@@ -1,0 +1,1091 @@
+{
+  "schema_version": 2,
+  "shard": "breferrari/obsidian-mind",
+  "source": "github:breferrari/obsidian-mind",
+  "version": "8.3.5",
+  "tarball_sha256": "4b67de04a500d24432d6680368e55eee419c09a2db5b0f4273a313bfead0ff5a",
+  "installed_at": "2026-08-23T19:39:01.491Z",
+  "updated_at": "2026-08-23T19:39:01.491Z",
+  "values_hash": "c8c4c2bd9c64dbf20953bbd8506db03493dc74326f21eff711e4ce67beece97e",
+  "modules": {
+    "brain": "included",
+    "work": "included",
+    "reference": "included",
+    "thinking": "included",
+    "claude": "included",
+    "org": "included",
+    "perf": "included",
+    "incidents": "included",
+    "one_on_ones": "included",
+    "codex": "included",
+    "gemini": "included"
+  },
+  "files": {
+    ".claude/agents/brag-spotter.md": {
+      "template": ".claude/agents/brag-spotter.md",
+      "rendered_hash": "99be3c9ba1771837e6a2306cbdaeedbd529841699d46f3d5767faf2a2038c452",
+      "ownership": "managed"
+    },
+    ".claude/agents/context-loader.md": {
+      "template": ".claude/agents/context-loader.md",
+      "rendered_hash": "c5fb0f8f0f8f03d2c38ede037cd8a2a3162e3d485f908d1a598ebc9be7dedbd3",
+      "ownership": "managed"
+    },
+    ".claude/agents/correction-sweep.md": {
+      "template": ".claude/agents/correction-sweep.md",
+      "rendered_hash": "9b4ae840a23a345d39bf2aa89b1065af83bf5c29a0669bcdee18df2e2d091e9d",
+      "ownership": "managed"
+    },
+    ".claude/agents/cross-linker.md": {
+      "template": ".claude/agents/cross-linker.md",
+      "rendered_hash": "413156f2be9fa602c39230f27a766b437c1f0cb853517a6678f98c8aa968b380",
+      "ownership": "managed"
+    },
+    ".claude/agents/people-profiler.md": {
+      "template": ".claude/agents/people-profiler.md",
+      "rendered_hash": "d82ededc5b606a9295eea70a5b50f28aac92f1b814a7d8e376319982ab2cad78",
+      "ownership": "managed"
+    },
+    ".claude/agents/review-fact-checker.md": {
+      "template": ".claude/agents/review-fact-checker.md",
+      "rendered_hash": "a386aada64312ea7093b896630f870f9d221da68dbb35289a740b21f4cfcbab4",
+      "ownership": "managed"
+    },
+    ".claude/agents/review-prep.md": {
+      "template": ".claude/agents/review-prep.md",
+      "rendered_hash": "c724076392d5e5e0fe9c97b6b07b7df399afb957e57198487103ca032d7530fe",
+      "ownership": "managed"
+    },
+    ".claude/agents/slack-archaeologist.md": {
+      "template": ".claude/agents/slack-archaeologist.md",
+      "rendered_hash": "1f1c5fafdc8a9b90e7cc421eb84a5bd3e9b20c33c96e641bdc2a38c7c56ee9bd",
+      "ownership": "managed"
+    },
+    ".claude/agents/vault-librarian.md": {
+      "template": ".claude/agents/vault-librarian.md",
+      "rendered_hash": "196d22e3ebed43e3d304da47a7308dd21460b42276675f8ef7976eb55b8f43a8",
+      "ownership": "managed"
+    },
+    ".claude/agents/vault-migrator.md": {
+      "template": ".claude/agents/vault-migrator.md",
+      "rendered_hash": "758510319d03203039f74d20d3c2b4c8e0d4f013a5783f7519281cef9c7dfde5",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-capture-1on1.md": {
+      "template": ".claude/commands/om-capture-1on1.md",
+      "rendered_hash": "8b135fbc774e93cb0ac18ff749439b0066079fd02ac510df0bea7338ccadaf12",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-correct.md": {
+      "template": ".claude/commands/om-correct.md",
+      "rendered_hash": "8f081b52dbb762f2436f56eb2d9e732af374ed766526c5ef0a28480cb87fcb07",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-dump.md": {
+      "template": ".claude/commands/om-dump.md",
+      "rendered_hash": "e2f31575ec3cc6c7bb86c29cb699214dbc219084365d34e2215c813dc4a6e090",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-humanize.md": {
+      "template": ".claude/commands/om-humanize.md",
+      "rendered_hash": "bc800052b91ce7514276041f415631b799346deb641d769e502b5f6f319d6599",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-incident-capture.md": {
+      "template": ".claude/commands/om-incident-capture.md",
+      "rendered_hash": "306261f95c2ee2d640804e4e2b8092494cdb9a2a055bae34b96682c30039ff6a",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-intake.md": {
+      "template": ".claude/commands/om-intake.md",
+      "rendered_hash": "ba8c1d92cd29f358b2c315dc99fd4dfdfe6fbc63ddf375c5be4f7fabc1c231e2",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-meeting.md": {
+      "template": ".claude/commands/om-meeting.md",
+      "rendered_hash": "94a2d7c6b81ac77f93273e1b7046369d4cc1b47b1a6c26ca55658dd427701f99",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-peer-scan.md": {
+      "template": ".claude/commands/om-peer-scan.md",
+      "rendered_hash": "5d930127a62ec66c99d8370ce98da28e898b06630463d2f339e42fe2bd77a51b",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-prep-1on1.md": {
+      "template": ".claude/commands/om-prep-1on1.md",
+      "rendered_hash": "434b8f82eb2a0f818639fbc21feaa9554ba0f56b5f3c189591754a11a7071414",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-project-archive.md": {
+      "template": ".claude/commands/om-project-archive.md",
+      "rendered_hash": "8f0b082db4ec42295048ad33c42d5645c12c900bd7493e5f39dab8f304d1e2be",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-review-brief.md": {
+      "template": ".claude/commands/om-review-brief.md",
+      "rendered_hash": "b751b029e46b4eabd37034029a510e2c28d324e30453e4670ec19d758092b416",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-review-peer.md": {
+      "template": ".claude/commands/om-review-peer.md",
+      "rendered_hash": "734d3eaa3dc23700fa7fc3df05391e331a753204018830e30c25bfc4da387ce3",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-self-review.md": {
+      "template": ".claude/commands/om-self-review.md",
+      "rendered_hash": "04b32c660126c9133416cc213c4113b807e1d7cc8aec1b0492b573257a0a3da1",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-slack-scan.md": {
+      "template": ".claude/commands/om-slack-scan.md",
+      "rendered_hash": "52a9b7064ebb0f1c0fb0072257f78e8b4a99754dc94ba2496d6afa1f9334cb80",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-standup.md": {
+      "template": ".claude/commands/om-standup.md",
+      "rendered_hash": "efdb670a316b879075a68a3735ee142c72a62e829163adf04de73dda083ffdf9",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-tidy.md": {
+      "template": ".claude/commands/om-tidy.md",
+      "rendered_hash": "ffdae9a51d5a8eef5a7b9607d44712a905bfc6e8108802dbc6b6d9654f255de0",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-vault-audit.md": {
+      "template": ".claude/commands/om-vault-audit.md",
+      "rendered_hash": "966adfdf35e74e7161d2b3aa35cd209eaeaacb687e8ab2073bfd75dd5b907cd6",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-vault-upgrade.md": {
+      "template": ".claude/commands/om-vault-upgrade.md",
+      "rendered_hash": "62ec81b0602543c24ed989334d3150c313c0c036beae7a9807264d29268fcab3",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-weekly.md": {
+      "template": ".claude/commands/om-weekly.md",
+      "rendered_hash": "aa66ecd9083a2bfb398fff81a0a1cca5b841becfa05b20558ac06b68479b7a78",
+      "ownership": "managed"
+    },
+    ".claude/commands/om-wrap-up.md": {
+      "template": ".claude/commands/om-wrap-up.md",
+      "rendered_hash": "9c9957f11c7bab7900c305465de279ec4b59c8af0e7f8b147b00969d5095ef4b",
+      "ownership": "managed"
+    },
+    ".claude/memory-template.md": {
+      "template": ".claude/memory-template.md",
+      "rendered_hash": "59a9ca283aee6faf8529a0b43bceca393a838fa881e36265d6016add02b8d4ee",
+      "ownership": "managed"
+    },
+    ".claude/scripts/.gitignore": {
+      "template": ".claude/scripts/.gitignore",
+      "rendered_hash": "c7bff301bdead0527c576c049e5176b0e8be7692ed78c35d46c6a5af35ec82c1",
+      "ownership": "managed"
+    },
+    ".claude/scripts/charcount.ts": {
+      "template": ".claude/scripts/charcount.ts",
+      "rendered_hash": "ee03394dd41bda9b8495a800d6b28248270fa33a67470146bd09463364d66dde",
+      "ownership": "managed"
+    },
+    ".claude/scripts/classify-message.ts": {
+      "template": ".claude/scripts/classify-message.ts",
+      "rendered_hash": "b5e37e323a56c27bceefecd486f46d39a7e2d852a1dae8c1bc79df869522318a",
+      "ownership": "managed"
+    },
+    ".claude/scripts/generate-memory-index.ts": {
+      "template": ".claude/scripts/generate-memory-index.ts",
+      "rendered_hash": "8b3c1e78e1bf64e3a36560dc53a5c7d167add4a953b3f3665abd2bfb131ac59c",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/active-hygiene.ts": {
+      "template": ".claude/scripts/lib/active-hygiene.ts",
+      "rendered_hash": "7bda4da9dde2f032bb162c930497a042f4ea76b253a50166926a98a6052d08a2",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/atomic-write.ts": {
+      "template": ".claude/scripts/lib/atomic-write.ts",
+      "rendered_hash": "6aaccd33194fecfe519c8c60435c39a2be85e6bb26a42526db681e7b034741f8",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/automemory-index.ts": {
+      "template": ".claude/scripts/lib/automemory-index.ts",
+      "rendered_hash": "6ee111413dd2d354f1ea72a53310becc0ec8b47e897823dbe6f6b0eeb95337e3",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/charcount.ts": {
+      "template": ".claude/scripts/lib/charcount.ts",
+      "rendered_hash": "42f7812eb7db685bac97b127316142100bdd4eb0020ad0fa976e98817d8c350a",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/correction-sweep.ts": {
+      "template": ".claude/scripts/lib/correction-sweep.ts",
+      "rendered_hash": "439e83f813df5a807cf2c5aa22d8551df61037dc07ac7100b42b13f33ddf22fb",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/frontmatter.ts": {
+      "template": ".claude/scripts/lib/frontmatter.ts",
+      "rendered_hash": "f06641381c9f0446824312667592daacf985cacc7b7732fdc82d25fd19a2216f",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/hint-state.ts": {
+      "template": ".claude/scripts/lib/hint-state.ts",
+      "rendered_hash": "493be3d98203a94178e4a98fbebd82def6f0cfc4a632b8ac5fe8f033e092ac9e",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/hook-io.ts": {
+      "template": ".claude/scripts/lib/hook-io.ts",
+      "rendered_hash": "5cef87c7020916ab39ab7417e1ca50e46d909dc384937d330279aa867325ff16",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/main-guard.ts": {
+      "template": ".claude/scripts/lib/main-guard.ts",
+      "rendered_hash": "e76f8a95c5ee9c015f8afe455707660db40e3494405697d528aae5cf6965244c",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/matcher.ts": {
+      "template": ".claude/scripts/lib/matcher.ts",
+      "rendered_hash": "b6ec8a0e0202bcccd5e171440578931cf3a8befbc9032acea9074c92c8bb90c4",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-caller.ts": {
+      "template": ".claude/scripts/lib/mcp-caller.ts",
+      "rendered_hash": "d8ad733c75f17a5fec1d9661ee3c269ed29a36fbc8e9a2ef0425d130dd299839",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-capture.ts": {
+      "template": ".claude/scripts/lib/mcp-capture.ts",
+      "rendered_hash": "4b1589cc67350cf55c783932a7899f1371a7a92bb9dfbb099f61ee16abcad62b",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-context.ts": {
+      "template": ".claude/scripts/lib/mcp-context.ts",
+      "rendered_hash": "abe6149c8fcb5510a5f84c06436a49ef9460523c219c15b86db3e3ae6e4fec79",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-exposure.ts": {
+      "template": ".claude/scripts/lib/mcp-exposure.ts",
+      "rendered_hash": "9375e0f38086a6025f67df069a8ae504f37780d55b14606e1b92afde6d17902c",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-graph.ts": {
+      "template": ".claude/scripts/lib/mcp-graph.ts",
+      "rendered_hash": "8d7f2b967feab90cce475f54a1a4db60d20a07c82e56105d1e7c45b8f3c46c94",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-memory-bridge.ts": {
+      "template": ".claude/scripts/lib/mcp-memory-bridge.ts",
+      "rendered_hash": "bbad5d79848fdb2dd3459b758e7a5ff4a87d555d61ca9776e7bd16f2741578f1",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-protocol.ts": {
+      "template": ".claude/scripts/lib/mcp-protocol.ts",
+      "rendered_hash": "490210f85dcc33d72ed7ed42f82ef9b1378e941e18fab499f1b5054dae985bc9",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-qmd-client.ts": {
+      "template": ".claude/scripts/lib/mcp-qmd-client.ts",
+      "rendered_hash": "a0468874f99cba67b06d4fb3dbfb6961b443b65438a8da60bf904f51be621331",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-reason.ts": {
+      "template": ".claude/scripts/lib/mcp-reason.ts",
+      "rendered_hash": "d0b2bfb2ab18fe0fa816dc3cb6fba5e18ddf7f261bdf626abb7475d5ee082e67",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-server.ts": {
+      "template": ".claude/scripts/lib/mcp-server.ts",
+      "rendered_hash": "86e2156ccd7dcd7cbeaa69b76ca60abdb375f818e3942d37313bf6f48f604cde",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/mcp-tools.ts": {
+      "template": ".claude/scripts/lib/mcp-tools.ts",
+      "rendered_hash": "3c4dd6dbdd40b24c80f600edac36ea875c9ec3dd113aab4d39a54abe9acf750f",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-discover.ts": {
+      "template": ".claude/scripts/lib/memory-discover.ts",
+      "rendered_hash": "2db56c7e7752f17a42d4d91bf10d399a149886e0299a12731d5ab649b08b1cff",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-index.ts": {
+      "template": ".claude/scripts/lib/memory-index.ts",
+      "rendered_hash": "742492c7e4e298e923ed97aa11225f102c05bc20d51c48b47e1573d94413e6f1",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-promoted.ts": {
+      "template": ".claude/scripts/lib/memory-promoted.ts",
+      "rendered_hash": "50683f03969d1130cc348bdbe4a455ed34476bebebfd898696b0d5043b331461",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-recall.ts": {
+      "template": ".claude/scripts/lib/memory-recall.ts",
+      "rendered_hash": "73523ff99f5ddd12a5ac086d2ab9d9eee1124afb4cd7c0f3eeccf207a3bc8db4",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-similarity.ts": {
+      "template": ".claude/scripts/lib/memory-similarity.ts",
+      "rendered_hash": "2104ce818a1c59730c0e0ea571e238709acaa439e51d30b53af470eaaa133af7",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-supersede.ts": {
+      "template": ".claude/scripts/lib/memory-supersede.ts",
+      "rendered_hash": "b842d44eababdfd0f3f9ba0adff955db5aaf0845ccb6d026f1376537447110b0",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/memory-write.ts": {
+      "template": ".claude/scripts/lib/memory-write.ts",
+      "rendered_hash": "4ab3ba3f6d979c9c4bedd531f02fe74a4203259783b4e2eb0b82168b8db51ec7",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/qmd-bootstrap.ts": {
+      "template": ".claude/scripts/lib/qmd-bootstrap.ts",
+      "rendered_hash": "8e138c5afdd9bfcb41abf4803e8736185f0de0cfe82d12fea93cf388e88268d6",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/qmd-ignore.ts": {
+      "template": ".claude/scripts/lib/qmd-ignore.ts",
+      "rendered_hash": "e596c678d03a7871d287784444794ba1d7dad7f5382e2fd2adb64f74c1481eb0",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/qmd-refresh.ts": {
+      "template": ".claude/scripts/lib/qmd-refresh.ts",
+      "rendered_hash": "16683f2bead66d42f729775476ee1b0cb157b90af6f6632f94aa98d295103ae0",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/qmd.ts": {
+      "template": ".claude/scripts/lib/qmd.ts",
+      "rendered_hash": "03f0149262cbcb470e778a8709171e905f8701cd9611963a7eb3b394f23f2877",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/read-field.ts": {
+      "template": ".claude/scripts/lib/read-field.ts",
+      "rendered_hash": "9317f718f038daea673e698eaf3c683eac8d0ed2cdf2fc80d31d1ccdb47c27f2",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/read-head.ts": {
+      "template": ".claude/scripts/lib/read-head.ts",
+      "rendered_hash": "ef20d9270a50667ee9bc544d625c286ea027225428e0257adacdbc3af4cf81b8",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/regex.ts": {
+      "template": ".claude/scripts/lib/regex.ts",
+      "rendered_hash": "4bdbbb1e83027db42d459cb17c3d71af7a91e09e3b53356c02188e2feb093c96",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/session-start.ts": {
+      "template": ".claude/scripts/lib/session-start.ts",
+      "rendered_hash": "4b08c26186a59a35685f964b788508900ff01ce4d0038a0999ff6d394b477293",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/signals.ts": {
+      "template": ".claude/scripts/lib/signals.ts",
+      "rendered_hash": "857aee4008e79e41b7b3241ab7c516261dd7b8034fc6de2a00426477367de8fb",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/wikilinks.ts": {
+      "template": ".claude/scripts/lib/wikilinks.ts",
+      "rendered_hash": "876c6ed61fe0d2e38adcf5d4678643955037e7e1e4a03845e7a883e8a565754b",
+      "ownership": "managed"
+    },
+    ".claude/scripts/om-mcp.mjs": {
+      "template": ".claude/scripts/om-mcp.mjs",
+      "rendered_hash": "6c252950d2841b2db9377278bf32caad5a7b32bcd4f118c5cb0b902846bd0a37",
+      "ownership": "managed"
+    },
+    ".claude/scripts/om-mcp.ts": {
+      "template": ".claude/scripts/om-mcp.ts",
+      "rendered_hash": "4bd90ffde7cc871fa6857380f73a3fd012d686293608cb3f48bb403735070ee2",
+      "ownership": "managed"
+    },
+    ".claude/scripts/package.json": {
+      "template": ".claude/scripts/package.json",
+      "rendered_hash": "ac3cf95181cad676ae95cac38dfff819525e77c0cf9dc3484c16ac0e40d06d4b",
+      "ownership": "managed"
+    },
+    ".claude/scripts/pre-compact.ts": {
+      "template": ".claude/scripts/pre-compact.ts",
+      "rendered_hash": "408bfc80f29f95541c76fd166bf25ed089997ed7cc35a221b2b56ec1978acd96",
+      "ownership": "managed"
+    },
+    ".claude/scripts/qmd-mcp.d.mts": {
+      "template": ".claude/scripts/qmd-mcp.d.mts",
+      "rendered_hash": "087d3c1deed8cfb90059e25bf8a1d8742459c46b7b7c2e1d8e7e960861e9356d",
+      "ownership": "managed"
+    },
+    ".claude/scripts/qmd-mcp.mjs": {
+      "template": ".claude/scripts/qmd-mcp.mjs",
+      "rendered_hash": "25a0472e55ef45b05d6414cc3f4b92b1c8a27572a4af0576b4c69a5348d52f9e",
+      "ownership": "managed"
+    },
+    ".claude/scripts/qmd-refresh-run.ts": {
+      "template": ".claude/scripts/qmd-refresh-run.ts",
+      "rendered_hash": "a3364f3c1610cf7614d024fc160b69697e4e8632260646be0804a0cd9a926d72",
+      "ownership": "managed"
+    },
+    ".claude/scripts/session-start.ts": {
+      "template": ".claude/scripts/session-start.ts",
+      "rendered_hash": "e903ec3936495110c816d2a8f4e02008f1a9c1f9260de2a4480e570a6e051406",
+      "ownership": "managed"
+    },
+    ".claude/scripts/stop-checklist.ts": {
+      "template": ".claude/scripts/stop-checklist.ts",
+      "rendered_hash": "da6157ff4297ef7428f3b4964247036c8c8936e611fcc58bedcaf06c3fca5005",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/active-hygiene.test.ts": {
+      "template": ".claude/scripts/tests/active-hygiene.test.ts",
+      "rendered_hash": "17ed725230008f943fd9d272fc84770b47b02af7f3985cddbf0df8948e0d0f12",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/agent-docs-sync.test.ts": {
+      "template": ".claude/scripts/tests/agent-docs-sync.test.ts",
+      "rendered_hash": "20f2b2cc1bc43be0105f1d8d88fb0322b690ffca0139cd2fc99b0c09259c866a",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/automemory-index.test.ts": {
+      "template": ".claude/scripts/tests/automemory-index.test.ts",
+      "rendered_hash": "73f3978a9f58419cf33ce9136b3318002d3c7e09a008f62fce6d12a3528bed55",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/capture-markup-guard.test.ts": {
+      "template": ".claude/scripts/tests/capture-markup-guard.test.ts",
+      "rendered_hash": "dab86d07ecbdc7cc4080668d852dd682a15773df73d1ddb701ef2a7724cc3c25",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/charcount.test.ts": {
+      "template": ".claude/scripts/tests/charcount.test.ts",
+      "rendered_hash": "4e71041605912383fd1f66d097023cc99eab7ec29272fa21fadf1e365de0a15f",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/classify-message.test.ts": {
+      "template": ".claude/scripts/tests/classify-message.test.ts",
+      "rendered_hash": "e733af24823ab8c0d37ed25a240190ffbefdd69944cba3cccb339b150b2e7a0c",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/correction-sweep-docs-sync.test.ts": {
+      "template": ".claude/scripts/tests/correction-sweep-docs-sync.test.ts",
+      "rendered_hash": "b76f4610869174fef8336d3fe62b14c1987b3b998610c37e4c02023554b4ba73",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/correction-sweep.test.ts": {
+      "template": ".claude/scripts/tests/correction-sweep.test.ts",
+      "rendered_hash": "a9b623fbb3c8262d1ef5878e060ae7710e2e5528eb38b4c047bbe58a86c37fd1",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/frontmatter.test.ts": {
+      "template": ".claude/scripts/tests/frontmatter.test.ts",
+      "rendered_hash": "302068f27c3aa5401c37ac1c37b15dbeaf04b904ae3bf7107d07d95f8bc16528",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/hint-state.test.ts": {
+      "template": ".claude/scripts/tests/hint-state.test.ts",
+      "rendered_hash": "d8a21f357905110d3cd255d14cffe73ec7b9b115d6d5c57d040590bf90d6b905",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/hook-config.test.ts": {
+      "template": ".claude/scripts/tests/hook-config.test.ts",
+      "rendered_hash": "21d26e7250b0445c5f26e02d2e91dcf8f87f9125ec00d01729878c1ff25a1c35",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/hook-io.test.ts": {
+      "template": ".claude/scripts/tests/hook-io.test.ts",
+      "rendered_hash": "0e248c04691fc71a2392bee98569eb9873fee43abfabfa3050601d208eba92b5",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/main-guard.test.ts": {
+      "template": ".claude/scripts/tests/main-guard.test.ts",
+      "rendered_hash": "11c030c708423358a78248fc7a4f308584c1b7e808985cf85de6a8ea83d74ff5",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/matcher.test.ts": {
+      "template": ".claude/scripts/tests/matcher.test.ts",
+      "rendered_hash": "738a364692484922a476a0143d9dcbef02b35339ebfb238cc9aa8274e8141a61",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-caller.test.ts": {
+      "template": ".claude/scripts/tests/mcp-caller.test.ts",
+      "rendered_hash": "b78a142d29d3a162530ed6ea403b73290625320f72bf191c94a32b2bafcf6966",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-capture.test.ts": {
+      "template": ".claude/scripts/tests/mcp-capture.test.ts",
+      "rendered_hash": "59d7d19ce71b7a90948e3c7affe16c07c9ab359bf5a84d76cd1d21513d7877bb",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-context.test.ts": {
+      "template": ".claude/scripts/tests/mcp-context.test.ts",
+      "rendered_hash": "43d354ea2133675bfb7e0c9033f4bcf92d053170afe735341cbd2986b9598a87",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-exposure.test.ts": {
+      "template": ".claude/scripts/tests/mcp-exposure.test.ts",
+      "rendered_hash": "2f0144e5bc383f3df915a8b158d4a284585742ea85573d2362bc26acc68bba18",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-graph.test.ts": {
+      "template": ".claude/scripts/tests/mcp-graph.test.ts",
+      "rendered_hash": "252e1412c58f135751fab2998d59768b7135a4bf12a1b5f04a1b7f6e1948c712",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-memory-bridge.test.ts": {
+      "template": ".claude/scripts/tests/mcp-memory-bridge.test.ts",
+      "rendered_hash": "6b795a59d8e3a777f78467ebce658ee21327320c0be81796a19bd3b85c9ab440",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-protocol.test.ts": {
+      "template": ".claude/scripts/tests/mcp-protocol.test.ts",
+      "rendered_hash": "9ad88ffea897c685862ec8305c612166fa336d58d9d803555e20643f4a50309d",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-qmd-client.test.ts": {
+      "template": ".claude/scripts/tests/mcp-qmd-client.test.ts",
+      "rendered_hash": "128e71c22356f074e0afb33f209ee2aa30c77cde3921aa66262ceab14b659d2d",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-reason.concurrency.test.ts": {
+      "template": ".claude/scripts/tests/mcp-reason.concurrency.test.ts",
+      "rendered_hash": "80352626cc68abce3c047ca93d8fe41f98e3314bc86e10c233cb1b58cd32bb54",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-reason.test.ts": {
+      "template": ".claude/scripts/tests/mcp-reason.test.ts",
+      "rendered_hash": "07a8d9b67ea214d5e0d13188f90d2c0c427cf12f284983e29901e5c956630173",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/mcp-refusal-audit.test.ts": {
+      "template": ".claude/scripts/tests/mcp-refusal-audit.test.ts",
+      "rendered_hash": "6c718399fc6601fdbd1adcf3d3f1900bc4f6e2d8f00aa203506a657b1a1fb171",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-discover.test.ts": {
+      "template": ".claude/scripts/tests/memory-discover.test.ts",
+      "rendered_hash": "e459971fa11322fc7daa7e1466a29118e0866e50c0d6cf50571376f990123216",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-index.test.ts": {
+      "template": ".claude/scripts/tests/memory-index.test.ts",
+      "rendered_hash": "22bf6472016c0afd7e37f179d457a10735b0bcec5b9108dbcb986e841ffb4ab7",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-promoted.test.ts": {
+      "template": ".claude/scripts/tests/memory-promoted.test.ts",
+      "rendered_hash": "12e629234f1fadf0214e7242098e33e61c1b2729b74f2b63dbc02523fb9a1eed",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-recall.test.ts": {
+      "template": ".claude/scripts/tests/memory-recall.test.ts",
+      "rendered_hash": "e1bf024ce885245db48583fa4ecc8afeb0560a414b00b01b5c3f65506d8a2620",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-similarity.test.ts": {
+      "template": ".claude/scripts/tests/memory-similarity.test.ts",
+      "rendered_hash": "d442b8587eeba6d401fb672ea5a20257e41959954e4150aeaa62792e428a4f3b",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-supersede.test.ts": {
+      "template": ".claude/scripts/tests/memory-supersede.test.ts",
+      "rendered_hash": "853c2671073692e0ac64f274018348c47518bd1d26ca3872aa60594919caefcd",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-write.concurrency.test.ts": {
+      "template": ".claude/scripts/tests/memory-write.concurrency.test.ts",
+      "rendered_hash": "bf73562aa070caa31ca390a1c7257b84781c104f9094776844ec7c9cb8339a7c",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/memory-write.test.ts": {
+      "template": ".claude/scripts/tests/memory-write.test.ts",
+      "rendered_hash": "446a84af5600731f7c3a4eced675c5de50ea13f7c1e6af64481be5af9171925e",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/om-mcp.integration.test.ts": {
+      "template": ".claude/scripts/tests/om-mcp.integration.test.ts",
+      "rendered_hash": "e488b87ad788d5013f9f92cf7b59bec16409e7a255456e6adb6e40a7b454ded9",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/pre-compact.test.ts": {
+      "template": ".claude/scripts/tests/pre-compact.test.ts",
+      "rendered_hash": "4b3f44a3428b6f8cab3dd3f65d7b560c2d6986724a98054ec912d1453b5c66ad",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-bootstrap.test.ts": {
+      "template": ".claude/scripts/tests/qmd-bootstrap.test.ts",
+      "rendered_hash": "7e73090b04c9891bc63d9462a5f295c21883f2a8fff1eea6035886f6627d0083",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-ignore.test.ts": {
+      "template": ".claude/scripts/tests/qmd-ignore.test.ts",
+      "rendered_hash": "597483629ec6288f322017de6572dcaf92f4036773b04d05b43a9885d777ac73",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-mcp.test.ts": {
+      "template": ".claude/scripts/tests/qmd-mcp.test.ts",
+      "rendered_hash": "f32d4b7ea2215bb1b53a59e1e878fecf1144e65620cd8888fcf53f9bc6ce7efc",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-refresh.integration.test.ts": {
+      "template": ".claude/scripts/tests/qmd-refresh.integration.test.ts",
+      "rendered_hash": "c04047ce2baa3d85b720cddfeb2c1e2f051d0b0414e8495391a46e15b3077d0d",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-refresh.test.ts": {
+      "template": ".claude/scripts/tests/qmd-refresh.test.ts",
+      "rendered_hash": "e589e2e7d0622bc668a81df682a840866e533fb51f0e2b03c476ecea7ab1fb24",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd.test.ts": {
+      "template": ".claude/scripts/tests/qmd.test.ts",
+      "rendered_hash": "41a9d0ee8bbd4b354d87c54bda37a0c0c954569b8a0ccb31da4f8022d9c208d6",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/read-head.test.ts": {
+      "template": ".claude/scripts/tests/read-head.test.ts",
+      "rendered_hash": "cf22bf0624f09112cfe2039f620158be20f7975496950e2886d27130a0d25455",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/regex.test.ts": {
+      "template": ".claude/scripts/tests/regex.test.ts",
+      "rendered_hash": "2a405bbcbd2ada4b3382d39a6c89efd9610852a67647423c0bae05bb2e9d8894",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/session-start.integration.test.ts": {
+      "template": ".claude/scripts/tests/session-start.integration.test.ts",
+      "rendered_hash": "e5606647221bfbc98820269aedec7c9967ee2ffd55466d20914b0ccee56f5b98",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/session-start.test.ts": {
+      "template": ".claude/scripts/tests/session-start.test.ts",
+      "rendered_hash": "87f0ad4a73571c1a924cc66ac6af60d806ecb11da7070925cbbb720b08e7a8b8",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/shard-contract.test.ts": {
+      "template": ".claude/scripts/tests/shard-contract.test.ts",
+      "rendered_hash": "197b53156f769ace2a7f190f323a384fa9b8590da346d63e9d9e14d421aba0a4",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/shardmindignore.test.ts": {
+      "template": ".claude/scripts/tests/shardmindignore.test.ts",
+      "rendered_hash": "7cbd17924d1dfa2888ccec5e98434d6b71d4f470ddabfb8e69820f4c332b93d4",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/signals.test.ts": {
+      "template": ".claude/scripts/tests/signals.test.ts",
+      "rendered_hash": "d6279d57dbc7fa24323e85eff7b702905384221da92890b30e2cd5a7fdcce426",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/stop-checklist.test.ts": {
+      "template": ".claude/scripts/tests/stop-checklist.test.ts",
+      "rendered_hash": "f9d6669e3e9f818bd4b3a7f78995765118a3b66dadda82ca06428c14dc2c9639",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/tidy-fix.test.ts": {
+      "template": ".claude/scripts/tests/tidy-fix.test.ts",
+      "rendered_hash": "5db841a6f7e3a0dd8e9d5a6dcfa8af3fd189cfb7f0823ecc928033df290d13bd",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/validate-write.memory.test.ts": {
+      "template": ".claude/scripts/tests/validate-write.memory.test.ts",
+      "rendered_hash": "f912c54f4b568dc7db8f7d03b5b36d6d1dbf6e55bfac19ded8a540106a134025",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/validate-write.test.ts": {
+      "template": ".claude/scripts/tests/validate-write.test.ts",
+      "rendered_hash": "527bbfd878172bd7c9263d29cb2db3976c29e2ddb4565e0f855bfe7f38815150",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/vault-wikilinks.test.ts": {
+      "template": ".claude/scripts/tests/vault-wikilinks.test.ts",
+      "rendered_hash": "d3704eda600ebbefdf1d22f1491af69075d49696fd53242a6e957425467519ed",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/wikilink-baseline.json": {
+      "template": ".claude/scripts/tests/wikilink-baseline.json",
+      "rendered_hash": "2d2a55219ea454f42e0a98be13f6cdb38280d8476f243dbafb0d86ae5e56c20f",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/wikilinks.test.ts": {
+      "template": ".claude/scripts/tests/wikilinks.test.ts",
+      "rendered_hash": "db63042a973a284e01722e2981d11f63cc43a8a32ddf2143bc5769f1639352ad",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/_helpers.ts": {
+      "template": ".claude/scripts/tests/_helpers.ts",
+      "rendered_hash": "e733f7b86ec789f5de51ccc4148dd54cf8fedd7c80305836d4bf277af0a60e10",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tidy-fix.ts": {
+      "template": ".claude/scripts/tidy-fix.ts",
+      "rendered_hash": "80f87f1a8933ec485b76e29dc7eb9ea6e2a1d4851db2ec48fe69e940a858d8aa",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tsconfig.json": {
+      "template": ".claude/scripts/tsconfig.json",
+      "rendered_hash": "136fe3cba1d400f6b66ce7fc7365160a78a74bcc1bc9801cb233c9db3b9d4105",
+      "ownership": "managed"
+    },
+    ".claude/scripts/validate-write.ts": {
+      "template": ".claude/scripts/validate-write.ts",
+      "rendered_hash": "44f8efeda13875ae6e112968426cd34ca1d03beaa77d02070ece27a61ca08aa2",
+      "ownership": "managed"
+    },
+    ".claude/settings.json": {
+      "template": ".claude/settings.json",
+      "rendered_hash": "fe42318041592a191ac8a7f8b3f47340c71998e06f3534abc22a979642056dd4",
+      "ownership": "managed"
+    },
+    ".claude/skills/defuddle/SKILL.md": {
+      "template": ".claude/skills/defuddle/SKILL.md",
+      "rendered_hash": "10673a4dc70a0a057612d443243ab7a5aa4abdd4a0fadc3f6eec5fd71ad5a971",
+      "ownership": "managed"
+    },
+    ".claude/skills/excalidraw-diagram/references/excalidraw-schema.md": {
+      "template": ".claude/skills/excalidraw-diagram/references/excalidraw-schema.md",
+      "rendered_hash": "e1ac098f16f723aaf0b1fc6e511c6981cfb7cfa57a646da8eaa623f047287d5b",
+      "ownership": "managed"
+    },
+    ".claude/skills/excalidraw-diagram/SKILL.md": {
+      "template": ".claude/skills/excalidraw-diagram/SKILL.md",
+      "rendered_hash": "482a7499122775f84cdb36e832c8e756f7c3d60aa783f2a56715fa2d7c489349",
+      "ownership": "managed"
+    },
+    ".claude/skills/json-canvas/references/EXAMPLES.md": {
+      "template": ".claude/skills/json-canvas/references/EXAMPLES.md",
+      "rendered_hash": "f5ce15a4b74643122396265e8c37c828874a4005794de2aee7030662968768eb",
+      "ownership": "managed"
+    },
+    ".claude/skills/json-canvas/SKILL.md": {
+      "template": ".claude/skills/json-canvas/SKILL.md",
+      "rendered_hash": "97d1ae0728955c4203922753d5656890e5e4dd371b8306ea11884f9b510f1b85",
+      "ownership": "managed"
+    },
+    ".claude/skills/mermaid-visualizer/references/syntax-rules.md": {
+      "template": ".claude/skills/mermaid-visualizer/references/syntax-rules.md",
+      "rendered_hash": "660965a794a26aa6db3efc0cab5f98b52c052b76ec3f33efed1084c722e90ad9",
+      "ownership": "managed"
+    },
+    ".claude/skills/mermaid-visualizer/SKILL.md": {
+      "template": ".claude/skills/mermaid-visualizer/SKILL.md",
+      "rendered_hash": "131decc93edbd3965782951f62f4f26364d895b471d140f8b0f3326c39978efa",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md": {
+      "template": ".claude/skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
+      "rendered_hash": "208fd63aead9bca1975626fea52605e6ab9434dc0529d923feb36b18b8877d3b",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-bases/SKILL.md": {
+      "template": ".claude/skills/obsidian-bases/SKILL.md",
+      "rendered_hash": "c0037f20926c7d8591cdd040365e4c0e4c0c4146386a506f28f241faee9a27d9",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-cli/SKILL.md": {
+      "template": ".claude/skills/obsidian-cli/SKILL.md",
+      "rendered_hash": "20cb8d69f7dc698f3cc7318db69b1fba744b8f591042684675d6f0706af0e83e",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-markdown/references/CALLOUTS.md": {
+      "template": ".claude/skills/obsidian-markdown/references/CALLOUTS.md",
+      "rendered_hash": "9912ec2e3f8711f65b8ceb82cc19cbffc5e6f8ccf2ab627e18926c522c383d8b",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-markdown/references/EMBEDS.md": {
+      "template": ".claude/skills/obsidian-markdown/references/EMBEDS.md",
+      "rendered_hash": "63b6205507e28fb58cf200bc348a2b139e50ae739743e2e6316732148973cb7a",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-markdown/references/PROPERTIES.md": {
+      "template": ".claude/skills/obsidian-markdown/references/PROPERTIES.md",
+      "rendered_hash": "392953b5838c3ab3df135b5a914f100ae7b95e4501b6a2e5c8dc63da3ac7558b",
+      "ownership": "managed"
+    },
+    ".claude/skills/obsidian-markdown/SKILL.md": {
+      "template": ".claude/skills/obsidian-markdown/SKILL.md",
+      "rendered_hash": "7ad72e1f0a9081ed325e76b6402ad5de50a00e63e2341fd403a92f147234a007",
+      "ownership": "managed"
+    },
+    ".claude/skills/qmd/SKILL.md": {
+      "template": ".claude/skills/qmd/SKILL.md",
+      "rendered_hash": "fbd8ff35d49cf673aaf611226cee9dbcbd1ee76ad645ef2fa2be12df2a66dba0",
+      "ownership": "managed"
+    },
+    ".claude/update-skills.ts": {
+      "template": ".claude/update-skills.ts",
+      "rendered_hash": "4bc5bc06252d2b1993d65855d100b53835b02578fba854fb9fb0f69b54b7a00e",
+      "ownership": "managed"
+    },
+    ".claude-plugin/marketplace.json": {
+      "template": ".claude-plugin/marketplace.json",
+      "rendered_hash": "4f3e17d34008b8e5934c63e0803aca34e0107d3e4d922076c4dba5a61a5d2192",
+      "ownership": "managed"
+    },
+    ".claude-plugin/plugin.json": {
+      "template": ".claude-plugin/plugin.json",
+      "rendered_hash": "07601fe9702d2fe59648a73f9c0b4596b10938a899f083c009d79a9f14f95c62",
+      "ownership": "managed"
+    },
+    ".codex/hooks.json": {
+      "template": ".codex/hooks.json",
+      "rendered_hash": "855906d6ac3d2de307b6e78c6d339a5770a8267e3e5b95781015a913b692e8fa",
+      "ownership": "managed"
+    },
+    ".gemini/settings.json": {
+      "template": ".gemini/settings.json",
+      "rendered_hash": "784052218a4b117f2bde6b9562eb4fd550374759822ebbf751bfd850dba4b709",
+      "ownership": "managed"
+    },
+    ".gitattributes": {
+      "template": ".gitattributes",
+      "rendered_hash": "5fa0c4a2b4a385ca1895d3159fb80489eaf7dc4851f92253a5ab49b6482804e5",
+      "ownership": "managed"
+    },
+    ".gitignore": {
+      "template": ".gitignore",
+      "rendered_hash": "ee32c4541004625b8182f56f4a983b640dca8d015b655192b4093e5756ccbde4",
+      "ownership": "managed"
+    },
+    ".mcp.json": {
+      "template": ".mcp.json",
+      "rendered_hash": "63eb78e663f3d2e69b68c99e792b6645fe66a29cfd8fd741122a454fd182bdc3",
+      "ownership": "managed"
+    },
+    ".obsidian/app.json": {
+      "template": ".obsidian/app.json",
+      "rendered_hash": "9b9504cf55d5b28d8c9d8cffcc32804830bf5c35bd366b7e621c3498f1f06065",
+      "ownership": "managed"
+    },
+    ".scripts/package.json": {
+      "template": ".scripts/package.json",
+      "rendered_hash": "0fd7f42d27d2716345c9df69594276f3eff908bdf44bdf7618b8d792e770f6fb",
+      "ownership": "managed"
+    },
+    ".scripts/qmd-bootstrap.ts": {
+      "template": ".scripts/qmd-bootstrap.ts",
+      "rendered_hash": "f8e95d4a8561552ee797f371e7ec8e91ad89b5c957bac18624ee45e0f60a219e",
+      "ownership": "managed"
+    },
+    ".shardmindignore": {
+      "template": ".shardmindignore",
+      "rendered_hash": "d3c59b73fb24187a5962f1b3f6d1987b5e02caf703875c855208299503a8d3b0",
+      "ownership": "managed"
+    },
+    "AGENTS.md": {
+      "template": "AGENTS.md",
+      "rendered_hash": "68fe756bd39dbe56104bf28f4a31bfa6674dc0d93f376a8c9bd577bcdde1f06f",
+      "ownership": "managed"
+    },
+    "ARCHITECTURE.md": {
+      "template": "ARCHITECTURE.md",
+      "rendered_hash": "491b7d8d4d10e73e1bd586743bb11d45eb64f07aac091007a94b6351b7b3300c",
+      "ownership": "managed"
+    },
+    "bases/1-1 History.base": {
+      "template": "bases/1-1 History.base",
+      "rendered_hash": "cc8a4e4804d51567605d60de7afb6fd300ecbf8aed6347d928aa68ac433b4015",
+      "ownership": "managed"
+    },
+    "bases/Competency Map.base": {
+      "template": "bases/Competency Map.base",
+      "rendered_hash": "0ead42f663f97272ad3c05159d08776429c61b9e9711bf687d88c88c9559fdca",
+      "ownership": "managed"
+    },
+    "bases/Incidents.base": {
+      "template": "bases/Incidents.base",
+      "rendered_hash": "79ede504cd377b232fb862cac8532bbff39ad496e1b59a856c5a923b69ed6fb5",
+      "ownership": "managed"
+    },
+    "bases/Memories.base": {
+      "template": "bases/Memories.base",
+      "rendered_hash": "4ae3dbf854d9aa4a14e5f6a02116f066137c03160b13147e46dfbcd98b4e9d0b",
+      "ownership": "managed"
+    },
+    "bases/People Directory.base": {
+      "template": "bases/People Directory.base",
+      "rendered_hash": "62f016415ff0545020501e5fd356828c02a428ad97d7a41381d60892bad782e8",
+      "ownership": "managed"
+    },
+    "bases/Recently Touched.base": {
+      "template": "bases/Recently Touched.base",
+      "rendered_hash": "8caf116277ac2cac045cab12cc491cc490c2aa79143cc4445da75add4f28c687",
+      "ownership": "managed"
+    },
+    "bases/Review Evidence.base": {
+      "template": "bases/Review Evidence.base",
+      "rendered_hash": "2265de13563250ef0259daa22c52a024cc86a1b883c3e65499932daa8b64489a",
+      "ownership": "managed"
+    },
+    "bases/Templates.base": {
+      "template": "bases/Templates.base",
+      "rendered_hash": "a6dc08592d0f026a41c9c04c5d03e38c4daeaa3e0aa9bcd9cd5be4fed2438ea8",
+      "ownership": "managed"
+    },
+    "bases/Work Dashboard.base": {
+      "template": "bases/Work Dashboard.base",
+      "rendered_hash": "4c879363e64af848152af9aaa654af7dd863ddf1b779ebedb2c39b7f6f5b7c3b",
+      "ownership": "managed"
+    },
+    "brain/Gotchas.md": {
+      "template": "brain/Gotchas.md",
+      "rendered_hash": "b52c0e8a726483b2f550459939f6e396b92f9bb06f941de9cbd572aa739db38b",
+      "ownership": "managed"
+    },
+    "brain/Key Decisions.md": {
+      "template": "brain/Key Decisions.md",
+      "rendered_hash": "f38f2f5807743074deb68bb512d4b00633b3cc40cd84dcb0a4e18b939f2ae9b2",
+      "ownership": "managed"
+    },
+    "brain/Memories.md": {
+      "template": "brain/Memories.md",
+      "rendered_hash": "d54c07a643efe32f478f2a2c1e87fb334298a353c638ac97b2bc13059d59a457",
+      "ownership": "managed"
+    },
+    "brain/North Star.md": {
+      "template": "brain/North Star.md",
+      "rendered_hash": "28a73b65fa9025400cfc77915455a2e7b17072795cdcfe1ad5144f8b9c8d8a2e",
+      "ownership": "managed"
+    },
+    "brain/Patterns.md": {
+      "template": "brain/Patterns.md",
+      "rendered_hash": "18873bac13f67f78b412f928e732e21bb30ce4c5d96deadaa4c4e3ede94d7f11",
+      "ownership": "managed"
+    },
+    "brain/Skills.md": {
+      "template": "brain/Skills.md",
+      "rendered_hash": "8b14d820fbfe8db403a069aa344dbb59d2c437bc850b723f82fee464ac16f8ec",
+      "ownership": "managed"
+    },
+    "CHANGELOG.md": {
+      "template": "CHANGELOG.md",
+      "rendered_hash": "c8bf1305df8a6a41268a14a258ae2e2f1af7e6804f0024dca51a885238e8ee26",
+      "ownership": "managed"
+    },
+    "CLAUDE.md": {
+      "template": "CLAUDE.md",
+      "rendered_hash": "ba53e361daa32536d308e3c7fe8e0329e3623ca8cad65bc4b747b1f0980ae90a",
+      "ownership": "managed"
+    },
+    "GEMINI.md": {
+      "template": "GEMINI.md",
+      "rendered_hash": "68fe756bd39dbe56104bf28f4a31bfa6674dc0d93f376a8c9bd577bcdde1f06f",
+      "ownership": "managed"
+    },
+    "Home.md": {
+      "template": "Home.md",
+      "rendered_hash": "792edcafab855bb138a6b31f41f88134150ad6dcd689d58cce909829a646fa58",
+      "ownership": "managed"
+    },
+    "LICENSE": {
+      "template": "LICENSE",
+      "rendered_hash": "f796b16e3a18b1e4fbde0291c6b69fe2ead32b7f4c38ecc5453fd8183a804784",
+      "ownership": "managed"
+    },
+    "org/people/.gitkeep": {
+      "template": "org/people/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "org/People & Context.md": {
+      "template": "org/People & Context.md",
+      "rendered_hash": "111cc040dd64937e6c07caa858b7a36a70bfc18d9fb9a4e2219d2b5e66bd79d5",
+      "ownership": "managed"
+    },
+    "org/teams/.gitkeep": {
+      "template": "org/teams/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "perf/brag/.gitkeep": {
+      "template": "perf/brag/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "perf/Brag Doc.md": {
+      "template": "perf/Brag Doc.md",
+      "rendered_hash": "a4c3b914f98514bc599926747544cf6d245cf5364f488ef315870c9e08a6324b",
+      "ownership": "managed"
+    },
+    "perf/competencies/README.md": {
+      "template": "perf/competencies/README.md",
+      "rendered_hash": "580cec37425aaa68fdd2829c26214ff4814ce29b7b6af63224b8647cd13567db",
+      "ownership": "managed"
+    },
+    "perf/evidence/.gitkeep": {
+      "template": "perf/evidence/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "README.md": {
+      "template": "README.md",
+      "rendered_hash": "c5199fc7aa233bbd743dd4fd2f8d4d1b8f7f0caf42e0cc558d50b4daefee2689",
+      "ownership": "managed"
+    },
+    "reference/.gitkeep": {
+      "template": "reference/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "templates/Competency Note.md": {
+      "template": "templates/Competency Note.md",
+      "rendered_hash": "074b8107661999ab64923c9ba36939b51c25d1396ea0e299472fbffb1080b6e1",
+      "ownership": "managed"
+    },
+    "templates/Decision Record.md": {
+      "template": "templates/Decision Record.md",
+      "rendered_hash": "8686086f09b22372d6ba1831d5b5b34ea1f055023b44f65c0c24dcb4795f05d7",
+      "ownership": "managed"
+    },
+    "templates/Review Template.md": {
+      "template": "templates/Review Template.md",
+      "rendered_hash": "5c37fb44a114dbe3a108273cfc45689c157c8c0f39107b04c0f29a1e5695cda6",
+      "ownership": "managed"
+    },
+    "templates/Thinking Note.md": {
+      "template": "templates/Thinking Note.md",
+      "rendered_hash": "097d64e767e112b68ae99b71ebf8acf4e829194427bd169761444627a3b6f2b7",
+      "ownership": "managed"
+    },
+    "templates/Work Note.md": {
+      "template": "templates/Work Note.md",
+      "rendered_hash": "0326c31d243f4a1b745ba33d140fc112ca700a3478b03adadf40b58e7465fe06",
+      "ownership": "managed"
+    },
+    "thinking/README.md": {
+      "template": "thinking/README.md",
+      "rendered_hash": "b2312affff35543d66964fa076e9dc34ef94a2fb563c2404e8752f7d8990e16a",
+      "ownership": "managed"
+    },
+    "vault-manifest.json": {
+      "template": "vault-manifest.json",
+      "rendered_hash": "61232f3888c462ec0deada6fa0420a9b62b5070c0e6347ecf6b9b09020de12e3",
+      "ownership": "managed"
+    },
+    "work/1-1/.gitkeep": {
+      "template": "work/1-1/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "work/active/.gitkeep": {
+      "template": "work/active/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "work/archive/.gitkeep": {
+      "template": "work/archive/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "work/incidents/.gitkeep": {
+      "template": "work/incidents/.gitkeep",
+      "rendered_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ownership": "managed"
+    },
+    "work/Index.md": {
+      "template": "work/Index.md",
+      "rendered_hash": "21e9cc975045f11ab5e14c07628b85b51a5327c566640661ba2e72f48ae1a119",
+      "ownership": "managed"
+    },
+    "work/meetings/README.md": {
+      "template": "work/meetings/README.md",
+      "rendered_hash": "ce4b5473272aaea7bcdfe23772e62dcabb0f2b24bb71cc24962ae26a316cdde1",
+      "ownership": "managed"
+    }
+  },
+  "bootstrap_fingerprint": "qmd-v3"
+}
