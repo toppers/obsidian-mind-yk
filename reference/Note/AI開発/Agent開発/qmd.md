@@ -8,7 +8,7 @@ tags:
 ---
 
 # qmd
-
+[GitHub \- tobi/qmd: mini cli search engine for your docs, knowledge bases, meeting notes, whatever\. Tracking current sota approaches while being all local · GitHub](https://github.com/tobi/qmd)
 vault 全体に対するセマンティック検索を提供するツール。MCP サーバー（`mcp__qmd__query` 等）と CLI（`qmd --index <name> query`）の両系統があり、検索インデックスは SQLite に保持される。
 
 詳細は `reference/Note/AI開発/Claude-Code/MCP/QMD/` 配下の各ノートにある。
