@@ -1,0 +1,99 @@
+---
+date: 2026-06-16
+description: "ローカルで動かす候補の LLM 一覧 — gpt-oss・Gemma・Llama ほか"
+tags:
+  - reference
+  - llm
+  - local-llm
+---
+
+- gpt-oss
+- Gemma
+- Llama
+- 1bitLLM
+- DeepSeek
+- Qwen
+- MiniMax
+- LFM
+- GLM
+- Kimi
+- MiMo
+# Ollama [Ollama](https://ollama.com/search)
+- kimi
+	- [kimi-k2.7-code](https://ollama.com/library/kimi-k2.7-code) cloud
+	- [kimi-k2.6](https://ollama.com/library/kimi-k2.6) cloud
+	- [kimi-k2.5](https://ollama.com/library/kimi-k2.5) cloud
+	- [kimi-k2-thinking](https://ollama.com/library/kimi-k2-thinking) cloud
+	- [kimi-k2](https://ollama.com/library/kimi-k2)cloud
+- MimiMax
+	- [minimax-m3](https://ollama.com/library/kimi-k2.7-code) cloud
+	- [minimax-m2.7](https://ollama.com/library/minimax-m2.7) cloud
+	- [minimax-m2.5](https://ollama.com/library/minimax-m2.5)cloud
+	- [minimax-m2.1](https://ollama.com/library/minimax-m2.1) cloud
+	- [minimax-m2](https://ollama.com/library/minimax-m2)cloud
+- LFM
+	- [lfm2.5](https://ollama.com/library/lfm2.5)
+	- [lfm2](https://ollama.com/library/lfm2)
+	- [lfm2.5-thinking](https://ollama.com/library/lfm2.5-thinking)
+- nemotron
+	- [nemotron-3-ultra](https://ollama.com/library/nemotron-3-ultra) cloud
+	- [nemotron-3-super](https://ollama.com/library/nemotron-3-super) cloud
+	- [nemotron3](https://ollama.com/library/nemotron3)
+	- [nemotron-cascade-2](https://ollama.com/library/nemotron-cascade-2)
+	- [nemotron-3-nano](https://ollama.com/library/nemotron-3-nano)cloud
+- gemma
+	- [gemma4](https://ollama.com/library/gemma4) cloud
+	- [embeddinggemma](https://ollama.com/library/embeddinggemma)
+	- [gemma3n](https://ollama.com/library/gemma3n)
+	- [functiongemma](https://ollama.com/library/functiongemma)
+	- [gemma3](https://ollama.com/library/gemma3)cloud
+	- [gemma2](https://ollama.com/library/gemma2)
+	- [gemma](https://ollama.com/library/gemma)
+	- [codegemma](https://ollama.com/library/codegemma)
+- qwen
+	- [qwen3.5](https://ollama.com/library/qwen3.5) cloud
+	- [qwen3.6](https://ollama.com/library/qwen3.6)
+	- [qwen3-coder](https://ollama.com/library/qwen3-coder) cloud
+	- [qwen3-vl](https://ollama.com/library/qwen3-vl) cloud
+	- [qwen3-embedding](https://ollama.com/library/qwen3-embedding)
+	- [qwen3-nexxt](https://ollama.com/library/qwen3-next)cloud
+	- [qwen3](https://ollama.com/library/qwen3)
+	- [qwen2.5](https://ollama.com/library/qwen2.5)
+	- [qwen2.5-coder](https://ollama.com/library/qwen2.5-coder)
+	- [qwen2.5vl](https://ollama.com/library/qwen2.5vl)
+	- [qwen2](https://ollama.com/library/qwen2)
+	- [qwen](https://ollama.com/library/qwen)
+	- [qwen3-coder-next](https://ollama.com/library/qwen3-coder-next)cloud
+- GLM
+	- [glm-5.1](https://ollama.com/library/glm-5.1)cloud
+	- [glm-ocr](https://ollama.com/library/glm-ocr)
+	- [glm-5](https://ollama.com/library/glm-5)cloud
+	- [glm-4.7](https://ollama.com/library/glm-4.7) cloud
+	- [glm-4.7-flash](https://ollama.com/library/glm-4.7-flash)
+	- [glm-4.6](https://ollama.com/library/glm-4.6)cloud
+- DeepSeek
+	- [deepseek-v4-pro](https://ollama.com/library/deepseek-v4-pro) cloud
+	- [deepseek-v4-flash](https://ollama.com/library/deepseek-v4-flash) cloud
+	- [deepseek-v3.2](https://ollama.com/library/deepseek-v3.2)cloud
+	- [deepseek-ocr](https://ollama.com/library/deepseek-ocr)
+	- [deepseek-v3.1](https://ollama.com/library/deepseek-v3.1)cloud
+	- [deepseek-r1](https://ollama.com/library/deepseek-r1)
+	- [deepseek-coder](https://ollama.com/library/deepseek-coder)
+	- [deepseek-coder-v2](https://ollama.com/library/deepseek-coder-v2)
+- gpt-oss
+	- -[gpt-oss](https://ollama.com/library/gpt-oss)cloud
+	- [gpt-oss-safeguard](https://ollama.com/library/gpt-oss-safeguard)
+- gemini
+	- [gemini-3-flash-preview](https://ollama.com/library/gemini-3-flash-preview)cloud
+- LLama
+	- [llama3.1](https://ollama.com/library/llama3.1)
+	- [llama3.2](https://ollama.com/library/llama3.2)
+	- [llama3](https://ollama.com/library/llama3)
+	- [llama3.3](https://ollama.com/library/llama3.3)
+	- [llama4](https://ollama.com/library/llama4)
+	- [codellama](https://ollama.com/library/codellama)
+- phi
+	- [phi3](https://ollama.com/library/phi3)
+	- [phi4](https://ollama.com/library/phi4)
+	- [phi4-reasoning](https://ollama.com/library/phi4-reasoning)
+	- [phi4-mini](https://ollama.com/library/phi4-mini)

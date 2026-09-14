@@ -1,0 +1,118 @@
+---
+title: "haskellの開発環境をwindows11上に構築する方法"
+source: "https://www.google.com/search?q=haskell%E3%81%AE%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%82%92windows11%E4%B8%8A%E3%81%AB%E6%A7%8B%E7%AF%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95&rlz=1C1HKFL_jaJP1216JP1216&sourceid=chrome&ie=UTF-8&amc=1&udm=50&aep=42&cud=0&qsubts=1780269591442&source=chrome.crn.rb&mstk=AUtExfCV_7p0C0qThyEvSr3NBMRmCK5romtWqKSKQVkX43V_Ee-jayCLg2ArXxlhG1w9sFp3cbRhpfzHLLeW7BabvJSENxg11gYfL9H3Qbf2lCr1_cndzTDTCv_GhENHAfh3fbuH1UKBv6zlHcpvLE7_zae9f9pxEjcEi5o&csuir=1&mtid=F8IcasfXKpil2roPnOe52Ag"
+author:
+published:
+created: 2026-06-01
+description: "Windows 11 上の Haskell 開発環境は WSL2 + GHCup が主流という調査結果。ネイティブ導入より依存関係・文字コードの問題が出にくい理由と、WSL2 セットアップから VSCode 連携までの手順"
+tags:
+  - "clippings"
+---
+## Search Results
+
+You said: haskellの開発環境をwindows11上に構築する方法
+
+**Searching**
+
+Windows 11におけるHaskellの開発環境は、 ==Linux環境をシミュレートできる **WSL2（Windows Subsystem for Linux）上でGHCupを使用して構築する**== のが最も安定しており、現在の主流です。Windowsに直接ネイティブインストールする方法（ネイティブ環境）に比べて、ライブラリの依存関係エラーや文字コード（エンコード）の問題が発生しにくくなります。
+
+以下に、WSL2を用いた具体的な環境構築手順と、テキストエディタ（VSCode）の連携方法を解説します。
+
+---
+
+1\. WSL2（Ubuntu）のセットアップ
+
+すでにWSL2を導入している場合は、このステップをスキップしてかまいません。
+
+1. **PowerShell** を管理者権限で開きます。
+2. 次のコマンドを実行してWSLとデフォルトのLinuxディストリビューション（Ubuntu）をインストールします。
+	```
+	wsl --install
+	```
+3. インストール完了後、PCを再起動します。
+4. 再起動後に自動で起動するLinuxターミナルで、初期ユーザー名とパスワードを設定します。
+
+2\. Linux環境のアップデートと必要パッケージの導入
+
+起動したUbuntuのターミナル上で、Haskellのビルドに必要なツール類をあらかじめインストールします。
+
+1. パッケージリストを更新し、既存のシステムをアップグレードします。
+	```
+	sudo apt update && sudo apt upgrade -y
+	```
+2. Haskellの標準ツールチェーン（GHCup）が必要とする依存パッケージを導入します。
+	```
+	sudo apt install -y build-essential curl libffi-dev libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5
+	```
+
+3\. GHCupによるHaskell環境のインストール
+
+Haskellの公式インストーラーである **GHCup** を使用して、コンパイラ（GHC）やビルドツール（Cabal / Stack）を導入します。
+
+1. Ubuntuのターミナルで以下のコマンドを実行します。
+	```
+	curl --proto '=https' --tlsv1.2 -sSf https://haskell.org | sh
+	```
+2. インストール中にいくつか質問（選択肢）が画面に表示されます。
+	- **PATHの自動追加**: `Enter` （カスタムしなければ自動で追加されます）
+		- **Haskell Language Server (HLS) のインストール**: `Y` を入力（VSCodeでの開発に必須です）
+		- **Stackのインストール**: 必要に応じて `Y` または `Enter`
+3. インストールが完了したら、設定を反映させるためにターミナルを再起動するか、以下のコマンドを実行します。
+	```
+	source ~/.bashrc
+	```
+4. 正しくインストールされたか確認するため、バージョンを表示してみます。
+	```
+	ghc --version
+	cabal --version
+	```
+
+4\. VSCode（Visual Studio Code）との連携
+
+快適にコードを書くために、Windows側のVSCodeからWSL2内のHaskell環境に接続します。
+
+1. Windowsに VSCode公式ページ からVSCodeをインストールします。
+2. VSCodeを起動し、拡張機能（Extensions）から **WSL** （Microsoft製）をインストールします。
+3. VSCodeの左下にある緑色の「リモートウィンドウを開く」アイコン（または `Ctrl + Shift + P` で `WSL: Connect to WSL` を選択）をクリックし、WSL2のUbuntuに接続します。
+4. WSLに接続した状態のVSCodeで、さらに拡張機能 **Haskell** （Haskell公式）をインストールします。これにより、コード補完やエラーチェック（HLS）が有効になります。
+
+---
+
+補足：Windowsネイティブ環境で構築したい場合
+
+WSL2を使わず、WindowsのコマンドプロンプトやPowerShell上で直接Haskellを動かしたい場合は、GHCup Windowsインストーラー を使用します。
+
+PowerShell（管理者権限ではない通常のウィンドウ）を開き、以下のコマンドを実行することでGHCupのインストールが始まります。以降の流れはLinux版とほぼ同様です。
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Try { Invoke-WebRequest -UseBasicParsing ((New-Object System.Net.WebClient).DownloadString('https://haskell.org')) -OutFile "$env:TEMP\ghcup-installer.ps1" } Catch { Write-Error $_.Exception.Message; throw }; & "$env:TEMP\ghcup-installer.ps1"
+```
+
+*注意: ネイティブ環境では、一部の外部ライブラリをビルドする際にMSYS2の設定が必要になったり、日本語環境特有の文字エンコードエラーに遭遇したりするリスクが高くなります。特別な理由がなければ、前述の **WSL2経由の手順** を強く推奨します。*
+
+- Haskellに再入門して100万エッジのグラフネットワーク... - Qiita
+	Sep 6, 2022 — かなり前にHaskell入門してからかなり間が空いてしまいほとんど記憶にないので、ほぼゼロから再入門しました。 data...![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAABSCAMAAADw8nOpAAAAZlBMVEVVxQD///9NwwBIwgBCwQD7/vjs+OXE6bPQ7cK246Ob2oCC0l1qzDBdyBPw+eqL1Wd5z1GV2Hmi3YiU2HPn9uCo34za8dF2z0rJ67rL68ON1m3B6K1iySdtzDrg89bZ8cyq35Oz45wgbwvXAAAEUElEQVRYhbWZ2YLqIAxAaQC70s1qHW1d/v8nb/eSQIvOHfOkhR5JSEKIzHPIIQijOFGsE5XEURgcXG+wvcHUzxjnAMAm6T5yzjI//R1S+jnwBaZL9zj35cfINGJ23kxl0dZS7chDIXZ4E1UUdrPakLIEJ3C0bGlT34IMFH8H2AtXwTvIo3gX2Is4OpGVektnTXtV7SODt3VehQd7yPAXxI4ZbiNPH5lxFXHaQn5E5LpCiKkhww+IvPEvSmeGNuT2znSpYhKYH/SruugvaHu0ICs7EbhoS/9cpWlanW9R2weqyCvzDagMpLID6xvODmnYqot1EYoijxYPB57dPVPmuCZIOGJksG5Nn3PHD60NqC2YmEoEOlKuaqvL45mDABCv9e37TxiGP+QXJLW+khqyXEbBH2afX/kMSG/1vOU4mRtIXq7Iw2pI7hPtIv206D6fVqjhI3BYkIX20hURfSMZc7Z4oBEaUMzIVB9rdOLVFlDiOY3WhpeIdEJG+hDX0p/5zjilmMYTOg7RiJR4/s1FXPZB34NZ5ID0cWBlM7HYTp5iCqALNUy/ux0yx781eZc5Hf1wP0lWXkbWCXmPTMnTyZjSGvTLq5H3uKoTMVo/kHZIn4TqpPjLcWa016BfKT1aOs0ZXTufosZxUA5Jomc25HnWIcmjeCS6j8q4rvuwuNGJHjvgR+LhPZr4eaF2N4RPm05tzg8sMBKpPDx+QneVlf2MrlESwwUMvzy4f+8e7qOtfdWDc9zxVAgZikbGzx0vaWOn3trBgDcIIhbjVU5+fneXHTAj8aIgZgn6Xo96vxLmlAVJdiNhaMNgyAclC98otxbFyRlEPWBIQ52zu7dHy9W7oSvO8zQnUivX4r295EtBv5krl1WuJUOxN3ed93LFeLEQjbl4exZkuq85KO30xWGusBNpE097ew6gF+gYmWBX1wy0Z03eoJIfITtXj7aQMtlYJwhyg8LICKcNjq5wkeXWB4KV9PKIEF3aQHGy+uUgVaHEVMdBf28W0EYPzxBUSHbJDaVg7RCftL+Hx7htmqTOjk//br/c1sjOB3xQQGl9Z18kNg85zqZM9Jk80O5k9NCF7WbApqB4HA7dFBv3cySNP1LAgHkXdonUQ3csYP5bc+QyvlkMklvrO/LUmdJSsqrPl7labi5ZcSLjTxfBENnwviXVXROWwhq7AdDGwhvMMnv6l1uphs2ll5QO2X6MXNByQWpXKaaX1r8T48LHtBuDS07WdpZ5Le2ZV9tUQ0ph1cd+eYZ2t504SBpzxl87SFIyANDMSSVk/SJszLURQS8WyU4GkeHclxNXIzR22iW8eVnNn3ZV9zoXFD06dps6nNdlkK7LkGkQFi0nvVJ+rLaQttbTcIbVeZxlWZw3XFDcOEk0jw3kZjsLRrEPsr0G2TfaeN9oNn6jJep9oXHrfaO9/I0muPeFVn0vf/6HwqD+X//tMS71j/+cmeTzv5D+AYo+LuC2ZcAPAAAAAElFTkSuQmCC)
+	Qiita
+- Windows PC に Haskellプログラミング環境を作る
+	Oct 28, 2023 — こんにちはこの度この散歩ウルグのチャンネルで初めての人向きにハスケルでプログラミングを楽しむシリーズを始めるということに...![](data:image/jpeg;base64,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)
+	1:07:46
+	YouTube·SampouOrg
+- Windows PCにHaskellプログラミング環境を作る（2023/10...
+	Oct 4, 2023 — はじめに. この記事は、Windows 11 + WSL2:Ubuntu + VSCode をつかった Haskellプ...![](data:image/jpeg;base64,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)
+	Zenn
+
+Show all
+
+Transcribing...
+
+Google apps
+
+Google Account
+
+小南靖雄
+
+ykominami@gmail.com
+
+## Related
+
+- [[WSL2-記事索引]]

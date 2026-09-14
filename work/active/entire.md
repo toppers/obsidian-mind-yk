@@ -20,7 +20,7 @@ tags:
 - インストール検証中: [[work/active/entire|Entire]]
 
 ## Notes
-- Windows11 上で
+- 
 
 ## Action Items
 - [ ] Windows11-PowerShell上でインストール
