@@ -1,0 +1,30 @@
+---
+date: 2026-09-05
+description: "TECSCDE-DT-EL内部仕様書 第5章（描画・インタラクション設計）— TECSCDE-TS内部仕様と同一、変更なし。rendererプロセスで動作。"
+project: TECS
+quarter: Q3-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecscde
+  - spec
+  - architecture
+---
+
+Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 5 of 11。
+
+## 5. 描画・インタラクション設計
+
+`SvgRenderer`・`CellRenderer`/`JoinRenderer`・`HitTester`・`GestureController`のクラス設計は、[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 05 描画・インタラクション設計|TECSCDE-TS内部仕様第5章]]と**完全に同一、変更なし**。SVG/DOMへのアクセスを要するため本モジュール（E）はrendererプロセスでのみ動作し、Electronのmain/preloadとは無関係である。
+
+`GestureController.state`をUI一時状態としてイミュータブル方針の対象外とする扱いも変更なし（[[TECSCDE-TS内部仕様]]5.3節参照）。
+
+詳細は[[TECSCDE-TS内部仕様]]第5章を参照。
+
+## Related
+
+- [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 05 描画・インタラクション設計|TECSCDE-TS内部仕様 第5章（一次情報源、本章はこれと同一）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
+
+---

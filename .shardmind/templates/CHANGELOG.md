@@ -1,5 +1,19 @@
 # Changelog
 
+## v8.4.0 — 2026-09-02
+
+### Fixed
+- the qmd search path was paying for a duplicate vector search and inheriting the wrong embedder
+- the markup refusal's recovery is a different shape, not the one that folded
+
+## v8.3.6 — 2026-08-23
+
+### Fixed
+- a wikilink terminator cannot survive into a memory filename (#237)
+- a client that answers no roots/list can declare itself with OM_CALLER (#240)
+- the first search waits out qmd's model download, and health round-trips a query
+- the release job survives a re-run after a partial failure
+
 ## v8.3.5 — 2026-08-17
 
 ### Fixed

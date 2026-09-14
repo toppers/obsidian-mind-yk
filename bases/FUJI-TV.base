@@ -1,0 +1,8 @@
+summaries:
+  customAverage: values.mean().round(3)
+filters:
+  or:
+    - file.hasTag("フジテレビ問題")
+views:
+  - type: table
+    name: 表

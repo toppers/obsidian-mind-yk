@@ -2,21 +2,21 @@
   "schema_version": 2,
   "shard": "breferrari/obsidian-mind",
   "source": "github:breferrari/obsidian-mind",
-  "version": "8.3.5",
-  "tarball_sha256": "4b67de04a500d24432d6680368e55eee419c09a2db5b0f4273a313bfead0ff5a",
-  "installed_at": "2026-08-23T19:39:01.491Z",
-  "updated_at": "2026-08-23T19:39:01.491Z",
-  "values_hash": "c8c4c2bd9c64dbf20953bbd8506db03493dc74326f21eff711e4ce67beece97e",
+  "version": "8.4.0",
+  "tarball_sha256": "118789a80ac923d9b3e5d62564046699d243a07120976129edca02f7e66b88e6",
+  "installed_at": "2026-08-18T03:06:24.516Z",
+  "updated_at": "2026-09-08T12:37:48.973Z",
+  "values_hash": "6e8712df949f5599d1b714ed815595482d39ef0674a599a9487351fd7dfe5916",
   "modules": {
     "brain": "included",
     "work": "included",
     "reference": "included",
     "thinking": "included",
-    "claude": "included",
     "org": "included",
     "perf": "included",
     "incidents": "included",
     "one_on_ones": "included",
+    "claude": "included",
     "codex": "included",
     "gemini": "included"
   },
@@ -144,12 +144,12 @@
     ".claude/commands/om-standup.md": {
       "template": ".claude/commands/om-standup.md",
       "rendered_hash": "efdb670a316b879075a68a3735ee142c72a62e829163adf04de73dda083ffdf9",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".claude/commands/om-tidy.md": {
       "template": ".claude/commands/om-tidy.md",
       "rendered_hash": "ffdae9a51d5a8eef5a7b9607d44712a905bfc6e8108802dbc6b6d9654f255de0",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".claude/commands/om-vault-audit.md": {
       "template": ".claude/commands/om-vault-audit.md",
@@ -199,7 +199,7 @@
     ".claude/scripts/lib/active-hygiene.ts": {
       "template": ".claude/scripts/lib/active-hygiene.ts",
       "rendered_hash": "7bda4da9dde2f032bb162c930497a042f4ea76b253a50166926a98a6052d08a2",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".claude/scripts/lib/atomic-write.ts": {
       "template": ".claude/scripts/lib/atomic-write.ts",
@@ -248,12 +248,12 @@
     },
     ".claude/scripts/lib/mcp-caller.ts": {
       "template": ".claude/scripts/lib/mcp-caller.ts",
-      "rendered_hash": "d8ad733c75f17a5fec1d9661ee3c269ed29a36fbc8e9a2ef0425d130dd299839",
+      "rendered_hash": "8596f5df08c54b2f7fd146d39296509c65bc8c3892b4ebd0e2f9bb25dfa75b68",
       "ownership": "managed"
     },
     ".claude/scripts/lib/mcp-capture.ts": {
       "template": ".claude/scripts/lib/mcp-capture.ts",
-      "rendered_hash": "4b1589cc67350cf55c783932a7899f1371a7a92bb9dfbb099f61ee16abcad62b",
+      "rendered_hash": "b26f760c12c14541ca835fe4c497eff163118b27ccdba10c97567abdd100e8df",
       "ownership": "managed"
     },
     ".claude/scripts/lib/mcp-context.ts": {
@@ -283,7 +283,7 @@
     },
     ".claude/scripts/lib/mcp-qmd-client.ts": {
       "template": ".claude/scripts/lib/mcp-qmd-client.ts",
-      "rendered_hash": "a0468874f99cba67b06d4fb3dbfb6961b443b65438a8da60bf904f51be621331",
+      "rendered_hash": "4f5e01076136a7f08b85614c5fc8cac48c996d4c896e9798dc760a9ef17bf7e9",
       "ownership": "managed"
     },
     ".claude/scripts/lib/mcp-reason.ts": {
@@ -293,12 +293,12 @@
     },
     ".claude/scripts/lib/mcp-server.ts": {
       "template": ".claude/scripts/lib/mcp-server.ts",
-      "rendered_hash": "86e2156ccd7dcd7cbeaa69b76ca60abdb375f818e3942d37313bf6f48f604cde",
+      "rendered_hash": "ab919a22af878f38b97b6bdedb0c368832e0d7159469a61c95271ad3fa4f92b5",
       "ownership": "managed"
     },
     ".claude/scripts/lib/mcp-tools.ts": {
       "template": ".claude/scripts/lib/mcp-tools.ts",
-      "rendered_hash": "3c4dd6dbdd40b24c80f600edac36ea875c9ec3dd113aab4d39a54abe9acf750f",
+      "rendered_hash": "d8ba7448d19849ca7fff9e7c539775143c6d735d29c331d338eb2668b0cc97d9",
       "ownership": "managed"
     },
     ".claude/scripts/lib/memory-discover.ts": {
@@ -333,7 +333,7 @@
     },
     ".claude/scripts/lib/memory-write.ts": {
       "template": ".claude/scripts/lib/memory-write.ts",
-      "rendered_hash": "4ab3ba3f6d979c9c4bedd531f02fe74a4203259783b4e2eb0b82168b8db51ec7",
+      "rendered_hash": "a97f27a30b845cb9bd48922de6356d9d020adc481968d240f0f1543dab9b82e4",
       "ownership": "managed"
     },
     ".claude/scripts/lib/qmd-bootstrap.ts": {
@@ -433,8 +433,8 @@
     },
     ".claude/scripts/tests/active-hygiene.test.ts": {
       "template": ".claude/scripts/tests/active-hygiene.test.ts",
-      "rendered_hash": "17ed725230008f943fd9d272fc84770b47b02af7f3985cddbf0df8948e0d0f12",
-      "ownership": "managed"
+      "rendered_hash": "6b4e73a26271ee28ba6529c40f15e632ef34ceb857c9137fb63778b791c9e614",
+      "ownership": "modified"
     },
     ".claude/scripts/tests/agent-docs-sync.test.ts": {
       "template": ".claude/scripts/tests/agent-docs-sync.test.ts",
@@ -448,7 +448,7 @@
     },
     ".claude/scripts/tests/capture-markup-guard.test.ts": {
       "template": ".claude/scripts/tests/capture-markup-guard.test.ts",
-      "rendered_hash": "dab86d07ecbdc7cc4080668d852dd682a15773df73d1ddb701ef2a7724cc3c25",
+      "rendered_hash": "4fd85ba8364613bcb31431c627cd82b4345526cc35279772a81e9d591fff7053",
       "ownership": "managed"
     },
     ".claude/scripts/tests/charcount.test.ts": {
@@ -484,7 +484,7 @@
     ".claude/scripts/tests/hook-config.test.ts": {
       "template": ".claude/scripts/tests/hook-config.test.ts",
       "rendered_hash": "21d26e7250b0445c5f26e02d2e91dcf8f87f9125ec00d01729878c1ff25a1c35",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".claude/scripts/tests/hook-io.test.ts": {
       "template": ".claude/scripts/tests/hook-io.test.ts",
@@ -503,32 +503,32 @@
     },
     ".claude/scripts/tests/mcp-caller.test.ts": {
       "template": ".claude/scripts/tests/mcp-caller.test.ts",
-      "rendered_hash": "b78a142d29d3a162530ed6ea403b73290625320f72bf191c94a32b2bafcf6966",
+      "rendered_hash": "6c64c4bd60379c92c8949ca66c472ce808d187615e62bfeffd552e02ca81944d",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-capture.test.ts": {
       "template": ".claude/scripts/tests/mcp-capture.test.ts",
-      "rendered_hash": "59d7d19ce71b7a90948e3c7affe16c07c9ab359bf5a84d76cd1d21513d7877bb",
+      "rendered_hash": "619efe9e219e6bcafd0b924e20a00d851340a5bd93d1db169d45d294ba9655b8",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-context.test.ts": {
       "template": ".claude/scripts/tests/mcp-context.test.ts",
-      "rendered_hash": "43d354ea2133675bfb7e0c9033f4bcf92d053170afe735341cbd2986b9598a87",
+      "rendered_hash": "9a7a986beea2bf7780c0b3d1fbf9905f5bee92a6b8d57460e5165d9a7a7fdce9",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-exposure.test.ts": {
       "template": ".claude/scripts/tests/mcp-exposure.test.ts",
-      "rendered_hash": "2f0144e5bc383f3df915a8b158d4a284585742ea85573d2362bc26acc68bba18",
+      "rendered_hash": "45b0d240da3733ed1d25b7add8c56d421820086f724b67701c5942a6125a30ef",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-graph.test.ts": {
       "template": ".claude/scripts/tests/mcp-graph.test.ts",
-      "rendered_hash": "252e1412c58f135751fab2998d59768b7135a4bf12a1b5f04a1b7f6e1948c712",
+      "rendered_hash": "fca23af388341821d0319cd6fa15f99c619474a691764c8cdf84f2390cafa6fd",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-memory-bridge.test.ts": {
       "template": ".claude/scripts/tests/mcp-memory-bridge.test.ts",
-      "rendered_hash": "6b795a59d8e3a777f78467ebce658ee21327320c0be81796a19bd3b85c9ab440",
+      "rendered_hash": "deb6d0f78264a8fb2bd5aa2c453f4a5e4b9f7d2aa72d3492d13592a72462f05c",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-protocol.test.ts": {
@@ -538,42 +538,42 @@
     },
     ".claude/scripts/tests/mcp-qmd-client.test.ts": {
       "template": ".claude/scripts/tests/mcp-qmd-client.test.ts",
-      "rendered_hash": "128e71c22356f074e0afb33f209ee2aa30c77cde3921aa66262ceab14b659d2d",
+      "rendered_hash": "56fcb1b5aa23154496a68af4f203faaf1661c693a927e629c9ab7c89a76eb4f3",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-reason.concurrency.test.ts": {
       "template": ".claude/scripts/tests/mcp-reason.concurrency.test.ts",
-      "rendered_hash": "80352626cc68abce3c047ca93d8fe41f98e3314bc86e10c233cb1b58cd32bb54",
+      "rendered_hash": "83e82701ff52cc4ddf3c70d07f99f31cf64771b323781be10da5ffac90636bca",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-reason.test.ts": {
       "template": ".claude/scripts/tests/mcp-reason.test.ts",
-      "rendered_hash": "07a8d9b67ea214d5e0d13188f90d2c0c427cf12f284983e29901e5c956630173",
+      "rendered_hash": "dc095f4ef5229777a7ba2365e814f3b3644583a1c8a4c1d923ac674bf8a6f28d",
       "ownership": "managed"
     },
     ".claude/scripts/tests/mcp-refusal-audit.test.ts": {
       "template": ".claude/scripts/tests/mcp-refusal-audit.test.ts",
-      "rendered_hash": "6c718399fc6601fdbd1adcf3d3f1900bc4f6e2d8f00aa203506a657b1a1fb171",
+      "rendered_hash": "1b2f1d2963033f947ae655924e76677c3f15603f7a020e81620783b8e7c16cb8",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-discover.test.ts": {
       "template": ".claude/scripts/tests/memory-discover.test.ts",
-      "rendered_hash": "e459971fa11322fc7daa7e1466a29118e0866e50c0d6cf50571376f990123216",
+      "rendered_hash": "b373f7e3064db19e81097d3a8ec50d3081b5629fffde712224813b247a77e43a",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-index.test.ts": {
       "template": ".claude/scripts/tests/memory-index.test.ts",
-      "rendered_hash": "22bf6472016c0afd7e37f179d457a10735b0bcec5b9108dbcb986e841ffb4ab7",
+      "rendered_hash": "f8d67bd2f36dc03444ead7b0470533047e9258dee26de014c99bb4a8dba6b632",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-promoted.test.ts": {
       "template": ".claude/scripts/tests/memory-promoted.test.ts",
-      "rendered_hash": "12e629234f1fadf0214e7242098e33e61c1b2729b74f2b63dbc02523fb9a1eed",
+      "rendered_hash": "6506b0b585e53d8ed9f2b950d5475d012168e42573f3900970ae9deba6cf43c8",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-recall.test.ts": {
       "template": ".claude/scripts/tests/memory-recall.test.ts",
-      "rendered_hash": "e1bf024ce885245db48583fa4ecc8afeb0560a414b00b01b5c3f65506d8a2620",
+      "rendered_hash": "68f8776b9f4384d79986be2ab16c7e0f91e46d5c3a47a512d0f43f79eeb15c04",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-similarity.test.ts": {
@@ -583,27 +583,27 @@
     },
     ".claude/scripts/tests/memory-supersede.test.ts": {
       "template": ".claude/scripts/tests/memory-supersede.test.ts",
-      "rendered_hash": "853c2671073692e0ac64f274018348c47518bd1d26ca3872aa60594919caefcd",
+      "rendered_hash": "effaf554388f3b69bb04de035b65889b221475366df406276acdc7cb9e0848ad",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-write.concurrency.test.ts": {
       "template": ".claude/scripts/tests/memory-write.concurrency.test.ts",
-      "rendered_hash": "bf73562aa070caa31ca390a1c7257b84781c104f9094776844ec7c9cb8339a7c",
+      "rendered_hash": "fcc32fbabb4bfca03b0fa3853083a424f96ea1328fed666600776bdc97179929",
       "ownership": "managed"
     },
     ".claude/scripts/tests/memory-write.test.ts": {
       "template": ".claude/scripts/tests/memory-write.test.ts",
-      "rendered_hash": "446a84af5600731f7c3a4eced675c5de50ea13f7c1e6af64481be5af9171925e",
+      "rendered_hash": "a7f9a1353ab3a2ce723809d74cef567b8b96f591fac46c5c1793f42f0fa2d601",
       "ownership": "managed"
     },
     ".claude/scripts/tests/om-mcp.integration.test.ts": {
       "template": ".claude/scripts/tests/om-mcp.integration.test.ts",
-      "rendered_hash": "e488b87ad788d5013f9f92cf7b59bec16409e7a255456e6adb6e40a7b454ded9",
+      "rendered_hash": "560394901b90fc2781690fb1f5d91d601e702aac9b391c37c0342472a913b956",
       "ownership": "managed"
     },
     ".claude/scripts/tests/pre-compact.test.ts": {
       "template": ".claude/scripts/tests/pre-compact.test.ts",
-      "rendered_hash": "4b3f44a3428b6f8cab3dd3f65d7b560c2d6986724a98054ec912d1453b5c66ad",
+      "rendered_hash": "d65eba1d321931f749f7c8bbc53a1d2f672d06dbc7fdca8f2a401019b9e37c5f",
       "ownership": "managed"
     },
     ".claude/scripts/tests/qmd-bootstrap.test.ts": {
@@ -613,7 +613,7 @@
     },
     ".claude/scripts/tests/qmd-ignore.test.ts": {
       "template": ".claude/scripts/tests/qmd-ignore.test.ts",
-      "rendered_hash": "597483629ec6288f322017de6572dcaf92f4036773b04d05b43a9885d777ac73",
+      "rendered_hash": "173a9852ad3cbd39425907643e33d67db3075504d120df261c0a23cbc9c9cd9e",
       "ownership": "managed"
     },
     ".claude/scripts/tests/qmd-mcp.test.ts": {
@@ -623,7 +623,7 @@
     },
     ".claude/scripts/tests/qmd-refresh.integration.test.ts": {
       "template": ".claude/scripts/tests/qmd-refresh.integration.test.ts",
-      "rendered_hash": "c04047ce2baa3d85b720cddfeb2c1e2f051d0b0414e8495391a46e15b3077d0d",
+      "rendered_hash": "f9661c6ff3293a184114c55d8267dcb688d899fbf2e3df2a9e47f3b03f0726a5",
       "ownership": "managed"
     },
     ".claude/scripts/tests/qmd-refresh.test.ts": {
@@ -638,7 +638,7 @@
     },
     ".claude/scripts/tests/read-head.test.ts": {
       "template": ".claude/scripts/tests/read-head.test.ts",
-      "rendered_hash": "cf22bf0624f09112cfe2039f620158be20f7975496950e2886d27130a0d25455",
+      "rendered_hash": "ef16a5727d6a06e4b326af85da94a573fadbbe88777543fd308a12bf127b97d5",
       "ownership": "managed"
     },
     ".claude/scripts/tests/regex.test.ts": {
@@ -648,12 +648,12 @@
     },
     ".claude/scripts/tests/session-start.integration.test.ts": {
       "template": ".claude/scripts/tests/session-start.integration.test.ts",
-      "rendered_hash": "e5606647221bfbc98820269aedec7c9967ee2ffd55466d20914b0ccee56f5b98",
+      "rendered_hash": "d449635bd06ba4eeb2c7333c4129e9f57a8b658941d95615f0d0530fcd877042",
       "ownership": "managed"
     },
     ".claude/scripts/tests/session-start.test.ts": {
       "template": ".claude/scripts/tests/session-start.test.ts",
-      "rendered_hash": "87f0ad4a73571c1a924cc66ac6af60d806ecb11da7070925cbbb720b08e7a8b8",
+      "rendered_hash": "f28ea7dc91060c938b0fe9fc80713c8a19525e2288ce62906ccfc6662e9ed55d",
       "ownership": "managed"
     },
     ".claude/scripts/tests/shard-contract.test.ts": {
@@ -673,12 +673,12 @@
     },
     ".claude/scripts/tests/stop-checklist.test.ts": {
       "template": ".claude/scripts/tests/stop-checklist.test.ts",
-      "rendered_hash": "f9d6669e3e9f818bd4b3a7f78995765118a3b66dadda82ca06428c14dc2c9639",
+      "rendered_hash": "1215dfb022d0325773baec236c0858996386d0555c5c176fb8622956edf631d2",
       "ownership": "managed"
     },
     ".claude/scripts/tests/tidy-fix.test.ts": {
       "template": ".claude/scripts/tests/tidy-fix.test.ts",
-      "rendered_hash": "5db841a6f7e3a0dd8e9d5a6dcfa8af3fd189cfb7f0823ecc928033df290d13bd",
+      "rendered_hash": "5ab2466de07c23bd5dc072850e749ffa331b7d612c10c55a9a3aa886a8f41d44",
       "ownership": "managed"
     },
     ".claude/scripts/tests/validate-write.memory.test.ts": {
@@ -688,7 +688,7 @@
     },
     ".claude/scripts/tests/validate-write.test.ts": {
       "template": ".claude/scripts/tests/validate-write.test.ts",
-      "rendered_hash": "527bbfd878172bd7c9263d29cb2db3976c29e2ddb4565e0f855bfe7f38815150",
+      "rendered_hash": "055be2fad948d1aa5d86225c58d43f4afc440efeb346ea35a3b7b1014b3bbc0f",
       "ownership": "managed"
     },
     ".claude/scripts/tests/vault-wikilinks.test.ts": {
@@ -708,7 +708,7 @@
     },
     ".claude/scripts/tests/_helpers.ts": {
       "template": ".claude/scripts/tests/_helpers.ts",
-      "rendered_hash": "e733f7b86ec789f5de51ccc4148dd54cf8fedd7c80305836d4bf277af0a60e10",
+      "rendered_hash": "57f41daf2f1b32c7ece017a78b0ee1949e1863c5d2be3eed4adfe24bcca716fe",
       "ownership": "managed"
     },
     ".claude/scripts/tidy-fix.ts": {
@@ -729,7 +729,7 @@
     ".claude/settings.json": {
       "template": ".claude/settings.json",
       "rendered_hash": "fe42318041592a191ac8a7f8b3f47340c71998e06f3534abc22a979642056dd4",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".claude/skills/defuddle/SKILL.md": {
       "template": ".claude/skills/defuddle/SKILL.md",
@@ -824,7 +824,7 @@
     ".codex/hooks.json": {
       "template": ".codex/hooks.json",
       "rendered_hash": "855906d6ac3d2de307b6e78c6d339a5770a8267e3e5b95781015a913b692e8fa",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".gemini/settings.json": {
       "template": ".gemini/settings.json",
@@ -834,12 +834,12 @@
     ".gitattributes": {
       "template": ".gitattributes",
       "rendered_hash": "5fa0c4a2b4a385ca1895d3159fb80489eaf7dc4851f92253a5ab49b6482804e5",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".gitignore": {
       "template": ".gitignore",
       "rendered_hash": "ee32c4541004625b8182f56f4a983b640dca8d015b655192b4093e5756ccbde4",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".mcp.json": {
       "template": ".mcp.json",
@@ -849,7 +849,7 @@
     ".obsidian/app.json": {
       "template": ".obsidian/app.json",
       "rendered_hash": "9b9504cf55d5b28d8c9d8cffcc32804830bf5c35bd366b7e621c3498f1f06065",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     ".scripts/package.json": {
       "template": ".scripts/package.json",
@@ -858,7 +858,7 @@
     },
     ".scripts/qmd-bootstrap.ts": {
       "template": ".scripts/qmd-bootstrap.ts",
-      "rendered_hash": "f8e95d4a8561552ee797f371e7ec8e91ad89b5c957bac18624ee45e0f60a219e",
+      "rendered_hash": "fd203bb14cfc88acf43a03753062f895f2bd32cf846fc66360c31d8c0a5d36be",
       "ownership": "managed"
     },
     ".shardmindignore": {
@@ -868,12 +868,12 @@
     },
     "AGENTS.md": {
       "template": "AGENTS.md",
-      "rendered_hash": "68fe756bd39dbe56104bf28f4a31bfa6674dc0d93f376a8c9bd577bcdde1f06f",
-      "ownership": "managed"
+      "rendered_hash": "1d5efca0271ce3b0ee50e79f6b9d50fac70f4f7881d58863c3173fd4806f504f",
+      "ownership": "modified"
     },
     "ARCHITECTURE.md": {
       "template": "ARCHITECTURE.md",
-      "rendered_hash": "491b7d8d4d10e73e1bd586743bb11d45eb64f07aac091007a94b6351b7b3300c",
+      "rendered_hash": "1f13d18f5452aaaa15de17a995dcabea1a6eedac4b68f883f9c3bcc32c01f142",
       "ownership": "managed"
     },
     "bases/1-1 History.base": {
@@ -923,53 +923,53 @@
     },
     "brain/Gotchas.md": {
       "template": "brain/Gotchas.md",
-      "rendered_hash": "b52c0e8a726483b2f550459939f6e396b92f9bb06f941de9cbd572aa739db38b",
+      "rendered_hash": "c551211a9b98e0dd79c9a7d00824350f5c8898e03d8ae103ac55e42d648363d8",
       "ownership": "managed"
     },
     "brain/Key Decisions.md": {
       "template": "brain/Key Decisions.md",
-      "rendered_hash": "f38f2f5807743074deb68bb512d4b00633b3cc40cd84dcb0a4e18b939f2ae9b2",
+      "rendered_hash": "d0fad4dca1979308feceed84867bfbb043823daa3001d27a517631a0ca70abc7",
       "ownership": "managed"
     },
     "brain/Memories.md": {
       "template": "brain/Memories.md",
-      "rendered_hash": "d54c07a643efe32f478f2a2c1e87fb334298a353c638ac97b2bc13059d59a457",
+      "rendered_hash": "f101e80c81fb468942dc6bf69d52673855d1d317de4a0fa734e5483af9ec9cc0",
       "ownership": "managed"
     },
     "brain/North Star.md": {
       "template": "brain/North Star.md",
-      "rendered_hash": "28a73b65fa9025400cfc77915455a2e7b17072795cdcfe1ad5144f8b9c8d8a2e",
+      "rendered_hash": "b8d062769e22f46e1939a16b04c8fa38f7d822d967df7601bbbac26da973e78e",
       "ownership": "managed"
     },
     "brain/Patterns.md": {
       "template": "brain/Patterns.md",
-      "rendered_hash": "18873bac13f67f78b412f928e732e21bb30ce4c5d96deadaa4c4e3ede94d7f11",
+      "rendered_hash": "84107f641d94dfc1e6e112584ac08777580859371ed10e6fcf19743e9e37a2ee",
       "ownership": "managed"
     },
     "brain/Skills.md": {
       "template": "brain/Skills.md",
-      "rendered_hash": "8b14d820fbfe8db403a069aa344dbb59d2c437bc850b723f82fee464ac16f8ec",
+      "rendered_hash": "6d9dec8435b1e4b2b05f00a55f3556287f09638f30be4e348ddbf8943a5df664",
       "ownership": "managed"
     },
     "CHANGELOG.md": {
       "template": "CHANGELOG.md",
-      "rendered_hash": "c8bf1305df8a6a41268a14a258ae2e2f1af7e6804f0024dca51a885238e8ee26",
+      "rendered_hash": "e23ecc49ecb01c3326c2c4b1284d65810c46d8c317c4160bf15cb1137919e633",
       "ownership": "managed"
     },
     "CLAUDE.md": {
       "template": "CLAUDE.md",
-      "rendered_hash": "ba53e361daa32536d308e3c7fe8e0329e3623ca8cad65bc4b747b1f0980ae90a",
+      "rendered_hash": "89233466e1597af83f9213d96ab3aaf059b5bdac349bc0bb01295ec2255aa2aa",
       "ownership": "managed"
     },
     "GEMINI.md": {
       "template": "GEMINI.md",
       "rendered_hash": "68fe756bd39dbe56104bf28f4a31bfa6674dc0d93f376a8c9bd577bcdde1f06f",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     "Home.md": {
       "template": "Home.md",
       "rendered_hash": "792edcafab855bb138a6b31f41f88134150ad6dcd689d58cce909829a646fa58",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     "LICENSE": {
       "template": "LICENSE",
@@ -984,7 +984,7 @@
     "org/People & Context.md": {
       "template": "org/People & Context.md",
       "rendered_hash": "111cc040dd64937e6c07caa858b7a36a70bfc18d9fb9a4e2219d2b5e66bd79d5",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     "org/teams/.gitkeep": {
       "template": "org/teams/.gitkeep",
@@ -999,7 +999,7 @@
     "perf/Brag Doc.md": {
       "template": "perf/Brag Doc.md",
       "rendered_hash": "a4c3b914f98514bc599926747544cf6d245cf5364f488ef315870c9e08a6324b",
-      "ownership": "managed"
+      "ownership": "modified"
     },
     "perf/competencies/README.md": {
       "template": "perf/competencies/README.md",
@@ -1053,7 +1053,7 @@
     },
     "vault-manifest.json": {
       "template": "vault-manifest.json",
-      "rendered_hash": "61232f3888c462ec0deada6fa0420a9b62b5070c0e6347ecf6b9b09020de12e3",
+      "rendered_hash": "fb2163f768fb146ca047a6ec03e891be5272839e585d105e45211e5a39f1655f",
       "ownership": "managed"
     },
     "work/1-1/.gitkeep": {
@@ -1078,12 +1078,27 @@
     },
     "work/Index.md": {
       "template": "work/Index.md",
-      "rendered_hash": "21e9cc975045f11ab5e14c07628b85b51a5327c566640661ba2e72f48ae1a119",
+      "rendered_hash": "03152a862de45b70c9445bd6405131d8f3a089cb5335642c19c439d47129a784",
       "ownership": "managed"
     },
     "work/meetings/README.md": {
       "template": "work/meetings/README.md",
       "rendered_hash": "ce4b5473272aaea7bcdfe23772e62dcabb0f2b24bb71cc24962ae26a316cdde1",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/_helpers.test.ts": {
+      "template": ".claude/scripts/tests/_helpers.test.ts",
+      "rendered_hash": "7f360d0ffd65b5af135d4aae97caa5e05ff283ff7bc403196683a267574309fc",
+      "ownership": "managed"
+    },
+    ".claude/scripts/lib/qmd-models.ts": {
+      "template": ".claude/scripts/lib/qmd-models.ts",
+      "rendered_hash": "b5c6348de27515f16c33dd21a76eb7dc02354421ac3b368923ec5e81da3a9acc",
+      "ownership": "managed"
+    },
+    ".claude/scripts/tests/qmd-models.test.ts": {
+      "template": ".claude/scripts/tests/qmd-models.test.ts",
+      "rendered_hash": "14b32f5cd0c684953ead688a1260cf82d36937bbea7b2216da8e426db65fa44e",
       "ownership": "managed"
     }
   },

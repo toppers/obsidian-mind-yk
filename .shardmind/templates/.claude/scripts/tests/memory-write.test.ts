@@ -12,7 +12,7 @@
 import { test, describe } from "node:test";
 import { extractAliases, buildResolver } from "../lib/wikilinks.ts";
 import assert from "node:assert/strict";
-import { mkdtempSync, rmSync, existsSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, existsSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, sep, resolve } from "node:path";
 
@@ -30,6 +30,8 @@ import {
 	MEMORY_ROOT,
 	type MemoryInput,
 } from "../lib/memory-write.ts";
+
+import { rmTemp } from "./_helpers.ts";
 
 const DAY = new Date(2026, 6, 26, 14, 2, 11); // 2026-07-26, local
 const OK = {
@@ -77,7 +79,7 @@ describe("real usage", () => {
 			assert.equal(rel, "memories/2026/07/2026-07-26 tsup externals decide what a patch can fix.md");
 			assert.ok(existsSync(join(dir, rel)));
 		} finally {
-			rmSync(dir, { recursive: true, force: true });
+			rmTemp(dir);
 		}
 	});
 
@@ -376,6 +378,55 @@ describe("slug and path safety", () => {
 		assert.ok(!s.includes("/"));
 	});
 
+	test("a wikilink terminator cannot survive a title, and `#` is the one that used to", () => {
+		// The defect: `#` is not a path hazard, so none of the filesystem classes
+		// removed it, and it reached the filename. The note then looked entirely
+		// normal and could not be addressed by any link, because a wikilink splits
+		// on `#` into a note target and a heading reference.
+		const s = slugify("Config flag #7 changes the default");
+		assert.ok(!s.includes("#"), `slug kept the hash: ${s}`);
+		// A space, not nothing: `Flag #7 set` must not collapse to `Flag7 set`.
+		assert.match(s, /flag 7 changes/i, `word boundary lost: ${s}`);
+		assert.ok(!/\s{2,}/.test(s), `double space left behind: ${s}`);
+	});
+
+	test("widening the class does not start eating ordinary titles", () => {
+		// The risk of a wider removal class is that it reaches titles it was never
+		// aimed at. A title whose words survive must keep all of them.
+		for (const [title, expect] of [
+			["Never revert a probe with git checkout", "Never revert a probe with git checkout"],
+			["Issue #142 and issue #7 disagree", "Issue 142 and issue 7 disagree"],
+			["C# is a language, not a heading", "C is a language, not a heading"],
+		] as const) {
+			assert.equal(slugify(title), expect);
+		}
+	});
+
+	test("a title of nothing but terminators is rejected rather than padded", () => {
+		// It slugifies to empty, which is the state the existing guard already
+		// catches — the same answer `...` and `***` get. Asserted here because the
+		// wider class creates new ways to reach that state, and the alternative
+		// (inventing a stem) would write a note nobody asked for.
+		for (const bad of ["#", "###", "# # #", "[[#]]"]) {
+			assert.equal(slugify(bad), "", `expected an empty slug for ${JSON.stringify(bad)}`);
+			const r = validateMemory({ ...OK, title: bad }, { now: DAY, origin: "p" });
+			assert.equal(r.ok, false, `should reject title ${JSON.stringify(bad)}`);
+		}
+	});
+
+	test("the link built from a written path contains no wikilink terminator", () => {
+		// The round trip, and the assertion that generalises: whatever the class
+		// grows to hold, the target built from the stem must stay addressable.
+		// This is the one that would have failed before the fix.
+		const stem = memoryPath(new Date("2026-01-05T00:00:00Z"), "Config flag #7 changes the default")
+			.replace(/\.md$/, "")
+			.split(sep)
+			.pop() as string;
+		for (const terminator of ["#", "[", "]", "|"]) {
+			assert.ok(!stem.includes(terminator), `[[${stem}]] is not addressable: contains ${terminator}`);
+		}
+	});
+
 	test("windows reserved stems are escaped", () => {
 		for (const name of ["CON", "con", "PRN", "AUX", "NUL", "COM1", "LPT9"]) {
 			assert.ok(slugify(name).startsWith("_"), `${name} must not be a bare reserved name`);
@@ -473,7 +524,7 @@ describe("write collisions", () => {
 			assert.ok(b.rel.includes("(2)"));
 			assert.ok(readMemory(dir, a.rel).includes(OK.body), "the first memory must survive intact");
 		} finally {
-			rmSync(dir, { recursive: true, force: true });
+			rmTemp(dir);
 		}
 	});
 
@@ -484,7 +535,7 @@ describe("write collisions", () => {
 			writeMemory(dir, v, []);
 			assert.ok(writeMemory(dir, v, []).rel.endsWith(".md"));
 		} finally {
-			rmSync(dir, { recursive: true, force: true });
+			rmTemp(dir);
 		}
 	});
 
@@ -494,7 +545,7 @@ describe("write collisions", () => {
 			const v = validateMemory(OK, { now: new Date(2027, 2, 3), origin: "p" }).value!;
 			assert.ok(existsSync(writeMemory(dir, v, []).full));
 		} finally {
-			rmSync(dir, { recursive: true, force: true });
+			rmTemp(dir);
 		}
 	});
 });
@@ -568,7 +619,7 @@ describe("containment property", () => {
 			const { full } = writeMemory(dir, v.value!, []);
 			assert.ok(resolve(full).startsWith(resolve(dir, MEMORY_ROOT) + sep));
 		} finally {
-			rmSync(dir, { recursive: true, force: true });
+			rmTemp(dir);
 		}
 	});
 });

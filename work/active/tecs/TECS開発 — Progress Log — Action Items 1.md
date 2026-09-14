@@ -1,5 +1,6 @@
 ---
 date: 2026-08-17
+description: "TECS開発 Progress Log の完了済みAction Items履歴（その1）— TECSCDE外部仕様 第1〜11章の執筆完了記録と tecsgen プラグイン仕様書のカーネル対応系・mrubyブリッジ系・トレース系着手。"
 project: TECS
 quarter: Q3-2026
 status: active

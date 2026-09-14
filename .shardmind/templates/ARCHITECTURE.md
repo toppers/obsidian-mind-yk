@@ -225,9 +225,13 @@ Worth understanding, because it explains the cost profile of everything built on
 
 | model | size | job |
 |---|---|---|
-| `embeddinggemma-300M` | ~328 MB | turns notes and queries into vectors |
-| `qmd-query-expansion-1.7B` | ~1.28 GB | rewrites a query into better search terms, and writes hypothetical answers for HyDE |
+| `Qwen3-Embedding-0.6B` | ~640 MB | turns notes and queries into vectors |
+| `qmd-query-expansion-1.7B` | ~1.28 GB | rewrites a query into better search terms, and writes hypothetical answers for HyDE — reached by the `qmd query` CLI, not by the typed sub-queries this template sends (see below) |
 | `Qwen3-Reranker-0.6B` | ~640 MB | reorders the shortlist by actual relevance |
+
+**The embedder is chosen, not inherited.** qmd defaults to `embeddinggemma-300M`, and the bootstrap replaces it. Measured on a 684-document vault against 211 human-labelled retrieval pairs, query path otherwise untouched: rank-1 0.299 → 0.469 and found@5 0.521 → 0.758 (McNemar exact p < 0.0001), replicated on a second independently written vault at rank-1 0.650 → 0.950 (p = 0.0003). It costs ~13ms a query and roughly doubles a full index build. Reranking is not a cheaper substitute for it — on the default embedder reranking is a large significant gain, on this one it is not significant on rank-1, because it had been compensating for the embedder; this model with no reranker beats the default with one, at an eighth of the latency.
+
+Set `models.embed` in the qmd config yourself and the bootstrap leaves it alone — it replaces qmd's default, never a choice. Changing the model invalidates every existing vector, since the two produce different dimensions and qmd refuses to mix them, so the bootstrap forces a full re-embed in the same run.
 
 They download on first use and are cached. QMD offloads to the GPU when it finds one — CUDA on a discrete card, Metal on Apple Silicon — and falls back to CPU otherwise. `qmd doctor` reports which.
 
@@ -578,7 +582,7 @@ sequenceDiagram
     OM->>Exp: allowedSearchPaths(vault, policy)
     Exp-->>OM: set of vault-relative keys
     OM->>QC: qmdSearch(allowed, query, limit)
-    QC->>QC: subQueries → lex + vec (+ hyde if question-shaped)
+    QC->>QC: subQueries → lex + vec
     QC->>QMD: tools/call query, limit = max(limit*4, 20)
     QMD-->>QC: structuredContent.results — the WHOLE vault
     QC->>QC: filter each hit against allowed
@@ -595,7 +599,7 @@ Four details in that flow are decisions rather than mechanics:
 
 **Over-fetch, then trim.** Because the filter runs on the result, asking qmd for exactly `limit` means a vault with much unserved content returns far fewer than requested with no sign that more existed. The client asks for `max(limit * 4, 20)`.
 
-**HyDE is conditional.** `lex` and `vec` always go out together — keywords find the exact term, vectors find the note that answers the question without using the word. `hyde` writes a hypothetical answer and matches against *that*, which is what finds the note whose title shares no words with the question. It runs a local generation model, so it is added only for queries that are at least four words *and* question-shaped. A two-word keyword lookup, where lexical matching is already the right tool, does not pay for it.
+**`lex` and `vec`, and deliberately nothing else.** Keywords find the exact term, vectors find the note that answers the question without using the word. There is no `hyde` sub-query, because qmd treats `hyde` as a *label* on a vector search rather than as a mode — as of 2.8.3 every site in its store reads `type === 'vec' || type === 'hyde'`, and generation happens only inside `expandQuery()`, which the plain-text `query` parameter reaches and a `searches` array bypasses. Passing the raw question in a `hyde` slot therefore repeats the `vec` search already going out, and pays for both: measured over 211 human-labelled pairs, sending it never, conditionally or always gave identical rank-1 and found@5 to four decimal places for +35-40ms a query. An *authored* hyde — a caller-written passage describing what the answer would look like — is a real technique and the `SubQuery` type still allows it; handing it the user's question is not that.
 
 **Degradation is explicit.** qmd is optional in this template. A failed call degrades that one search and says so; it must never present as "the vault is empty". The client tracks liveness, so one qmd crash does not disable search for the life of the server, and the entry script replaces a dead child behind a 5-second cooldown so a permanently-broken qmd cannot fork a process per call.
 

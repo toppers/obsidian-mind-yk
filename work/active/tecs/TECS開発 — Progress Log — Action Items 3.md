@@ -1,3 +1,16 @@
+---
+date: 2026-08-15
+description: "TECS開発 Progress Log の完了済みAction Items満尾記録 — DataPumpHolderPlugin/TransparentMarshalerPlugin完成、TransparentRPCSignaturePlugin参照切れの発見"
+project: TECS
+quarter: Q3-2026
+status: active
+tags:
+  - work-note
+  - log
+---
+
+# TECS開発 — Progress Log — Action Items 3
+
 [[TECS開発 — Progress Log#Action Items 履歴（完了分）|Action Items 履歴（完了分）へ戻る]]
 
 ## Entries

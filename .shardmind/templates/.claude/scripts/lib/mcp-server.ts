@@ -27,8 +27,8 @@ import {
 	vaultRelKeyRaw,
 } from "./mcp-exposure.ts";
 import { expandNote } from "./mcp-graph.ts";
-import { qmdSearch, type QmdClient } from "./mcp-qmd-client.ts";
-import { callerProject, callerProjectSource, isVaultItself, PROJECT_MARKER, sumAuditField, sanitize } from "./mcp-caller.ts";
+import { qmdProbe, qmdSearch, type QmdClient } from "./mcp-qmd-client.ts";
+import { callerProject, callerProjectSource, CALLER_VAR, isVaultItself, PROJECT_MARKER, sumAuditField, sanitize } from "./mcp-caller.ts";
 import { callerPlatforms, digestsFrom, resolvableNames } from "./mcp-memory-bridge.ts";
 import { captureNote, describeToolMarkup, toolMarkupRefusal } from "./mcp-capture.ts";
 import { semanticMemoryOrder } from "./mcp-memory-bridge.ts";
@@ -59,6 +59,20 @@ import {
 	describeRefusal,
 	REASON_ACTION,
 } from "./mcp-reason.ts";
+
+/**
+ * How `health` names each way an identity can be decided.
+ *
+ * A table rather than a ternary, because the ternary this replaced could only
+ * say "declared or folder" and would have reported a third source as the second
+ * the moment one existed. `satisfies` makes the compiler notice the next one.
+ */
+const IDENTITY_SOURCE = {
+	declared: `the ${PROJECT_MARKER} file`,
+	folder: "folder name",
+	env: `${CALLER_VAR} in this server's registration`,
+	none: "nowhere",
+} as const satisfies Record<ReturnType<typeof callerProjectSource>, string>;
 
 const PROTOCOL_VERSION = "2025-11-25";
 const SERVER_NAME = "om";
@@ -703,8 +717,13 @@ export function createHandlers(deps: ServerDeps): Handlers {
 		].join("\n");
 	}
 
-	function callHealth(): string {
+	async function callHealth(): Promise<string> {
 		const who = caller();
+		// Run BEFORE anything is rendered, because the line it feeds used to be a
+		// check on the launcher FILE existing. On 2026-08-22 that line read healthy
+		// while every search was timing out — on the one tool whose job is telling
+		// apart the failure modes behind an identical "no results".
+		const probe = await qmdProbe(qmd());
 		// Populate the cache before reporting on it. `recall` tells the user to run
 		// health when a memory is missing, so this is routinely the FIRST call a
 		// server serves — and "3 memories / 0 entries held" reads as a parse
@@ -736,7 +755,10 @@ export function createHandlers(deps: ServerDeps): Handlers {
 						"    If that is not deliberate, unset it — everything below describes the OTHER vault.",
 					]
 				: []),
-			`Caller: ${who.project ?? "ANONYMOUS (no MCP roots — only general-scope memories are visible)"}${who.project ? ` (from the ${callerProjectSource(session.roots) === "declared" ? PROJECT_MARKER + " file" : "folder name"})` : ""}`,
+			`Caller: ${who.project ?? `ANONYMOUS (no MCP roots and no ${CALLER_VAR} — only general-scope memories are visible)`}${who.project ? ` (from ${IDENTITY_SOURCE[callerProjectSource(session.roots)]})` : ""}`,
+			...(who.project === null
+				? [`  A client that cannot send roots can still identify itself: set ${CALLER_VAR} where this server is registered.`]
+				: []),
 			...(who.project && callerProjectSource(session.roots) === "folder"
 				? [`  Another repo with this folder name would share this identity. Write a distinct name into ${PROJECT_MARKER} to separate them.`]
 				: []),
@@ -747,7 +769,7 @@ export function createHandlers(deps: ServerDeps): Handlers {
 			// server could not re-read, served from an older parse.
 			`Parsed store: ${parsed} entr${parsed === 1 ? "y" : "ies"}${memoryIndex.stats.stale ? ` (${memoryIndex.stats.stale} served from an older parse — check permissions)` : ""}`,
 			`Exposed roots: ${policy.roots.join(", ") || "(none)"} [${policy.source}]`,
-			`Search index: ${ctx.qmdIndex ?? "(qmd default)"} · launcher ${ctx.qmdLauncher ? "found" : "NOT FOUND"}`,
+			`Search index: ${ctx.qmdIndex ?? "(qmd default)"} · launcher ${ctx.qmdLauncher ? "found" : "NOT FOUND"} · search ${probe.detail}`,
 			// `reason` is the one tool that spawns a session, and nothing bounds it.
 			// Reporting the day's usage is what stands in for a limit: the answer to
 			// "where did that go" has to exist somewhere, and this is where.
@@ -783,7 +805,12 @@ export function createHandlers(deps: ServerDeps): Handlers {
 						(p) => `promotion marker in ${p} could not be parsed — it is invisible to every consumer.`,
 					),
 				];
-				const all = [...h.warnings, ...mine];
+				// The probe failing is the loudest thing this tool can report: it means
+				// search is not answering NOW, which every other line here would let a
+				// caller mistake for an empty vault. It goes in the warnings block
+				// because "No warnings." printing during a live search outage is the
+				// exact failure this probe exists to end.
+				const all = [...h.warnings, ...mine, ...(probe.ok ? [] : [`search ${probe.detail}`])];
 				return all.length ? `Warnings:\n${all.map((w) => `- ${w}`).join("\n")}` : "No warnings.";
 			})(),
 			...(h.notes.length ? ["", `Notes:\n${h.notes.map((n) => `- ${n}`).join("\n")}`] : []),
@@ -830,7 +857,7 @@ export function createHandlers(deps: ServerDeps): Handlers {
 				case "reason":
 					return session.ok(id, text(await callReason(args)));
 				case "health":
-					return session.ok(id, text(callHealth()));
+					return session.ok(id, text(await callHealth()));
 				default:
 					return session.fail(id, `unknown tool ${p.name}`, -32602);
 			}

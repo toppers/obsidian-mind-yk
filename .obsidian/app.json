@@ -13,5 +13,8 @@
     ".codex/",
     ".gemini/",
     ".shardmind/"
-  ]
+  ],
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "current",
+  "showLineNumber": true
 }

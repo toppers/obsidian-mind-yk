@@ -1,5 +1,6 @@
 ---
 date: 2026-08-17
+description: "TECS開発 Progress Log の完了済みAction Items履歴（その2）— tecsgen プラグイン仕様書の RPC系・Cインタフェース系の完走、HRP2ドメイン境界プラグイン群、北極星「17件」カウントの実ファイル突き合わせ。"
 project: TECS
 quarter: Q3-2026
 status: active

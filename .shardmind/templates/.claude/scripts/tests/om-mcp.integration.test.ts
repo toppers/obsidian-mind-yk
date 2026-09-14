@@ -17,10 +17,11 @@
 import { test, describe, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { spawn, type ChildProcess } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync, existsSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { rmTemp, waitFor } from "./_helpers.ts";
 
 const SCRIPTS = join(dirname(fileURLToPath(import.meta.url)), "..");
 const LAUNCHER = join(SCRIPTS, "om-mcp.mjs");
@@ -39,6 +40,8 @@ let child: ChildProcess;
 let stderr = "";
 const pending = new Map<number, (m: Rpc) => void>();
 let nextId = 0;
+/** Set when we have answered `roots/list` — the moment this session stops being anonymous. */
+let rootsAnswered = false;
 
 function put(rel: string, body: string): void {
 	const full = join(vault, rel);
@@ -118,6 +121,7 @@ before(async () => {
 			// identified rather than anonymous.
 			if (msg.method === "roots/list") {
 				send({ jsonrpc: "2.0", id: msg.id, result: { roots: [{ uri: `file:///C:/Dev/${CALLER}` }] } });
+				rootsAnswered = true;
 				continue;
 			}
 			if (msg.method) continue;
@@ -136,12 +140,17 @@ before(async () => {
 	});
 	assert.equal((init.result?.serverInfo as { name?: string })?.name, "om");
 	send({ jsonrpc: "2.0", method: "notifications/initialized" });
-	await new Promise((r) => setTimeout(r, 300));
+	// Wait for the handshake itself rather than for 300ms and hope. Until
+	// `roots/list` has been asked and answered this session is anonymous, and an
+	// anonymous run fails as though the vault were empty — so a runner slow
+	// enough to lose that bet loses the whole suite, not one test (#235).
+	await waitFor(() => rootsAnswered, TIMEOUT);
+	assert.ok(rootsAnswered, "the server must ask who is calling, or every scope assertion below is meaningless");
 });
 
 after(() => {
 	child?.kill();
-	if (vault) rmSync(vault, { recursive: true, force: true });
+	rmTemp(vault);
 });
 
 describe("the om server on the wire", () => {
@@ -272,6 +281,29 @@ describe("the om server on the wire", () => {
 		assert.match(t, /Reasoning today: nothing yet today/);
 		// And it names the model that a call would actually use.
 		assert.match(t, /model: your CLI default/);
+	});
+
+	test("health reports a search outage instead of reporting no warnings", async () => {
+		// The whole point of the tool, and the thing it failed at on 2026-08-22: a
+		// foreign repo's search was timing out, `health` said `launcher found` and
+		// `No warnings.`, and the caller had every reason to conclude the vault
+		// simply held no record. It held a complete one.
+		//
+		// This fixture vault carries no qmd launcher, so search is genuinely dead
+		// here — which makes it the outage, not a mock of one. `launcher found` is
+		// a check on a FILE EXISTING and can never notice this; only a round trip
+		// can.
+		const t = textOf(await call("tools/call", { name: "health", arguments: {} }));
+		assert.doesNotMatch(t, /No warnings\./, "a live search outage must not render as a clean bill of health");
+
+		// Asserted against the WARNINGS BLOCK, not the whole report. The first
+		// version of this test searched the full text and passed with the warning
+		// removed, because `search DID NOT ANSWER` also appears on the `Search
+		// index:` line — so it proved the probe ran, never that its verdict was
+		// raised where a caller looks. That is the same defect as `launcher found`,
+		// committed by the test written to catch it.
+		const block = (t.split(/^Warnings:\n/m)[1] ?? "").split(/\n\nNotes:/)[0] ?? "";
+		assert.match(block, /^- search DID NOT ANSWER/m, "the outage has to be raised as a warning, not merely reported inline");
 	});
 
 	test("recall on an empty store explains itself rather than returning nothing", async () => {
