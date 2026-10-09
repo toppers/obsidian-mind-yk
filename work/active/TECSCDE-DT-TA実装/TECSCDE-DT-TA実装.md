@@ -16,7 +16,7 @@ tags:
 ## Context
 
 - [[work/active/TECSCDE-DT-TA内部仕様/TECSCDE-DT-TA内部仕様|TECSCDE-DT-TA内部仕様]]（Tauri・Rust、struct/impl/trait設計、backend/frontendの2層プロセス境界、全11章執筆完了 2026-09-05）に対応する実装。
-- 対象ローカルリポジトリ: `E:\Ccur\typescript\TECSCDE-DT-TA`（[[TECSCDE-JS-TS実装]]の`E:\Ccur\typescript\TECSCDE`、[[TECSCDE-TS実装]]の`E:\Ccur\typescript\TECSCDE-TS`、[[TECSCDE-DT-EL実装]]の`E:\Ccur\typescript\TECSCDE-DT-EL`とは別リポジトリ）。**2026-09-07に`git init`（初期化のみ）**。
+- 対象ローカルリポジトリ: `E:\Ccur\typescript\TECSCDE-DT-TA`（[[TECSCDE-JS-TS実装]]の`E:\Ccur\typescript\TECSCDE-JS`（旧称`TECSCDE`）、[[TECSCDE-TS実装]]の`E:\Ccur\typescript\TECSCDE-TS`、[[TECSCDE-DT-EL実装]]の`E:\Ccur\typescript\TECSCDE-DT-EL`とは別リポジトリ）。**2026-09-07に`git init`（初期化のみ）**。
 - 対象リモートリポジトリ: 未作成（ローカルのみ、2026-09-07時点）。
 
 ## Notes

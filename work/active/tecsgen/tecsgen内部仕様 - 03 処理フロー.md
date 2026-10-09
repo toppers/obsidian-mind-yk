@@ -88,7 +88,7 @@ run2（リンクルート Region ごとに繰り返し）
   │    │    ├─ 各 Celltype の _tecsgen.h / _factory.h 生成
   │    │    ├─ 各 Celltype の _templ.c / _inline_templ.h 生成
   │    │    └─ tecsgen.cfg 生成（ファクトリ出力）
-  │    └─ root_namespace.generate_post       # generate 後処理（8章、8.1/8.3/8.5含め未再検証）
+  │    └─ root_namespace.generate_post       # generate 後処理（8章8.1/8.3/8.5、2026-09-15検証済み。celltype/signature の post 処理＝ヘッダの#include/#undef/インクルードガード閉じ等）
   │
   └─ finalize
        ├─ AppFile.update   # エラー0件のときのみ、変更のあったファイルを上書き

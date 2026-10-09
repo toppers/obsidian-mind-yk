@@ -58,3 +58,4 @@ ty v0.0.77
 ## Related
 - [[reference/Note/Python開発/uv-tool|uv-tool]] — 2026-08-01時点のスナップショット
 - [[uv-tool-2]] — 同リストに#とxの印を付けた版
+- [[uv-tool-4]] — 2026-09-28時点の後続スナップショット

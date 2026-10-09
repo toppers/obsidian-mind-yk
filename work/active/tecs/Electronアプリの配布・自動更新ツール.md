@@ -1,6 +1,6 @@
 ---
 date: 2026-09-12
-description: "Electronアプリのパッケージング・自動更新ツールの比較参考ノート（electron-builder/electron-updater、Electron Forge、electron-packager、Squirrel、update-electron-app、Nucleus、OSネイティブ配布チャネル）。TECSCDE-DT-EL内部仕様第11章11.2節#2・TECSCDE-DT-TA内部仕様第11章11.2節#5の背景知識。"
+description: "Electronアプリのパッケージング・自動更新ツールの比較参考ノート（electron-builder/electron-updater、Electron Forge、electron-packager、Squirrel、update-electron-app、Nucleus、OSネイティブ配布チャネル）。TECSCDE-DT-EL内部仕様第11章11.2節#2・TECSCDE-DT-TA内部仕様第11章11.2節#5の背景知識。2026-09-23、TECSCDE-DT-ELの自動更新方式（origin公開化＋update-electron-app）が決定、詳細は[[TECSCDE-DT-EL 配布アーキテクチャ決定]]へ。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -43,12 +43,13 @@ tags:
 | Mac App Store / Microsoft Store | OS標準のストア配布。更新はストア側に委ねられるが審査・サンドボックス制約を受ける |
 | Homebrew Cask（macOS）/ winget・Chocolatey（Windows）/ Snap・Flatpak（Linux） | パッケージマネージャ経由の配布。ユーザー側の`brew upgrade`等が更新手段になる |
 
-## TECSCDE-DT-ELでの選定状況（2026-09-12時点）
+## TECSCDE-DT-ELでの選定状況（2026-09-23時点）
 
-パッケージング（package/make）は**Electron Forge**を採用・動作確認済み（実装詳細は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]Action Items参照）。自動更新(publish)は未着手・未決——公式路線に揃えるなら`update-electron-app`（Forgeと親和性が高く、electron-updaterより薄い）、配布インフラを持たない個人開発という前提ならGitHub Releasesとの組み合わせが現実的な候補になる。
+パッケージング（package/make）は**Electron Forge**を採用・動作確認済み（実装詳細は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]Action Items参照）。自動更新(publish)は**決定済み**: `update-electron-app` + GitHub Releasesを採用。push先の`origin`（`toppers/tecscde-dt-el`）が当時非公開リポジトリであったため一時的に配布専用の公開ミラーリポジトリ案を検討したが、同日中にユーザーがoriginをpublicへ変更したため撤回——**origin自身へ直接publish**する構成で確定した。決定の経緯は[[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]]参照。
 
 ## Related
 
+- [[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]] — 本ノートの比較検討をもとに確定した自動更新方式の決定記録（2026-09-23）
 - [[work/active/tecs/Electron Forgeの使い方|Electron Forgeの使い方]] — 採用したForgeの具体的な使い方（インストール・コマンド・forge.config.js構造）
 - [[work/active/tecs/Electronアプリのコード署名|Electronアプリのコード署名]] — 同じ未決事項のうちコード署名の仕組み（OV/EV証明書・Authenticode）を扱う姉妹ノート
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]] — Electron Forge導入の実装ノート

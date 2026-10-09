@@ -15,7 +15,7 @@ tags:
 
 ## Context
 
-- [[TECSCDE-JS-TS実装]]（関数/interfaceベース、ブラウザ、`E:\Ccur\typescript\TECSCDE`）と [[TECSCDE-DT-EL実装]]（クラスベース、Electron、`E:\Ccur\typescript\TECSCDE-DT-EL`）は**別リポジトリ・別パラダイム**だが、同じエディタを実装するため多くのロジックを共有する。
+- [[TECSCDE-JS-TS実装]]（関数/interfaceベース、ブラウザ、`E:\Ccur\typescript\TECSCDE-JS`、旧称`TECSCDE`）と [[TECSCDE-DT-EL実装]]（クラスベース、Electron、`E:\Ccur\typescript\TECSCDE-DT-EL`）は**別リポジトリ・別パラダイム**だが、同じエディタを実装するため多くのロジックを共有する。
 - きっかけ: [[TECSCDE-DT-EL実装]]の Action Item「第5・6章（描画・表示制御）は [[TECSCDE-TS実装]] にも未実装、両方で同時に必要」。実装を始める前に**何が共通で・その正典（single source）はどこにあり・どう共有するか**を先に決めておくためのノート（[[reference/Note/daily/2026-09-08|2026-09-08 日次ノート]]の目標より）。
 - 対象は JS-TS実装 と DT-EL実装 の2つ。クラス階層そのものを共有する [[TECSCDE-TS実装]]（クラスベース・ブラウザ）と [[TECSCDE-DT-EL実装]] の関係は別軸（下記「3層目」参照）。
 

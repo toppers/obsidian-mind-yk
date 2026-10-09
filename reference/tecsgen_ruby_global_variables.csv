@@ -1,0 +1,809 @@
+﻿variable,file,line,kind,code
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,137,update,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,145,update,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,151,definition,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,211,reference,case $CHARSET_CONSOLE
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,240,update,$CHARSET_CONSOLE = $CHARSET_CONSOLE_DEFAULT
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,256,reference,"self.resolve_alias_and_check( $LANG_CONSOLE, $CHARSET_CONSOLE )"
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,265,update,"$LANG_CONSOLE, $CHARSET_CONSOLE = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,267,update,"$LANG_CONSOLE, $CHARSET_CONSOLE = lang_console, charset_console"
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,279,reference,"dbgPrint ""LANG_FILE=#{$LANG_FILE}.#{$CHARSET_FILE}, LANG_CONSOLE=#{$LANG_CONSOLE}.#{$CHARSET_CONSOLE}\n"""
+$CHARSET_CONSOLE,tecslib\core\tecs_lang.rb,288,reference,"print ""#{$CHARSET_FILE} #{$CHARSET_CONSOLE}\n"""
+$CHARSET_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,235,definition,$CHARSET_CONSOLE_DEFAULT = nil
+$CHARSET_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,240,reference,$CHARSET_CONSOLE = $CHARSET_CONSOLE_DEFAULT
+$CHARSET_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,259,reference,"lang_console, charset_console = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$CHARSET_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,265,reference,"$LANG_CONSOLE, $CHARSET_CONSOLE = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,135,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( lang )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,137,reference,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,143,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'LANG' ] )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,145,reference,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,149,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'TECSGEN_LANG' ] )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,151,reference,$CHARSET_CONSOLE = $CHARSET_FILE
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,155,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'TECSGEN_FILE_LANG' ] )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,177,definition,$CHARSET_FILE = :eucJP
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,180,update,$CHARSET_FILE = :sjis
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,183,update,$CHARSET_FILE = :utf8
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,186,update,$CHARSET_FILE = nil
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,196,reference,case $CHARSET_FILE
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,238,update,$CHARSET_FILE = $CHARSET_FILE_DEFAULT
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,250,reference,"self.resolve_alias_and_check( $LANG_FILE, $CHARSET_FILE )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,271,update,"$LANG_FILE, $CHARSET_FILE = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,273,update,"$LANG_FILE, $CHARSET_FILE = lang_file, charset_file"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,279,reference,"dbgPrint ""LANG_FILE=#{$LANG_FILE}.#{$CHARSET_FILE}, LANG_CONSOLE=#{$LANG_CONSOLE}.#{$CHARSET_CONSOLE}\n"""
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,288,reference,"print ""#{$CHARSET_FILE} #{$CHARSET_CONSOLE}\n"""
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,290,reference,"$LANG_FILE, $CHARSET_FILE, res = self.resolve_alias_and_check( $LANG_FILE, $CHARSET_FILE )"
+$CHARSET_FILE,tecslib\core\tecs_lang.rb,291,reference,"print ""#{$LANG_FILE} #{$CHARSET_FILE}, #{res}\n"""
+$CHARSET_FILE_DEFAULT,tecslib\core\tecs_lang.rb,233,definition,$CHARSET_FILE_DEFAULT = nil
+$CHARSET_FILE_DEFAULT,tecslib\core\tecs_lang.rb,238,reference,$CHARSET_FILE = $CHARSET_FILE_DEFAULT
+$CHARSET_FILE_DEFAULT,tecslib\core\tecs_lang.rb,253,reference,"lang_file, charset_file = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$CHARSET_FILE_DEFAULT,tecslib\core\tecs_lang.rb,271,reference,"$LANG_FILE, $CHARSET_FILE = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$CODE_TYPE_ARRAY,tecslib\core\tecs_lang.rb,169,reference,res = $CODE_TYPE_ARRAY.index( code )
+$CODE_TYPE_ARRAY,tecslib\core\tecs_lang.rb,171,reference,"print ""-k: illegal kcode type #{code}. (#{$CODE_TYPE_ARRAY.join("", "")})\n"""
+$CODE_TYPE_ARRAY,tecslib\core\tecs_lang.rb,243,definition,"$CODE_TYPE_ARRAY = [ ""euc"", ""sjis"", ""none"", ""utf8"" ]"
+$Copyright,tecsgen.rb,473,reference,"STDERR << ""#{$title} version #{$tool_version} (tecsgen version #{$version})  #{$Copyright}\n"""
+$Copyright,tecsgen.rb,475,reference,"STDERR << ""tecsgen  version #{$version}  #{$Copyright}\n"""
+$DESTINATION,tecslib\plugin\ThroughPlugin.rb,330,reference,"str = str.gsub( /(^|[^\$])\$DESTINATION\$/, ""\\1#{@callee_cell.get_global_name}"" )"
+$ID,tecslib\core\generate.rb,5268,reference,"str = str.gsub( /(^|[^\$])\$ID\$/, ""\\1#{id}"" )"
+$IN_EXERB,tecslib\core\componentobj\import_c.rb,74,reference,if $IN_EXERB then
+$IN_EXERB,tecslib\core\tecs_lang.rb,131,reference,"if $IN_EXERB && ( ENV[ 'TERM' ] == nil || ENV[ 'TERM' ] == ""cygwin"" ) then"
+$IN_EXERB,tecslib\core\tecsgen.rb,58,reference,if $IN_EXERB then
+$Id,cdelib\cell_plugin_dialog.rb,52,reference,$Id: cell_plugin_dialog.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$Id,cdelib\palette.rb,52,reference,$Id: palette.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$Id,cdelib\saveload.rb,52,reference,$Id: saveload.rb 2780 2018-02-11 11:22:33Z okuma-top $
+$Id,cdelib\tcontrol.rb,52,reference,$Id: tcontrol.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$Id,cdelib\tmodel.rb,52,reference,$Id: tmodel.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$Id,cdelib\tview.rb,52,reference,$Id: tview.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$Id,tecscde.rb,53,reference,$Id: tecscde.rb 2640 2017-06-03 11:27:12Z okuma-top $
+$KCONV_CDL,tecsgen.rb,336,definition,$KCONV_CDL = Kconv::EUC
+$KCONV_CDL,tecslib\core\messages.rb,50,reference,if $KCONV_TECSGEN == $KCONV_CDL || $KCONV_CDL == Kconv::BINARY then
+$KCONV_CDL,tecslib\core\messages.rb,53,reference,"return str.kconv( $KCONV_CDL, $KCONV_TECSGEN )"
+$KCONV_CDL,tecslib\core\plugin.rb,311,reference,"@file.print( str.kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_CDL,tecslib\core\plugin.rb,319,reference,"@file.print( str.kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_CDL,tecslib\core\plugin.rb,328,reference,"@file.print( sprintf( format, *arg ).kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_CDL,tecslib\core\tecs_lang.rb,198,update,$KCONV_CDL = Kconv::EUC
+$KCONV_CDL,tecslib\core\tecs_lang.rb,201,update,$KCONV_CDL = Kconv::SJIS
+$KCONV_CDL,tecslib\core\tecs_lang.rb,204,update,$KCONV_CDL = Kconv::UTF8
+$KCONV_CDL,tecslib\core\tecs_lang.rb,207,update,$KCONV_CDL = Kconv::BINARY
+$KCONV_CONSOLE,tecslib\core\plugin.rb,308,reference,if $KCONV_CONSOLE == Kconv::BINARY then
+$KCONV_CONSOLE,tecslib\core\plugin.rb,316,reference,if $KCONV_CONSOLE == Kconv::BINARY then
+$KCONV_CONSOLE,tecslib\core\plugin.rb,325,reference,if $KCONV_CONSOLE == Kconv::BINARY then
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,213,definition,$KCONV_CONSOLE = Kconv::EUC
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,215,update,$KCONV_CONSOLE = Kconv::SJIS
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,217,update,$KCONV_CONSOLE = Kconv::UTF8
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,219,update,$KCONV_CONSOLE = Kconv::BINARY
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,299,reference,if $KCONV_CONSOLE == Kconv::BINARY then
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,302,reference,"STDOUT.print str.kconv( $KCONV_CONSOLE, $KCONV_TECSGEN )"
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,306,reference,if $KCONV_CONSOLE == Kconv::BINARY then
+$KCONV_CONSOLE,tecslib\core\tecs_lang.rb,309,reference,"STDOUT.puts str.kconv( $KCONV_CONSOLE, $KCONV_TECSGEN )"
+$KCONV_TECSGEN,tecsgen.rb,339,definition,$KCONV_TECSGEN = Kconv::UTF8
+$KCONV_TECSGEN,tecslib\core\messages.rb,50,reference,if $KCONV_TECSGEN == $KCONV_CDL || $KCONV_CDL == Kconv::BINARY then
+$KCONV_TECSGEN,tecslib\core\messages.rb,53,reference,"return str.kconv( $KCONV_CDL, $KCONV_TECSGEN )"
+$KCONV_TECSGEN,tecslib\core\plugin.rb,311,reference,"@file.print( str.kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_TECSGEN,tecslib\core\plugin.rb,319,reference,"@file.print( str.kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_TECSGEN,tecslib\core\plugin.rb,328,reference,"@file.print( sprintf( format, *arg ).kconv( $KCONV_CDL, $KCONV_TECSGEN ) )"
+$KCONV_TECSGEN,tecslib\core\tecs_lang.rb,222,update,$KCONV_TECSGEN = Kconv::UTF8
+$KCONV_TECSGEN,tecslib\core\tecs_lang.rb,302,reference,"STDOUT.print str.kconv( $KCONV_CONSOLE, $KCONV_TECSGEN )"
+$KCONV_TECSGEN,tecslib\core\tecs_lang.rb,309,reference,"STDOUT.puts str.kconv( $KCONV_CONSOLE, $KCONV_TECSGEN )"
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,136,update,$LANG_CONSOLE = $LANG_FILE
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,144,update,$LANG_CONSOLE = $LANG_FILE
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,150,definition,$LANG_CONSOLE = $LANG_FILE
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,239,update,$LANG_CONSOLE = $LANG_CONSOLE_DEFAULT
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,256,reference,"self.resolve_alias_and_check( $LANG_CONSOLE, $CHARSET_CONSOLE )"
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,265,reference,"$LANG_CONSOLE, $CHARSET_CONSOLE = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,267,reference,"$LANG_CONSOLE, $CHARSET_CONSOLE = lang_console, charset_console"
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,279,reference,"dbgPrint ""LANG_FILE=#{$LANG_FILE}.#{$CHARSET_FILE}, LANG_CONSOLE=#{$LANG_CONSOLE}.#{$CHARSET_CONSOLE}\n"""
+$LANG_CONSOLE,tecslib\core\tecs_lang.rb,287,reference,"print ""#{$LANG_FILE} #{$LANG_CONSOLE}\n"""
+$LANG_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,234,definition,$LANG_CONSOLE_DEFAULT = :en_US
+$LANG_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,239,reference,$LANG_CONSOLE = $LANG_CONSOLE_DEFAULT
+$LANG_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,259,reference,"lang_console, charset_console = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$LANG_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,264,reference,"require_tecsgen_lib( ""tecslib/messages/messages_console_#{$LANG_CONSOLE_DEFAULT}.rb"" )"
+$LANG_CONSOLE_DEFAULT,tecslib\core\tecs_lang.rb,265,reference,"$LANG_CONSOLE, $CHARSET_CONSOLE = $LANG_CONSOLE_DEFAULT, $CHARSET_CONSOLE_DEFAULT"
+$LANG_FILE,tecslib\core\tecs_lang.rb,135,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( lang )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,136,reference,$LANG_CONSOLE = $LANG_FILE
+$LANG_FILE,tecslib\core\tecs_lang.rb,143,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'LANG' ] )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,144,reference,$LANG_CONSOLE = $LANG_FILE
+$LANG_FILE,tecslib\core\tecs_lang.rb,149,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'TECSGEN_LANG' ] )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,150,reference,$LANG_CONSOLE = $LANG_FILE
+$LANG_FILE,tecslib\core\tecs_lang.rb,155,reference,"$LANG_FILE, $CHARSET_FILE, *dum = self.parse_lang( ENV[ 'TECSGEN_FILE_LANG' ] )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,178,definition,$LANG_FILE = :ja_JP
+$LANG_FILE,tecslib\core\tecs_lang.rb,181,update,$LANG_FILE = :ja_JP
+$LANG_FILE,tecslib\core\tecs_lang.rb,184,update,$LANG_FILE = :ja_JP
+$LANG_FILE,tecslib\core\tecs_lang.rb,187,update,"$LANG_FILE = ""en_US"""
+$LANG_FILE,tecslib\core\tecs_lang.rb,237,update,$LANG_FILE = $LANG_FILE_DEFAULT
+$LANG_FILE,tecslib\core\tecs_lang.rb,250,reference,"self.resolve_alias_and_check( $LANG_FILE, $CHARSET_FILE )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,271,reference,"$LANG_FILE, $CHARSET_FILE = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$LANG_FILE,tecslib\core\tecs_lang.rb,273,reference,"$LANG_FILE, $CHARSET_FILE = lang_file, charset_file"
+$LANG_FILE,tecslib\core\tecs_lang.rb,279,reference,"dbgPrint ""LANG_FILE=#{$LANG_FILE}.#{$CHARSET_FILE}, LANG_CONSOLE=#{$LANG_CONSOLE}.#{$CHARSET_CONSOLE}\n"""
+$LANG_FILE,tecslib\core\tecs_lang.rb,287,reference,"print ""#{$LANG_FILE} #{$LANG_CONSOLE}\n"""
+$LANG_FILE,tecslib\core\tecs_lang.rb,290,reference,"$LANG_FILE, $CHARSET_FILE, res = self.resolve_alias_and_check( $LANG_FILE, $CHARSET_FILE )"
+$LANG_FILE,tecslib\core\tecs_lang.rb,291,reference,"print ""#{$LANG_FILE} #{$CHARSET_FILE}, #{res}\n"""
+$LANG_FILE_DEFAULT,tecslib\core\tecs_lang.rb,232,definition,$LANG_FILE_DEFAULT  = :en_US
+$LANG_FILE_DEFAULT,tecslib\core\tecs_lang.rb,237,reference,$LANG_FILE = $LANG_FILE_DEFAULT
+$LANG_FILE_DEFAULT,tecslib\core\tecs_lang.rb,253,reference,"lang_file, charset_file = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$LANG_FILE_DEFAULT,tecslib\core\tecs_lang.rb,270,reference,"require_tecsgen_lib( ""tecslib/messages/messages_file_#{$LANG_FILE_DEFAULT}.rb"" )"
+$LANG_FILE_DEFAULT,tecslib\core\tecs_lang.rb,271,reference,"$LANG_FILE, $CHARSET_FILE = $LANG_FILE_DEFAULT, $CHARSET_FILE_DEFAULT"
+$LOAD_PATH,tecsgen.rb,106,reference,($library_path+$LOAD_PATH).each{ |path|
+$NEXT,tecslib\plugin\ThroughPlugin.rb,332,reference,"str = str.gsub( /(^|[^\$])\$NEXT\$/, ""\\1#{@next_cell.get_global_name}"" )"
+$RUBYLIB,tecsgen.rb,151,reference,"STDERR << ""tecsgen: Fail to load #{fname}. Check $RUBYLIB environment variable or -L option\n"""
+$Ruby19_File_Encode,tecslib\core\bnf.tab.rb,5122,reference,"msg = ""E"".encode $Ruby19_File_Encode"
+$Ruby19_File_Encode,tecslib\core\bnf.tab.rb,5123,reference,"if( $Ruby19_File_Encode == ""Shift_JIS"" )"
+$Ruby19_File_Encode,tecslib\core\bnf.tab.rb,5133,reference,"mode = ""r:#{$Ruby19_File_Encode}"""
+$Ruby19_File_Encode,tecslib\core\bnf.y.rb,2163,reference,"msg = ""E"".encode $Ruby19_File_Encode"
+$Ruby19_File_Encode,tecslib\core\bnf.y.rb,2164,reference,"if( $Ruby19_File_Encode == ""Shift_JIS"" )"
+$Ruby19_File_Encode,tecslib\core\bnf.y.rb,2174,reference,"mode = ""r:#{$Ruby19_File_Encode}"""
+$Ruby19_File_Encode,tecslib\core\generate.rb,5293,reference,"mode = "":"" + $Ruby19_File_Encode"
+$Ruby19_File_Encode,tecslib\core\plugin.rb,303,reference,"mode += "":"" + $Ruby19_File_Encode"
+$Ruby19_File_Encode,tecslib\core\tecs_lang.rb,199,definition,"$Ruby19_File_Encode = ""ASCII-8BIT"""
+$Ruby19_File_Encode,tecslib\core\tecs_lang.rb,202,update,"$Ruby19_File_Encode = ""Shift_JIS"""
+$Ruby19_File_Encode,tecslib\core\tecs_lang.rb,205,update,"$Ruby19_File_Encode = ""ASCII-8BIT"""
+$Ruby19_File_Encode,tecslib\core\tecs_lang.rb,208,update,"$Ruby19_File_Encode = ""ASCII-8BIT"""
+$Ruby19_File_Encode,tecslib\core\tecs_lang.rb,280,reference,"dbgPrint ""Ruby19_File_Encode=#{$Ruby19_File_Encode}\n"""
+$SOURCE,tecslib\plugin\ThroughPlugin.rb,329,reference,"str = str.gsub( /(^|[^\$])\$SOURCE\$/, ""\\1#{@caller_cell.get_global_name}"" )"
+$TECSCDE,tecscde.rb,176,definition,$TECSCDE = true
+$TECSCDE,tecsgen.rb,593,reference,if $TECSCDE != true && $TECSFLOW != true then
+$TECSFLOW,tecsflow.rb,43,definition,$TECSFLOW = true
+$TECSFLOW,tecsgen.rb,220,reference,if ! $TECSFLOW then
+$TECSFLOW,tecsgen.rb,455,reference,if ARGV.empty? && ! $print_version && ! $unit_test && ! $TECSFLOW
+$TECSFLOW,tecsgen.rb,480,reference,if $print_version && ARGV.empty? && ! $TECSFLOW
+$TECSFLOW,tecsgen.rb,593,reference,if $TECSCDE != true && $TECSFLOW != true then
+$Title,tecscde.rb,177,definition,"$Title = ""tecscde"""
+$_factory,tecslib\plugin\HRPSVCSignaturePlugin.rb,120,reference,"write(""$ct$_factory.h"", ""#include \\"""
+$_factory,tecslib\plugin\lib\GenHRP2Marshaler.rb,143,reference,"write(""$ct$_factory.h"", ""#include <t_syslog.h>"");"
+$_start,tecslib\plugin\FMPHandlerPlugin.rb,47,reference,"[:InClass,    ""DEF_INH( {{interruptHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$_start,tecslib\plugin\FMPHandlerPlugin.rb,49,reference,"[:InClass,    ""DEF_EXC( {{cpuExceptionHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$_start,tecslib\plugin\HRMPKernelObjectPlugin.rb,84,reference,"""DEF_INH( {{interruptHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$_start,tecslib\plugin\HRMPKernelObjectPlugin.rb,87,reference,"""DEF_EXC( {{cpuExceptionHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$_start,tecslib\plugin\HRPHandlerPlugin.rb,84,reference,"start = @celltype.subst_name( ""$id$_start"", name_array )"
+$_start,tecslib\plugin\HRPHandlerPlugin.rb,90,reference,"start = @celltype.subst_name( ""$id$_start"", name_array )"
+$_tecsgen,tecslib\plugin\HRPSVCSignaturePlugin.rb,101,reference,"write(""$ct$_tecsgen.h"", ""#include \\""kernel_cfg.h\\"""");"
+$arguments,tecsgen.rb,225,reference,"dbgPrint  ""ARGV(remained): #{ARGV}, argments=#{$arguments}\n"""
+$arguments,tecsgen.rb,275,definition,"$arguments = """""
+$arguments,tecsgen.rb,276,update,"ARGV.each { |a| $arguments += "" "" + a }"
+$arguments,tecslib\core\generate.rb,487,reference,"f.print ""	$(TECSGEN) #{TECSGEN.subst_tecspath( $arguments, true )}\n\n"""
+$b_cpp_specified,cdelib\saveload.rb,533,reference,if $b_cpp_specified
+$b_cpp_specified,tecsgen.rb,321,definition,$b_cpp_specified = false
+$b_cpp_specified,tecsgen.rb,327,update,$b_cpp_specified = true
+$b_cpp_specified,tecsgen.rb,378,update,$b_cpp_specified = true
+$b_cpp_specified,tecslib\core\tool_info.rb,103,reference,if ! $b_cpp_specified
+$b_cpp_specified,tecslib\core\tool_info.rb,105,update,$b_cpp_specified = true
+$b_exist,tecsmerge.rb,126,definition,$b_exist = false
+$b_exist,tecsmerge.rb,598,reference,elsif $b_exist == false then
+$b_exist,tecsmerge.rb,687,update,$b_exist = true
+$b_force_apply_tool_info,cdelib\saveload.rb,188,reference,if validate || $b_force_apply_tool_info
+$b_force_apply_tool_info,cdelib\saveload.rb,213,reference,if validate || $b_force_apply_tool_info
+$b_force_apply_tool_info,tecscde.rb,184,definition,$b_force_apply_tool_info = false
+$b_force_apply_tool_info,tecscde.rb,191,update,$b_force_apply_tool_info = true
+$b_force_apply_tool_info,tecslib\core\tool_info.rb,83,reference,if validator.validate || $b_force_apply_tool_info
+$b_list,tcflow.rb,49,definition,$b_list = false
+$b_list,tcflow.rb,63,update,$b_list = true
+$b_no_gcc_extension_support,tecslib\core\componentobj\import_c.rb,212,reference,if ! $b_no_gcc_extension_support then
+$b_print_all_token,flowlib\C_parser.tab.rb,346,reference,if $b_print_all_token then
+$b_print_all_token,flowlib\C_parser.y.rb,938,reference,if $b_print_all_token then
+$b_print_all_token,tcflow.rb,52,definition,$b_print_all_token = false
+$b_print_all_token,tcflow.rb,75,update,$b_print_all_token = true
+$b_show,tecsmerge.rb,125,definition,$b_show  = false
+$b_show,tecsmerge.rb,698,update,$b_show = true
+$b_show,tecsmerge.rb,713,reference,if $b_show then
+$b_summarize,tcflow.rb,48,definition,$b_summarize = false
+$b_summarize,tcflow.rb,66,update,$b_summarize = true
+$b_tate,cdelib\tmodel.rb,793,reference,if $b_tate
+$b_tate,cdelib\tmodel.rb,800,reference,if $b_tate
+$b_tate,tecscde.rb,183,definition,$b_tate = true
+$b_tate,tecscde.rb,194,update,$b_tate = true
+$b_tate,tecscde.rb,197,update,$b_tate = false
+$b_version,tcflow.rb,47,definition,$b_version=false
+$base_dir,cdelib\saveload.rb,494,reference,"$base_dir.each{ |bd, b_necessity|"
+$base_dir,tecscde.rb,188,reference,$base_dir[ dir ] = true
+$base_dir,tecsgen.rb,292,definition,$base_dir  = {  }
+$base_dir,tecslib\core\componentobj\importable.rb,57,reference,if ! $base_dir[ Dir.pwd ]
+$base_dir,tecslib\core\componentobj\importable.rb,58,reference,$base_dir[ Dir.pwd ] = true
+$base_dir,tecslib\core\componentobj\importable.rb,69,reference,$base_dir.each_key{ |bd|
+$base_dir,tecslib\core\componentobj\importable.rb,85,reference,$base_dir[ bd ] = true
+$base_dir,tecslib\core\componentobj\importable.rb,99,reference,"$base_dir.each{ |bd, flag|"
+$base_dir,tecslib\core\tool_info.rb,86,reference,if ! $base_dir.include? bd
+$base_dir,tecslib\core\tool_info.rb,87,reference,$base_dir[ bd ] = true
+$c_suffix,tecsgen.rb,308,update,"$c_suffix  = ""c"""
+$c_suffix,tecsgen.rb,439,definition,$c_suffix = suffix
+$c_suffix,tecslib\core\generate.rb,536,reference,"f.print ""$(_TECS_OBJ_DIR)%.o : %.#{$c_suffix}\n"""
+$c_suffix,tecslib\core\generate.rb,816,reference,"gen_celltype_names_domain( f, ""	$(GEN_DIR)/"", ""_tecsgen.#{$c_suffix} \\\n"", domain_type, r, false )"
+$c_suffix,tecslib\core\generate.rb,837,reference,"gen_celltype_names_domain2( f, """", "".#{$c_suffix} \\\n"", domain_type, r, true, false )"
+$c_suffix,tecslib\core\generate.rb,841,reference,"gen_celltype_names_domain( f, """", ""_tecsgen.#{$c_suffix} \\\n"", domain_type, r, true )"
+$c_suffix,tecslib\core\generate.rb,847,reference,"gen_celltype_names( f, ""	"", "".#{$c_suffix} \\\n"", false, false )"
+$c_suffix,tecslib\core\generate.rb,1338,reference,"fs[r] = AppFile.open(""#{$gen}/#{@global_name}#{nsp}_tecsgen.#{$c_suffix}"")"
+$c_suffix,tecslib\core\generate.rb,1350,reference,"f = AppFile.open(""#{$gen}/#{@global_name}#{gn}_tecsgen.#{$c_suffix}"")"
+$c_suffix,tecslib\core\generate.rb,4525,reference,"fname = ""#{$gen}/#{@global_name}_templ.#{$c_suffix}"""
+$c_suffix,tecslib\core\generate.rb,4530,reference,"fname = ""#{$gen}/#{@global_name}.#{$c_suffix}"""
+$c_suffix,tecslib\plugin\ATK1AlarmPlugin.rb,175,reference,"file = AppFile.open( ""#{$gen}/tAlarm_tecsgen.#{$c_suffix}"" )"
+$c_suffix,tecslib\plugin\ATK1ISRPlugin.rb,137,reference,"file = AppFile.open( ""#{$gen}/tISR_tecsgen.#{$c_suffix}"" )"
+$c_suffix,tecslib\plugin\ATK1KernelPlugin.rb,169,reference,"file2 = AppFile.open( ""#{$gen}/tKernel_tecsgen.#{$c_suffix}"" )"
+$c_suffix,tecslib\plugin\ATK1TaskPlugin.rb,203,reference,"file = AppFile.open( ""#{$gen}/tTask_tecsgen.#{$c_suffix}"" )"
+$cb,tecslib\core\generate.rb,5264,reference,"str = str.gsub( /(^|[^\$])\$cb\$/, ""\\1#{cb}"" )"
+$cb_proto,tecslib\core\generate.rb,5267,reference,"str = str.gsub( /(^|[^\$])\$cb_proto\$/, ""\\1#{cb_proto}"" )"
+$cbp,tecslib\core\generate.rb,5270,reference,"str = str.gsub( /(^|[^\$])\$cbp\$/, ""\\1#{cbp}"" )"
+$cbp,tecslib\plugin\FMPHandlerPlugin.rb,45,reference,"[:InClass,    ""CRE_ISR( {{id}}, { {{attribute}}, $cbp$, {{interruptNumber}}, tISR_start, {{isrPriority}} })""],"
+$cbp,tecslib\plugin\FMPHandlerPlugin.rb,51,reference,"[:Any,        ""ATT_INI({ {{attribute}}, $cbp$, tInitializeRoutine_start })""],"
+$cbp,tecslib\plugin\FMPHandlerPlugin.rb,53,reference,"[:Any,        ""ATT_TER({ {{attribute}}, $cbp$, tTerminateRoutine_start })""],"
+$cbp,tecslib\plugin\HRMPKernelObjectPlugin.rb,46,reference,"""CRE_TSK( {{id}}, { {{attribute}}, $cbp$, tTask_start, {{priority}}, {{stackSize}} } )"" ],"
+$cbp,tecslib\plugin\HRMPKernelObjectPlugin.rb,81,reference,"""CRE_ISR( {{id}}, { {{attribute}}, $cbp$, {{interruptNumber}}, tISR_start, {{isrPriority}} })""],"
+$cbp,tecslib\plugin\HRMPKernelObjectPlugin.rb,90,reference,"""ATT_INI({ {{attribute}}, $cbp$, tInitializeRoutine_start })""],"
+$cbp,tecslib\plugin\HRMPKernelObjectPlugin.rb,93,reference,"""ATT_TER({ {{attribute}}, $cbp$, tTerminateRoutine_start })""],"
+$cbp,tecslib\plugin\NotifierPlugin.rb,1149,reference,"if e == ""$cbp$"""
+$cde_format_version,cdelib\version.rb,2,definition,"$cde_format_version = ""0.5.0.0"""
+$cell,tecslib\core\expression.rb,1015,reference,"str = str.          gsub( /(^|[^\$])\$cell\$/, ""\\1#{cell_name}"" )"
+$cell,tecslib\core\generate.rb,5263,reference,"str = str.gsub( /(^|[^\$])\$cell\$/, ""\\1#{cell}"" )"
+$cell,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,382,reference,"char_t *bridgeName = C_EXP( ""$cell$"" );"
+$cell,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,387,reference,"char_t *bridgeName = C_EXP( ""$cell$"" );"
+$cell_global,tecslib\core\generate.rb,5271,reference,"str = str.gsub( /(^|[^\$])\$cell_global\$/, ""\\1#{cell_global}"" )"
+$count,tecslib\plugin\ThroughPlugin.rb,337,reference,"str = str.gsub( /(^|[^\$])\$count\$/, ""\\1#{@count}"" )"
+$count,tecslib\plugin\lib\GenOpaqueMarshaler.rb,289,reference,"@serverChannelInitializer = subst_name( ""portNo=8931+$count$;"" ).to_sym"
+$count,tecslib\plugin\lib\GenOpaqueMarshaler.rb,290,reference,"@clientChannelInitializer = subst_name( ""portNo=8931+$count$; serverAddr=\""127.0.0.1\""; "" ).to_sym"
+$cpp,tecsgen.rb,322,reference,if $cpp == nil then
+$cpp,tecsgen.rb,323,definition,"$cpp       = ""gcc -E -DTECSGEN"""
+$cpp,tecsgen.rb,326,update,$cpp = ENV[ 'TECS_CPP' ]
+$cpp,tecsgen.rb,377,update,$cpp = arg
+$cpp,tecslib\core\componentobj\import_c.rb,169,reference,"cmd = ""#{$cpp} #{def_opt} #{include_opt} #{tmp_C}"""
+$cpp,tecslib\core\tool_info.rb,104,update,$cpp = info[ :cpp ]
+$cpp_cmd,tcflow.rb,46,definition,$cpp_cmd=nil
+$cpp_cmd,tcflow.rb,60,update,$cpp_cmd = arg
+$cpp_cmd,tcflow.rb,123,reference,"c_parser.parse( [ f ], $cpp_cmd )"
+$ct,tecslib\core\expression.rb,1014,reference,"str = @c_exp_string.gsub( /(^|[^\$])\$ct\$/, ""\\1#{ct_name}"" )"
+$ct,tecslib\core\generate.rb,4920,reference,"file_name = file_name.gsub( /(^|[^\$])\$ct\$/, ""\\1#{@name}"" )"
+$ct,tecslib\core\generate.rb,4922,reference,"format    = format.gsub( /(^|[^\$])\$ct\$/, ""\\1#{@name}"" )"
+$ct,tecslib\core\generate.rb,5260,reference,"str = str.gsub( /(^|[^\$])\$ct\$/, ""\\1#{ct}"" )"
+$ct,tecslib\plugin\HRPSVCSignaturePlugin.rb,101,reference,"write(""$ct$_tecsgen.h"", ""#include \\""kernel_cfg.h\\"""");"
+$ct,tecslib\plugin\HRPSVCSignaturePlugin.rb,120,reference,"write(""$ct$_factory.h"", ""#include \\"""
+$ct,tecslib\plugin\lib\GenHRP2Marshaler.rb,143,reference,"write(""$ct$_factory.h"", ""#include <t_syslog.h>"");"
+$ct_global,tecslib\core\generate.rb,4921,reference,"file_name = file_name.gsub( /(^|[^\$])\$ct_global\$/, ""\\1#{@global_name}"" )"
+$ct_global,tecslib\core\generate.rb,4923,reference,"format    = format.gsub( /(^|[^\$])\$ct_global\$/, ""\\1#{@global_name}"" )"
+$ct_global,tecslib\core\generate.rb,5261,reference,"str = str.gsub( /(^|[^\$])\$ct_global\$/, ""\\1#{ct_global}"" )"
+$debug,tecsgen.rb,172,reference,if $debug then
+$debug,tecsgen.rb,180,reference,if $debug then
+$debug,tecsgen.rb,186,reference,if $debug then
+$debug,tecsgen.rb,286,update,$debug     = false
+$debug,tecsgen.rb,407,definition,$debug = true
+$debug,tecslib\core\C_parser.tab.rb,265,reference,if $debug then
+$debug,tecslib\core\C_parser.y.rb,1040,reference,if $debug then
+$debug,tecslib\core\bnf.tab.rb,364,reference,if $debug then
+$debug,tecslib\core\bnf.tab.rb,399,reference,if $debug then
+$debug,tecslib\core\bnf.y.rb,1870,reference,if $debug then
+$debug,tecslib\core\bnf.y.rb,1905,reference,if $debug then
+$debug,tecslib\core\componentobj\join.rb,1147,reference,if $debug then
+$debug,tecslib\core\generate.rb,662,reference,if $debug then
+$debug,tecslib\core\generate.rb,907,reference,if $debug then
+$debug,tecslib\core\generate.rb,4932,reference,if $debug then
+$debug,tecslib\core\generate.rb,5015,reference,if $debug then
+$debug,tecslib\core\pluginModule.rb,98,reference,if $debug then
+$debug,tecslib\plugin\lib\GenAttMod.rb,135,reference,if $debug then
+$define,cdelib\saveload.rb,504,reference,$define.each { |define|
+$define,tecsgen.rb,296,definition,$define    = [ ]
+$define,tecsgen.rb,349,reference,$define << define
+$define,tecslib\core\componentobj\import_c.rb,73,reference,$define.each{ |define|
+$define,tecslib\core\generate.rb,367,reference,"$define.each{ |define| f.print "" -D #{define}"" }"
+$define,tecslib\core\tool_info.rb,98,reference,if ! $define.include?( define )
+$define,tecslib\core\tool_info.rb,99,reference,$define << define
+$destination,tecslib\plugin\ThroughPlugin.rb,328,reference,"str = str.gsub( /(^|[^\$])\$destination\$/, ""\\1#{@callee_cell.get_name}"" )"
+$dryrun,tecsgen.rb,287,update,$dryrun    = false
+$dryrun,tecsgen.rb,381,definition,$dryrun = true
+$end,flowlib\C_parser.tab.rb,1266,reference,"""$end"","
+$end,tecslib\core\C_parser.tab.rb,1522,reference,"""$end"","
+$end,tecslib\core\bnf.tab.rb,416,reference,"if token_to_str(t) == ""$end"" then"
+$end,tecslib\core\bnf.tab.rb,1960,reference,"""$end"","
+$end,tecslib\core\bnf.y.rb,1922,reference,"if token_to_str(t) == ""$end"" then"
+$end_region,tecslib\plugin\ThroughPlugin.rb,335,reference,"str = str.gsub( /(^|[^\$])\$end_region\$/, ""\\1#{@end_region.get_global_name}"" )"
+$exe_name,tcflow.rb,44,definition,"$exe_name=""tcflow"""
+$exe_name,tcflow.rb,83,reference,"puts ""#{$exe_name} : #{$version}"""
+$exe_name,tcflow.rb,95,reference,"STDERR.puts ""#{$exe_name} : #{$version}"""
+$force_overwrite,tecsgen.rb,303,update,$force_overwrite = false
+$force_overwrite,tecsgen.rb,384,definition,$force_overwrite = true
+$force_overwrite,tecslib\core\generate.rb,5286,reference,if $force_overwrite
+$force_overwrite,tecslib\core\generate.rb,5313,reference,if $force_overwrite
+$gen,tecsflow.rb,57,update,$gen = $gen_base = dir
+$gen,tecsflow.rb,80,reference,"$tecsgen_dump_file_name = ""#{$gen}/tecsgen.rbdmp"""
+$gen,tecsflow.rb,81,reference,"$tcflow_dump_file_name = ""#{$gen}/tcflow.rbdmp"""
+$gen,tecsgen.rb,281,update,$gen       = $gen_base
+$gen,tecsgen.rb,387,definition,$gen = $gen_base = dir
+$gen,tecslib\core\componentobj\import.rb,88,reference,"if( Generator.get_plugin ) &&( File.exist? ""#{$gen}/#{@cdl}"" ) then"
+$gen,tecslib\core\componentobj\import.rb,89,reference,"@cdl_path = ""#{$gen}/#{@cdl}"""
+$gen,tecslib\core\componentobj\import_c.rb,146,reference,"tmp_C = ""#{$gen}/tmp_C_src.c"""
+$gen,tecslib\core\componentobj\import_c.rb,166,reference,"tmp_header = ""#{$gen}/tmp_#{tmp_header}"""
+$gen,tecslib\core\generate.rb,127,reference,"dbgPrint ""Namespace#generate: generating_region=#{$generating_region.get_name} namespace=#{@name} gen_dir=#{$gen}\n"""
+$gen,tecslib\core\generate.rb,219,reference,"f = AppFile.open( ""#{$gen}/global_tecsgen.#{$h_suffix}"" )"
+$gen,tecslib\core\generate.rb,302,reference,"f = AppFile.open( ""#{$gen}/global_tecsgen.#{$h_suffix}"" )"
+$gen,tecslib\core\generate.rb,325,update,"dbgPrint (""gen_makefile_template: region=#{@name} $generating_region=#{$generating_region.get_name} $gen=#{$gen}\n"")"
+$gen,tecslib\core\generate.rb,330,reference,"f = AppFile.open( ""#{$gen}/Makefile.templ"" )"
+$gen,tecslib\core\generate.rb,354,reference,"f.print ""GEN_DIR = $(BASE_DIR)/#{$gen}\n"""
+$gen,tecslib\core\generate.rb,553,reference,"f = AppFile.open( ""#{$gen}/Makefile.tecsgen"" )"
+$gen,tecslib\core\generate.rb,1058,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,1074,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,1220,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,1310,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,1338,reference,"fs[r] = AppFile.open(""#{$gen}/#{@global_name}#{nsp}_tecsgen.#{$c_suffix}"")"
+$gen,tecslib\core\generate.rb,1350,reference,"f = AppFile.open(""#{$gen}/#{@global_name}#{gn}_tecsgen.#{$c_suffix}"")"
+$gen,tecslib\core\generate.rb,3098,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_factory.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,3106,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_factory.#{$h_suffix}"")"
+$gen,tecslib\core\generate.rb,4525,reference,"fname = ""#{$gen}/#{@global_name}_templ.#{$c_suffix}"""
+$gen,tecslib\core\generate.rb,4530,reference,"fname = ""#{$gen}/#{@global_name}.#{$c_suffix}"""
+$gen,tecslib\core\generate.rb,4866,reference,"fname = ""#{$gen}/#{@global_name}_inline_templ.#{$h_suffix}"""
+$gen,tecslib\core\generate.rb,4871,reference,"fname = ""#{$gen}/#{@global_name}_inline.#{$h_suffix}"""
+$gen,tecslib\core\generate.rb,4927,reference,"file_name = ""#{$gen}/#{file_name}"""
+$gen,tecslib\core\generate.rb,4977,reference,"file_name = ""#{$gen}/#{file_name}"""
+$gen,tecslib\core\generate.rb,5049,reference,"f = AppFile.open( ""#{$gen}/Makefile.templ"" )"
+$gen,tecslib\core\generate.rb,5090,reference,"f = AppFile.open( ""#{$gen}/Makefile.depend"" )"
+$gen,tecslib\core\pluginModule.rb,126,reference,"tmp_file_name = ""#{$gen}/tmp_#{plugin_name}_#{count}.cdl"""
+$gen,tecslib\core\pluginModule.rb,203,reference,"tmp_file_name = ""#{$gen}/tmp_#{plClass.name}_post_code.cdl"""
+$gen,tecslib\core\tecsgen.rb,348,update,$gen = $gen_base
+$gen,tecslib\core\tecsgen.rb,350,update,"$gen = $gen_base + ""/"" + region.get_global_name.to_s"
+$gen,tecslib\core\tecsgen.rb,352,reference,if ! File.directory?( $gen ) then
+$gen,tecslib\core\tecsgen.rb,353,reference,Dir.mkdir( $gen )
+$gen,tecslib\core\tecsgen.rb,356,reference,"print( ""Cannot mkdir #{$gen}\n"" )"
+$gen,tecslib\core\tecsgen.rb,361,update,$gen = $gen_base
+$gen,tecslib\core\tecsgen.rb,475,update,$gen = $gen_base
+$gen,tecslib\core\tecsgen.rb,477,update,"$gen = $gen_base + ""/"" + region.get_global_name.to_s"
+$gen,tecslib\core\tecsgen.rb,480,update,$gen = $gen_base
+$gen,tecslib\core\tecsgen.rb,499,reference,"File.write( ""#{$gen}/tecsgen.rbdmp"", Marshal.dump(Namespace.get_root) )"
+$gen,tecslib\plugin\ATK1AlarmPlugin.rb,79,reference,"file2 = CFile.open( ""#{$gen}/ALARM_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1AlarmPlugin.rb,175,reference,"file = AppFile.open( ""#{$gen}/tAlarm_tecsgen.#{$c_suffix}"" )"
+$gen,tecslib\plugin\ATK1DelayTaskPlugin.rb,87,reference,"file2 = AppFile.open( ""#{$gen}/tDelayTaskBody_factory.#{$h_suffix}"" )"
+$gen,tecslib\plugin\ATK1EventPlugin.rb,70,reference,"file2 = CFile.open( ""#{$gen}/EVENT_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1ISRPlugin.rb,79,reference,"file2 = CFile.open( ""#{$gen}/ISR_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1ISRPlugin.rb,137,reference,"file = AppFile.open( ""#{$gen}/tISR_tecsgen.#{$c_suffix}"" )"
+$gen,tecslib\plugin\ATK1KernelPlugin.rb,88,reference,"file2 = CFile.open( ""#{$gen}/Kernel_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1KernelPlugin.rb,169,reference,"file2 = AppFile.open( ""#{$gen}/tKernel_tecsgen.#{$c_suffix}"" )"
+$gen,tecslib\plugin\ATK1ResourcePlugin.rb,79,reference,"file2 = CFile.open( ""#{$gen}/RESOURCE_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1ResourcePlugin.rb,80,reference,"file3 = CFile.open( ""#{$gen}/#{@celltype.get_name}_factory.#{$h_suffix}"", ""w"" )"
+$gen,tecslib\plugin\ATK1TaskPlugin.rb,86,reference,"file2 = CFile.open( ""#{$gen}/TASK_tecsgen.oil"", ""w"" )"
+$gen,tecslib\plugin\ATK1TaskPlugin.rb,203,reference,"file = AppFile.open( ""#{$gen}/tTask_tecsgen.#{$c_suffix}"" )"
+$gen,tecslib\plugin\C2TECSBridgePlugin.rb,60,reference,"@header_name = ""#{$gen}/C2TECS_#{@signature.get_global_name}.h"""
+$gen,tecslib\plugin\C2TECSBridgePlugin.rb,207,reference,"@header_name = ""#{$gen}/"" + rhs.to_s"
+$gen,tecslib\plugin\CIfGenCelltypePlugin.rb,75,reference,"file = CFile.open( ""#{$gen}/#{@celltype.get_global_name}_cif.h"", ""w"" )"
+$gen,tecslib\plugin\CppIfGenCelltypePlugin.rb,100,reference,"file = CFile.open( ""#{$gen}/#{@celltype.get_global_name}_cppif.hpp"", ""w"" )"
+$gen,tecslib\plugin\CppIfGenCelltypePlugin.rb,420,reference,"file = CFile.open( ""#{$gen}/#{sig.get_global_name}_cppif.hpp"", ""w"" )"
+$gen,tecslib\plugin\DataPumpHolderPlugin.rb,186,reference,"file = CFile.open( ""#{$gen}/#{@celltype.get_global_name}_signature.cdl"", ""w"" )"
+$gen,tecslib\plugin\DataPumpHolderPlugin.rb,281,reference,"file = CFile.open( ""#{$gen}/#{@celltype.get_global_name}_celltype.cdl"", ""w"" )"
+$gen,tecslib\plugin\FMPHandlerPlugin.rb,141,reference,"f = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\FMPObjectPlugin.rb,161,reference,"f = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRMPDomainPlugin.rb,93,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRMPKernelObjectPlugin.rb,211,reference,"f = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2KernelObjectPlugin.rb,179,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2KernelObjectPlugin.rb,250,reference,"file3 = AppFile.open( ""#{$gen}/tecsgen_#{cell_domain_root.get_name.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRP2KernelObjectPlugin.rb,297,reference,"file3 = AppFile.open( ""#{$gen}/tecsgen_#{cell.get_region.get_name.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRP2PostHook.rb,66,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2PostHook.rb,68,reference,"file = AppFile.open( ""#{$gen}/tecsgen_#{rlist[0].get_param.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRP2PostHook.rb,88,reference,"file = AppFile.open( ""#{$gen}/tecsgen_#{rlist[0].get_param.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRP2PostHook.rb,92,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2PostHook.rb,105,reference,"file = AppFile.open( ""#{$gen}/tecsgen_#{reg.get_param.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRP2RPCPlugin.rb,84,reference,"@rpc_channel_celltype_file_name = ""#{$gen}/#{@rpc_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,111,reference,"file2 = CFile.open( ""#{$gen}/#{@ct_name_body}.cdl"", ""w"" )"
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,128,reference,"file2 = CFile.open( ""#{$gen}/#{@ct_name}.cdl"", ""w"" )"
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,238,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,352,reference,"file2 = AppFile.open( ""#{$gen}/#{@ct_name_body}.c"" )"
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,450,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2SVCPlugin.rb,460,reference,"file2 = AppFile.open( ""#{$gen}/#{@ct_name_body}_factory.h"" )"
+$gen,tecslib\plugin\HRP2TaskPlugin.rb,156,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2TaskPlugin.rb,167,reference,"file = AppFile.open( ""#{$gen}/tecsgen#{nsp}.cfg"" )"
+$gen,tecslib\plugin\HRP2TaskPlugin.rb,181,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRP2TaskPlugin.rb,185,reference,"file = AppFile.open( ""#{$gen}/tecsgen_#{regions_hrp2[0].get_namespace_path.get_global_name}.cfg"" )"
+$gen,tecslib\plugin\HRPKernelObjectPlugin.rb,98,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRPKernelObjectPlugin.rb,167,reference,"file3 = AppFile.open( ""#{$gen}/tecsgen_#{cell_domain_root.get_global_name}.cfg"" )"
+$gen,tecslib\plugin\HRPKernelObjectPlugin.rb,183,reference,"file3 = AppFile.open( ""#{$gen}/tecsgen_#{cell_domain_root.get_name.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRPKernelObjectPlugin.rb,279,reference,"file3 = AppFile.open( ""#{$gen}/tecsgen_#{cell.get_region.get_name.to_s}.cfg"" )"
+$gen,tecslib\plugin\HRPPlugin.rb,161,update,"dbgPrint ""HRPPlugin: $generating_region=#{$generating_region.get_name} $gen=#{$gen}\n"""
+$gen,tecslib\plugin\HRPPlugin.rb,163,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\HRPRPCPlugin.rb,73,reference,"@rpc_channel_celltype_file_name = ""#{$gen}/#{@rpc_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\Mruby2CBridgePlugin.rb,67,reference,"cf = CFile.open( ""#{$gen}/Mruby2C_tsInitializerBridge.cdl"", ""w"")"
+$gen,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,430,reference,"initializer_celltype_cdl = ""#{$gen}/#{cell.get_name}Initializer.cdl"""
+$gen,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,442,reference,"initializer_celltype_cdl = ""#{$gen}/#{cell.get_name}Initializer.cdl"""
+$gen,tecslib\plugin\NotifierPlugin.rb,344,reference,"@source_file = AppFile.open( ""#{$gen}/#{@celltype_name}.c"" )"
+$gen,tecslib\plugin\NotifierPlugin.rb,349,reference,"@header_file = AppFile.open( ""#{$gen}/#{@celltype_name}.h"" )"
+$gen,tecslib\plugin\NotifierPlugin.rb,370,reference,"aux_header_file = AppFile.open( ""#{$gen}/#{@celltype_name}_aux.h"" )"
+$gen,tecslib\plugin\NotifierPlugin.rb,940,reference,"kernelCfg = AppFile.open( ""#{$gen}/#{@output_file}"" )"
+$gen,tecslib\plugin\OpaqueRPCPlugin.rb,71,reference,"@rpc_server_channel_celltype_file_name = ""#{$gen}/#{@rpc_server_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\OpaqueRPCPlugin.rb,73,reference,"@rpc_client_channel_celltype_file_name = ""#{$gen}/#{@rpc_client_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\RPCPlugin.rb,79,reference,"@rpc_channel_celltype_file_name = ""#{$gen}/#{@rpc_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\SharedOpaqueRPCPlugin.rb,85,reference,"@shared_channel_ct_file_name = ""#{$gen}/#{@shared_channel_ct_name}.cdl"""
+$gen,tecslib\plugin\SharedRPCPlugin.rb,77,reference,"@shared_channel_ct_file_name = ""#{$gen}/#{@shared_channel_ct_name}.cdl"""
+$gen,tecslib\plugin\SharedRPCPlugin.rb,79,reference,"@rpc_channel_celltype_file_name = ""#{$gen}/#{@rpc_channel_celltype_name}.cdl"""
+$gen,tecslib\plugin\SharedRPCPlugin.rb,177,reference,"f = CFile.open( ""#{$gen}/#{@shared_channel_ct_name}.cdl"", ""w"" )"
+$gen,tecslib\plugin\SharedRPCPlugin.rb,232,reference,"import( ""#{$gen}/#{@shared_channel_ct_name}.cdl"" );"
+$gen,tecslib\plugin\TECS2CBridgePlugin.rb,52,reference,"@header_name = ""#{$gen}/#{@signature.get_global_name}.#{$h_suffix}"""
+$gen,tecslib\plugin\TECSInfoCompoPlugin.rb,70,reference,"fn = ""#{$gen}/tmp_#{cell.get_region.get_global_name}_TECSInfoSub.cdl"""
+$gen,tecslib\plugin\TECSInfoPlugin.rb,70,reference,"fn = ""#{$gen}/tmp_#{cell.get_region.get_global_name}_TECSInfoSub.cdl"""
+$gen,tecslib\plugin\TECSInfoPlugin.rb,100,reference,"File.open( ""#{$gen}/include_all_signature_header.h"", ""w"" ){ |f|"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,116,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tVarDeclInfo_factory.h"" )"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,179,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tCelltypeInfo_factory.h"" )"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,208,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tCallInfo_factory.h"" )"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,245,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tEntryInfo_factory.h"" )"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,250,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tCellInfo_factory.h"" )"
+$gen,tecslib\plugin\TECSInfoPlugin.rb,261,reference,"f = AppFile.open( ""#{$gen}/nTECSInfo_tRawEntryDescriptorInfo_factory.h"" )"
+$gen,tecslib\plugin\ThroughPlugin.rb,170,reference,"file2 = CFile.open( ""#{$gen}/#{@ct_name}.cdl"", ""w"" )"
+$gen,tecslib\plugin\TracePlugin.rb,91,reference,"file2 = CFile.open( ""#{$gen}/#{@ct_name}.cdl"", ""w"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,50,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,55,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen_#{nsp}.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,149,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,167,reference,"file = AppFile.open( ""#{$gen}/tecsgen#{nsp_dom}.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,181,reference,"file = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,185,reference,"file = AppFile.open( ""#{$gen}/tecsgen_#{regions_hrmp[0].get_global_name}.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,200,reference,"file2 = AppFile.open( ""#{$gen}/tecsgen.cfg"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,228,reference,"file2 = AppFile.open( ""#{$gen}/#{ct.get_global_name}.c"")"
+$gen,tecslib\plugin\lib\GenAttMod.rb,250,reference,"file2 = AppFile.open( ""#{$gen}/tHRPSVCCaller_#{signature.get_global_name}_id.h"" )"
+$gen,tecslib\plugin\lib\GenAttMod.rb,260,reference,"file2 = AppFile.open( ""#{$gen}/tHRPSVCBody_#{signature.get_global_name}_factory.h"" )"
+$gen,tecslib\plugin\lib\GenHRP2Marshaler.rb,110,reference,"@marshaler_celltype_file_name = ""#{$gen}/#{@marshaler_celltype_name}.cdl"""
+$gen,tecslib\plugin\lib\GenOpaqueMarshaler.rb,306,reference,"@marshaler_celltype_file_name = ""#{$gen}/#{@marshaler_celltype_name}.cdl"""
+$gen,tecslib\plugin\lib\GenTransparentMarshaler.rb,117,reference,"@marshaler_celltype_file_name = ""#{$gen}/#{@marshaler_celltype_name}.cdl"""
+$gen,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,118,reference,"fn2 = ""#{$gen}/tmp_MrubyBridgeCelltypePluginModule_#{@celltype.get_name}_#{@@count}.cdl"""
+$gen_base,tecsflow.rb,57,update,$gen = $gen_base = dir
+$gen_base,tecsgen.rb,280,update,"$gen_base  = ""gen"""
+$gen_base,tecsgen.rb,281,reference,$gen       = $gen_base
+$gen_base,tecsgen.rb,387,definition,$gen = $gen_base = dir
+$gen_base,tecsgen.rb,566,reference,if ! File.directory?( $gen_base ) then
+$gen_base,tecsgen.rb,567,reference,Dir.mkdir( $gen_base )
+$gen_base,tecsgen.rb,570,reference,"print( ""Cannot mkdir #{$gen_base}. If the path has hierarchy, please create directory by manual.\n"" )"
+$gen_base,tecslib\core\gen_xml.rb,45,reference,"file_name = $gen_base + ""/"" + $target + "".xml"""
+$gen_base,tecslib\core\tecsgen.rb,348,reference,$gen = $gen_base
+$gen_base,tecslib\core\tecsgen.rb,350,reference,"$gen = $gen_base + ""/"" + region.get_global_name.to_s"
+$gen_base,tecslib\core\tecsgen.rb,361,reference,$gen = $gen_base
+$gen_base,tecslib\core\tecsgen.rb,432,reference,"STDERR.print ""error occurred while generating. some file can be corrupt in #{$gen_base}\n"""
+$gen_base,tecslib\core\tecsgen.rb,436,reference,"open( ""#{$gen_base}/tecsgen.timestamp"", ""w"" ){|io|}"
+$gen_base,tecslib\core\tecsgen.rb,475,reference,$gen = $gen_base
+$gen_base,tecslib\core\tecsgen.rb,477,reference,"$gen = $gen_base + ""/"" + region.get_global_name.to_s"
+$gen_base,tecslib\core\tecsgen.rb,480,reference,$gen = $gen_base
+$gen_dir,flowlib\C_parser.tab.rb,144,reference,"file2_name = ""#{$gen_dir}/tmp_#{file.sub(/.*\//,"""")}"""
+$gen_dir,flowlib\C_parser.y.rb,736,reference,"file2_name = ""#{$gen_dir}/tmp_#{file.sub(/.*\//,"""")}"""
+$gen_dir,tcflow.rb,50,definition,"$gen_dir = ""gen"""
+$gen_dir,tcflow.rb,69,update,$gen_dir = arg
+$gen_dir,tcflow.rb,92,reference,"TCFlow::Function.load_funclist ""#{$gen_dir}/tcflow.rbdmp"""
+$gen_dir,tcflow.rb,129,reference,"TCFlow::Function.dump_funclist ""#{$gen_dir}/tcflow.rbdmp"""
+$generate_all_template,tecsgen.rb,282,update,$generate_all_template = false
+$generate_all_template,tecsgen.rb,429,definition,$generate_all_template = true
+$generate_all_template,tecslib\core\generate.rb,1200,reference,elsif $generate_all_template
+$generate_all_template,tecslib\core\generate.rb,4520,reference,return if @b_reuse && ! $generate_all_template
+$generate_all_template,tecslib\core\generate.rb,4860,reference,return if @b_reuse && ! $generate_all_template
+$generate_all_template,tecslib\core\generate.rb,4862,reference,return if @b_reuse && ! $generate_all_template
+$generate_all_template,tecslib\plugin\DataPumpHolderPlugin.rb,804,reference,if ! $generate_all_template then
+$generate_no_template,tecsgen.rb,283,update,$generate_no_template = false
+$generate_no_template,tecsgen.rb,432,definition,$generate_no_template = true
+$generate_no_template,tecslib\core\generate.rb,327,reference,return if $generate_no_template
+$generate_no_template,tecslib\core\generate.rb,4522,reference,return if $generate_no_template
+$generate_no_template,tecslib\core\generate.rb,4863,reference,return if $generate_no_template
+$generate_no_template,tecslib\core\generate.rb,5045,reference,return if $generate_no_template
+$generating_region,tecsgen.rb,299,update,$generating_region = nil
+$generating_region,tecslib\core\componentobj\cell.rb,865,reference,if $generating_region == nil then
+$generating_region,tecslib\core\componentobj\cell.rb,871,reference,if $generating_region == @region.get_link_root then
+$generating_region,tecslib\core\componentobj\namespace.rb,202,reference,if @cache_generating_region == $generating_region then
+$generating_region,tecslib\core\componentobj\namespace.rb,231,reference,@cache_generating_region = $generating_region
+$generating_region,tecslib\core\generate.rb,127,reference,"dbgPrint ""Namespace#generate: generating_region=#{$generating_region.get_name} namespace=#{@name} gen_dir=#{$gen}\n"""
+$generating_region,tecslib\core\generate.rb,136,reference,if $generating_region.get_n_cells == 0 then
+$generating_region,tecslib\core\generate.rb,163,reference,if @@domain_gen_factory_list[ $generating_region ] == nil then
+$generating_region,tecslib\core\generate.rb,164,reference,@@domain_gen_factory_list[ $generating_region ] = self
+$generating_region,tecslib\core\generate.rb,165,reference,get_domain_type.gen_factory $generating_region
+$generating_region,tecslib\core\generate.rb,169,reference,if @@class_gen_factory_list[ $generating_region ] == nil then
+$generating_region,tecslib\core\generate.rb,170,reference,@@class_gen_factory_list[ $generating_region ] = self
+$generating_region,tecslib\core\generate.rb,171,reference,get_class_type.gen_factory $generating_region
+$generating_region,tecslib\core\generate.rb,185,reference,if $generating_region.get_n_cells == 0 then
+$generating_region,tecslib\core\generate.rb,217,update,"dbgPrint ""gen_global_header region=#{@name} $generating_region=#{$generating_region.get_name}\n"""
+$generating_region,tecslib\core\generate.rb,325,update,"dbgPrint (""gen_makefile_template: region=#{@name} $generating_region=#{$generating_region.get_name} $gen=#{$gen}\n"")"
+$generating_region,tecslib\core\generate.rb,340,reference,if $generating_region != @@root_namespace then
+$generating_region,tecslib\core\generate.rb,342,reference,"target += ""-#{$generating_region.get_global_name}"""
+$generating_region,tecslib\core\generate.rb,346,reference,if $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,432,reference,if $generating_region.get_n_cells != 0 then
+$generating_region,tecslib\core\generate.rb,438,reference,if $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,450,reference,if $generating_region.get_n_cells != 0 then
+$generating_region,tecslib\core\generate.rb,458,reference,if Region.get_link_roots.length > 1 && $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,470,reference,if $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,478,reference,if $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,484,reference,if $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,495,reference,if $generating_region.get_n_cells != 0 || $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,499,reference,if Region.get_link_roots.length > 1 && $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,501,reference,if $generating_region.get_n_cells > 0 then
+$generating_region,tecslib\core\generate.rb,516,reference,if $generating_region.get_n_cells != 0 then
+$generating_region,tecslib\core\generate.rb,530,reference,if $generating_region.get_n_cells != 0 || $generating_region == @@root_namespace then
+$generating_region,tecslib\core\generate.rb,619,reference,if $generating_region.get_n_cells != 0 then
+$generating_region,tecslib\core\generate.rb,660,reference,domain_regions = [ $generating_region ]
+$generating_region,tecslib\core\generate.rb,672,reference,if domain_regions.length > 1 || domain_regions[0] != $generating_region then
+$generating_region,tecslib\core\generate.rb,1057,update,"dbgPrint ""generate_signature_header signature=#{@name} $generating_region=#{$generating_region.get_name}\n"""
+$generating_region,tecslib\core\tecsgen.rb,345,definition,$generating_region = region
+$generating_region,tecslib\core\tecsgen.rb,472,update,$generating_region = region
+$generating_region,tecslib\plugin\HRPPlugin.rb,161,update,"dbgPrint ""HRPPlugin: $generating_region=#{$generating_region.get_name} $gen=#{$gen}\n"""
+$h_suffix,tecsgen.rb,309,update,"$h_suffix  = ""h"""
+$h_suffix,tecsgen.rb,443,definition,$h_suffix = suffix
+$h_suffix,tecslib\core\generate.rb,219,reference,"f = AppFile.open( ""#{$gen}/global_tecsgen.#{$h_suffix}"" )"
+$h_suffix,tecslib\core\generate.rb,302,reference,"f = AppFile.open( ""#{$gen}/global_tecsgen.#{$h_suffix}"" )"
+$h_suffix,tecslib\core\generate.rb,621,reference,"f.print ""\t$(GEN_DIR)/#{s.get_global_name}_tecsgen.#{$h_suffix} \\\n"""
+$h_suffix,tecslib\core\generate.rb,1058,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,1074,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,1220,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,1310,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_tecsgen.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,1460,reference,"hname = ""#{p.get_signature.get_global_name}_tecsgen.#{$h_suffix}"".to_sym"
+$h_suffix,tecslib\core\generate.rb,1492,reference,"hname = ""#{ct.get_global_name}_tecsgen.#{$h_suffix}"".to_sym"
+$h_suffix,tecslib\core\generate.rb,3098,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_factory.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,3106,reference,"f = AppFile.open(""#{$gen}/#{@global_name}_factory.#{$h_suffix}"")"
+$h_suffix,tecslib\core\generate.rb,4866,reference,"fname = ""#{$gen}/#{@global_name}_inline_templ.#{$h_suffix}"""
+$h_suffix,tecslib\core\generate.rb,4871,reference,"fname = ""#{$gen}/#{@global_name}_inline.#{$h_suffix}"""
+$h_suffix,tecslib\core\generate.rb,5072,reference,"headers = [ ""$(GEN_DIR)/#{@global_name}_tecsgen.#{$h_suffix}"", ""$(GEN_DIR)/#{@global_name}_factory.#{$h_suffix}"", ""$(GEN_DIR)/global_tecsgen.#{$h_suffix}"" ]"
+$h_suffix,tecslib\core\generate.rb,5076,reference,"headers << ""#{@global_name}_inline.#{$h_suffix}"""
+$h_suffix,tecslib\core\generate.rb,5082,reference,"headers << ""$(GEN_DIR)/#{p.get_signature.get_global_name}_tecsgen.#{$h_suffix}"""
+$h_suffix,tecslib\core\generate.rb,5220,reference,"headers << "" $(GEN_DIR)/#{ct.get_global_name}_tecsgen.#{$h_suffix}"""
+$h_suffix,tecslib\core\generate.rb,5222,reference,"headers << "" #{ct.get_global_name}_inline.#{$h_suffix}"""
+$h_suffix,tecslib\plugin\ATK1DelayTaskPlugin.rb,87,reference,"file2 = AppFile.open( ""#{$gen}/tDelayTaskBody_factory.#{$h_suffix}"" )"
+$h_suffix,tecslib\plugin\ATK1ResourcePlugin.rb,80,reference,"file3 = CFile.open( ""#{$gen}/#{@celltype.get_name}_factory.#{$h_suffix}"", ""w"" )"
+$h_suffix,tecslib\plugin\NotifierPlugin.rb,388,reference,"hname = ""#{ct.get_global_name}_tecsgen.#{$h_suffix}"""
+$h_suffix,tecslib\plugin\TECS2CBridgePlugin.rb,52,reference,"@header_name = ""#{$gen}/#{@signature.get_global_name}.#{$h_suffix}"""
+$id,tecslib\core\expression.rb,1016,reference,"str = str.          gsub( /(^|[^\$])\$id\$/, ""\\1#{ct_name}_#{cell_name}"" )"
+$id,tecslib\core\generate.rb,5266,reference,"str = str.gsub( /(^|[^\$])\$id\$/, ""\\1#{ct}_#{cell_global}"" )"
+$id,tecslib\plugin\FMPHandlerPlugin.rb,47,reference,"[:InClass,    ""DEF_INH( {{interruptHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$id,tecslib\plugin\FMPHandlerPlugin.rb,49,reference,"[:InClass,    ""DEF_EXC( {{cpuExceptionHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$id,tecslib\plugin\HRMPKernelObjectPlugin.rb,84,reference,"""DEF_INH( {{interruptHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$id,tecslib\plugin\HRMPKernelObjectPlugin.rb,87,reference,"""DEF_EXC( {{cpuExceptionHandlerNumber}}, { {{attribute}}, $id$_start})""],"
+$id,tecslib\plugin\HRP2AlarmHandlerPlugin.rb,53,reference,"val[:id] = val[:id].gsub( /(^|[^\$])\$id\$/, ""\\1#{@celltype.get_name.to_s}_#{cell.get_name.to_s}"" )"
+$id,tecslib\plugin\HRP2CyclicHandlerPlugin.rb,53,reference,"val[:id] = val[:id].gsub( /(^|[^\$])\$id\$/, ""\\1#{@celltype.get_name.to_s}_#{cell.get_name.to_s}"" )"
+$id,tecslib\plugin\HRP2HandlerPlugin.rb,54,reference,"val[:id] = val[:id].gsub( /(^|[^\$])\$id\$/, ""\\1#{@celltype.get_name.to_s}_#{cell.get_name.to_s}"" )"
+$id,tecslib\plugin\HRPHandlerPlugin.rb,62,reference,"val[:id] = val[:id].gsub( /(^|[^\$])\$id\$/, ""\\1#{@celltype.get_name.to_s}_#{cell.get_name.to_s}"" )"
+$id,tecslib\plugin\HRPHandlerPlugin.rb,84,reference,"start = @celltype.subst_name( ""$id$_start"", name_array )"
+$id,tecslib\plugin\HRPHandlerPlugin.rb,90,reference,"start = @celltype.subst_name( ""$id$_start"", name_array )"
+$id,tecslib\plugin\HRPTaskPlugin.rb,66,reference,"val[:id] = val[:id].gsub( /(^|[^\$])\$id\$/, ""\\1#{@celltype.get_name.to_s}_#{cell.get_name.to_s}"" )"
+$idx,tecslib\core\generate.rb,5269,reference,"str = str.gsub( /(^|[^\$])\$idx\$/, ""\\1#{idx}"" )"
+$idx_is_id,tecsgen.rb,284,update,$idx_is_id = false
+$idx_is_id,tecsgen.rb,390,definition,$idx_is_id = true
+$idx_is_id,tecslib\core\componentobj\celltype.rb,175,reference,if $idx_is_id then
+$import_path,cdelib\saveload.rb,512,reference,$import_path.each{ |path|
+$import_path,tecsgen.rb,293,definition,"$import_path = [ ""."" ]"
+$import_path,tecsgen.rb,360,reference,$import_path << path
+$import_path,tecslib\core\componentobj\import_c.rb,92,reference,$import_path.each{ |path|
+$import_path,tecslib\core\componentobj\import_c.rb,122,reference,$import_path.each{ |path|
+$import_path,tecslib\core\componentobj\importable.rb,50,reference,$import_path.each{ |path|
+$import_path,tecslib\core\componentobj\importable.rb,70,reference,$import_path.each{ |path|
+$import_path,tecslib\core\generate.rb,357,reference,search_path = $import_path + TECSGEN::Makefile.get_search_path
+$import_path,tecslib\core\tecsgen.rb,48,reference,if $import_path.index( path ) == nil then
+$import_path,tecslib\core\tecsgen.rb,50,reference,$import_path << path
+$import_path,tecslib\core\tecsgen.rb,62,reference,$import_path.each{ |path|
+$import_path,tecslib\core\tecsgen.rb,67,update,$import_path = paths
+$import_path,tecslib\core\tool_info.rb,92,reference,if ! $import_path.include?( path )
+$import_path,tecslib\core\tool_info.rb,93,reference,$import_path << path
+$import_path_opt,tecsgen.rb,294,definition,$import_path_opt = []
+$import_path_opt,tecsgen.rb,361,reference,$import_path_opt << path
+$kcode,tecsgen.rb,302,update,$kcode     = nil
+$kcode,tecsgen.rb,394,definition,$kcode = code
+$kcode,tecslib\core\tecs_lang.rb,163,reference,if $kcode == nil
+$kcode,tecslib\core\tecs_lang.rb,167,reference,code = $kcode
+$kcode,tecslib\core\tecs_lang.rb,175,reference,case $kcode
+$library_path,tecsgen.rb,106,reference,($library_path+$LOAD_PATH).each{ |path|
+$library_path,tecsgen.rb,295,definition,$library_path = [ $tecsgen_base_path ]
+$library_path,tecsgen.rb,364,reference,$library_path << path
+$n_err,tecsmerge.rb,124,definition,$n_err   = 0
+$n_err,tecsmerge.rb,168,update,$n_err += 1
+$n_err,tecsmerge.rb,171,update,$n_err += 1
+$n_err,tecsmerge.rb,311,update,$n_err += 1
+$n_err,tecsmerge.rb,556,update,$n_err += 1
+$n_err,tecsmerge.rb,571,update,$n_err += 1
+$n_err,tecsmerge.rb,629,reference,if $n_err > 0 then
+$n_err,tecsmerge.rb,723,reference,if $n_err > 0 then
+$n_err,tecsmerge.rb,724,reference,"STDERR.puts( ""#{$n_err} errors"" )"
+$next,tecslib\plugin\ThroughPlugin.rb,331,reference,"str = str.gsub( /(^|[^\$])\$next\$/, ""\\1#{@next_cell.get_name}"" )"
+$no_banner,tecsgen.rb,304,update,$no_banner = false
+$no_banner,tecsgen.rb,420,definition,$no_banner = true
+$no_banner,tecsgen.rb,474,reference,elsif ! $no_banner || $print_version
+$no_default_import_path,tecsgen.rb,307,update,$no_default_import_path = false
+$no_default_import_path,tecsgen.rb,435,definition,$no_default_import_path = true
+$no_default_import_path,tecsgen.rb,533,reference,if $no_default_import_path == false then
+$old_mode,tecsmerge.rb,127,definition,$old_mode = false
+$old_mode,tecsmerge.rb,288,reference,if (! $old_mode) && ( /^\{/ =~ line ) && ( stat == :PREAMBLE_BODY || stat == :POSTAMBLE_BODY )
+$old_mode,tecsmerge.rb,701,update,$old_mode = true
+$old_mode,tecsmerge.rb,717,reference,if $old_mode then
+$package,tecslib\version.rb,1,definition,"$package = ""tecsgen"""
+$preferred_region,tecslib\plugin\ThroughPlugin.rb,336,reference,"str = str.gsub( /(^|[^\$])\$preferred_region\$/, ""\\1#{@region.get_global_name}"" )"
+$print_version,tecsflow.rb,64,update,$print_version = true
+$print_version,tecsgen.rb,305,update,$print_version = false
+$print_version,tecsgen.rb,423,definition,$print_version = true
+$print_version,tecsgen.rb,455,reference,if ARGV.empty? && ! $print_version && ! $unit_test && ! $TECSFLOW
+$print_version,tecsgen.rb,474,reference,elsif ! $no_banner || $print_version
+$print_version,tecsgen.rb,480,reference,if $print_version && ARGV.empty? && ! $TECSFLOW
+$ram_initializer,tecsgen.rb,297,update,$ram_initializer = false
+$ram_initializer,tecsgen.rb,367,definition,$ram_initializer = true
+$ram_initializer,tecslib\core\componentobj\celltype.rb,713,reference,$ram_initializer && @n_call_port_dynamic > 0 ||
+$ram_initializer,tecslib\core\componentobj\celltype.rb,739,reference,@n_var_init > 0 || has_CB? || ( @n_call_port_dynamic && $ram_initializer )
+$ram_initializer,tecslib\core\generate.rb,265,reference,if $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,1389,reference,if $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,2720,reference,next if inib_cb == :INIB && p.is_dynamic? && p.get_array_size == nil && ! $ram_initializer
+$ram_initializer,tecslib\core\generate.rb,2728,reference,if inib_cb == :INIB && p.is_dynamic? && p.get_array_size == nil && $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,2738,reference,if inib_cb == :INIB && p.is_dynamic? && p.get_array_size != nil && $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,2957,reference,if p.is_dynamic? && $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,3420,reference,const = ( port.is_dynamic? && ! $ram_initializer ) ? '' : 'const '
+$ram_initializer,tecslib\core\generate.rb,3421,reference,init = ( port.is_dynamic? && $ram_initializer ) ? '_init_' : ''
+$ram_initializer,tecslib\core\generate.rb,3493,reference,if port.is_dynamic? && $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,3590,reference,if !( $ram_initializer && a.get_kind == :VAR ) then
+$ram_initializer,tecslib\core\generate.rb,3724,reference,if $ram_initializer == false || $rom == false then
+$ram_initializer,tecslib\core\generate.rb,3805,reference,if has_INIB? && ( $ram_initializer || ! has_CB? ) then
+$ram_initializer,tecslib\core\generate.rb,3973,reference,if v.get_initializer && $ram_initializer == false then
+$ram_initializer,tecslib\core\generate.rb,3994,reference,if v.get_initializer && $ram_initializer == false then
+$ram_initializer,tecslib\core\generate.rb,4016,reference,( $ram_initializer ? 0 : (@n_call_port_dynamic-@n_call_port_array_dynamic) )  > 0 ) ||
+$ram_initializer,tecslib\core\generate.rb,4025,reference,next if inib_cb == :INIB && p.is_dynamic? && p.get_array_size == nil && ! $ram_initializer
+$ram_initializer,tecslib\core\generate.rb,4040,reference,if  $ram_initializer then
+$ram_initializer,tecslib\core\generate.rb,4065,reference,if inib_cb == :INIB && p.is_dynamic? && p.get_array_size != nil && $ram_initializer then
+$ram_initializer,tecslib\plugin\TECSInfoPlugin.rb,135,reference,if $ram_initializer then
+$ram_initializer,tecslib\plugin\TECSInfoPlugin.rb,147,reference,if $ram_initializer then
+$ram_initializer,tecslib\plugin\TECSInfoPlugin.rb,221,reference,if $ram_initializer then
+$ram_initializer,tecslib\plugin\TECSInfoPlugin.rb,234,reference,if $ram_initializer then
+$read_dump,tcflow.rb,51,definition,$read_dump = false
+$read_dump,tcflow.rb,72,update,$read_dump = true
+$read_dump,tcflow.rb,81,reference,if ARGV.empty? && $read_dump == false
+$read_dump,tcflow.rb,91,reference,if $read_dump then
+$region_list,tecsgen.rb,298,definition,$region_list = {}
+$region_list,tecsgen.rb,357,reference,$region_list[ gen_path ] = true
+$region_list,tecslib\core\tecsgen.rb,326,reference,if $region_list.length > 0 then
+$region_list,tecslib\core\tecsgen.rb,327,reference,if $region_list[ region.get_namespace_path.get_path_str ] then
+$region_list,tecslib\core\tecsgen.rb,328,reference,$region_list[ region.get_namespace_path.get_path_str ] = false
+$region_list,tecslib\core\tecsgen.rb,337,reference,if $region_list.length > 0 then
+$region_list,tecslib\core\tecsgen.rb,411,reference,"$region_list.each{ |region_path_str, val|"
+$region_list,tecslib\core\tecsgen.rb,451,reference,if $region_list.length > 0 then
+$region_list,tecslib\core\tecsgen.rb,452,reference,if $region_list[ region.get_namespace_path.get_path_str ] == false then
+$region_list,tecslib\core\tecsgen.rb,453,reference,$region_list[ region.get_namespace_path.get_path_str ] = true
+$rom,tecsgen.rb,317,definition,$rom       = true
+$rom,tecsgen.rb,319,update,$rom       = false
+$rom,tecsgen.rb,401,update,$rom = false
+$rom,tecslib\core\componentobj\celltype.rb,709,reference,result = $rom &&
+$rom,tecslib\core\componentobj\celltype.rb,729,reference,if $rom then
+$rom,tecslib\core\generate.rb,1422,reference,"yn_rom       = ""yes""  if $rom"
+$rom,tecslib\core\generate.rb,2191,reference,if p.get_array_size && $rom then
+$rom,tecslib\core\generate.rb,2598,reference,if ( $rom )then
+$rom,tecslib\core\generate.rb,2653,reference,if $rom then
+$rom,tecslib\core\generate.rb,2681,reference,next if $rom && inib_cb == :CB
+$rom,tecslib\core\generate.rb,3724,reference,if $ram_initializer == false || $rom == false then
+$rom,tecslib\core\generate.rb,3760,reference,if $rom == false then
+$rom,tecslib\core\generate.rb,3935,reference,elsif $rom then
+$rom,tecslib\core\generate.rb,3953,reference,elsif cb_inib == :CB && $rom && ! a.is_rw? then
+$rom,tecslib\core\generate.rb,4045,reference,elsif $rom == false then
+$root_namespace,tecsflow.rb,82,definition,$root_namespace = nil
+$root_namespace,tecsflow.rb,454,update,$root_namespace = Marshal.load( mar_in )
+$root_namespace,tecsflow.rb,473,reference,Namespace.set_root $root_namespace
+$root_namespace,tecsflow.rb,474,reference,$root_namespace.print_all_cells
+$run_dir,cdelib\saveload.rb,472,reference,Dir.chdir $run_dir
+$run_dir,tecsgen.rb,291,definition,$run_dir   = Dir.pwd
+$run_dir,tecslib\core\componentobj\importable.rb,77,reference,Dir.chdir $run_dir
+$show_tree,tecsgen.rb,288,update,$show_tree = false
+$show_tree,tecsgen.rb,404,definition,$show_tree = true
+$show_tree,tecslib\core\tecsgen.rb,379,reference,if $show_tree then
+$source,tecslib\plugin\ThroughPlugin.rb,327,reference,"str = str.gsub( /(^|[^\$])\$source\$/, ""\\1#{@caller_cell.get_name}"" )"
+$start,flowlib\C_parser.tab.rb,1367,reference,"""$start"","
+$start,tecslib\core\C_parser.tab.rb,1620,reference,"""$start"","
+$start,tecslib\core\bnf.tab.rb,2100,reference,"""$start"","
+$start_region,tecslib\plugin\ThroughPlugin.rb,334,reference,"str = str.gsub( /(^|[^\$])\$start_region\$/, ""\\1#{@start_region.get_global_name}"" )"
+$target,tecsgen.rb,306,update,"$target    = ""tecs"""
+$target,tecsgen.rb,554,definition,$target = ARGV[0]
+$target,tecsgen.rb,555,reference,pos = $target.rindex( /[:\\\/]/ )
+$target,tecsgen.rb,557,update,$target = $target[pos+1..-1]
+$target,tecsgen.rb,559,reference,pos = $target.rindex( /\./ )
+$target,tecsgen.rb,561,update,$target = $target[0..pos-1]
+$target,tecslib\core\gen_xml.rb,45,reference,"file_name = $gen_base + ""/"" + $target + "".xml"""
+$target,tecslib\core\generate.rb,339,reference,target = $target
+$tcflow_dump_file_name,tecsflow.rb,81,definition,"$tcflow_dump_file_name = ""#{$gen}/tcflow.rbdmp"""
+$tcflow_dump_file_name,tecsflow.rb,463,reference,"print ""reading '#{$tcflow_dump_file_name}'\n"""
+$tcflow_dump_file_name,tecsflow.rb,468,reference,$tcflow_funclist = TCFlow::Function.load_funclist $tcflow_dump_file_name
+$tcflow_dump_file_name,tecsflow.rb,470,reference,"print ""fatal: fail to load '#{$tcflow_dump_file_name}' in #{doing}\n"""
+$tcflow_funclist,tecsflow.rb,83,definition,$tcflow_funclist = nil
+$tcflow_funclist,tecsflow.rb,127,reference,if $tcflow_funclist[ ep_func ] then
+$tcflow_funclist,tecsflow.rb,128,reference,"$tcflow_funclist[ ep_func ].get_call_funcs.each{ |cf, cff|"
+$tcflow_funclist,tecsflow.rb,156,reference,"$tcflow_funclist.each{|name, func|"
+$tcflow_funclist,tecsflow.rb,198,reference,if $tcflow_funclist[ ep_func ].kind_of? TCFlow::Function then
+$tcflow_funclist,tecsflow.rb,199,reference,func = $tcflow_funclist[ ep_func ]
+$tcflow_funclist,tecsflow.rb,252,reference,if $tcflow_funclist[ ep_func ] then
+$tcflow_funclist,tecsflow.rb,253,reference,function = $tcflow_funclist[ ep_func ]
+$tcflow_funclist,tecsflow.rb,308,reference,func = $tcflow_funclist[ call_func_name ]
+$tcflow_funclist,tecsflow.rb,468,update,$tcflow_funclist = TCFlow::Function.load_funclist $tcflow_dump_file_name
+$tcflow_funclist,tecsflow.rb,496,reference,"$tcflow_funclist.each{ |fname, func|"
+$tecscde,tecscde.rb,182,definition,$tecscde = true
+$tecscde_version,cdelib\version.rb,1,definition,"$tecscde_version = ""0.5.1.0"""
+$tecscde_version,tecscde.rb,75,reference,$tool_version = $tecscde_version
+$tecsflow_base_path,tecsflow.rb,40,definition,$tecsflow_base_path = File.dirname( File.expand_path __FILE__ )
+$tecsflow_base_path,tecsflow.rb,47,reference,"require ""#{$tecsflow_base_path}/flowlib/classes.rb"""
+$tecsflow_base_path,tecsflow.rb,48,reference,"require ""#{$tecsflow_base_path}/tecslib/version.rb"""
+$tecsflow_base_path,tecsflow.rb,49,reference,"require ""#{$tecsflow_base_path}/tecsgen.rb"""
+$tecsgen_base_path,cdelib\cell_plugin_dialog.rb,63,reference,"Dir.chdir( ""#{$tecsgen_base_path}/../glade"" ){"
+$tecsgen_base_path,cdelib\palette.rb,61,reference,"Dir.chdir( ""#{$tecsgen_base_path}/../glade"" ){"
+$tecsgen_base_path,tecscde.rb,63,definition,$tecsgen_base_path = File.dirname( File.expand_path __FILE__ )
+$tecsgen_base_path,tecscde.rb,67,reference,"require ""#{$tecsgen_base_path}/cdelib/version"""
+$tecsgen_base_path,tecscde.rb,68,reference,"require ""#{$tecsgen_base_path}/cdelib/tmodel"""
+$tecsgen_base_path,tecscde.rb,69,reference,"require ""#{$tecsgen_base_path}/cdelib/tview"""
+$tecsgen_base_path,tecscde.rb,70,reference,"require ""#{$tecsgen_base_path}/cdelib/tcontrol"""
+$tecsgen_base_path,tecscde.rb,71,reference,"require ""#{$tecsgen_base_path}/cdelib/saveload"""
+$tecsgen_base_path,tecscde.rb,72,reference,"require ""#{$tecsgen_base_path}/cdelib/cell_plugin_dialog"""
+$tecsgen_base_path,tecscde.rb,73,reference,"require ""#{$tecsgen_base_path}/cdelib/palette.rb"""
+$tecsgen_base_path,tecscde.rb,178,reference,"require ""#{$tecsgen_base_path}/tecsgen.rb"""
+$tecsgen_base_path,tecsgen.rb,62,update,$tecsgen_base_path = File.dirname( File.expand_path __FILE__ )
+$tecsgen_base_path,tecsgen.rb,224,reference,"dbgPrint  ""tecspath: #{$tecsgen_base_path}, __FILE__=#{__FILE__}\n"""
+$tecsgen_base_path,tecsgen.rb,295,reference,$library_path = [ $tecsgen_base_path ]
+$tecsgen_base_path,tecsgen.rb,332,reference,"$tecspath = ""#{$tecsgen_base_path}/tecs"""
+$tecsgen_dump_file_name,tecsflow.rb,80,definition,"$tecsgen_dump_file_name = ""#{$gen}/tecsgen.rbdmp"""
+$tecsgen_dump_file_name,tecsflow.rb,449,reference,"print ""reading '#{$tecsgen_dump_file_name}'\n"""
+$tecsgen_dump_file_name,tecsflow.rb,451,reference,mar_in = File.read( $tecsgen_dump_file_name )
+$tecsgen_dump_file_name,tecsflow.rb,452,reference,TCFlow::Function.load_funclist $tecsgen_dump_file_name
+$tecsgen_dump_file_name,tecsflow.rb,458,reference,"print ""fatal: fail to load '#{$tecsgen_dump_file_name}' in #{doing}\n"""
+$tecspath,cdelib\saveload.rb,513,reference,"tecspath = $tecspath.gsub( /\\/, '\\\\\\\\' )"
+$tecspath,tecsgen.rb,330,definition,$tecspath = ENV[ 'TECSPATH' ]
+$tecspath,tecsgen.rb,332,update,"$tecspath = ""#{$tecsgen_base_path}/tecs"""
+$tecspath,tecsgen.rb,535,reference,"if $tecspath != ""."" then"
+$tecspath,tecsgen.rb,536,reference,TECSGEN.add_import_path $tecspath
+$tecspath,tecsgen.rb,539,reference,Dir.foreach( $tecspath ){ |f|
+$tecspath,tecsgen.rb,540,reference,"if f != ""."" && f != "".."" && File.directory?( $tecspath + '/' + f ) then"
+$tecspath,tecsgen.rb,541,reference,TECSGEN.add_import_path( $tecspath + '/' + f )
+$tecspath,tecslib\core\tecsgen.rb,59,reference,"new_tecspath = cygpath( $tecspath, $tecspath )"
+$tecspath,tecslib\core\tecsgen.rb,68,update,$tecspath = new_tecspath
+$tecspath,tecslib\core\tecsgen.rb,78,reference,tp = $tecspath.dup
+$title,tecsflow.rb,44,definition,"$title = ""tecsflow"""
+$title,tecsgen.rb,472,reference,if $title then
+$title,tecsgen.rb,473,reference,"STDERR << ""#{$title} version #{$tool_version} (tecsgen version #{$version})  #{$Copyright}\n"""
+$tool_version,tecscde.rb,75,definition,$tool_version = $tecscde_version
+$tool_version,tecsflow.rb,45,update,"$tool_version = ""1.G.0"""
+$tool_version,tecsgen.rb,473,reference,"STDERR << ""#{$title} version #{$tool_version} (tecsgen version #{$version})  #{$Copyright}\n"""
+$unique_id,tecsgen.rb,285,update,$unique_id = false
+$unique_id,tecsgen.rb,411,definition,$unique_id = true
+$unique_id,tecslib\core\optimize.rb,110,reference,if $unique_id then
+$unit_test,tecsgen.rb,301,update,$unit_test = false
+$unit_test,tecsgen.rb,426,definition,$unit_test = true
+$unit_test,tecsgen.rb,455,reference,if ARGV.empty? && ! $print_version && ! $unit_test && ! $TECSFLOW
+$unit_test,tecsgen.rb,522,reference,if $unit_test then
+$unit_test,tecslib\core\componentobj\namespacepath.rb,252,reference,if $unit_test then
+$unit_test,tecslib\core\tecs_lang.rb,283,reference,if $unit_test then
+$unit_test,tecslib\core\types.rb,1633,reference,if $unit_test then
+$unopt,tecsflow.rb,335,reference,if ! $unopt then
+$unopt,tecsflow.rb,366,reference,if ! $unopt then
+$unopt,tecsgen.rb,278,update,$unopt     = false
+$unopt,tecsgen.rb,370,definition,$unopt = true
+$unopt,tecslib\core\componentobj\port.rb,189,reference,if $unopt || $unopt_entry then
+$unopt,tecslib\core\tecsgen.rb,373,reference,if ! $unopt then
+$unopt,tecslib\core\tecsgen.rb,493,reference,if ! $unopt then
+$unopt_entry,tecsgen.rb,279,update,$unopt_entry= false
+$unopt_entry,tecsgen.rb,373,definition,$unopt_entry = true
+$unopt_entry,tecslib\core\componentobj\port.rb,189,reference,if $unopt || $unopt_entry then
+$unopt_entry,tecslib\core\componentobj\port.rb,513,reference,if @port_type == :ENTRY && $unopt_entry == true then
+$unopt_entry,tecslib\core\componentobj\port.rb,523,reference,if @port_type == :ENTRY && $unopt_entry == true then
+$unopt_entry,tecslib\core\optimize.rb,326,reference,if $unopt_entry == false then
+$unopt_entry,tecslib\plugin\TECSInfoCompoPlugin.rb,52,reference,if $unopt_entry == false then
+$unopt_entry,tecslib\plugin\TECSInfoCompoPlugin.rb,54,update,$unopt_entry = true
+$unopt_entry,tecslib\plugin\TECSInfoPlugin.rb,52,reference,if $unopt_entry == false then
+$unopt_entry,tecslib\plugin\TECSInfoPlugin.rb,54,update,$unopt_entry = true
+$verbose,tecsgen.rb,289,update,$verbose   = false
+$verbose,tecsgen.rb,408,definition,$verbose = true
+$verbose,tecsgen.rb,414,update,$verbose = true
+$verbose,tecsgen.rb,477,reference,if $verbose then
+$verbose,tecslib\core\componentobj\cell.rb,685,reference,if $verbose then
+$verbose,tecslib\core\componentobj\celltype.rb,565,reference,return if ! $verbose
+$verbose,tecslib\core\componentobj\celltypeModule.rb,62,reference,if $verbose then
+$verbose,tecslib\core\componentobj\import_c.rb,141,reference,if $verbose then
+$verbose,tecslib\core\componentobj\import_c.rb,172,reference,if( $verbose )then
+$verbose,tecslib\core\componentobj\importable.rb,60,reference,if $verbose then
+$verbose,tecslib\core\componentobj\importable.rb,80,reference,if $verbose then
+$verbose,tecslib\core\componentobj\namespace.rb,419,reference,elsif $verbose then
+$verbose,tecslib\core\componentobj\signature.rb,316,reference,if $verbose then
+$verbose,tecslib\core\generate.rb,5337,reference,if $verbose then
+$verbose,tecslib\core\generate.rb,5343,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,106,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,160,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,173,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,207,reference,if $verbose && dn then
+$verbose,tecslib\core\optimize.rb,236,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,304,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,321,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,341,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,346,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,351,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,357,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,426,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,432,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,445,reference,if $verbose then
+$verbose,tecslib\core\optimize.rb,451,reference,if $verbose then
+$verbose,tecslib\core\pluginModule.rb,71,reference,if ( $verbose ) then
+$verbose,tecslib\core\pluginModule.rb,214,reference,if $verbose then
+$verbose,tecslib\core\tecsgen.rb,318,reference,if $verbose
+$verbose,tecslib\plugin\RepeatCellPlugin.rb,67,reference,if $verbose then
+$version,tcflow.rb,45,definition,"$version=""V1.0.0.1"""
+$version,tcflow.rb,77,reference,"parser.version = ""#{$version}"""
+$version,tcflow.rb,83,reference,"puts ""#{$exe_name} : #{$version}"""
+$version,tcflow.rb,95,reference,"STDERR.puts ""#{$exe_name} : #{$version}"""
+$version,tecsflow.rb,66,reference,"parser.version = ""#{$version}"""
+$version,tecsgen.rb,447,reference,"parser.version = ""#{$version}"""
+$version,tecsgen.rb,473,reference,"STDERR << ""#{$title} version #{$tool_version} (tecsgen version #{$version})  #{$Copyright}\n"""
+$version,tecsgen.rb,475,reference,"STDERR << ""tecsgen  version #{$version}  #{$Copyright}\n"""
+$version,tecslib\version.rb,2,update,"$version = ""1.9.1"""
+$yydebug,tecsgen.rb,290,update,$yydebug   = false
+$yydebug,tecsgen.rb,417,definition,$yydebug = true
+$yydebug,tecsgen.rb,487,reference,unless $yydebug then

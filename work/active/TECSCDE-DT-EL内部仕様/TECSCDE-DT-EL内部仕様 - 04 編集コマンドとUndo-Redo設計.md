@@ -62,6 +62,10 @@ class ClipboardGateway {
 
 `CutCommand`は[[TECSCDE-TS内部仕様]]4.5節の設計（内部で`CopyCommand`相当の処理と`DeleteCommand`相当を1コマンドに合成）を踏襲し、`CopyCommand`側の変更がそのまま反映される。
 
+> [!note] 実装での設計更新（2026-09-11）
+> - **`PasteCommand`**: Electron 44 の `clipboard.readText()` が非同期（`Promise<string>`）であるのに対し、`Command.apply()` は純粋同期処理であるため、`PasteCommand` は `ClipboardGateway` を持たず、事前に解決済みのテキスト（`string | undefined`）を引数で受け取る設計に改めた（[[work/active/tecs/TECSCDE-DT-EL PasteCommand非同期クリップボード決定|決定記録]]）。
+> - **`CutCommand`**: `History.current` が `past` コマンド列を先頭から再生（replay）する設計のため、`apply()` 内にクリップボード書き込み副作用を持つと再描画のたびに書き込みが再実行されてしまう。そのため副作用はコマンド発行前の `AppStore.cutSelection` へ移し、`CutCommand.apply()` は純粋なモデル削除のみを行う。
+
 ## Related
 
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 04 編集コマンドとUndo-Redo設計|TECSCDE-TS内部仕様 第4章（一次情報源、Copy/Paste/Cut以外は同一）]]

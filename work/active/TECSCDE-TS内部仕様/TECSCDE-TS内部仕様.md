@@ -42,6 +42,7 @@ tags:
 - [[TECSCDE外部仕様]] — 本書が実装しようとする外部仕様（全11章、行動仕様の一次情報源）
 - [[TECSCDE内部仕様]] — 同じ外部仕様に基づく既存の内部仕様（関数／インタフェースベース）。本書はこれに対する代替設計案
 - [[work/active/tecs/TECSCDE-実装アーキテクチャ案|TECSCDE-実装アーキテクチャ案]] — [[TECSCDE内部仕様]]系統の具体的パッケージ構成・型設計案
+- [[work/active/tecs/TECSCDE-TS-実装アーキテクチャ案|TECSCDE-TS-実装アーキテクチャ案]] — 本書（クラスベース）に対応する具体的パッケージ構成・Vite/CLI環境・テスト戦略案
 - [[TECSCDE-JS-TS実装]] — 現行の実際の実装（関数ベース、本書のクラス設計は未反映）
 - [[work/active/TECSCDE-TS実装/TECSCDE-TS実装|TECSCDE-TS実装]] — 本書のクラス設計に対応する実装進捗ノート（着手前）
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様]] — 本書のクラス設計を、デスクトップ版外部仕様に基づきElectron固有化した内部仕様（2026-09-05着手）

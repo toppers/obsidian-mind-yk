@@ -220,7 +220,7 @@ README が挙げる数値目標（いずれも**作者側の主張**であり、
 - **プラグイン本体は有効**。セッション起動時に ECC の hooks.json 由来の警告が出るのはこのため（Bash プリフライト検査・doc ファイル警告・config 保護・MCP ヘルスチェック・compact 前の状態保存・SessionStart での前回コンテキスト復元・Stop 時の一括 format/typecheck・`console.log` 検査・セッション評価/コスト追跡/デスクトップ通知 など）。
 - **ルール群は自動読み込み無効**。`~/.claude/rules/ecc.disabled/`（`.disabled` にリネーム）に退避してあり、`common/`（coding-style・security・testing・git-workflow・code-review・agents・patterns・performance・hooks・development-workflow）等は参照はできるが自動注入されない。
 - **hooks・agents（67）・skills（281）は稼働中**。
-- この構成（本体 ON ／ ルールのみ OFF）は**段階導入の判断**による — 想定より多機能で、常時ロードされる rules がコンテキストを圧迫するため、効果の明確な層から足す方針。記録: [[Key Decisions]] 2026-09-11。
+- この構成（本体 ON ／ ルールのみ OFF）は**段階導入の判断**による — 想定より多機能で、常時ロードされる rules がコンテキストを圧迫するため、効果の明確な層から足す方針。記録: [[Key Decisions Archive]] 2026-09-11。
 
 ## 10. 参考リソース
 

@@ -20,6 +20,9 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 6 of 
 
 詳細は[[TECSCDE-TS内部仕様]]第6章を参照。
 
+> [!note] 実装での設計更新（2026-09-09）
+> - **パン（Pan）の実現**: SVG レベルでの `transform`/`viewBox` 操作ではなく、シェル（モジュールG）側の HTML スクロールコンテナ（`pan-scroll.ts`、`panCenter`(mm) ⇔ `scrollLeft/Top`(px)）で実現。描画層の `CanvasView` は `panCenter` を読まない。
+
 ## Related
 
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 06 表示制御設計|TECSCDE-TS内部仕様 第6章（一次情報源、本章はこれと同一）]]

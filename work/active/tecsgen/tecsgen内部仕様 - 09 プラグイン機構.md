@@ -1,6 +1,6 @@
 ---
 date: 2026-08-16
-description: "tecsgen内部仕様書 第9章（プラグイン機構、plugin.rb/pluginModule.rb）— プラグインの種類・ロード、PluginModule、MultiPluginディスパッチ機構、既知の問題3件（TransparentRPCSignaturePlugin参照切れ・FMPのRPC死コード・CppIfGenの二重無効化コード）。"
+description: "tecsgen内部仕様書 第9章（プラグイン機構、plugin.rb/pluginModule.rb）— プラグインの種類・ロード、PluginModule、MultiPluginディスパッチ機構、既知の問題3件（TransparentRPCSignaturePlugin参照切れ・FMPのRPC死コード・CppIfGenの二重無効化コード）。2026-09-15、3件とも呼び出し元・エラー処理経路を追跡——9.7.1はP2001のクリーンな失敗、9.7.2はサイレントな誤生成（nilとの違いが鍵）、9.7.3は定義/undef対の構造から意図性を補強。CppIfGenPluginの複製も直接比較で確認済みに格上げ。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -11,7 +11,7 @@ tags:
   - spec
 ---
 
-Domain note split from [[tecsgen内部仕様]] (2026-08-16, 25KB threshold). Chapter 9 of 12.
+Domain note split from [[tecsgen内部仕様]] (2026-08-16, 25KB threshold). Chapter 9 of 12. **2026-09-15、9.7の既知の問題3件を`pluginModule.rb`・`signature.rb`・`join.rb`・`FMPPlugin.rb`・`CppIfGenCelltypePlugin.rb`まで遡って追跡し、実行時挙動を確定**（[[work/active/tecsgen/tecsgen内部仕様 - 要再検証項目一覧#5. 第9章 プラグイン機構 — 9.7 既知の問題（3件、実行時未再現）|要再検証項目一覧]]項目5）。
 
 ## 9. プラグイン機構（plugin.rb / pluginModule.rb）
 
@@ -68,7 +68,7 @@ end
 | [[work/active/tecsgen-plugins/MrubyBridgePlugin\|MrubyBridgePlugin]] | CDL上の付与位置（celltype/cell/signature/through） | 4種類すべて |
 | [[work/active/tecsgen-plugins/HRMPPlugin\|HRMPPlugin]] | CDL指定子の種類（`domain(...)` か `class(...)` か） | HRMPDomainPlugin / HRMPClassPlugin |
 | [[work/active/tecsgen-plugins/CIfGenPlugin\|CIfGenPlugin]] | CDL上の付与位置 | celltype/cell の2種類のみ（signature・through・domainは非対応） |
-| [[work/active/tecsgen-plugins/CppIfGenPlugin\|CppIfGenPlugin]] | CDL上の付与位置 | celltype/cell の2種類のみ（CIfGenPluginからの複製と推測） |
+| [[work/active/tecsgen-plugins/CppIfGenPlugin\|CppIfGenPlugin]] | CDL上の付与位置 | celltype/cell の2種類のみ（2026-09-15確認: `CIfGenPlugin.get_plugin`と`CppIfGenPlugin.get_plugin`はコメント文言・分岐構造とも一字一句同一で、`$Id: MultiPlugin.rb...`という複製元由来のヘッダ文字列まで残る——「推測」ではなく直接比較で確認済みの複製） |
 
 > [!note] 発見: 基底クラステンプレートの複製痕跡
 > `CIfGenPlugin`・`HRPPlugin` など複数のプラグインファミリーで、ファイル内の `$Id` キーワードが実際のファイル名ではなく複製元の基底クラスファイル（`MultiPlugin.rb`・`CelltypePlugin.rb`・`CellPlugin.rb` 等）を指したまま残っている（[[work/active/tecsgen-plugins/CIfGenPlugin|CIfGenPlugin 仕様書]] 4節）。単発の書き換え忘れではなく、「基底クラスファイルをコピーして新しいプラグインファミリーを作る」という標準付属プラグインの制作過程そのものを示す一次証拠。新規プラグイン開発者が既存ファミリーを雛形にする際に踏襲されている慣行と見られる。
@@ -92,15 +92,17 @@ end
 
 ### 9.7 既知の問題（プラグイン仕様書調査で発見）
 
-標準付属プラグイン群の仕様書化（[[work/active/tecsgen-plugins/PluginCoverageAudit|カバレッジ監査]]、2026-08-15完了）で見つかった、実装上のリスクとなりうる3件。いずれもソースの静的な突き合わせのみに基づく指摘であり、実行時の再現確認はしていない。
+標準付属プラグイン群の仕様書化（[[work/active/tecsgen-plugins/PluginCoverageAudit|カバレッジ監査]]、2026-08-15完了）で見つかった、実装上のリスクとなりうる3件。**2026-09-15、3件とも実際の呼び出し元・エラー処理経路まで遡って追跡し、「静的な文字列の不一致」から「トレース済みの具体的な実行時挙動」へ格上げした**（実際にtecsgenを実行してのブラックボックス再現ではないが、コードパスを最後まで辿ったことで結果は一意に定まる）。
 
-#### 9.7.1 `TransparentRPCSignaturePlugin` 参照切れ
+#### 9.7.1 `TransparentRPCSignaturePlugin` 参照切れ — 挙動を追跡: クラッシュではなく「クリーンな失敗」
 
 [[work/active/tecsgen-plugins/RPCPlugin|RPCPlugin]]（`gen_marshaler_celltype_`、195〜201行）と [[work/active/tecsgen-plugins/DataPumpHolderPlugin|DataPumpHolderPlugin]] が生成するCDLが、どちらも独立に `generate(TransparentRPCSignaturePlugin, ...)` というクラス名を呼び出す。しかし `tecslib/plugin/` 全85ファイルおよびリポジトリ全体を検索しても、この名前のクラス定義・エイリアスは一切存在しない（実在するのは `TransparentMarshalerPlugin`）。`TransparentMarshalerPlugin` が過去に `TransparentRPCSignaturePlugin` という名前だった時期にリネームされ、生成コード側の文字列リテラルだけ追随できなかった、という説明が最も自然だが確証はない。
 
-`RPCPlugin` の Transparent 方式マーシャラ生成、または `DataPumpHolderPlugin` の Buffered 系合成セルタイプが実際にコンパイルされた場合、`MultiPlugin`（9.5）のディスパッチ機構が `TransparentRPCSignaturePlugin` のロードに失敗するコードパスが2箇所独立に埋め込まれている。9.5 で見た「`$Id` の複製痕跡」のような静的なメタデータの矛盾とは異なり、**実行時に初めて顕在化しうる参照切れ**である点に注意。
+**追跡した実行時挙動**: `PluginModule.load_plugin`（`pluginModule.rb:75`）は`require_tecsgen_lib("TransparentRPCSignaturePlugin.rb", false)`でファイルを探すが、`$library_path`/`$LOAD_PATH`のどこにもそのファイル名は存在しないため`false`を返す→`cdl_error("P2001 $1.rb : fail to load plugin", ...)`を発行して`nil`を返す。呼び出し元の`Signature#apply_plugin`（`signature.rb:315`）は`return if plClass == nil`で**nilを安全に処理**しており、Rubyの未捕捉例外やクラッシュにはならない。つまり実際に起きるのは、**`P2001`という明確なエラーメッセージが出て、コード生成フェーズへ進むゲート（11章、`Generator.get_n_error != 0`）に引っかかりtecsgenが正常終了コードでは終わらない**という「クリーンだが確実な失敗」である——未定義動作や不可解なクラッシュではない。
 
-#### 9.7.2 FMP の RPC 死コード（マルチプロセッサ間仲介の実装未完）
+**実行による確認（2026-09-26）**: [[tecsgen-python3移植計画]]の正解データ採取で、移植元 `test/` のケースを実際に実行し、上の追跡どおりの挙動を確認した（WSL Ubuntu、Ruby 3.2.3、gcc 13.3、SVN r3304）。`class`・`rpc`・`DataPumpHolder` の3ケースが `P2001 TransparentRPCSignaturePlugin.rb : fail to load plugin` を出し、終了コード1で止まる。Ruby の例外は出ない。続けて、ロードに失敗したプラグインが作るはずだった CDL（`gen/tMarshaler_*.cdl` など）が見つからないという `S1148`、またはセルタイプが見つからないという `S1027` が連鎖して出る。つまり**移植元の標準テストのうち、RPC を使う3ケースは現行版では通らない**。
+
+#### 9.7.2 FMP の RPC 死コード — 追跡の結果、「未完成」より深刻な**サイレントな誤生成**と判明
 
 `FMPPlugin#add_through_plugin`（87〜140行）は [[work/active/tecsgen-plugins/HRP2Plugin|HRP2Plugin]]・[[work/active/tecsgen-plugins/HRPPlugin|HRPPlugin]] と同じ役割（結合先のクラス境界をまたぐ場合の仲介プラグイン自動選択）を持つが、「呼び先クラスが特定プロセッサ限定（`locality=="only"`）かつ呼び元が別プロセッサまたは非限定」という、本来RPC仲介が必要なはずの条件で `[]`（挿入なし）を返す。分岐には次のコメントアウト済みコードが残る。
 
@@ -110,13 +112,15 @@ end
 return []
 ```
 
-`FMPRPCPlugin` というクラスは `tecslib/plugin/` のどこにも存在しない（FMP関連3ファイルのみで確認済み）——マルチプロセッサ間のRPC仲介機構は設計段階で構想されたが実装されないまま終わったことを示す直接証拠。9.5 の「基底クラステンプレートの複製痕跡」（存在するコードの複製忘れ）とは性質が異なり、こちらは**存在しないクラスへの参照を残したまま無効化された未完成機能**である。
+`FMPRPCPlugin` というクラスは `tecslib/plugin/` のどこにも存在しない（FMP関連3ファイルのみで確認済み）。
 
-#### 9.7.3 CppIfGen の二重無効化コード（意図不明）
+**追跡した実行時挙動**: 呼び出し元（`join.rb`、複数箇所）は`add_through_plugin`の戻り値が**`nil`なら`cdl_error`で結合を拒否**するが、**`[]`（空配列）は「結合は許可、追加のthroughプラグインは不要」として扱われる**——`FMPPlugin#add_through_plugin`は全分岐（カーネルオブジェクト宛て・RPC必要・直接呼出し可）で一貫して`[]`を返しており、`nil`を返す分岐が存在しない。つまりRPC仲介が必要と判定した条件でも**エラーも警告も一切出さず、プロセッサ境界をまたぐ直接呼出しとして黙って結合を許可する**——「未実装のため止まる」のではなく「未実装のまま気づかれずに通る」という、9.7.1より一段階深刻なサイレント欠陥。マルチプロセッサ間RPC仲介機構は設計段階で構想されたが実装されないまま終わったことを示す直接証拠でもある。
 
-`CppIfGenCelltypePlugin` には、[[work/active/tecsgen-plugins/CIfGenPlugin|CIfGenCelltypePlugin]] と同じ「`TOPPERS_CB_TYPE_ONLY` マクロで `_tecsgen.h` をインクルードし CELLCB 型定義だけを取り込む」トリックのコードが存在するが、`dummy = <<EOT` ... `#if 0` という**二重の無効化**（到達不能なヒアドキュメント代入の中に、さらに `#if 0` で囲まれたコード）がかかっている。
+#### 9.7.3 CppIfGen の二重無効化コード — 構造から「意図的」の裏付けを追加
 
-これが「TECS内部APIをC++側では隠さない」という意図的な設計方針転換なのか、単なる実装未完了なのかは、コメントからは判断できない（[[work/active/tecsgen-plugins/CppIfGenPlugin|CppIfGenPlugin 仕様書]] 5節）。9.5 で見た複製慣行の延長として、C言語版（CIfGenPlugin）のコードをC++版へ複製した際に、C++側では不要と判断して無効化した可能性はあるが、その判断が明示的に記録されていない。
+`CppIfGenCelltypePlugin`（100〜130行）には、[[work/active/tecsgen-plugins/CIfGenPlugin|CIfGenCelltypePlugin]] と同じ「`TOPPERS_CB_TYPE_ONLY` マクロで `_tecsgen.h` をインクルードし CELLCB 型定義だけを取り込む」トリックのコードが存在するが、`dummy = <<EOT` ... `#if 0` という**二重の無効化**（到達不能なヒアドキュメント代入の中に、さらに `#if 0` で囲まれたコード）がかかっている。**同じ構造の無効化が定義側・undef側の2箇所（110〜118行・124〜130行）に対で存在し**、間に挟まる`file.print "#include \"...\_tecsgen.h\""`（120〜122行）だけがガード無しでそのまま出力される——結果としてC++用インタフェースヘッダは`_tecsgen.h`の全内容を素通しでincludeする形になり、CIfGenPlugin（C版）が意図するCB型限定includeとは異なる。
+
+これが「TECS内部APIをC++側では隠さない」という意図的な設計方針転換なのか、単なる実装未完了なのかは、コメントからは判断できない（[[work/active/tecsgen-plugins/CppIfGenPlugin|CppIfGenPlugin 仕様書]] 5節）。**ただし、定義側・undef側という対になる2箇所が両方とも同じ二重無効化パターン（Rubyのdummy代入＋C側`#if 0`）で揃っている**という構造は、単発の消し忘れでは起こりにくく、9.5で確認した「CIfGenPluginからの複製」慣行の延長として——C言語版のコードをC++版へ複製した際に、C++側では丸ごと不要と判断して意図的に無効化した可能性を補強する（が、明示的な記録が無い以上「未検証」のまま残す）。
 
 ---
 

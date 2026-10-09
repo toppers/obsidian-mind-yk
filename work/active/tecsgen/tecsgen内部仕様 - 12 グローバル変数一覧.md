@@ -1,6 +1,6 @@
 ---
 date: 2026-08-22
-description: "tecsgen内部仕様書 第12章（グローバル変数一覧）— 実装全体で使われるグローバル変数の一覧表。存在しない`$KCODE_CDL`等を削除し、`$force_overwrite`の説明と欠落していたテンプレート系変数を訂正。"
+description: "tecsgen内部仕様書 第12章（グローバル変数一覧）— 実装全体で使われるグローバル変数の一覧表。存在しない`$KCODE_CDL`等を削除し訂正済み。2026-09-24、機械的全数走査によるCSV生データへのリンクを追加。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -48,6 +48,13 @@ Domain note split from [[tecsgen内部仕様]] (2026-08-16, 25KB threshold). Cha
 | `$CHARSET_FILE` | Symbol\|nil | 環境変数解決後に決定（`tecs_lang.rb`） | CDL ファイルの実際の文字コード（例: `:eucJP`） |
 | `$KCONV_CDL` | const | `Kconv::EUC`（`$CHARSET_FILE` 確定後に再設定） | CDL 用 `Kconv` 定数（5.1/10.2 の文字コード変換で使用） |
 | `$KCONV_TECSGEN` | const | `Kconv::UTF8` | tecsgen ソース自身（メッセージ・コメント埋め込み文字列）の文字コード |
+
+## 全数調査（生データ、2026-09-24）
+
+AST等を使わない正規表現ベースの機械的全数走査で、`$`プレフィックスの全出現箇所（110変数・808件）を定義/更新/参照に分類したCSVを生成: [[reference/tecsgen_ruby_global_variables.csv]]
+
+> [!warning] 上表（手動検証済み）とは性質が異なる
+> 上表はソースを直接読んで検証済みの「実際に意味のある設定用グローバル変数」のみを掲載。CSV側は機械的全数走査のため、`bnf.tab.rb`等の生成ファイル内の変数や、"定義"の判定（各変数の最初の代入をヒューリスティックに定義とみなす）に誤りを含みうる。突き合わせ時は上表を正とし、CSVは差分発見・網羅性チェックの補助に使うこと。
 
 ---
 

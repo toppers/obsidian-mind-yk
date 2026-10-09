@@ -1,0 +1,23 @@
+{
+  "id": "conv-1791511023440-8tzuw0jqr",
+  "providerId": "claude",
+  "title": "obsidian の パブリッシュのしかたを教えて",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1791511023443,
+  "lastActivityAt": 1791511068885,
+  "sessionId": "d104d6a9-b363-4250-a1ec-5818b2d1b284",
+  "selectedModel": "opus",
+  "providerState": {
+    "providerSessionId": "d104d6a9-b363-4250-a1ec-5818b2d1b284"
+  },
+  "usage": {
+    "model": "opus",
+    "inputTokens": 2,
+    "cacheCreationInputTokens": 1350,
+    "cacheReadInputTokens": 79010,
+    "contextWindow": 1000000,
+    "contextTokens": 80362,
+    "percentage": 8,
+    "contextWindowIsAuthoritative": true
+  }
+}

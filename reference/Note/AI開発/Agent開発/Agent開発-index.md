@@ -20,11 +20,12 @@ tags:
 - [[dahatake skills mdq index]] — `mdq index` CLIヘルプ控え
 - [[dahatake skills code-query]] — `cq` CLIヘルプ控え
 - [[pmb-使用法]] — PMBのセットアップ選択肢の比較表（埋め込みモデルのRAM使用量とCJK想起精度のトレードオフ） (2026-06-30)
-- [[shardmind]] — shardmindでbreferrari/obsidian-mindを導入した実行ログ (2026-06-30)
+- [[shardmind]] — shardmindのコマンド早見表（2026-09-29）と、breferrari/obsidian-mind導入の実行ログ (2026-06-30)
 - [[エージェント対応CLI設計パターン]] — エージェント対応CLIの設計パターン。AIに使われるコマンドラインを作る10のルール (2026-05-27)
 
 - [[Serena ykominami-svn-2 実行結果]] — .serena配下15リポジトリでserena project indexを再実行した結果控え (2026-08-30)
 - [[graphify ykominami-svn-2 実行結果]] — 同15リポジトリでgraphifyをコード限定実行した結果控え、serenaとの比較 (2026-08-30)
+- [[llm-wiki-plugin]] — `/plugin marketplace update llm-wiki`実行結果、wiki:*スラッシュコマンド一覧と推定トークンコスト (2026-09-16)
 
 ## Subdirectories
 - [[Agent-Skill-index]] — 自作スキル群の調査・分割・設定・呼び出し方法に関するメモ集

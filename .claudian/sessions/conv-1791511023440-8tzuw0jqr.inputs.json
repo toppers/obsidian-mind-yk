@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "conversationId": "conv-1791511023440-8tzuw0jqr",
+  "records": [
+    {
+      "schemaVersion": 1,
+      "id": "msg-1791511024437-4i68pwk",
+      "userTurnOrdinal": 1,
+      "state": "accepted",
+      "localMessageId": "msg-1791511023435-6jxceqh",
+      "timestamp": 1791511023435,
+      "rawDisplayText": "obsidian の パブリッシュのしかたを教えて",
+      "canonicalText": "obsidian の パブリッシュのしかたを教えて",
+      "images": [],
+      "contentDigest": "f53db78be871bbf506e9fe568d06e3f86aeaafc85bba74af5ff9471908aa077d",
+      "providerUserMessageId": "bf6faa70-c84b-4ef6-afdc-5a596c7181ba",
+      "providerAssistantMessageId": "08d3dc59-9853-47fd-869b-4a471085431d"
+    }
+  ]
+}

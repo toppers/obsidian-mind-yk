@@ -36,9 +36,10 @@
     ".claude/om-mcp-audit.jsonl",
     ".claude/om-mcp-audit.jsonl.1",
     ".claude/om-reasoning/",
-    ".claude/om-mcp-no-mcp.json*"
+    ".claude/om-mcp-no-mcp.json*",
+    ".smart-env"
   ],
-  "gitignore_exclusions_updated_at": 1789362491682,
+  "gitignore_exclusions_updated_at": 1791510713579,
   "language": "en",
   "re_import_wait_time": 13,
   "smart_chat_threads": {

@@ -38,11 +38,11 @@ Pattern は全て `**/*.md`、`Include: yes (default)`。
 
 ## 履歴
 
-- 2026-08-11 時点のスナップショットは [[使い方]]（当時は `ob-TECS*` 系3件＋`wiki-tecs*` 系6件、総316文書/162未埋め込み）。コレクション名が `ob-TECS*` → `wiki-tecs*`／`tecs*` に変わっている。
+- 2026-08-11 時点のスナップショットは [[QMD-使い方]]（当時は `ob-TECS*` 系3件＋`wiki-tecs*` 系6件、総316文書/162未埋め込み）。コレクション名が `ob-TECS*` → `wiki-tecs*`／`tecs*` に変わっている。
 
 ## Related
 
-- [[使い方]] — 2026-08-11 の `qmd status` スナップショット（この一覧の旧版）
+- [[QMD-使い方]] — 2026-08-11 の `qmd status` スナップショット（この一覧の旧版）
 - [[QMD-SQLiteの場所]] — 索引 DB ファイル（`index.sqlite`）の探索順
 - [[QMD-アーキテクチャ]] — qmd 本体の構成
 - [[Gotchas - Tooling & Config]] — 空の `.mcp.json` は正しい（qmd は `~/.claude.json`）

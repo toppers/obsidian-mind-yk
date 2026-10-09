@@ -44,8 +44,8 @@ tags:
 - [[Claude-MCP-Tool一覧]]
 - [[MCP-設定方法]]
 - [[MCP-設定方法-2]]
-- [[reference/Note/AI開発/Claude-Code/MCP/PMB/使い方|PMB — 使い方]]
-- [[reference/Note/AI開発/Claude-Code/MCP/QMD/使い方|QMD — 使い方]]
+- [[reference/Note/AI開発/Claude-Code/MCP/PMB/PMB-使い方|PMB — 使い方]]
+- [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-使い方|QMD — 使い方]]
 - [[Claude-Code-Plugins]]
 
 ## 運用・監査・棚卸

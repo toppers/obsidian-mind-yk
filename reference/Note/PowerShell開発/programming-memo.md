@@ -11,4 +11,4 @@ soffice_path: C:\Program Files\LibreOffice\program\soffice.exe
 
 ## Related
 
-- [[ps1-list]] — PowerShell スクリプト一覧
+- [[work/active/ps1|ps1]] — PowerShell スクリプト一覧（旧ps1-listはここに統合・削除済み、2026-09-21）

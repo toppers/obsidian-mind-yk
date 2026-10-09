@@ -39,6 +39,16 @@ TECS WG の開発作業全体の進捗管理ノート。
 | テスト仕様・テストプログラム作成 | 進行中 | |
 | ユーザ向けドキュメント作成 | 進行中 | |
 
+## tecsgen-python3
+
+tecsgen（Ruby実装）のPython3移植版。構文解析は Ruby 版の racc の表を移植して使う（2026-09-27 に tree-sitter から変更 → [[tecsgen-python3 構文解析方式決定]]）。P2 まで実装・検証済み。詳細: [[tecsgen-python3]]
+
+| 作業 | 状態 | メモ |
+|------|------|------|
+| 外部仕様作成 | - | [[tecsgen-python3外部仕様]] 未着手（2026-09-21プレースホルダ作成） |
+| 内部仕様作成 | - | [[tecsgen-python3内部仕様]] 未着手（2026-09-21プレースホルダ作成） |
+| 実装 | - | Python3版最新コード `E:/Ccur/python3/tecsgen-python3`。tecsgen-python3実装ノート未作成 |
+
 ## TECSCDE
 
 TECS コンポーネント設計環境（Component Diagram Editor）。

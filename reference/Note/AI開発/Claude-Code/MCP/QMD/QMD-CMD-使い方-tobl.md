@@ -157,4 +157,4 @@ qmd doctor      # 環境診断（モデル、GPU、DB状態など）
 
 
 ## Related
-- [[reference/Note/AI開発/Claude-Code/MCP/QMD/使い方|QMD の使い方]]
+- [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-使い方|QMD の使い方]]

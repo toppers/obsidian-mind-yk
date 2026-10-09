@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート。現行の関数ベース実装（TECSCDE-JS-TS実装）とは別系統。モデル＋CDL（tree-sitter化完了）・第4章commands（Copy/Cut/Paste含む）・第5章render・第6章view-state・第7章io・モジュールH diagnostics（TecsgenResultParser含む）・モジュールI tecsgen（TecsgenCommandBuilder）まで実装完了（2026-09-13、120テストpass）。"
+description: "TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート。現行の関数ベース実装（TECSCDE-JS-TS実装）とは別系統。モデル＋CDL（tree-sitter化完了）・第4章commands（Copy/Cut/Paste含む）・第5章render・第6章view-state・第7章io・モジュールH diagnostics（TecsgenResultParser含む）・モジュールI tecsgen（TecsgenCommandBuilder）・モジュールG ui-shell（UiComponentライフサイクル・各パネル・ダイアログ・Store）まで実装完了（2026-09-16、138テストpass）。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -15,7 +15,7 @@ tags:
 
 ## Context
 - [[TECSCDE-TS内部仕様]]（クラスベース設計、全11章執筆完了 2026-09-05）に対応する実装。現行実装[[TECSCDE-JS-TS実装]]（関数/interfaceベース）とは別系統で、本書の設計自体の採否は未決（[[TECSCDE-TS内部仕様 - 11 未決事項と実装単位案]]11.2節）。
-- 対象ローカルリポジトリ: `E:\Ccur\typescript\TECSCDE-TS`（[[TECSCDE-JS-TS実装]]の`E:\Ccur\typescript\TECSCDE`とは別リポジトリ）
+- 対象ローカルリポジトリ: `E:\Ccur\typescript\TECSCDE-TS`（[[TECSCDE-JS-TS実装]]の`E:\Ccur\typescript\TECSCDE-JS`（旧称`TECSCDE`）とは別リポジトリ）
 - 対象リモートリポジトリ: https://github.com/ykominami/tecscde-ts（非公開、2026-09-05作成、README等の初期化なし）
 
 ## Notes
@@ -31,6 +31,29 @@ tags:
     - 第9章9.4節: `src/diagnostics/tecsgen-result-parser.ts`（`TecsgenResultParser`、`TECSGEN_CODES`）。
     - 第9章9.5節: `src/tecsgen/command-builder.ts`（`TecsgenCommandBuilder`）。
     - テスト4ファイル（`tests/cdl-fragment.test.ts`、`tests/clipboard-commands.test.ts`、`tests/tecsgen-result-parser.test.ts`、`tests/tecsgen-command-builder.test.ts`）を追加。**全120テストpass**、`tsc --noEmit` green。
+- **2026-09-16、モジュールG（UIシェル）およびStore実装完了**:
+  - `src/ui-shell/ui-component.ts`: 共通抽象基底クラス `UiComponent`（`mount`/`update`/`destroy`/`isMounted` ライフサイクル）。
+  - `src/ui-shell/toolbar.ts`: `Toolbar extends UiComponent`（ファイル操作、選択/新規作成モード、Undo/Redo、整列、整合性チェック、tecsgen提示、検索ボックス・巡回）。
+  - `src/ui-shell/property-panel.ts`: `PropertyPanel extends UiComponent`（未選択時用紙・図面設定、単一セル属性・ポート編集、複数セル一括整列・リージョン・属性編集、結合プロパティ・削除）。
+  - `src/ui-shell/palette.ts`: `Palette extends UiComponent`（セルタイプ一覧、選択・モード切替、セルタイプ詳細ダイアログ呼出）。
+  - `src/ui-shell/status-bar.ts`: `StatusBar extends UiComponent`（モード表示、ポインタmm座標、未保存状態、エラー・警告バッジ集計とメッセージ一覧切替）。
+  - `src/ui-shell/display-control-bar.ts`: `DisplayControlBar extends UiComponent`（ズーム倍率スライダー/ボタン、グリッド・シグニチャ名・リージョン色分けトグル、リージョン表示フィルタ・凡例表示）。
+  - `src/ui-shell/navigator.ts`: `NavigatorComponent extends UiComponent`（用紙・セル縮小表示、可視範囲矩形、クリック/ドラッグでのパン操作）。
+  - `src/ui-shell/dialogs.ts`: モーダル抽象 `openModal`、破棄確認 `confirmDiscard`、`showTecsgenCommandDialog`、`showCelltypeDetailModal`、`DiagnosticsList extends UiComponent`、`jumpToElement`。
+  - `src/app/store.ts`: 中央pub/subストア `Store`（History・ViewState・SelectionState・DiagnosticsCollector・Clipboard・Search状態統合）。
+  - `src/commands/`: `ChangePaperCommand`, `ChangeRegionsCommand`, `EditAttrsCommand` を追加・エクスポート。
+  - `src/model/document.ts`: `withPaper`, `withRegions` を追加。
+  - `src/view-state/region-color.ts`: `getRegionColor`, `getRegionLegend` を実装。
+  - テスト2ファイル（`tests/store.test.ts`, `tests/ui-shell.test.ts`）を追加。**全138テストpass**、`tsc --noEmit` green。
+- **2026-09-17、[[work/active/tecs/TECSCDE-TS-実装アーキテクチャ案|TECSCDE-TS-実装アーキテクチャ案]]に基づくVite/CLI環境およびWebエントリポイント実装完了**:
+  - `index.html`: 外部仕様3.1.2に基づく領域構成（ツールバー、キャンバス、ナビゲータ、セルタイプ一覧、プロパティパネル、表示制御バー、ステータスバー）。
+  - `src/style.css`: CSS Gridレイアウト、SVG描画スタイル、印刷用CSS（`@media print`）。
+  - `src/app/main.ts`: WASM初期化、`Store`および各`UiComponent`・`SvgRenderer`・`GestureController`のマウント、ファイルI/O・ショートカットキー配線。
+  - `vite.config.ts`: 開発サーバー設定、単一HTML/JSバンドル設定、Vitest統合。
+  - `.dependency-cruiser.cjs`: 9モジュールの境界強制ルール。
+  - `src/view-state/types.ts`: `CanvasView`と`MM_TO_PX`を定義し、モジュールFのモジュールE依存を解消。
+  - `src/io/dirty-tracker.ts`: `HistoryLike`構造的インターフェースにより、モジュールAのモジュールD直接依存を解消。
+  - `npm run check`（`build` + `test` + `depcruise`）検証完了: **全15テストスイート139テストpass、77モジュール279依存で境界違反0**。
 
 ## Action Items
 - [x] モデル（C）＋CDLパーサ/シリアライザ（B）のround trip実装に着手する（[[TECSCDE-TS内部仕様 - 11 未決事項と実装単位案]]11.3節）——2026-09-06確認、8テストpass
@@ -40,11 +63,13 @@ tags:
 - [x] 手書きパーサからtree-sitter CDL文法への移行（2026-09-13、コミット`5a1c189`）
 - [x] 第7章モジュールA（ファイルI/O）の実装（2026-09-13、コミット`8d779ba`）
 - [x] [[work/active/TECSCDE共通ロジック/TECSCDE共通ロジック|共通ロジック]]（Copy/Cut/Paste・CDL断片・TecsgenResultParser・TecsgenCommandBuilder）を同期（2026-09-13、120テストpass）
-- [ ] モジュールG（UIシェル）をTS独自の`UiComponent`ライフサイクル設計で実装する（DT-ELのElectron専用`AppShell`は移植不可、[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 02 モジュール構成と責務境界|第2章]]の設計に従い別途実装）
+- [x] モジュールG（UIシェル）をTS独自の`UiComponent`ライフサイクル設計で実装する（2026-09-16、コミット`54b8440`、139テストpass）
 - [x] 2026-09-11の移植分をコミットする——コミット`531801d`
+- [x] [[work/active/tecs/TECSCDE-TS-実装アーキテクチャ案|TECSCDE-TS-実装アーキテクチャ案]]に基づくCLI起動環境・Vite開発サーバー・Webエントリポイントを実装する（2026-09-17、`npm run check` green）
 
 ## Related
 - [[TECSCDE-TS内部仕様]] — 本実装が対応するクラスベース内部仕様（全11章）
+- [[work/active/tecs/TECSCDE-TS-実装アーキテクチャ案|TECSCDE-TS-実装アーキテクチャ案]] — 本実装のためのパッケージ構成・Vite/CLI環境・テスト戦略案
 - [[TECSCDE-JS-TS実装]] — 現行の関数ベース実装（比較対象）
 - [[TECSCDE内部仕様]] — 現行実装が準拠する既存内部仕様
 - [[work/active/tecs/TECS開発|TECS開発]] — 開発進捗全体

@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT-EL内部仕様書 第7章（ファイルI/O設計）— mainプロセスのFileServiceクラス（dialog+fs、アトミック書き込み）とrenderer側FileGatewayによるElectron固有実装。"
+description: "TECSCDE-DT-EL内部仕様書 第7章（ファイルI/O設計）— mainプロセスのFileServiceクラス（dialog+fs、アトミック書き込み、openDialog()は2026-09-21撤回）とrenderer側FileGatewayによるElectron固有実装。7.6節（ファイルブラウザ設計）は第7B章へ分離（2026-09-22、25KB閾値）。同日、7.7節（読み込み経路の統合）を第7C章として追加。同日、7.5節（インポート自動追跡、resolveImports()の具体設計）を第7D・7E章として分離・詳細化——tecsgen本体との探索順序の違いはInferred/未検証から確定済みへ更新。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -20,25 +20,13 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 7 of 
 
 ### 7.1 `FileService`クラス（mainプロセス）
 
+> [!note] `openDialog()`の撤回（2026-09-21）
+> 当初はここに、複数ファイルを同時に選べるOSネイティブのファイル選択ダイアログ（`dialog.showOpenDialog`、`properties: ['openFile', 'multiSelections']`）を呼ぶ`openDialog()`メソッドを規定していたが、[[TECSCDE-DT外部仕様]]5.3節の撤回に伴い削除した。理由は実機確認で判明した「ファイルブラウザ（7.6節）と役割が重複し、2つの『開く』入口が利用者を混乱させる」という点——ダイアログ由来の複数ファイル同時指定（最後の選択を編集対象、他を参照専用とする規則）はコマンドライン引数・ファイル関連付け経由の起動（7.4節）にのみ残る。
+
 ```ts
 // main/file-service.ts
 class FileService {
   constructor(private readonly window: BrowserWindow) {}
-
-  async openDialog(): Promise<OpenResult | null> {
-    const result = await dialog.showOpenDialog(this.window, {
-      properties: ['openFile', 'multiSelections'],
-      filters: [{ name: 'CDE files', extensions: ['cde', 'cdl'] }],
-    });
-    if (result.canceled || result.filePaths.length === 0) return null;
-    const paths = result.filePaths;
-    const editablePath = paths[paths.length - 1]!; // 最後に選択したファイルを編集対象とする
-    const contents = await Promise.all(paths.map(p => fs.promises.readFile(p, 'utf-8')));
-    return {
-      editable: { path: editablePath, content: contents[contents.length - 1]! },
-      references: paths.slice(0, -1).map((p, i) => ({ path: p, content: contents[i]! })),
-    };
-  }
 
   async save(path: string, content: string): Promise<void> {
     await this.writeAtomic(path, content); // 7.2節参照
@@ -74,7 +62,6 @@ class FileService {
 // main/ipc.ts
 const fileService = new FileService(mainWindow);
 
-ipcMain.handle('file:open', () => fileService.openDialog());
 ipcMain.handle('file:save', (_e, path: string, content: string) => fileService.save(path, content));
 ipcMain.handle('file:saveAs', (_e, content: string, suggestedName: string) => fileService.saveAsDialog(suggestedName, content));
 ipcMain.handle('file:export', (_e, path: string, data: Buffer | string) => fileService.exportFile(path, data));
@@ -87,7 +74,6 @@ ipcMain.handle('file:export', (_e, path: string, data: Buffer | string) => fileS
 ```ts
 // renderer/file-gateway.ts
 class FileGateway {
-  open(): Promise<OpenResult | null> { return window.tecscde.file.open(); }
   save(path: string, content: string): Promise<void> { return window.tecscde.file.save(path, content); }
   saveAs(content: string, suggestedName: string): Promise<string | null> { return window.tecscde.file.saveAs(content, suggestedName); }
   export(path: string, data: Buffer | string): Promise<void> { return window.tecscde.file.export(path, data); }
@@ -117,39 +103,33 @@ app.on('open-file', (event, path) => {
 
 `pendingOpenPath`は、rendererプロセスの初期化完了後にIPC（`app:pendingOpenPath`のような専用チャネル、または起動時に一度だけ送るイベント）で渡し、`FileGateway`を介さず直接`FileService.openPath(path)`（`openDialog`のダイアログを介さない版、7.1節に追加が必要）を呼んで読み込む。
 
+> [!note] 実装での設計更新（2026-09-10 / 2026-09-16）
+> - **起動時ドキュメント供給（`app:bootstrap`）**: renderer からの `file://` fetch が CORS 制約を受けるため、Main プロセスが `did-finish-load` 後に `app:bootstrap` IPC で初期ドキュメントのソーステキスト群（CLI 指定ファイル、または `public/samples`）を 1 回だけプッシュ供給する方式を採用。
+> - **tree-sitter WASM ロード**: 同じく renderer からの直接 fetch が困難なため、Main プロセスが `fs`（asar 透過）で WASM バイナリを読み出し、IPC 経由で renderer へバイト列を渡して初期化する構成を採用。
+
 ### 7.5 インポート参照先の解決
 
-[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様5.1・5.3節]]および同第8章8.1節が規定する参照先の自動追跡は、rendererのモジュールBが抽出したインポート要求をmainの`FileService`へ渡して実現する。
+[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様5.1・5.3節]]および同第8章8.1節が規定する参照先の自動追跡（`FileService.resolveImports()`）の詳細設計は、[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07D インポート自動追跡|第7D章（具体アルゴリズム・tecsgen本体との対応検証）]]・[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|第7E章（renderer側オーケストレーション・import_C境界・統合ポイント）]]に分離した（2026-09-22、25KB閾値。旧稿にあった「tecsgen本体の探索順序とは異なる（inferred・未検証）」という警告は、`Importable#find_file`の実ソース検証により第7D章7.5.3節で対応関係を確定し解消済み）。
 
-```ts
-interface ImportRequest {
-  readonly kind: 'import' | 'import_C';
-  readonly specifier: string;
-}
+### 7.6 ファイルブラウザ（サイドパネル）
 
-interface ImportResolutionOptions {
-  readonly baseDir?: string;
-  readonly importPaths: readonly string[];
-  readonly cpp?: string;
-}
+`FileService`拡張・IPC・`FileBrowserView`・ルートフォルダの永続化（Local AppData）と起動時自動復元を含む全体設計は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07B ファイルブラウザ設計|第7B章（ファイルブラウザ設計）]]に分離（2026-09-22、25KB閾値）。
 
-interface ResolvedImport {
-  readonly request: ImportRequest;
-  readonly canonicalPath?: string;
-  readonly content?: string;
-  readonly error?: 'not-found' | 'not-utf8' | 'read-failed';
-}
-```
+### 7.7 読み込み経路の統合
 
-`FileGateway.resolveImports(editablePath, requests, options)`は専用IPCを介して`FileService.resolveImports()`を呼ぶ。mainは、編集対象ファイルのディレクトリ、`base_dir`、`import_path`の順に候補を正規化して存在を検証し、実在したファイルをUTF-8として読み取って返す。rendererは返されたCDLを再びモジュールBへ渡し、追加の`import`／`import_C`を再帰的に解決する。循環参照と重複読み込みはmainが返す正規化済み絶対パスをキーにrenderer側で抑止する。
-
-`base_dir`・`import_path`・`cpp`の保存値は解決処理へ入力するだけで、正規化結果や現在の環境に合わせてモデル内の値を書き換えない。解決失敗は例外で全体を中断せず、第8章の診断へ変換する。`import_C`で用いる`cpp`は第9章9.6節へ渡す起動候補であり、`FileService`自身は外部プロセスを起動しない。
+前回セッションの復元・ファイルブラウザからの参照専用追加・消去ボタン（新規作成の別名）・tecsgenオプション形式ファイルの一括読み込み・import自動追跡との統一（第11章11.2節#7〜#11）の設計は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章（読み込み経路の統合）]]にまとめた（2026-09-22追加）。
 
 ## Related
 
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07D インポート自動追跡|TECSCDE-DT-EL内部仕様 第7D章（7.5節、resolveImports()具体アルゴリズムの分離先）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|TECSCDE-DT-EL内部仕様 第7E章（7.5節続き、renderer側統合の分離先）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07B ファイルブラウザ設計|TECSCDE-DT-EL内部仕様 第7B章（7.6節、ファイルブラウザ設計の分離先）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|TECSCDE-DT-EL内部仕様 第7C章（7.7節、読み込み経路の統合の分離先）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様 第5章（本章が実装する外部仕様）]]
+- [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様 第3章（3.5.1節、7.6節が実装するファイルブラウザの画面規定）]]
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様 第7章（DirtyTrackerの一次情報源、FileIOStrategyは本章で廃止）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 02 モジュール構成とプロセス境界|TECSCDE-DT-EL内部仕様 第2章（プロセス配置の根拠）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様 第11章（11.2節#4、ファイルブラウザ採用の決定記録）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---

@@ -19,7 +19,7 @@ vault 全体に対するセマンティック検索を提供するツール。MC
 
 - [[qmd-cmd-使い方]] — QMD のコマンドの使い方
 - [[QMD-CMD-使い方-tobl]] — CLAUDE.md 記載コマンド一覧の使い方（tobl版）。フュージョン戦略・スコア解釈を含む
-- [[reference/Note/AI開発/Claude-Code/MCP/QMD/使い方|QMD — 使い方（status 実行結果）]] — `mcp__qmd__status` の実行結果メモ
+- [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-使い方|QMD — 使い方（status 実行結果）]] — `mcp__qmd__status` の実行結果メモ
 
 ### 構成・内部
 

@@ -43,7 +43,7 @@ tags:
 ## Plugin
 ### Excalidraw
 ---
-- [[graphify-tecsgenコードベースでの作業記録]] 
+- [[reference/Note/TECS-WG/tecsgen/tecsgen-tecsgen]] 
 # [[リポジトリのMarkDown化]]
 ---
 # ソースコードの知識グラフ化

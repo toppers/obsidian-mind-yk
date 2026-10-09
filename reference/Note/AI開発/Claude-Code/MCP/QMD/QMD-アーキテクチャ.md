@@ -89,5 +89,5 @@ bin/qmdはロックファイル（package-lock.json→Node、bun.lock→Bun）�
 
 
 ## Related
-- [[reference/Note/AI開発/Claude-Code/MCP/QMD/使い方|QMD の使い方]]
+- [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-使い方|QMD の使い方]]
 - [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-SQLiteの場所|QMD インストール後の SQLite の所在]] — index.sqlite の探索順とエンジン本体の格納場所

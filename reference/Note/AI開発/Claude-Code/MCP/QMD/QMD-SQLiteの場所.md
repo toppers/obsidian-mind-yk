@@ -39,5 +39,5 @@ tags:
 
 ## Related
 - [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-アーキテクチャ|QMD のアーキテクチャ]]
-- [[reference/Note/AI開発/Claude-Code/MCP/QMD/使い方|QMD の使い方]]
+- [[reference/Note/AI開発/Claude-Code/MCP/QMD/QMD-使い方|QMD の使い方]]
 - [[reference/Note/PC/qmd MCPクライアント-サーバーのインストール|qmd MCPクライアント/サーバーのインストール]] — Windows でネイティブモジュール(better-sqlite3)のビルドが失敗した経緯

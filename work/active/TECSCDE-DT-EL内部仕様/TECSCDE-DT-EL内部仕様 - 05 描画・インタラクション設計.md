@@ -22,6 +22,10 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 5 of 
 
 詳細は[[TECSCDE-TS内部仕様]]第5章を参照。
 
+> [!note] 実装での設計更新（2026-09-09）
+> - **`HitTester`**: `SvgRenderer` ではなく、ズーム比率のみを参照する `CanvasView` を受け取る疎結合な構造に変更。
+> - **`GestureController`**: コンストラクタで DOM リスナを張らず、イベント処理メソッドを公開した上で `attach(svg)` メソッドで明示的に結線する設計に変更（状態機械をヘッドレスで単体テスト可能にするため）。
+
 ## Related
 
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 05 描画・インタラクション設計|TECSCDE-TS内部仕様 第5章（一次情報源、本章はこれと同一）]]

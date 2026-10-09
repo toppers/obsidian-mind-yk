@@ -1,0 +1,98 @@
+---
+date: 2026-09-21
+description: "tecsgen（Ruby実装）のPython3移植版の作業ノート。構文解析はRuby版のracc表を移植（2026-09-27にtree-sitterから変更）。P5pまで実装・検証済み（プラグイン不使用の119/119ケースで生成物がRuby版とバイト一致、プラグイン使用は34/46、2026-10-01時点）。カーネル依存系（HRP・FMP・HRMP・HRP2・ATK1Event）は11ケースすべて一致（P5l〜P5p）"
+project: tecsgen-python3
+status: active
+quarter: Q3-2026
+tags:
+  - work-note
+---
+
+# tecsgen-python3
+tecsgenをPython3で実装する
+
+`work/active/tecsgen-python3/` と `work/active/tecsgen-plugins-python3` 配下の仕様書群への入口。
+
+## 計画
+
+- [[tecsgen-python3移植計画]] — フェーズ分割・差分テスト方針・リスク（2026-09-26）。完了済みの P0〜P2 の詳細は [[tecsgen-python3移植計画 Archive — P0–P2]]
+- [[tecsgen-python3 P0基本方針決定]] — CLI完全互換・mixinは多重継承・グローバル変数は設定オブジェクトへ集約（2026-09-26）
+- P1 基盤（Node・エラー処理・入出力）を実装・検証（2026-09-27）→ [[tecsgen-python3移植計画]]・[[tecsgen-python3内部仕様 - 11 エラー・警告処理|内部仕様11章]]
+- [[tecsgen-python3 パッケージ構成決定]] — Rubyと1ファイル対1モジュール、プラグインはRubyと同名（2026-09-26）
+- [[tecsgen-python3 tree-sitter読み込み方式決定]] — 文法のCソースを同梱しC拡張としてビルド（2026-09-26、**2026-09-27 superseded**）
+- P2 構文解析のフロントエンドを実装・検証（2026-09-27）→ [[tecsgen-python3 構文解析方式決定]]（tree-sitterをやめracc表駆動へ）・[[tecsgen-python3内部仕様 - 05 字句解析・構文解析|内部仕様5章]]
+- P3 型・値・式・コンポーネントモデルと意味解析を実装・検証（2026-09-27）→ [[tecsgen-python3内部仕様 - 06 意味解析|内部仕様6章]]
+- P4 最適化とコード生成を実装・検証（2026-09-27）。プラグインを使わない119ケースすべてで生成物・標準出力・終了コードが Ruby 版と一致 → [[tecsgen-python3内部仕様 - 07 最適化|内部仕様7章]]・[[tecsgen-python3内部仕様 - 08 コード生成|8章]]
+- P5 プラグイン機構と標準プラグインを P5a〜P5p まで実装・検証（2026-09-27〜10-01）。正解データのあるプラグインは移植済みで、`-L` による利用者プラグインの探索も P5q で実装済み。プラグインありの全46ケースが一致（as of 2026-10-02、詳細は進捗ログの P5q。2026-10-03 に 63 ケースへ増え、85 本中 83 本を移植済み。[[tecsgen-python3移植計画#P5 プラグイン機構と標準プラグイン|移植計画のP5]]）。カーネル依存系（HRP・FMP・HRMP・HRP2・ATK1Event）は11ケースすべて一致 → [[tecsgen-python3移植計画 — P5 進捗ログ]]・[[tecsgen-python3移植計画#P5 プラグイン機構と標準プラグイン|移植計画のP5]]
+
+## 仕様書
+
+- [[tecsgen-python3外部仕様]] — 外部仕様（CDL入力・生成コード出力・CLI・プラグイン・エラー処理）
+- [[tecsgen-python3内部仕様]] — 内部仕様（処理フロー・クラス設計・意味解析・最適化・コード生成の実装）
+- [[tecsgen-plugins-python3|tecsgen プラグイン-python3仕様書]]
+## Context
+- [[reference/03-Resources/my-topic/CLAUDE|TECS Wiki]]
+- [[TECS開発]] — 開発進捗全体
+- [[tecsgen]]
+- [[tecsgen外部仕様]]
+- [[tecsgen内部仕様]]
+- [[tecsgen-plugins]]
+- Python3版最新コード "E:/Ccur/python3/tecsgen-python3"
+- Python3版リモートリポジトリ git@github.com:ykominami/tecsgen-python3.git（2026-09-28 に `ykominami/tecsgen-python` から改名。旧 URL は GitHub がリダイレクトする）
+- Ruby版最新コード  "E:\Ccur\python3\asp3_stm32cube_TECS\tecsgen-rb"
+	- 旧Ruby版最新コード  "E:/Crepo/toppers-tecs-svn/toppers/tecsgen/branches/ykominami_r3033"
+- WSL上のasp+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/asp+tecs/trunk"
+- WSL上のasp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/asp3+tecs/trunk"
+- WSL上のatk1+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/atk1+tecs/trunk"
+- WSL上のev3rt+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/ev3rt+tecs/trunk"
+- WSL上のfmp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/fmp3+tecs/trunk"
+- WSL上のhrmp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrmp3+tecs/trunk"
+- WSL上のhrp2+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrp2+tecs/trunk"
+- - WSL上のhrp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrp3+tecs/trunk"
+- WSL上のhr-tecs3のsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hr-tecs3/trunk"
+- WSL上のssp+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/ssp+tecs/trunk"
+- WSL上に展開済みのMrubyBridgePluginPackageパッケージ "~/Ccur/TECS-WG-DL/MrubyBridgePluginPackage-130616/"
+- WSL上に展開済みのasp3_arm_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_arm_gcc-20260518/"
+- WSL上に展開済みのasp3_imx8mm_evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_imx8mm_evk_gcc-20200710/"
+- WSL上に展開済みのasp3_lpc55s69evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_lpc55s69evk_gcc-20230401/"
+- WSL上に展開済みのasp3_macosx_xcodeパッケージ "~/Ccur/TECS-WG-DL/asp3_macosx_xcode-20191006/"
+- WSL上に展開済みのasp3_mimxrt685evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_mimxrt685evk_gcc-20230401/"
+- WSL上に展開済みのasp3_nrf5340_dk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nrf5340_dk_gcc-20230401/"
+- WSL上に展開済みのasp3_nucleo_f401re_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_f401re_gcc-20260518/"
+- WSL上に展開済みのasp3_nucleo_h563zi_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_h563zi_gcc-20260518/"
+- WSL上に展開済みのasp3_nucleo_l552zeq_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_l552zeq_gcc-20230401/"
+- WSL上に展開済みのasp3_posix_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_posix_gcc-20260518/"
+- WSL上に展開済みのasp3_raspberrypi_pico_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_raspberrypi_pico_gcc-20230401/"
+- WSL上に展開済みのasp3_rx_ccrx-20240401パッケージ "~/Ccur/TECS-WG-DL/asp3_rx_ccrx-20240401/"
+- WSL上に展開済みのasp3_zybo_gcc-20190325パッケージ "~/Ccur/TECS-WG-DL/asp3_zybo_gcc-20190325/"
+- WSL上に展開済みのasp3_zybo_z7_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_zybo_z7_gcc-20260520/"
+- WSL上に展開済みのatk1+tecsパッケージ "~/Ccur/TECS-WG-DL/atk1+tecs_1.0.0/"
+- WSL上に展開済みのmruby-on-asp+tecs_packageパッケージ "~/Ccur/TECS-WG-DL/mruby-on-asp+tecs_package-130618/"
+- WSL上に展開済みのmruby-on-ev3rt+tecs_packageパッケージ "~/Ccur/TECS-WG-DL/mruby-on-ev3rt+tecs_package-beta2.2.0/"
+- WSL上に展開済みのmruby_on_GR-PEACH-TECS_packageパッケージ "~/Ccur/TECS-WG-DL/mruby_on_GR-PEACH-TECS_package-alpha1.0.0/"
+- WSL上に展開済みのstm32primer2_tecs_eduパッケージ ~/Ccur/TECS-WG-DL/stm32primer2_tecs_edu-20101129/"
+- WSL上に展開済みのtecscde-MinGWパッケージ ~/Ccur/TECS-WG-DL/tecscde-MinGW-V0.5.0/"
+
+## Notes
+
+- 2026-10-01: Context の WSL 展開済み21パッケージは全件 `.cdl` を含むと確認。移植元 Ruby tecsgen r3304 を使い、`E:/Ccur/python3/tecsgen-python3/tests/golden/packages/` に Plugin 正解データ16ケースを採集（ASP3系13・ATK1・Mruby2C・EV3各1）。4系統の再採集で生成物・ログ・Plugin trace がバイト一致し、WSL 検証は903 pass・77 skip。RX 用 `ccrx.exe` 不在と旧 `MrubyBridge-test` の T1007 は `diagnostics/` に分離。全21件の選定理由は `package_inventory.json`、採集手順は同リポジトリの `tools/golden/README.md`。
+
+## Action Items
+- [ ] [[tecsgen-python3外部仕様]]作成
+- [ ] [[tecsgen-python3内部仕様]]作成
+- [ ] tecsgen-python3実装作成
+- [ ] Ruby版tecsgenのcmake対応をPython版に反映する（2026-10-05 追加。調査と計画のたたき台: [[tecsgen-python3 cmake対応計画]]）
+
+## Related
+- [[TECS開発]] — TECS WG開発進捗全体
+- [[tecsgen]] — Ruby実装版（移植元）
+- [[work/active/tecsgen-python3/tecsgen-python3 Mixin粒度決定|tecsgen-python3 Mixin粒度決定]] — Ruby版のクラス再オープンをPython Mixinへ変換する粒度の決定（2026-09-26、proposed）
+- [[reference/Ruby動的ロードとPython対応|Ruby動的ロードとPython対応]] — Rubyのrequire/load/evalに対応するPythonの動的ロード手段リファレンス（プラグイン機構実装時に参照）
+- [[reference/Racc代替のPythonパーサジェネレータ比較|Racc代替のPythonパーサジェネレータ比較]] — tree-sitterのPython利用がDLL運用前提で複雑になりうるため、DLL不要な代替（Lark/SLY等）を調査中
+- [[reference/Ruby Mixinとpython多重継承対応|Ruby Mixinとpython多重継承対応]] — Ruby版`module`/`include`をPython多重継承＋MROへ移植する際のリファレンス
+- [[reference/Pythonのグローバル変数の使い方|Pythonのグローバル変数の使い方]] — Ruby版の`$`グローバル変数（[[reference/tecsgen_ruby_global_variables.csv|実測CSV]]）をPython側でどう扱うかの検討材料
+- [[reference/tecsgen動的typedef判定とPythonパーサ選定|tecsgen動的typedef判定とPythonパーサ選定]] — Ruby版字句解析の動的typedef判定機構がtree-sitter/Lark/SLYで再現できるかの検討（DLL回避との論点衝突あり）
+- [[reference/Rubyとpythonのカレントディレクトリ変更の影響|Rubyとpythonのカレントディレクトリ変更の影響]] — chdirの影響比較。相対パス解決の設計原則
+- [[reference/Rubyトップレベルメソッドとpython対応|Rubyトップレベルメソッドとpython対応]] — Ruby版の23トップレベルメソッド（実測CSV）をPythonのモジュール関数として移植する際の対応
+- [[reference/Rubyネストクラスとpython対応|Rubyネストクラスとpython対応]] — Rubyのネストクラス（レキシカル定数探索）とPythonの名前空間化の違い
+- [[reference/Rubyクラス再オープンとpython対応|Rubyクラス再オープンとpython対応]] — 複数ファイルにまたがるclass定義（再オープン）の挙動差とPython側のMixin代替。実測により`Namespace`（7ファイル）等コアクラス全般で広範に使用されていることを確認（[[reference/tecsgen_ruby_class_reopen.csv|CSV]]）——移植時にMixin設計への変換が必須になる可能性が高い

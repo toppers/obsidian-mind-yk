@@ -45,6 +45,7 @@ tags:
 - `contextIsolation: true`・`nodeIntegration: false` は維持。renderer から Node/Electron API へ触れる経路は依然 `contextBridge` 経由のみで、サンドボックス無効化で広がる攻撃面は preload スクリプト自身（信頼済みの自作コード）に限られる。
 - **手放したもの**: Electron のサンドボックス保護。将来 renderer に信頼できないコンテンツ（外部 URL・サードパーティ埋め込み等）を読み込む設計になった場合は再検討が必要。本アプリはローカルの `.cde`/`.cdl` ファイルと `tecsgen` 出力のみを扱うため、当面のリスクは低い。
 - **検証済み**: `electron .` で preload ロード成功・`contextBridge.exposeInMainWorld("tecscde", ...)` 実行を確認（`Unable to load preload script` エラーが消えた）。`npm run check`（build + 47テスト + depcruise）green。
+- **2026-09-15、asar化後の実機起動でも確認済み**: `electron-forge package`後の`.exe`をターミナルから起動し、DevTools Consoleで`window.tecscde`の存在とAPI呼び出し（IPC往復）を確認。preload自体のESM/asar互換性リスクは実際には問題にならなかった——起動時に別途発覚した`electron-squirrel-startup`の依存関係配置バグ（`devDependencies`にあったためpackagerのプルーニングで除外されクラッシュ）を修正した後は、preload/contextBridgeは想定通り動作した（詳細: [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]Action Items）。
 - 姉妹実装 [[work/active/TECSCDE-TS実装/TECSCDE-TS実装|TECSCDE-TS実装]]（ブラウザ、Electron なし）・[[work/active/TECSCDE-DT-TA実装/TECSCDE-DT-TA実装|TECSCDE-DT-TA実装]]（Tauri、preload 相当なし）には影響しない。
 
 ## Related

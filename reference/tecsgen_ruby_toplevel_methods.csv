@@ -1,0 +1,649 @@
+﻿method,kind,file,line,code
+analyze_option,definition,tecsflow.rb,51,def analyze_option
+analyze_option,call,tecsflow.rb,76,analyze_option
+analyze_option,call,tecsgen.rb,217,analyze_option addtional_option_parser
+begin_extern_C,definition,tecslib\core\generate.rb,82,def begin_extern_C f
+begin_extern_C,call,tecslib\core\generate.rb,1229,begin_extern_C f
+begin_extern_C,call,tecslib\core\generate.rb,1265,begin_extern_C f
+dbgPrint,definition,tecscde.rb,77,"def dbgPrint( message, *args )"
+dbgPrint,definition,tecsgen.rb,179,def dbgPrint( str )
+dbgPrint,call,cdelib\tmodel.rb,140,"dbgPrint ""applying change_no="
+dbgPrint,call,cdelib\tmodel.rb,143,"dbgPrint ""apply"
+dbgPrint,call,cdelib\tmodel.rb,583,"dbgPrint ""TmCell.new\n"""
+dbgPrint,call,cdelib\tmodel.rb,707,"dbgPrint ""cell move"
+dbgPrint,call,cdelib\tmodel.rb,1838,"dbgPrint ""moved_eport=("
+dbgPrint,call,cdelib\tview.rb,207,"dbgPrint ""delete"" + args.to_s + ""\n"""
+dbgPrint,call,cdelib\tview.rb,273,"dbgPrint( ""canvas width="
+dbgPrint,call,cdelib\tview.rb,277,"dbgPrint ""pressed"" + event.to_s + ""\n"""
+dbgPrint,call,cdelib\tview.rb,296,"dbgPrint ""released"" + event.to_s + ""\n"""
+dbgPrint,call,cdelib\tview.rb,304,"dbgPrint ""motion"" + event.to_s + ""\n"""
+dbgPrint,call,cdelib\tview.rb,444,"dbgPrint ""scale_val="
+dbgPrint,call,tecsgen.rb,99,"dbgPrint( ""require_lib:"
+dbgPrint,call,tecsgen.rb,224,"dbgPrint  ""tecspath:"
+dbgPrint,call,tecsgen.rb,225,"dbgPrint  ""ARGV(remained):"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,235,"dbgPrint ""Cell new_cell:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,266,"dbgPrint ""previous:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,376,"dbgPrint ""add_array_member:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,381,"dbgPrint ""new_join: cell="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,393,"dbgPrint ""new_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,407,"dbgPrint( ""new_reverse_join name="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,477,"dbgPrint ""create_reverse_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,549,"dbgPrint ""set_f_ref:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,575,"dbgPrint( ""set_spec_list:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,592,"dbgPrint( ""new allocator join"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,625,"dbgPrint( ""through: celltype="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,725,"dbgPrint ""  CLONING Cell"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,726,"dbgPrint ""              my_name="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,753,"dbgPrint ""cell.set_cloned : global_name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,754,"dbgPrint ""set_cloned:  entry_array_max_subscript.len="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,771,"dbgPrint ""set_cloned: celltype="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,808,"dbgPrint ""=====   Cell"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,854,"dbgPrint( ""Cell"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,908,"dbgPrint ""get_real_global_name: cell name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,910,"dbgPrint ""   name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,911,"dbgPrint "" get_name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,912,"dbgPrint ""\n\n"""
+dbgPrint,call,tecslib\core\componentobj\cell.rb,918,"dbgPrint "" composite join name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,925,"dbgPrint ""  get_real_global_name: cell name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,939,"dbgPrint ""get_real_global_port_name: cell name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,941,"dbgPrint ""   name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,942,"dbgPrint "" get_name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,943,"dbgPrint ""\n"""
+dbgPrint,call,tecslib\core\componentobj\cell.rb,950,"dbgPrint ""   composite join name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,958,"dbgPrint ""get_real_global_port_name:  cell name:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1028,"dbgPrint "" port_referenced:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1048,"dbgPrint ""  get_global_port_name: cell port:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1097,"dbgPrint( ""set_entry_port_max_subscript:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1114,"dbgPrint ""set_entry_inner_port_max_subscript"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1152,"dbgPrint ""create_relay_allocator_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1161,"dbgPrint ""create_relay_allocator_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1171,"dbgPrint( ""create relay_allocator in_composite\n"" )"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1172,"dbgPrint("""
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1176,"dbgPrint ""create_relay_allocator: found"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1236,"dbgPrint ""relay success:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1242,"dbgPrint ""create_relay_allocator_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1309,"dbgPrint( ""set_port_reference_count:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1317,"dbgPrint ""set_port_ref:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1322,"dbgPrint( ""set_port_reference_count:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1357,"dbgPrint ""check_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1648,"dbgPrint ""set_require_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1689,"dbgPrint ""set_definition_join in"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1701,"dbgPrint "" set_definition_join: checking"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1715,"dbgPrint ""set_definition_join:"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1738,"dbgPrint ""=====    expanding"
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1745,"dbgPrint ""expand: set_f_ref\n"""
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1756,"dbgPrint ""set_max_entry_port_inner_cell name="
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1760,"dbgPrint ""set_entry_inner_port_max_subscript("
+dbgPrint,call,tecslib\core\componentobj\cell.rb,1814,"dbgPrint ""callable?"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,570,"dbgPrint( ""[DYNAMIC] checking dynamic port:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,576,"dbgPrint( ""[DYNAMIC] checking ref_desc port:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,584,"dbgPrint( ""[DYNAMIC] checking Descriptor parameter:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,611,"dbgPrint ""[DYNAMIC] find_dynamic_port signature="
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,613,"dbgPrint ""[DYNAMIC] port="
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,622,"dbgPrint ""[DYNAMIC] find_ref_desc_port signature="
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,624,"dbgPrint ""[DYNAMIC] port="
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,639,"dbgPrint( ""[DYNAMIC] dyn_ref="
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,645,"dbgPrint( ""[DYNAMIC] found INOUT Descriptor parameter:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,651,"dbgPrint( ""[DYNAMIC] found INBOUND Descriptor parameter:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,658,"dbgPrint( ""[DYNAMIC] found OUTBOUND Descriptor parameter:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,678,"dbgPrint ""Celltype"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,761,"dbgPrint ""distance"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,770,"dbgPrint ""distance found:"
+dbgPrint,call,tecslib\core\componentobj\celltype.rb,772,"dbgPrint ""distance not found\n"""
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,60,"dbgPrint ""ClassType.new: region="
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,83,"dbgPrint ""create_class_plugin region="
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,97,"dbgPrint( ""ClassType.joinable?: from_region="
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,102,"dbgPrint ""ClassType"
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,131,"dbgPrint ""ClassType: get_option:"
+dbgPrint,call,tecslib\core\componentobj\classtype.rb,137,"dbgPrint ""ClassType"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,197,"dbgPrint ""internal_allocator {cp_internal_name}"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,198,"dbgPrint ""internal_allocator:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,262,"dbgPrint ""new_join:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,292,"dbgPrint ""S1061 CompositeCelltypeJoin"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,337,"dbgPrint ""compositecelltype join: add"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,430,"dbgPrint ""new_port:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,510,"dbgPrint ""CompositeCelltype: find in composite:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,514,"dbgPrint ""CompositeCelltype:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,544,"dbgPrint ""expand composite:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,546,"dbgPrint """
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,558,"dbgPrint ""expand : cell"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,569,"dbgPrint ""        cj :"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,579,"dbgPrint ""  REWRITE_EX parent cell:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,581,"dbgPrint ""expand : parent cell:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,602,"dbgPrint ""\n"""
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,607,"dbgPrint ""expand : clone"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,619,"dbgPrint ""  cloned:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltype.rb,624,"dbgPrint ""change_rhs_port: inner cell"
+dbgPrint,call,tecslib\core\componentobj\compositecelltypejoin.rb,70,"dbgPrint(  ""match?""  )"
+dbgPrint,call,tecslib\core\componentobj\compositecelltypejoin.rb,75,"dbgPrint(  ""  cell_name:"
+dbgPrint,call,tecslib\core\componentobj\compositecelltypejoin.rb,76,"dbgPrint(  ""  @cell_name:"
+dbgPrint,call,tecslib\core\componentobj\domaintype.rb,83,"dbgPrint ""create_domain_plugin: plugin_name="
+dbgPrint,call,tecslib\core\componentobj\domaintype.rb,126,"dbgPrint ""DomainType"
+dbgPrint,call,tecslib\core\componentobj\generate.rb,57,"dbgPrint ""generate:"
+dbgPrint,call,tecslib\core\componentobj\importable.rb,64,"dbgPrint ""base_dir=. while searching"
+dbgPrint,call,tecslib\core\componentobj\importable.rb,84,"dbgPrint ""base_dir="
+dbgPrint,call,tecslib\core\componentobj\importable.rb,93,"dbgPrint ""base_dir=. while searching"
+dbgPrint,call,tecslib\core\componentobj\join.rb,80,"dbgPrint ""Join"
+dbgPrint,call,tecslib\core\componentobj\join.rb,130,"dbgPrint ""set_definition:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,177,"dbgPrint( ""Join"
+dbgPrint,call,tecslib\core\componentobj\join.rb,262,"dbgPrint ""set_definition: set_f_ref"
+dbgPrint,call,tecslib\core\componentobj\join.rb,290,"dbgPrint ""Join OK"
+dbgPrint,call,tecslib\core\componentobj\join.rb,300,"dbgPrint ""Join set_definition: rhs:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,307,"dbgPrint ""Join OK"
+dbgPrint,call,tecslib\core\componentobj\join.rb,325,"dbgPrint( ""ep_through_list: cell="
+dbgPrint,call,tecslib\core\componentobj\join.rb,327,"dbgPrint( ""Join name="
+dbgPrint,call,tecslib\core\componentobj\join.rb,357,"dbgPrint ""create_allocator_join:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,369,"dbgPrint ""create_allocator_join:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,372,"dbgPrint ""create_allocator_join:3 not"
+dbgPrint,call,tecslib\core\componentobj\join.rb,385,"dbgPrint ""check_region"
+dbgPrint,call,tecslib\core\componentobj\join.rb,419,"dbgPrint ""sibling_level:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,420,"dbgPrint ""from:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,421,"dbgPrint ""to:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,439,"dbgPrint ""going out from"
+dbgPrint,call,tecslib\core\componentobj\join.rb,478,"dbgPrint ""going from"
+dbgPrint,call,tecslib\core\componentobj\join.rb,538,"dbgPrint ""going in to"
+dbgPrint,call,tecslib\core\componentobj\join.rb,593,"dbgPrint ""check_region2"
+dbgPrint,call,tecslib\core\componentobj\join.rb,642,"dbgPrint ""check_and_gen_through"
+dbgPrint,call,tecslib\core\componentobj\join.rb,959,"dbgPrint ""cell get_cell_global_name:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,976,"dbgPrint ""Cell get_port_global_name:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1124,"dbgPrint ""change_name:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1144,"dbgPrint ""change_rhs_port: name="
+dbgPrint,call,tecslib\core\componentobj\join.rb,1164,"dbgPrint ""  REWRITE cell_name:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1188,"dbgPrint ""array_member2.len :"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1196,"dbgPrint ""change_rhs array_member"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1213,"dbgPrint ""=====  clone_for_composite:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1224,"dbgPrint ""join cloned :"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1249,"dbgPrint ""clone_array_member:"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1273,"dbgPrint ""Join"
+dbgPrint,call,tecslib\core\componentobj\join.rb,1277,"dbgPrint ""Joinarray"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,77,"dbgPrint ""push Namespace\n"""
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,87,"dbgPrint ""pop Namespace\n"""
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,99,"dbgPrint ""Namespace.PUSH"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,103,"dbgPrint ""Namespace.POP"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,112,"dbgPrint ""Namespace: initialize name="
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,126,"dbgPrint ""namespace: re-appear"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,136,"dbgPrint ""namespace: 1st-appear"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,139,"dbgPrint ""Namespace: initialize name="
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,141,"dbgPrint ""Namespace: initialize2 name="
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,356,"dbgPrint ""new_namespace:"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,402,"dbgPrint ""Namespace.new_cell:"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,423,"dbgPrint ""check_ref_but_undef:"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,581,"dbgPrint ""set_definition_join"
+dbgPrint,call,tecslib\core\componentobj\namespace.rb,604,"dbgPrint ""check_join"
+dbgPrint,call,tecslib\core\componentobj\port.rb,610,"dbgPrint ""create_reverse_require_join"
+dbgPrint,call,tecslib\core\componentobj\region.rb,116,"dbgPrint ""Region="
+dbgPrint,call,tecslib\core\componentobj\region.rb,126,"dbgPrint ""Region="
+dbgPrint,call,tecslib\core\componentobj\region.rb,142,"dbgPrint ""Region.new: re-appear"
+dbgPrint,call,tecslib\core\componentobj\region.rb,173,"dbgPrint ""Region.new:"
+dbgPrint,call,tecslib\core\componentobj\region.rb,177,"dbgPrint ""new Node:"
+dbgPrint,call,tecslib\core\componentobj\region.rb,181,"dbgPrint ""new LinkRoot:"
+dbgPrint,call,tecslib\core\componentobj\region.rb,258,"dbgPrint ""Region"
+dbgPrint,call,tecslib\core\componentobj\region.rb,272,"dbgPrint  ""set_region_family_line: Region:"
+dbgPrint,call,tecslib\core\componentobj\region.rb,411,"dbgPrint ""get_path_string:"
+dbgPrint,call,tecslib\core\componentobj\region.rb,531,"dbgPrint ""going out from"
+dbgPrint,call,tecslib\core\componentobj\region.rb,535,"dbgPrint ""distance: region="
+dbgPrint,call,tecslib\core\componentobj\region.rb,560,"dbgPrint ""going from"
+dbgPrint,call,tecslib\core\componentobj\region.rb,598,"dbgPrint ""going in to"
+dbgPrint,call,tecslib\core\componentobj\region.rb,625,"dbgPrint ""dsitance="
+dbgPrint,call,tecslib\core\expression.rb,707,"dbgPrint ""elements_get_type_sub:"
+dbgPrint,call,tecslib\core\expression.rb,1011,"dbgPrint ""C_EXP:"
+dbgPrint,call,tecslib\core\gen_xml.rb,46,"dbgPrint ""generating XML file:"
+dbgPrint,call,tecslib\core\generate.rb,127,"dbgPrint ""Namespace"
+dbgPrint,call,tecslib\core\generate.rb,137,"dbgPrint ""only makefile_template"
+dbgPrint,call,tecslib\core\generate.rb,217,"dbgPrint ""gen_global_header region="
+dbgPrint,call,tecslib\core\generate.rb,325,"dbgPrint (""gen_makefile_template: region="
+dbgPrint,call,tecslib\core\generate.rb,663,"dbgPrint ""domain_regions: """
+dbgPrint,call,tecslib\core\generate.rb,863,"dbgPrint ""gen_celltype_names"
+dbgPrint,call,tecslib\core\generate.rb,897,"dbgPrint ""gen_celltype_names namespace="
+dbgPrint,call,tecslib\core\generate.rb,908,"dbgPrint ""gen_celltype_names_domain: region="
+dbgPrint,call,tecslib\core\generate.rb,909,"dbgPrint ""gen_celltype_names_domain:\n"""
+dbgPrint,call,tecslib\core\generate.rb,910,"regions.each{|r| dbgPrint ""    ct="
+dbgPrint,call,tecslib\core\generate.rb,911,"dbgPrint ""\n"""
+dbgPrint,call,tecslib\core\generate.rb,944,"dbgPrint ""gen_celltype_names"
+dbgPrint,call,tecslib\core\generate.rb,1057,"dbgPrint ""generate_signature_header signature="
+dbgPrint,call,tecslib\core\generate.rb,1337,"dbgPrint ""celltype:"
+dbgPrint,call,tecslib\core\generate.rb,3346,"dbgPrint ""me="
+dbgPrint,call,tecslib\core\generate.rb,3391,"dbgPrint( ""gen_cell_ep_vdes_array:"
+dbgPrint,call,tecslib\core\generate.rb,4033,"dbgPrint ""cell_cb_call_port:"
+dbgPrint,call,tecslib\core\optimize.rb,140,"dbgPrint ""id_specified_cells celltype="
+dbgPrint,call,tecslib\core\optimize.rb,464,"dbgPrint """
+dbgPrint,call,tecslib\core\plugin.rb,252,"dbgPrint ""check_plugin_arg:"
+dbgPrint,call,tecslib\core\plugin.rb,261,"dbgPrint ""calling:"
+dbgPrint,call,tecslib\core\pluginModule.rb,67,"dbgPrint ""PluginModule: load_plugin:"
+dbgPrint,call,tecslib\core\pluginModule.rb,85,"dbgPrint ""pluginClass="
+dbgPrint,call,tecslib\core\pluginModule.rb,87,"dbgPrint ""pluginClass="
+dbgPrint,call,tecslib\core\pluginModule.rb,134,"dbgPrint ""generate_and_parse:"
+dbgPrint,call,tecslib\core\pluginModule.rb,157,"dbgPrint ""------------  gen_plugin_post_code  -------------\n"""
+dbgPrint,call,tecslib\core\pluginModule.rb,158,"dbgPrint ""PluginModule"
+dbgPrint,call,tecslib\core\pluginModule.rb,192,"dbgPrint ""pluginModule: prio="
+dbgPrint,call,tecslib\core\pluginModule.rb,212,"dbgPrint ""PluginModule:"
+dbgPrint,call,tecslib\core\pluginModule.rb,228,"dbgPrint( """
+dbgPrint,call,tecslib\core\syntaxobj\namedlist.rb,58,"dbgPrint ""add_item: name="
+dbgPrint,call,tecslib\core\syntaxobj\namedlist.rb,139,"dbgPrint ""NamedList clone"
+dbgPrint,call,tecslib\core\syntaxobj\node.rb,158,"dbgPrint ""set_owner:"
+dbgPrint,call,tecslib\core\tecs_lang.rb,279,"dbgPrint ""LANG_FILE="
+dbgPrint,call,tecslib\core\tecs_lang.rb,280,"dbgPrint ""Ruby19_File_Encode="
+dbgPrint,call,tecslib\core\tecsgen.rb,49,"dbgPrint ""add_import_path: '"
+dbgPrint,call,tecslib\core\tecsgen.rb,87,"dbgPrint ""subst_tecspath"
+dbgPrint,call,tecslib\core\tecsgen.rb,101,"dbgPrint ""is_absolute("
+dbgPrint,call,tecslib\core\tecsgen.rb,233,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,241,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,249,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,257,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,266,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,272,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,280,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,284,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,293,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,299,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,302,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,307,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,317,"dbgPrint """
+dbgPrint,call,tecslib\core\tecsgen.rb,323,"dbgPrint ""Region.path_str:"
+dbgPrint,call,tecslib\core\tecsgen.rb,364,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,369,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,374,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,394,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,396,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,406,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,440,"dbgPrint ""dump_tecsgen_rbdmp 0:\n"""
+dbgPrint,call,tecslib\core\tecsgen.rb,447,"dbgPrint ""dump_tecsgen_rbdmp 1: Region.path_str:"
+dbgPrint,call,tecslib\core\tecsgen.rb,459,"dbgPrint ""dump_tecsgen_rbdmp 2: Region.path_str:"
+dbgPrint,call,tecslib\core\tecsgen.rb,471,"dbgPrint ""dump_tecsgen_rbdmp 3: Region.path_str:"
+dbgPrint,call,tecslib\core\tecsgen.rb,483,"dbgPrint ""dump_tecsgen_rbdmp 4: Region.path_str:"
+dbgPrint,call,tecslib\core\tecsgen.rb,484,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,489,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,494,"dbgPrint( """
+dbgPrint,call,tecslib\core\tecsgen.rb,498,"dbgPrint ""dump_tecsgen_rbdmp final: Region.path_str:"
+dbgPrint,call,tecslib\core\tecsinfo.rb,730,"dbgPrint ""param_list"
+dbgPrint,call,tecslib\core\tool_info.rb,147,"dbgPrint ""validate_object:"
+dbgPrint,call,tecslib\core\tool_info.rb,165,"dbgPrint """
+dbgPrint,call,tecslib\core\types.rb,462,"dbgPrint ""sign="
+dbgPrint,call,tecslib\core\types.rb,506,"dbgPrint ""check_and_clip: negative="
+dbgPrint,call,tecslib\plugin\FMPHandlerPlugin.rb,85,"dbgPrint ""FMPHandlerPlugin: new_cell"
+dbgPrint,call,tecslib\plugin\FMPHandlerPlugin.rb,155,"dbgPrint ""FMPHandlerPlugin: get_only prc_id="
+dbgPrint,call,tecslib\plugin\FMPObjectPlugin.rb,76,"dbgPrint ""print_cfg_cre:"
+dbgPrint,call,tecslib\plugin\FMPObjectPlugin.rb,175,"dbgPrint ""FMPObjectPlugin"
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,69,"dbgPrint ""FMPPlugin: initialize: region="
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,96,"dbgPrint ""FMPPlugin: add_through_plugin:"
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,113,"dbgPrint ""FMPPlugin: Join: "" + (join.get_cell.get_real_celltype(join.get_rhs_port1).get_global_name).to_s +"
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,125,"dbgPrint ""*****"
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,135,"dbgPrint ""**** Direct Call\n"""
+dbgPrint,call,tecslib\plugin\FMPPlugin.rb,143,"dbgPrint ""FMPPlugin: joinable? from"
+dbgPrint,call,tecslib\plugin\HRMPClassPlugin.rb,80,"dbgPrint ""HRMPClassPlugin: initialize: region="
+dbgPrint,call,tecslib\plugin\HRMPClassPlugin.rb,94,"dbgPrint ""HRMPClassPlugin: joinable? from"
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,53,"dbgPrint ""HRMPPlugin: initialize: region="
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,67,"dbgPrint ""MyDomainPlugin: joinable? from"
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,118,"dbgPrint ""--------- add_inter_domain:"
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,135,"dbgPrint ""--------- get_inter_domain"
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,139,"dbgPrint ""--------- get_inter_domain:"
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,152,"dbgPrint ""get_sac_str: cell="
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,154,"dbgPrint ""   src_domain="
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,166,"dbgPrint ""cell="
+dbgPrint,call,tecslib\plugin\HRMPDomainPlugin.rb,167,"dbgPrint ""dr_src="
+dbgPrint,call,tecslib\plugin\HRMPKernelObjectPlugin.rb,235,"dbgPrint ""HRMPKernelObjectPlugin: cell="
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,45,"dbgPrint ""HRMPPlugin: DomainPlugin"""
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,49,"dbgPrint ""HRMPPlugin: ClassPlugin"""
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,53,"dbgPrint ""HRMPPlugin: unsupported"""
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,68,"dbgPrint ""MyDomainPlugin: add_through_plugin:"
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,129,"dbgPrint ""HRMPJoinManger: add_through_plugin_class:"
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,146,"dbgPrint ""HRMPPlugin: Join: "" + (join.get_cell.get_real_celltype(join.get_rhs_port1).get_global_name).to_s +"
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,157,"dbgPrint ""*****"
+dbgPrint,call,tecslib\plugin\HRMPPlugin.rb,160,"dbgPrint ""HRMPPlugin: **** Direct Call\n"""
+dbgPrint,call,tecslib\plugin\HRP2KernelObjectPlugin.rb,247,"dbgPrint ""~~~~~"
+dbgPrint,call,tecslib\plugin\HRP2KernelObjectPlugin.rb,289,"dbgPrint ""acv = """
+dbgPrint,call,tecslib\plugin\HRP2KernelObjectPlugin.rb,325,"dbgPrint ""===== begin check registered celltype =====\n"""
+dbgPrint,call,tecslib\plugin\HRP2KernelObjectPlugin.rb,327,"dbgPrint( ct.get_name.to_s + ""\n"" )"
+dbgPrint,call,tecslib\plugin\HRP2KernelObjectPlugin.rb,329,"dbgPrint ""===== end check registered celltype =====\n"""
+dbgPrint,call,tecslib\plugin\HRP2RPCPlugin.rb,237,"dbgPrint ""make allocator\n"""
+dbgPrint,call,tecslib\plugin\HRP2TaskPlugin.rb,62,"dbgPrint ""assign task plugin\n"""
+dbgPrint,call,tecslib\plugin\HRP2TaskPlugin.rb,145,"dbgPrint ""HRP2 domain in"
+dbgPrint,call,tecslib\plugin\HRP2TaskPlugin.rb,147,dbgPrint reg.get_name
+dbgPrint,call,tecslib\plugin\HRPKernelObjectManager.rb,92,"dbgPrint ""HRPSVCManage: add_cell cell="
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,84,"dbgPrint ""===== begin"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,94,"dbgPrint ""***** already checked\n"""
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,103,"dbgPrint ""===== begin check my domain"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,153,"dbgPrint ""~~~~~"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,164,"dbgPrint ""~~~~~"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,172,"dbgPrint ""~~~~~"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,190,"dbgPrint ""===== end check my domain"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,196,"dbgPrint ""===== begin check regions"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,287,"dbgPrint ""===== end check regions"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,291,"dbgPrint ""===== end"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,306,"dbgPrint ""===== begin check registered celltype =====\n"""
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,308,"dbgPrint( ct.get_name.to_s + ""\n"" )"
+dbgPrint,call,tecslib\plugin\HRPKernelObjectPlugin.rb,310,"dbgPrint ""===== end check registered celltype =====\n"""
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,52,"dbgPrint ""HRPPlugin: initialize: region="
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,73,"dbgPrint ""MyDomainPlugin: add_through_plugin:"
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,128,"dbgPrint ""warning: at HRP Join Check"""
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,136,"dbgPrint ""MyDomainPlugin: joinable? from"
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,161,"dbgPrint ""HRPPlugin: $generating_region="
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,186,"dbgPrint ""--------- add_inter_domain:"
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,203,"dbgPrint ""--------- get_inter_domain"
+dbgPrint,call,tecslib\plugin\HRPPlugin.rb,207,"dbgPrint ""--------- get_inter_domain:"
+dbgPrint,call,tecslib\plugin\HRPRPCPlugin.rb,455,"dbgPrint ""HRPRPCPlugin"
+dbgPrint,call,tecslib\plugin\HRPRPCPlugin.rb,477,"dbgPrint ""HRPRPCPlugin: In class class_type="
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,58,"dbgPrint ""HRPSVCBodyCellPlugin: cell="
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,136,"dbgPrint ""HRPSVCBodyCellPlugin:regions_to_tacp:"
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,222,"dbgPrint ""set_exportEntryPort: cell="
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,227,"dbgPrint ""set_exportEntryPort:"
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,235,"dbgPrint ""set_exportEntryPort:"
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,247,"dbgPrint ""HRPSVCBodyCell: substRegion origin="
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,252,"dbgPrint ""HRPSVCBodyCell: original_region_nsp="
+dbgPrint,call,tecslib\plugin\HRPSVCBodyCellPlugin.rb,261,"dbgPrint ""HRPSVCBodyCell: subst_region_nsp="
+dbgPrint,call,tecslib\plugin\HRPSVCSignaturePlugin.rb,506,"dbgPrint ""struct member"
+dbgPrint,call,tecslib\plugin\HRPSVCSignaturePlugin.rb,508,"dbgPrint ""member array type"
+dbgPrint,call,tecslib\plugin\HRPSVCSignaturePlugin.rb,528,"dbgPrint ""check_intptr IN\n"""
+dbgPrint,call,tecslib\plugin\HRPSVCSignaturePlugin.rb,531,"dbgPrint ""check_intptr"
+dbgPrint,call,tecslib\plugin\HRPSVCThroughPlugin.rb,225,"dbgPrint ""gen_caller_check_code(func_name):"
+dbgPrint,call,tecslib\plugin\HRPSVCThroughPlugin.rb,334,"dbgPrint ""callable_domain.length = 0\n"""
+dbgPrint,call,tecslib\plugin\HRPSVCThroughPlugin.rb,341,"dbgPrint ""callable_domain.length > 1 && not all_domains \n"""
+dbgPrint,call,tecslib\plugin\HRPTaskPlugin.rb,48,"dbgPrint ""HRPTaskCelltypePlugin new_cell="
+dbgPrint,call,tecslib\plugin\HRPTaskPlugin.rb,70,"dbgPrint ""assign task plugin\n"""
+dbgPrint,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,64,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,78,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,119,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,180,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,187,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeCelltypePlugin.rb,44,"dbgPrint ""MrubyBridgeCelltypePlugin loaded\n"""
+dbgPrint,call,tecslib\plugin\MrubyBridgeCompositePlugin.rb,44,"dbgPrint ""MrubyBridgeCompositePlugin loaded\n"""
+dbgPrint,call,tecslib\plugin\MrubyBridgePlugin.rb,44,"dbgPrint ""MrubyBridgePlugin: SignaturePlugin"""
+dbgPrint,call,tecslib\plugin\MrubyBridgePlugin.rb,48,"dbgPrint ""MrubyBridgePlugin: CelltypePlugin"""
+dbgPrint,call,tecslib\plugin\MrubyBridgePlugin.rb,52,"dbgPrint ""MrubyBridgePlugin: CompositePlugin"""
+dbgPrint,call,tecslib\plugin\MrubyBridgePlugin.rb,56,"dbgPrint ""MrubyBridgePlugin: CellPlugin"""
+dbgPrint,call,tecslib\plugin\MrubyBridgePlugin.rb,64,"dbgPrint ""MrubyBridgePlugin: unsupported"""
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,126,"dbgPrint ""MrubyBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,129,"dbgPrint ""MrubyBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,133,"dbgPrint ""MrubyBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,136,"dbgPrint ""MrubyBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,150,"dbgPrint ""MrubyBridgePlugin: auto_exclude"
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,481,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,491,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgePlugin.rb,44,"dbgPrint ""MrubyInfoBridgePlugin: SignaturePlugin"""
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgePlugin.rb,56,"dbgPrint ""MrubyInfoBridgePlugin: CellPlugin"""
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgePlugin.rb,64,"dbgPrint ""MrubyInfoBridgePlugin: unsupported"""
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,115,"dbgPrint ""MrubyInfoBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,118,"dbgPrint ""MrubyInfoBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,122,"dbgPrint ""MrubyInfoBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,125,"dbgPrint ""MrubyInfoBridgePlugin:"
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,139,"dbgPrint ""MrubyInfoBridgePlugin: auto_exclude"
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,493,"dbgPrint """
+dbgPrint,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,503,"dbgPrint """
+dbgPrint,call,tecslib\plugin\NotifierPlugin.rb,1063,"dbgPrint """
+dbgPrint,call,tecslib\plugin\NotifierPlugin.rb,1071,"dbgPrint """
+dbgPrint,call,tecslib\plugin\NotifierPlugin.rb,1073,"dbgPrint """
+dbgPrint,call,tecslib\plugin\OpaqueMarshalerPlugin.rb,69,"dbgPrint ""OpaqueMarshalerPlugin: signature="
+dbgPrint,call,tecslib\plugin\SharedRPCPlugin.rb,99,"dbgPrint ""SahredRPCPlugin: Region:"
+dbgPrint,call,tecslib\plugin\TECSInfoPlugin.rb,286,"dbgPrint ""TECSInfoPlugin: get_post_code_priority:"
+dbgPrint,call,tecslib\plugin\lib\GenAttMod.rb,108,"dbgPrint ""gen_att_mod root="
+dbgPrint,call,tecslib\plugin\lib\GenAttMod.rb,121,"dbgPrint ""att_mod:  celltype:"
+dbgPrint,call,tecslib\plugin\lib\GenAttMod.rb,206,"dbgPrint ""RPPPlugin: cell_nsp="
+dbgPrint,call,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,59,"dbgPrint """
+dbgPrint,call,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,84,"dbgPrint ""MrubyBridgeCelltypePluginModule: new_cell:"
+dbgPrint,call,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,125,"dbgPrint ""MrubyBridgeCelltypePluginModule new_cell: Import"
+dbgPrint,call,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,174,"dbgPrint """
+dbgPrintf,definition,tecsgen.rb,185,def dbgPrintf( *param )
+dbgPrintf,call,tecslib\core\componentobj\compositecelltypejoin.rb,71,"dbgPrintf( ""  @cell:      %-20s      %08x\n"", @cell.get_name, @cell.object_id )"
+dbgPrintf,call,tecslib\core\componentobj\compositecelltypejoin.rb,72,"dbgPrintf( ""  @port_decl: %-20s      %08x\n"", @port_decl.get_name, @port_decl.object_id )"
+dbgPrintf,call,tecslib\core\componentobj\compositecelltypejoin.rb,73,"dbgPrintf( ""  cell:       %-20s      %08x\n"", cell.get_name, cell.object_id )"
+dbgPrintf,call,tecslib\core\componentobj\compositecelltypejoin.rb,74,"dbgPrintf( ""  port_decl:  %-20s      %08x\n"", port_decl.get_name, port_decl.object_id )"
+end_extern_C,definition,tecslib\core\generate.rb,90,def end_extern_C f
+end_extern_C,call,tecslib\core\generate.rb,1235,end_extern_C f
+end_extern_C,call,tecslib\core\generate.rb,1282,end_extern_C f
+endif_cb_type_only,definition,tecslib\core\generate.rb,75,def endif_cb_type_only f
+endif_cb_type_only,call,tecslib\core\generate.rb,1261,endif_cb_type_only f
+endif_cb_type_only,call,tecslib\core\generate.rb,1280,endif_cb_type_only f
+endif_cb_type_only,call,tecslib\core\generate.rb,1302,endif_cb_type_only f
+endif_cb_type_only,call,tecslib\core\generate.rb,1319,endif_cb_type_only f
+endif_macro_only,definition,tecslib\core\generate.rb,54,def endif_macro_only f
+endif_macro_only,call,tecslib\core\generate.rb,285,endif_macro_only f
+endif_macro_only,call,tecslib\core\generate.rb,1067,endif_macro_only f
+endif_macro_only,call,tecslib\core\generate.rb,1236,endif_macro_only f
+endif_macro_only,call,tecslib\core\generate.rb,1283,endif_macro_only f
+endif_macro_only,call,tecslib\core\generate.rb,1314,endif_macro_only f
+error_check,definition,tecsmerge.rb,628,"def error_check dst_file, level"
+error_check,call,tecsmerge.rb,579,"error_check dst_file, 1"
+error_check,call,tecsmerge.rb,582,"error_check dst_file, 2"
+error_check,call,tecsmerge.rb,585,"error_check dst_file, 3"
+flush_print,definition,tecscde.rb,83,"def flush_print( message, *args )"
+flush_print,call,cdelib\tcontrol.rb,125,"flush_print ""save\n""; @model.save( @model.get_file_editing )"
+flush_print,call,cdelib\tcontrol.rb,132,"flush_print ""export to"
+flush_print,call,cdelib\tcontrol.rb,136,"flush_print ""mode: pointer\n"""
+flush_print,call,cdelib\tcontrol.rb,141,"flush_print ""mode: new\n"""
+flush_print,call,cdelib\tcontrol.rb,154,"flush_print ""quit\n"";Gtk.main_quit"
+flush_print,call,cdelib\tmodel.rb,134,"flush_print ""* set_undo_point number="
+flush_print,call,cdelib\tmodel.rb,174,"flush_print ""truncate undo buffer"
+flush_print,call,cdelib\tmodel.rb,181,"flush_print ""* set_undo_point: nothing changed\n"""
+flush_print,call,cdelib\tmodel.rb,189,"flush_print ""* undo change_no="
+flush_print,call,cdelib\tmodel.rb,199,"flush_print ""* redo change_no="
+ifdef_cb_type_only,definition,tecslib\core\generate.rb,68,def ifdef_cb_type_only f
+ifdef_cb_type_only,call,tecslib\core\generate.rb,1317,ifdef_cb_type_only f
+ifdef_macro_only,definition,tecslib\core\generate.rb,40,def ifdef_macro_only f
+ifndef_cb_type_only,definition,tecslib\core\generate.rb,61,def ifndef_cb_type_only f
+ifndef_cb_type_only,call,tecslib\core\generate.rb,1243,ifndef_cb_type_only f
+ifndef_cb_type_only,call,tecslib\core\generate.rb,1275,ifndef_cb_type_only f
+ifndef_cb_type_only,call,tecslib\core\generate.rb,1287,ifndef_cb_type_only f
+ifndef_macro_only,definition,tecslib\core\generate.rb,47,def ifndef_macro_only f
+ifndef_macro_only,call,tecslib\core\generate.rb,241,ifndef_macro_only f
+ifndef_macro_only,call,tecslib\core\generate.rb,1065,ifndef_macro_only f
+ifndef_macro_only,call,tecslib\core\generate.rb,1228,ifndef_macro_only f
+ifndef_macro_only,call,tecslib\core\generate.rb,1264,ifndef_macro_only f
+ifndef_macro_only,call,tecslib\core\generate.rb,1312,ifndef_macro_only f
+merge,definition,tecsmerge.rb,538,"def merge( src_file, dst_dir )"
+merge,call,tecslib\core\ctypes.rb,136,"raise ""merge: unknown type"
+merge,call,tecsmerge.rb,686,"parser.on('-e', '--exist-only',  ""merge if exist in destination directory"") { |fs|"
+merge,call,tecsmerge.rb,754,"merge( """
+merge,call,tecsmerge.rb,758,"merge( s, dst )"
+print_Makefile_note,definition,tecslib\core\generate.rb,112,def print_Makefile_note f
+print_Makefile_note,call,tecslib\core\generate.rb,332,print_Makefile_note f
+print_exception,definition,tecsgen.rb,167,def print_exception( evar )
+print_exception,call,tecsgen.rb,116,print_exception( evar )
+print_exception,call,tecsgen.rb,142,print_exception( e )
+print_exception,call,tecsgen.rb,601,print_exception( evar )
+print_exception,call,tecslib\core\C_parser.tab.rb,198,print_exception( evar )
+print_exception,call,tecslib\core\C_parser.y.rb,973,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\cell.rb,695,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\celltypeModule.rb,73,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\celltypeModule.rb,89,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\celltypeModule.rb,100,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\import_c.rb,150,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\import_c.rb,159,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\import_c.rb,190,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\import_c.rb,197,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\join.rb,693,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\join.rb,827,print_exception( evar )
+print_exception,call,tecslib\core\componentobj\signature.rb,325,print_exception( evar )
+print_exception,call,tecslib\core\gen_xml.rb,62,print_exception( evar )
+print_exception,call,tecslib\core\generate.rb,179,print_exception( evar )
+print_exception,call,tecslib\core\generate.rb,210,print_exception( evar )
+print_exception,call,tecslib\core\generate.rb,4943,print_exception( evar )
+print_exception,call,tecslib\core\generate.rb,5030,print_exception( evar )
+print_exception,call,tecslib\core\pluginModule.rb,132,print_exception( evar )
+print_exception,call,tecslib\core\pluginModule.rb,139,print_exception( evar )
+print_exception,call,tecslib\core\pluginModule.rb,145,print_exception( evar )
+print_exception,call,tecslib\core\pluginModule.rb,221,print_exception( evar )
+print_exception,call,tecslib\core\tecsgen.rb,426,print_exception( evar )
+print_indent,definition,tecsflow.rb,85,def print_indent( level )
+print_indent,definition,tecslib\core\generate.rb,117,"def print_indent( f, n )"
+print_indent,call,tecsflow.rb,265,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,311,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,314,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,325,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,359,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,405,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,410,indent_level = print_indent indent_level
+print_indent,call,tecsflow.rb,435,indent_level = print_indent indent_level
+print_indent,call,tecslib\core\generate.rb,3690,"print_indent( f, indent )"
+print_indent,call,tecslib\core\generate.rb,3695,"print_indent( f, indent )"
+print_indent,call,tecslib\core\generate.rb,3743,"print_indent( f, indent )"
+print_indent,call,tecslib\core\generate.rb,3748,"print_indent( f, indent )"
+print_indent,call,tecslib\core\generate.rb,3755,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3810,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3819,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3830,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3839,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3933,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3938,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3943,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,3987,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4019,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4029,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4042,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4053,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4067,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4072,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4125,"print_indent( f, indent + 1 )"
+print_indent,call,tecslib\core\generate.rb,4130,"print_indent( f, indent + 1 )"
+print_note,definition,tecslib\core\generate.rb,98,"def print_note( f, b_complete = true )"
+print_note,call,tecslib\core\generate.rb,222,print_note f
+print_note,call,tecslib\core\generate.rb,1060,print_note f
+print_note,call,tecslib\core\generate.rb,1222,print_note f
+print_note,call,tecslib\core\generate.rb,1358,print_note f
+print_note,call,tecslib\core\generate.rb,1368,print_note f2
+print_note,call,tecslib\core\generate.rb,4538,"print_note( f, true )"
+print_note,call,tecslib\core\generate.rb,4880,"print_note( f, true )"
+print_report,definition,tecsgen.rb,192,def print_report
+print_report,call,tecslib\core\tecsgen.rb,388,print_report
+print_report,call,tecslib\core\tecsgen.rb,430,print_report
+rename_dst,definition,tecsmerge.rb,648,def rename_dst( dst_file )
+rename_dst,call,tecsmerge.rb,587,bkup_file = rename_dst( dst_file )
+require_tecsgen_lib,definition,tecsgen.rb,98,"def require_tecsgen_lib( fname, b_fatal = true )"
+require_tecsgen_lib,call,tecsgen.rb,471,require_tecsgen_lib 'tecslib/version.rb'
+require_tecsgen_lib,call,tecsgen.rb,485,require_tecsgen_lib 'tecslib/core/tecs_lang.rb'
+require_tecsgen_lib,call,tecsgen.rb,488,require_tecsgen_lib 'tecslib/core/bnf.tab.rb'
+require_tecsgen_lib,call,tecsgen.rb,490,require_tecsgen_lib 'tecslib/core/bnf-deb.tab.rb'
+require_tecsgen_lib,call,tecsgen.rb,494,require_tecsgen_lib 'tecslib/core/syntaxobj.rb'
+require_tecsgen_lib,call,tecsgen.rb,495,require_tecsgen_lib 'tecslib/core/pluginModule.rb'
+require_tecsgen_lib,call,tecsgen.rb,496,require_tecsgen_lib 'tecslib/core/plugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,497,require_tecsgen_lib 'tecslib/core/messages.rb'
+require_tecsgen_lib,call,tecsgen.rb,498,require_tecsgen_lib 'tecslib/core/types.rb'
+require_tecsgen_lib,call,tecsgen.rb,499,require_tecsgen_lib 'tecslib/core/value.rb'
+require_tecsgen_lib,call,tecsgen.rb,500,require_tecsgen_lib 'tecslib/core/componentobj.rb'
+require_tecsgen_lib,call,tecsgen.rb,501,require_tecsgen_lib 'tecslib/core/expression.rb'
+require_tecsgen_lib,call,tecsgen.rb,502,require_tecsgen_lib 'tecslib/core/optimize.rb'
+require_tecsgen_lib,call,tecsgen.rb,503,require_tecsgen_lib 'tecslib/core/tecsgen.rb'
+require_tecsgen_lib,call,tecsgen.rb,504,require_tecsgen_lib 'tecslib/core/generate.rb'
+require_tecsgen_lib,call,tecsgen.rb,505,require_tecsgen_lib 'tecslib/core/gen_xml.rb'
+require_tecsgen_lib,call,tecsgen.rb,506,require_tecsgen_lib 'tecslib/core/tool_info.rb'
+require_tecsgen_lib,call,tecsgen.rb,507,require_tecsgen_lib 'tecslib/core/tecsinfo.rb'
+require_tecsgen_lib,call,tecsgen.rb,508,require_tecsgen_lib 'tecslib/core/unjoin_plugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,509,require_tecsgen_lib 'tecslib/plugin/CelltypePlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,510,require_tecsgen_lib 'tecslib/plugin/CompositePlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,511,require_tecsgen_lib 'tecslib/plugin/CellPlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,512,require_tecsgen_lib 'tecslib/plugin/SignaturePlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,513,require_tecsgen_lib 'tecslib/plugin/ThroughPlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,514,require_tecsgen_lib 'tecslib/plugin/DomainPlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,515,require_tecsgen_lib 'tecslib/plugin/ClassPlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,516,require_tecsgen_lib 'tecslib/plugin/MultiPlugin.rb'
+require_tecsgen_lib,call,tecsgen.rb,519,require_tecsgen_lib 'tecslib/core/C_parser.tab.rb'
+require_tecsgen_lib,call,tecsgen.rb,520,require_tecsgen_lib 'tecslib/core/ctypes.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,41,require_tecsgen_lib 'tecslib/core/componentobj/signature.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,44,require_tecsgen_lib 'tecslib/core/componentobj/celltypeModule.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,45,require_tecsgen_lib 'tecslib/core/componentobj/celltype.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,46,require_tecsgen_lib 'tecslib/core/componentobj/port.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,47,require_tecsgen_lib 'tecslib/core/componentobj/factory.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,50,require_tecsgen_lib 'tecslib/core/componentobj/cell.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,51,require_tecsgen_lib 'tecslib/core/componentobj/join.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,52,require_tecsgen_lib 'tecslib/core/componentobj/reversejoin.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,55,require_tecsgen_lib 'tecslib/core/componentobj/compositecelltype.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,56,require_tecsgen_lib 'tecslib/core/componentobj/compositecelltypejoin.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,59,require_tecsgen_lib 'tecslib/core/componentobj/domaintype.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,60,require_tecsgen_lib 'tecslib/core/componentobj/classtype.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,61,require_tecsgen_lib 'tecslib/core/componentobj/namespace.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,62,require_tecsgen_lib 'tecslib/core/componentobj/region.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,63,require_tecsgen_lib 'tecslib/core/componentobj/namespacepath.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,66,require_tecsgen_lib 'tecslib/core/componentobj/importable.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,67,require_tecsgen_lib 'tecslib/core/componentobj/import.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,68,require_tecsgen_lib 'tecslib/core/componentobj/import_c.rb'
+require_tecsgen_lib,call,tecslib\core\componentobj.rb,71,require_tecsgen_lib 'tecslib/core/componentobj/generate.rb'
+require_tecsgen_lib,call,tecslib\core\pluginModule.rb,75,"if require_tecsgen_lib( """
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,42,require_tecsgen_lib 'tecslib/core/syntaxobj/node.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,43,require_tecsgen_lib 'tecslib/core/syntaxobj/namedlist.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,45,require_tecsgen_lib 'tecslib/core/syntaxobj/decl.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,47,require_tecsgen_lib 'tecslib/core/syntaxobj/funchead.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,48,require_tecsgen_lib 'tecslib/core/syntaxobj/paramdecl.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,49,require_tecsgen_lib 'tecslib/core/syntaxobj/paramlist.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,51,require_tecsgen_lib 'tecslib/core/syntaxobj/typedef.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,53,require_tecsgen_lib 'tecslib/core/syntaxobj/cdlinitializer.rb'
+require_tecsgen_lib,call,tecslib\core\syntaxobj.rb,54,require_tecsgen_lib 'tecslib/core/syntaxobj/cdlstring.rb'
+require_tecsgen_lib,call,tecslib\core\tecs_lang.rb,263,"if require_tecsgen_lib( ""tecslib/messages/messages_console_"
+require_tecsgen_lib,call,tecslib\core\tecs_lang.rb,264,"require_tecsgen_lib( ""tecslib/messages/messages_console_"
+require_tecsgen_lib,call,tecslib\core\tecs_lang.rb,269,"if require_tecsgen_lib( ""tecslib/messages/messages_file_"
+require_tecsgen_lib,call,tecslib\core\tecs_lang.rb,270,"require_tecsgen_lib( ""tecslib/messages/messages_file_"
+require_tecsgen_lib,call,tecslib\plugin\CIfGenPlugin.rb,47,"require_tecsgen_lib ""tecslib/plugin/CIfGenCelltypePlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\CIfGenPlugin.rb,50,"require_tecsgen_lib ""tecslib/plugin/CIfGenCellPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\CppIfGenPlugin.rb,47,"require_tecsgen_lib ""tecslib/plugin/CppIfGenCelltypePlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\CppIfGenPlugin.rb,50,"require_tecsgen_lib ""tecslib/plugin/CppIfGenCellPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\FMPPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\FMPPlugin.rb,41,"require_tecsgen_lib ""lib/GenAttMod.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRMPClassPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRMPDomainPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRMPDomainPlugin.rb,41,"require_tecsgen_lib ""lib/GenAttMod.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRMPPlugin.rb,46,require_tecsgen_lib 'tecslib/plugin/HRMPDomainPlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\HRMPPlugin.rb,50,require_tecsgen_lib 'tecslib/plugin/HRMPClassPlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\HRP2AlarmHandlerPlugin.rb,42,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2CyclicHandlerPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2DataqueuePlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2EventflagPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2FixedSizeMemoryPoolPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2HandlerPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2ObjectPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2PostHook.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2PriorityDataqueuePlugin.rb,40,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2RPCPlugin.rb,40,"require_tecsgen_lib ""lib/GenHRP2Marshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2SemaphorePlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRP2TaskPlugin.rb,41,"require_tecsgen_lib ""HRP2KernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPHandlerPlugin.rb,39,"require_tecsgen_lib ""HRPKernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPObjectPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPPlugin.rb,41,"require_tecsgen_lib ""lib/GenAttMod.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPRPCPlugin.rb,40,"require_tecsgen_lib ""lib/GenOpaqueMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPRPCPlugin.rb,41,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPSVCSignaturePlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPTaskPlugin.rb,40,"require_tecsgen_lib ""HRPKernelObjectPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\HRPTaskPlugin.rb,41,"require_tecsgen_lib ""HRPKernelObjectManager.rb"""
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgeCellPlugin.rb,53,"require_tecsgen_lib( ""MrubyBridgeSignaturePlugin.rb"" )"
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgeCelltypePlugin.rb,40,require_tecsgen_lib 'tecslib/plugin/lib/MrubyBridgeCelltypePluginModule.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgeCompositePlugin.rb,40,require_tecsgen_lib 'tecslib/plugin/lib/MrubyBridgeCelltypePluginModule.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgePlugin.rb,45,require_tecsgen_lib 'tecslib/plugin/MrubyBridgeSignaturePlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgePlugin.rb,49,require_tecsgen_lib 'tecslib/plugin/MrubyBridgeCelltypePlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgePlugin.rb,53,require_tecsgen_lib 'tecslib/plugin/MrubyBridgeCompositePlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgePlugin.rb,57,require_tecsgen_lib 'tecslib/plugin/MrubyBridgeCellPlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyBridgeSignaturePlugin.rb,70,require_tecsgen_lib 'lib/MrubyBridgeSignaturePluginModule.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyInfoBridgeCellPlugin.rb,43,"require_tecsgen_lib( ""MrubyBridgeSignaturePlugin.rb"" )"
+require_tecsgen_lib,call,tecslib\plugin\MrubyInfoBridgePlugin.rb,45,require_tecsgen_lib 'tecslib/plugin/MrubyInfoBridgeSignaturePlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyInfoBridgePlugin.rb,57,require_tecsgen_lib 'tecslib/plugin/MrubyInfoBridgeCellPlugin.rb'
+require_tecsgen_lib,call,tecslib\plugin\MrubyInfoBridgeSignaturePlugin.rb,42,require_tecsgen_lib 'lib/MrubyBridgeSignaturePluginModule.rb'
+require_tecsgen_lib,call,tecslib\plugin\MultiPlugin.rb,45,"require_tecsgen_lib ""tecslib/plugin/SignaturePlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\MultiPlugin.rb,48,"require_tecsgen_lib ""tecslib/plugin/CelltypePlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\MultiPlugin.rb,51,"require_tecsgen_lib ""tecslib/plugin/CellPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\MultiPlugin.rb,54,"require_tecsgen_lib ""tecslib/plugin/ThroughPlugin.rb"""
+require_tecsgen_lib,call,tecslib\plugin\OpaqueMarshalerPlugin.rb,43,"require_tecsgen_lib ""lib/GenOpaqueMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\OpaqueMarshalerPlugin.rb,44,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\OpaqueRPCPlugin.rb,44,"require_tecsgen_lib ""lib/GenOpaqueMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\OpaqueRPCPlugin.rb,45,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\RPCPlugin.rb,40,"require_tecsgen_lib ""lib/GenTransparentMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\RPCPlugin.rb,41,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\SharedOpaqueRPCPlugin.rb,40,"require_tecsgen_lib ""lib/GenOpaqueMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\SharedOpaqueRPCPlugin.rb,41,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\SharedRPCPlugin.rb,40,"require_tecsgen_lib ""lib/GenTransparentMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\SharedRPCPlugin.rb,41,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\TransparentMarshalerPlugin.rb,43,"require_tecsgen_lib ""lib/GenTransparentMarshaler.rb"""
+require_tecsgen_lib,call,tecslib\plugin\TransparentMarshalerPlugin.rb,44,"require_tecsgen_lib ""lib/GenParamCopy.rb"""
+require_tecsgen_lib,call,tecslib\plugin\lib\MrubyBridgeCelltypePluginModule.rb,53,"require_tecsgen_lib( ""MrubyBridgeCellPlugin.rb"" )"
+set_encoding,definition,tecsmerge.rb,638,def set_encoding file
+set_encoding,call,tecsmerge.rb,552,set_encoding dst
+set_encoding,call,tecsmerge.rb,567,set_encoding src
+set_encoding,call,tecsmerge.rb,592,set_encoding dst
+set_encoding,call,tecsmerge.rb,603,set_encoding src
+set_encoding,call,tecsmerge.rb,613,set_encoding dst
+write_array,definition,tecsmerge.rb,130,"def write_array( file, array )"
+write_array,call,tecsmerge.rb,490,"write_array( file, @head )"
+write_array,call,tecsmerge.rb,492,"write_array( file, @preamble_comment )"
+write_array,call,tecsmerge.rb,494,"write_array( file, @preamble_body )"
+write_array,call,tecsmerge.rb,497,"write_array( file, @postamble_comment )"
+write_array,call,tecsmerge.rb,499,"write_array( file, @postamble_body )"
+write_array,call,tecsmerge.rb,522,"write_array( file, @entry_comment )"
+write_array,call,tecsmerge.rb,524,"write_array( file, @entry_body )"
+write_array,call,tecsmerge.rb,529,"write_array( file, @entry_func_comment[fnm] )"
+write_array,call,tecsmerge.rb,531,"write_array( file, @entry_func_body[fnm] )"

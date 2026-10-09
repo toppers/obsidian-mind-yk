@@ -86,6 +86,12 @@ Event-log satellite of [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TEC
   - `src/renderer/gateways/tecsgen-gateway.ts`: `preprocess`メソッドを実装（`window.tecscde.tecsgen.preprocess`へ委譲）。
   - **テスト**: `tests/main/tecsgen-runner.test.ts`（2件）、`tests/preload/index.test.ts`（1件）、`tests/main/ipc.test.ts`（1件）、`tests/renderer/gateways.test.ts`（1件）を追加・検証。**188テスト全pass**、`npm run check`（typecheck:renderer + esbuild + build:main + test + depcruise）green。
 
+## 2026-09-16以降
+
+2026-09-16〜の日付つき実装エントリ（tree-sitter移行・`-I`誤り訂正・未コミット作業の整理）は
+[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — Progress Log — 2026-09-16〜|TECSCDE-DT-EL実装 — Progress Log — 2026-09-16〜]]
+に分離（2026-09-20、25KB閾値）。
+
 ## Related
 
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]] — コア（要約・Action Items・Related）

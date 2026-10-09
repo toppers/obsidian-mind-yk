@@ -12,6 +12,7 @@ tags:
 - [[agent-skill-2]] — Agent Skill 分割マッピング表。独自スキル群のSKILL.md分割対応表 (2026-08-12)
 - [[agent-skill-3]] — 外部仕様書生成時の引数・無視規則・出力形式・エラー規則メモ
 - [[agent-skill-4]] — reverse-gen-internal-spec・gem-class-dependency-diagram・class-internal-spec-to-external-spec・git-branch-pr-flowの引数控え (2026-09-02)
+- [[agent-skill-5]] — SKILL.mdが参照するシンボリックリンクの検出・実体化を行うスキルの要件メモ (2026-09-16)
 - [[AGENT-skill-設定方法]] — エージェント別のスキル設定ファイルパス一覧（claude/codex/gemini/copilot/cursor/junie/kilocode等）
 - [[AGENT-skills-2]] — 自作スキル名の一覧の走り書き (2026-08-02)
 - [[AGENTS-skill]] — 自作の仕様書系スキルの用途メモ (2026-08-02)
