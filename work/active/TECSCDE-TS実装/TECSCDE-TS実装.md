@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート。現行の関数ベース実装（TECSCDE-JS-TS実装）とは別系統。モデル＋CDL（tree-sitter化完了）・第4章commands（Copy/Cut/Paste含む）・第5章render・第6章view-state・第7章io・モジュールH diagnostics（TecsgenResultParser含む）・モジュールI tecsgen（TecsgenCommandBuilder）・モジュールG ui-shell（UiComponentライフサイクル・各パネル・ダイアログ・Store）まで実装完了（2026-09-16、138テストpass）。"
+description: "TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート"
 project: TECS
 quarter: Q3-2026
 status: active
