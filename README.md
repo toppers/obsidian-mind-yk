@@ -25,7 +25,7 @@
 
 
 # Obsidian-mind のREADME.md
-- [README-0.md](https://github.com/toppers/obsidian-mind-yk/blog/README-0.md)
-- [日本語版README.md](https://github.com/toppers/obsidian-mind-yk/blog/README-ja.md)
+- [README-0.md](https://github.com/toppers/obsidian-mind-yk/blob/main/README-0.md)
+- [日本語版README.md](https://github.com/toppers/obsidian-mind-yk/blob/main/README.ja.md)
 
 
