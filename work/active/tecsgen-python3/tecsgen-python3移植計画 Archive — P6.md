@@ -2,7 +2,7 @@
 date: 2026-10-05
 description: "tecsgen-python3移植計画のうち完了済みフェーズP6（仕上げ: 配布・CLI・tecsmerge・実プロジェクトの差分テスト・仕様書の完成）の詳細をverbatim分離したアーカイブ。25KB閾値による分割"
 project: tecsgen-python3
-status: completed
+status: tracking
 quarter: Q4-2026
 tags:
   - work-note

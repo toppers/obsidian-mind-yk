@@ -97,7 +97,9 @@ Ruby 版 tecsgen-rb（`asp3_stm32cube_TECS` の `tecsgen-rb`）の cmake 対応�
 - **基準の切り替え**: `test/` 158ケース（`transparent_marshaler` を除く）、p2・p3、カーネル23、配布パッケージ17 を tecsgen-rb で再採取。旧との差は `CMakeLists.tecsgen.cmake` の追加と、上の3ケースの成功化だけ。`transparent_marshaler` は tecsgen-rb に `TransparentMarshalerPlugin.rb` が無いため、r3304 の正解を残し比較の対象外にした
 - **検証**: プラグインなし119/119・プラグインあり77/77 が一致（`tools/port/p4_progress.py`）。Windows 1025 passed / 78 skipped、WSL 1020 passed / 83 skipped、ruff・ty とも通過。配布パッケージは、これまで p3 記録が2件しか無く検証の対象外だった13件に記録を採り、検証の対象に加えた
 - **採取ツール**: `wsl_check.sh` に `--build-src-tree`・`--src-tree`・`--exclude`・`--cases-golden` を追加。svn 以外の移植元に対応した（`tools/golden/README.md`）
-- **未了**: `CMake.add_*` を呼ぶプラグインでの一致（呼び出すテストケースが無い）、`asp3_stm32cube_TECS` の `Asp3Tecs.cmake` から Python 版を呼ぶ確認（C5）。ブランチの `main` へのマージ（PR #9）と、`-k` の差異の修正（`ykominami/fix-kcode-differences`、PR #8 で先に取り込み済み）との取り込み順は、2026-10-05 に完了
+- **`CMake.add_*` を呼ぶプラグイン**（2026-10-09 確認）: 標準のテストケースには無いので、利用者プラグイン（`-L`）の合成ケースで確かめ、`gen/` 13ファイルが Ruby 版（tecsgen-rb）とバイト一致した。同日、golden ケース `cmake_add` として固定した（Python 版 PR #11 で `main` にマージ済み、`11f38ef`。プラグインありの一致は 78/78） → [[tecsgen-python3 cmake対応計画 — C3 の結果#C3 の結果（2026-10-09）: `CMake.add_*` を呼ぶプラグインで Ruby 版と一致|C3 の結果]]
+- **セルタイプ以外の種類のプラグイン**（2026-10-09 確認）: signature・cell・composite・multi・through・domain・class の各プラグインから `CMake.add_*` を呼んでも、Ruby 版と一致した。multi で見つけた移植のずれ（`MultiPlugin#get_plugin` が返す、ファイル名と違う名前のクラスの post_code が出ない）を修正し、golden ケース 7 件を追加した（Python 版 PR #12 で `main` にマージ済み、`9c3d635`。プラグインありの一致は 85/85） → [[tecsgen-python3 cmake対応計画 — C3 の結果#種類ごとの確認（2026-10-09）|種類ごとの確認]]
+- **未了**: `asp3_stm32cube_TECS` の `Asp3Tecs.cmake` から Python 版を呼ぶ確認（C5）。ブランチの `main` へのマージ（PR #9）と、`-k` の差異の修正（`ykominami/fix-kcode-differences`、PR #8 で先に取り込み済み）との取り込み順は、2026-10-05 に完了
 
 ## 主要リスク
 

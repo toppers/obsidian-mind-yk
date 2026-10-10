@@ -1,0 +1,65 @@
+---
+date: 2026-09-12
+description: "コード署名（Authenticode方式・OV/EV証明書・macOS notarization）の仕組みと、Electron Forge/electron-builder/electron-winstallerでの設定方法の参考ノート。TECSCDE-DT-EL内部仕様第11章11.2節#2・TECSCDE-DT-TA内部仕様第11章11.2節#5の未決事項（配布・自動更新・コード署名）の背景知識。"
+project: TECS
+quarter: Q3-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecscde
+  - reference
+---
+
+# Electronアプリのコード署名
+
+## Context
+
+[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様11.2節#2]]・[[work/active/TECSCDE-DT-TA内部仕様/TECSCDE-DT-TA内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-TA内部仕様11.2節#5]]がともに「配布・自動更新・コード署名」を未決事項としている。[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]が2026-09-12にElectron Forge（`@electron-forge/maker-squirrel`）を導入しパッケージング自体は解決したが、**コード署名は未設定のまま**（生成される`Setup.exe`は未署名）。本ノートはその背景知識と、実装時に必要になる設定の参考。
+
+## コード署名とは
+
+実行ファイル/インストーラに、開発者の身元を証明するデジタル署名を付与する仕組み。OSは署名を検証し、①署名者本人が作成したこと、②署名後に改ざんされていないこと、を保証する。
+
+未署名の場合の挙動:
+
+| OS | 挙動 |
+|----|------|
+| Windows | SmartScreenが「発行元不明のアプリ」警告を出す。「詳細情報」→「実行」を能動的にクリックしないと起動できない |
+| macOS | Gatekeeperが起動をブロック。署名に加えて**Apple公証(notarization)**も無いと「壊れている」とすら表示される |
+
+## 仕組み（Windows/Authenticode方式）
+
+1. 認証局（CA）からコード署名証明書を取得
+2. `signtool.exe`（Windows SDK付属）や`electron-builder`/`electron-winstaller`内包ツールで、証明書の秘密鍵を使い実行ファイルのハッシュに署名
+3. 署名情報とタイムスタンプ（証明書失効後も有効性を保つため）が実行ファイルに埋め込まれる
+4. OSが証明書チェーンをルートCAまで検証し、発行元を表示
+
+## 証明書の種類
+
+| 種類 | 特徴 |
+|------|------|
+| OV（Organization Validation） | 法人確認が必要。年間数万円〜。SmartScreenの「評価」蓄積が必要なため、発行直後もしばらく警告が出ることがある |
+| EV（Extended Validation） | 厳格な発行者審査と秘密鍵の安全な保管が必要。EVでもSmartScreen警告の即時解消は保証されない（[Microsoftの説明](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation)）。 |
+| macOS Developer ID | Apple Developer Program（年額$99）加入で取得可能。個人開発でも比較的安価 |
+
+個人・小規模開発ではWindows証明書のコスト（特にEVのハードウェアトークン運用）がハードルになりやすい。
+
+## Electronツールチェーンでの設定箇所
+
+- **electron-builder**: `certificateFile`/`certificatePassword`（Windows）、`identity`（macOS）等の設定で署名・notarizationまで自動化
+- **electron-winstaller**（`@electron-forge/maker-squirrel`が内部で使用）: 従来の証明書ファイル指定に加え、`windowsSign`で署名処理を設定できる。
+- **Electron Forge**: Windowsでは`packagerConfig.windowsSign`（アプリ本体）とSquirrel makerの`windowsSign`（インストーラー）を設定する（[公式ガイド](https://www.electronforge.io/guides/code-signing/code-signing-windows)）。
+
+## TECSCDE-DT-ELの現状（2026-09-12時点）
+
+Electron Forge導入は完了したが`forge.config.js`に署名設定は追加していない。現状のビルドは未署名で、Windows SmartScreenの警告が出る。公開配布向けの候補にはAzure Artifact Signing、SignPath Foundation（条件を満たすOSS）、民間認証局のOV/EV証明書がある。候補比較と採用条件は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案#11.2.1 Windowsインストーラーのコード署名候補（2026-10-09、未決）|内部仕様11.2.1節]]を参照。
+
+## Related
+
+- [[work/active/tecs/Electron Forgeの使い方|Electron Forgeの使い方]] — 採用したForgeの具体的な使い方（署名設定を追加する際の設定箇所もここ）
+- [[work/active/tecs/Electronアプリの配布・自動更新ツール|Electronアプリの配布・自動更新ツール]] — 同じ未決事項のうちパッケージング・自動更新ツールの比較を扱う姉妹ノート
+- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]] — Electron Forge導入の実装ノート（本ノートの直接のきっかけ）
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様 第11章11.2節#2]] — 対応する未決事項
+- [[work/active/TECSCDE-DT-TA内部仕様/TECSCDE-DT-TA内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-TA内部仕様 第11章11.2節#5]] — Tauri版の同種の未決事項（`tauri-plugin-updater`等は別途検討要）
+- [[work/active/tecs/TECS開発|TECS開発]] — 開発進捗全体

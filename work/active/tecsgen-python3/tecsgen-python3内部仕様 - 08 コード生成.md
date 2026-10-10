@@ -69,4 +69,4 @@ Ruby 版 tecsgen-rb の `generate.rb`（`gen_cmake_tecsgen`・`cmake_normalize_p
 - **呼び出し位置**: `generate()` の `gen_makefile_tecsgen()` の次（セルが0個のときの早期 return の前）と、`gen_makefile()` の末尾。したがって、セルが無い領域でも出力される
 - **出力する変数**: 外部仕様4章（4.2）を参照。空の一覧も `set(… )` として出す。`TECS_LINK_OPTIONS`・`TECS_CUSTOM_COMMANDS`・追加行は、あるときだけ
 - **絶対パス**: 正解データ（`test/`・カーネル・配布パッケージの全ケース）の `CMakeLists.tecsgen.cmake` に、絶対パスは1つも出ていない（出力は相対パスか `${…}`）。このため、正解データを採るときの相対化の置き換えは不要だった（決定: 相対化は採取時に行う。必要になったときのための方針）
-- **確認**: プラグインなし119ケース・プラグインあり77ケースで、`CMakeLists.tecsgen.cmake` を含めてバイト一致。`CMake.add_*` を呼ぶプラグインの出力は、呼び出すテストケースが無いため未確認
+- **確認**: プラグインなし119ケース・プラグインあり77ケースで、`CMakeLists.tecsgen.cmake` を含めてバイト一致。`CMake.add_*` を呼ぶプラグインの出力は、標準のテストケースが無いので、合成した利用者プラグインで確認した（2026-10-09、`gen/` 13ファイルがバイト一致。[[tecsgen-python3 cmake対応計画 — C3 の結果#C3 の結果（2026-10-09）: `CMake.add_*` を呼ぶプラグインで Ruby 版と一致|C3 の結果]]）。`gen_cmake_tecsgen` は生成の最初に走るので、`gen_factory` など生成段階のフックから呼んだ `add_*` は出力に反映されない（Ruby 版と同じ）。この合成ケースは golden ケース `cmake_add` として固定した（2026-10-09、Python 版 PR #11 で `main` にマージ済み、`11f38ef`。[[tecsgen-python3 cmake対応計画 — C3 の結果#golden ケースとしての固定（2026-10-09）|固定の内容]]。プラグインありの一致は、`cmake_add_<種類>` 7件を加えた PR #12 のマージ後は 85/85）

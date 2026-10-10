@@ -1,6 +1,6 @@
 ---
 date: 2026-09-21
-description: "tecsgen（Ruby実装）のPython3移植版の作業ノート。構文解析はRuby版のracc表を移植（2026-09-27にtree-sitterから変更）。P5pまで実装・検証済み（プラグイン不使用の119/119ケースで生成物がRuby版とバイト一致、プラグイン使用は34/46、2026-10-01時点）。カーネル依存系（HRP・FMP・HRMP・HRP2・ATK1Event）は11ケースすべて一致（P5l〜P5p）"
+description: "tecsgen（Ruby実装）のPython3移植版の作業ノート。構文解析はRuby版のracc表を移植（2026-09-27にtree-sitterから変更）。P0〜P7まで実装・検証済み（プラグイン不使用119/119・プラグイン使用85/85ケースで生成物がRuby版（tecsgen-rb）とバイト一致、2026-10-09時点）。cmake対応とAsp3Tecs.cmakeからの呼び出しも完了（2026-10-06）"
 project: tecsgen-python3
 status: active
 quarter: Q3-2026
@@ -18,6 +18,7 @@ tecsgenをPython3で実装する
 - [[tecsgen-python3移植計画]] — フェーズ分割・差分テスト方針・リスク（2026-09-26）。完了済みの P0〜P2 の詳細は [[tecsgen-python3移植計画 Archive — P0–P2]]
 - [[tecsgen-python3 P0基本方針決定]] — CLI完全互換・mixinは多重継承・グローバル変数は設定オブジェクトへ集約（2026-09-26）
 - P1 基盤（Node・エラー処理・入出力）を実装・検証（2026-09-27）→ [[tecsgen-python3移植計画]]・[[tecsgen-python3内部仕様 - 11 エラー・警告処理|内部仕様11章]]
+- [[tecsgen-python3 tecsflow・Marshal調査]] — Ruby版のMarshal使用箇所と`tecsflow.rb:452`の不要な呼び出し（WSLで削除前後の出力一致を確認、2026-10-09）。tecsflow移植時の前提資料
 - [[tecsgen-python3 パッケージ構成決定]] — Rubyと1ファイル対1モジュール、プラグインはRubyと同名（2026-09-26）
 - [[tecsgen-python3 tree-sitter読み込み方式決定]] — 文法のCソースを同梱しC拡張としてビルド（2026-09-26、**2026-09-27 superseded**）
 - P2 構文解析のフロントエンドを実装・検証（2026-09-27）→ [[tecsgen-python3 構文解析方式決定]]（tree-sitterをやめracc表駆動へ）・[[tecsgen-python3内部仕様 - 05 字句解析・構文解析|内部仕様5章]]
@@ -37,7 +38,7 @@ tecsgenをPython3で実装する
 - [[tecsgen外部仕様]]
 - [[tecsgen内部仕様]]
 - [[tecsgen-plugins]]
-- Python3版最新コード "E:/Ccur/python3/tecsgen-python3"
+- Python3版最新コード "E:/Ccur/python3/tecsgen-python3-yk"
 - Python3版リモートリポジトリ git@github.com:ykominami/tecsgen-python3.git（2026-09-28 に `ykominami/tecsgen-python` から改名。旧 URL は GitHub がリダイレクトする）
 - Ruby版最新コード  "E:\Ccur\python3\asp3_stm32cube_TECS\tecsgen-rb"
 	- 旧Ruby版最新コード  "E:/Crepo/toppers-tecs-svn/toppers/tecsgen/branches/ykominami_r3033"
@@ -78,10 +79,19 @@ tecsgenをPython3で実装する
 - 2026-10-01: Context の WSL 展開済み21パッケージは全件 `.cdl` を含むと確認。移植元 Ruby tecsgen r3304 を使い、`E:/Ccur/python3/tecsgen-python3/tests/golden/packages/` に Plugin 正解データ16ケースを採集（ASP3系13・ATK1・Mruby2C・EV3各1）。4系統の再採集で生成物・ログ・Plugin trace がバイト一致し、WSL 検証は903 pass・77 skip。RX 用 `ccrx.exe` 不在と旧 `MrubyBridge-test` の T1007 は `diagnostics/` に分離。全21件の選定理由は `package_inventory.json`、採集手順は同リポジトリの `tools/golden/README.md`。
 
 ## Action Items
-- [ ] [[tecsgen-python3外部仕様]]作成
-- [ ] [[tecsgen-python3内部仕様]]作成
-- [ ] tecsgen-python3実装作成
-- [ ] Ruby版tecsgenのcmake対応をPython版に反映する（2026-10-05 追加。調査と計画のたたき台: [[tecsgen-python3 cmake対応計画]]）
+- [x] [[tecsgen-python3外部仕様]]作成（全10章、2026-10-02）
+- [x] [[tecsgen-python3内部仕様]]作成（全12章、2026-10-02）
+- [x] tecsgen-python3実装作成（P0〜P6 完了、2026-10-02。プラグインなし119/119・あり77/77 が Ruby 版とバイト一致、as of 2026-10-05）
+- [x] Ruby版tecsgenのcmake対応をPython版に反映する（2026-10-05 追加、同日 PR #9 でマージ。C5 は 2026-10-06 に完了。調査と計画: [[tecsgen-python3 cmake対応計画]]）
+- [x] `CMake.add_*` を呼ぶプラグインでの一致確認（2026-10-09、合成した利用者プラグインで `gen/` 13ファイルがバイト一致。[[tecsgen-python3 cmake対応計画]] の C3 の結果）
+- [x] `CMake.add_*` を、セルタイプ以外の7種類（signature・cell・composite・multi・through・domain・class）のプラグインから呼んで Ruby 版と比べた（2026-10-09）。multi で移植のずれ（`get_plugin` が返すクラスを同じファイルに書くと post_code が出ない）を見つけ、修正し、golden ケース `cmake_add_<種類>` 7件を追加（Python 版 PR #12。[[tecsgen-python3 cmake対応計画]] の「種類ごとの確認」）
+- [x] Python 版 PR #12 をマージ（2026-10-09、マージコミット `9c3d635`）。外部仕様 4・6・8章のケース数を 78 から 85 に更新した。SonarCloud の品質ゲートは「新規コードの重複 33.2%（基準 3% 以下）」で失敗のまま（既存のテスト用プラグインを複製した変種ケースが原因）
+- [x] SonarCloud の重複の品質ゲート対策として、`.sonarcloud.properties`（`sonar.cpd.exclusions=tests/**,tools/golden/inputs/**`）を追加（2026-10-09、Python 版 PR #13 で `main` にマージ済み、`3c19c86`）
+- [x] PR #13 の効果を確認（2026-10-09）。検証用のドラフト PR #14（`tests/user_plugins/` に既存プラグインの完全な複製 168 行だけを追加。マージせずに閉じ、ブランチは削除）で、SonarCloud の「新規コードの重複」は **0.0%**、品質ゲートは通過した（PR #12 は 33.2% で失敗）。公式ドキュメントは「ワイルドカードは使えない」とするが、`sonar.cpd.exclusions=tests/**,tools/golden/inputs/**` は自動解析で効く。SonarCloud の API は非公開設定で認証が要るため、PR のコメントで確認した
+- [x] `Asp3Tecs.cmake` の configure 以降（コンパイル・リンク）を確認した（2026-10-09）。NUCLEO-H563ZI の `sample1` を、CubeMX の代わりに ST の公開テンプレートで、tecsgen を Ruby 版・Python 版にして configure からリンクまで通し、最終イメージが SHA-256 まで一致（[[tecsgen-python3 cmake対応計画 — C6 ビルド検証]]）
+- [x] ほかの 3 ボードを確認した（2026-10-09）。TECS を使うのは H563ZI と N6570-DK だけで、H533・C562 のサンプルは TECS を使わない（`asp3_add_syssvc`）ため対象外。N6570-DK（FSBL）は CubeMX の代わりに ST の公開テンプレートで、H563ZI と同様に Ruby 版・Python 版で configure からリンクまで通し、最終イメージが SHA-256 まで一致（[[tecsgen-python3 cmake対応計画 — C6 ビルド検証]]）
+- [ ] 残り（[[tecsgen-python3移植計画]] P7）: 実機（書込み・起動）の確認、実際の CubeMX 生成物でのビルド、H533・C562 に TECS を展開したときの確認、`transparent_marshaler` ケースの扱いの決定（as of 2026-10-09）
+- [x] `add_*` の合成ケースを golden ケース `cmake_add` としてリポジトリに固定（2026-10-09、Python 版 PR #11 で `main` にマージ済み、`11f38ef`。プラグインあり 78/78 一致）
 
 ## Related
 - [[TECS開発]] — TECS WG開発進捗全体

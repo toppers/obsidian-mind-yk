@@ -1,6 +1,6 @@
 ---
 date: 2026-10-02
-description: "tecsgen-python3外部仕様 第6章（プラグイン）— CDLでの呼び出し規約はRuby版と同じ、記述言語はPython。標準付属プラグインの移植状況（85ファイル中83ファイル移植。残る2ファイルは動かす経路が無く対象外。as of 2026-10-03）と利用者プラグインの書き方。"
+description: "tecsgen-python3外部仕様 第6章（プラグイン）— CDLでの呼び出し規約はRuby版と同じ、記述言語はPython。標準付属プラグインの移植状況（85ファイル中83ファイル移植。残る2ファイルは動かす経路が無く対象外。プラグインを使う85ケースが一致。as of 2026-10-09）と利用者プラグインの書き方（`CMake` API を呼ぶ時期の注意を含む）。"
 project: tecsgen-python3
 quarter: Q4-2026
 status: active
@@ -21,7 +21,7 @@ CDL の記述（`[generate(PluginName, "param=val, ...")]`、`generate(PluginNam
 
 ### 6.2 標準付属プラグインの移植状況（as of 2026-10-03）
 
-標準付属プラグインのうち、Ruby 版のファイル（85 本）で **83 本を移植**しました。残る 2 本（`HRP2Cache`・`HRP2PostHook`）は、動かす経路が無いので移植しません。正解データのあるテストケースでは、プラグインを使う 63 ケースが Ruby 版とバイト一致します。（2026-10-02 の「67 本移植・18 本未移植」は数え間違いで、実際のファイル数との突き合わせで直しました。）
+標準付属プラグインのうち、Ruby 版のファイル（85 本）で **83 本を移植**しました。残る 2 本（`HRP2Cache`・`HRP2PostHook`）は、動かす経路が無いので移植しません。正解データのあるテストケースでは、プラグインを使う 85 ケースが Ruby 版（tecsgen-rb）とバイト一致します（2026-10-09。`TransparentRPCSignaturePlugin` を含む）。（2026-10-02 の「67 本移植・18 本未移植」は数え間違いで、実際のファイル数との突き合わせで直しました。）
 
 | 区分 | 状況 |
 |---|---|
@@ -40,9 +40,12 @@ Python 版では、利用者が書くプラグインは Python のモジュー�
 - 置き場所: `-L` で指したディレクトリ（複数指定可）。`<クラス名>.py`、または `tecslib/plugin/<クラス名>.py` の名前で探す
 - 探す順序: 標準付属（組み込み）プラグインを先に探し、その後に `-L` のディレクトリを探す。**組み込みと同名のプラグインは `-L` で上書きできない**
 - 基底クラス: `tecsgen.plugin.*`（`CelltypePlugin`・`CellPlugin`・`SignaturePlugin`・`ThroughPlugin` ほか）を明示的に import して継承する
+- `MultiPlugin` の子クラス: `get_plugin` が返すクラスは、`MultiPlugin` の子クラスと**同じファイルに書いてよい**（ファイル名と違う名前のクラスでも、Ruby 版と同じく動く）。以前は、同じファイルに書いたクラスの post_code ファイル（`tmp_<クラス名>_post_code.cdl`）が出なかったが、修正した（2026-10-09、Python 版 PR #12 で `main` にマージ済み）
 - 失敗時: ロードに失敗すると P2003、ファイルが無いと P2001（Ruby 版と同じ番号）
 - 信頼モデル: `-L` で指したディレクトリのコードをそのまま実行する（Ruby 版と同じ。信頼できるディレクトリだけを指定すること）
-- `CMake` API（2026-10-05 追加。tecsgen-rb の `TECSGEN::CMake` に対応）: `from tecsgen.core.tecsgen import CMake` で取り込み、`CMake.add_source(path)`・`add_include(path)`・`add_define(define)`・`add_link_option(opt)`・`add_custom_command(cmd)`・`add_line(line)` を呼ぶと、`gen/CMakeLists.tecsgen.cmake` の対応する一覧（`TECS_PLUGIN_EXTRA_SOURCES`・`TECS_INCLUDE_DIRS`・`TECS_COMPILE_DEFINITIONS`・`TECS_LINK_OPTIONS`・`TECS_CUSTOM_COMMANDS`・プラグインの追加行）に出力される（重複は除く）。標準付属プラグインでこの API を使うものは無い。**この API を呼ぶプラグインでの一致は、まだ確認していない**（呼び出しのあるテストケースが無い）
+- `CMake` API（2026-10-05 追加。tecsgen-rb の `TECSGEN::CMake` に対応）: `from tecsgen.core.tecsgen import CMake` で取り込み、`CMake.add_source(path)`・`add_include(path)`・`add_define(define)`・`add_link_option(opt)`・`add_custom_command(cmd)`・`add_line(line)` を呼ぶと、`gen/CMakeLists.tecsgen.cmake` の対応する一覧（`TECS_PLUGIN_EXTRA_SOURCES`・`TECS_INCLUDE_DIRS`・`TECS_COMPILE_DEFINITIONS`・`TECS_LINK_OPTIONS`・`TECS_CUSTOM_COMMANDS`・プラグインの追加行）に出力される（重複は除く）。標準付属プラグインでこの API を使うものは無い。次の点に注意すること（いずれも Ruby 版 tecsgen-rb と同じ挙動。2026-10-09 に、セルタイププラグインから呼ぶ合成ケースで、`gen/` の 13 ファイルが Ruby 版とバイト一致することを確認した。signature・cell・composite・multi・through・domain・class の各プラグインのコンストラクタから呼ぶ場合も、同日に Ruby 版との一致を確認した）
+  - **呼ぶ時期**: `gen/CMakeLists.tecsgen.cmake` は生成の最初（`Makefile.tecsgen` の次）に書かれる。そのため、プラグインの**コンストラクタや `new_cell` など、生成より前に呼ばれる場所**から呼んだものだけが出力に反映される。`gen_factory` など**生成段階のフックから呼んだものは、反映されない**（エラーにも警告にもならず、黙って無視される）
+  - **値の扱い**: 引数は文字列にして保持される（Symbol・整数も可）。同じ値を複数回渡しても出力は 1 回で、最初に渡した順に並ぶ。`add_include` に渡したパスは `\` が `/` に変わるだけで、`$(BASE_DIR)` などの変数は展開されずそのまま出る
 
 ### 6.4 Ruby版との差異
 

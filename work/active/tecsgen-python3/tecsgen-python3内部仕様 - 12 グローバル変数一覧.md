@@ -80,6 +80,8 @@ P1 で決めた、以降の移植すべてに適用する規約。
 
 Ruby のクラス変数（`@@x`）は設定オブジェクトではなくクラス属性に写した（[[tecsgen-python3内部仕様 - 04 クラス設計#クラス変数|4.3]]）。
 
+**cmake 対応（2026-10-05、P7）で増えたグローバル変数は無い**（確認 2026-10-09、Python 版 `02fd2cb`〜`dd33023` の差分）。`CMake`（`core/tecsgen.py`）の状態（`_sources`・`_includes`・`_defines`・`_link_options`・`_custom_commands`・`_lines`）は、上のクラス変数の扱いに従ってクラス属性で持つ。`Makefile` と同じく、`TECSGEN.reset()`（1プロセスで複数回実行するテスト用。Ruby 版には無い）と `TECSGEN.set_default_config()` が `CMake.reset()` を呼んで空に戻す。設定オブジェクト（`context.py`）への追加も無い。
+
 ## Related
 
 - [[tecsgen-python3内部仕様]] — 目次

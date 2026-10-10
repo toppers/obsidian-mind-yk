@@ -2,7 +2,7 @@
 date: 2026-09-27
 description: "tecsgen-python3移植計画のうち完了済みフェーズP0（準備と方針決定）・P1（基盤）・P2（構文解析のフロントエンド）の詳細をverbatim分離したアーカイブ。正解データ採取、racc表駆動への切替、持ち越し事項"
 project: tecsgen-python3
-status: completed
+status: tracking
 quarter: Q3-2026
 tags:
   - work-note

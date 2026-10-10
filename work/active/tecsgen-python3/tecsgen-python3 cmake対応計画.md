@@ -78,15 +78,19 @@ tags:
 | C0 実行確認 | 完了 |
 | C1 基準の切り替え | **完了**（下の結果）。`test/` 158（`transparent_marshaler` を除く）・p2・p3・カーネル23・配布パッケージ17 を再採取して置き換えた |
 | C2 実装 | **完了**。`CMake` クラス・`gen_cmake_tecsgen` ほか、`TransparentRPCSignaturePlugin`、`DataPumpHolderPlugin.gen_ep_func_body` |
-| C3 API の公開 | `CMake` クラスは `from tecsgen.core.tecsgen import CMake` で使える。**`add_*` を呼ぶプラグインでの一致は未確認**（呼び出すテストケースが無い） |
+| C3 API の公開 | `CMake` クラスは `from tecsgen.core.tecsgen import CMake` で使える。**`add_*` を呼ぶプラグインでの一致を確認済み**（2026-10-09、下の「C3 の結果」）。標準のテストケースには呼び出すものが無いので、合成プラグインで確かめた |
 | C4 仕様書 | **完了**（外部仕様4章・6章、内部仕様8章8.6） |
-| C5 利用側の確認 | **生成までは確認済み・反映は実装し、マージ済み**（2026-10-06。Python 版 PR #10、`asp3_stm32cube_TECS` PR #1）。下の「C5 の結果」。実機ビルド・リンクは未確認 |
+| C5 利用側の確認 | **生成までは確認済み・反映は実装し、マージ済み**（2026-10-06。Python 版 PR #10、`asp3_stm32cube_TECS` PR #1）。下の「C5 の結果」。ビルド・リンクは [[tecsgen-python3 cmake対応計画 — C6 ビルド検証\|C6]] で確認、実機は未確認 |
 
 ## 次の一手
 
 - （完了 2026-10-05）Python 版リポジトリのブランチ `ykominami/cmake-support` を、PR #9 で `main` へマージした（マージコミット `f3ded69`）。`-k` の差異の修正（`ykominami/fix-kcode-differences`）は PR #8 で先に取り込み済みで、取り込み順の調整は不要だった
-- （完了 2026-10-06）C5: 方針（案3）の2つのブランチを、それぞれマージした。Python 版の `ykominami/tecsgen-path`（PR #10、`f6782ab`）、`asp3_stm32cube_TECS` の `ykominami/tecsgen-python3-command`（自分の fork の PR #1、`3b72ead`。上流 `hiro22022/asp3_stm32cube_TECS` への PR は出していない）。残りは、configure 以降（ビルド・リンク・実機）の確認（CubeMX 生成物が必要）
-- `CMake.add_*` を呼ぶ最小のプラグインを作り、Ruby 版の同等プラグインと出力を比べる（C3 の確認）
+- （完了 2026-10-06）C5: 方針（案3）の2つのブランチを、それぞれマージした。Python 版の `ykominami/tecsgen-path`（PR #10、`f6782ab`）、`asp3_stm32cube_TECS` の `ykominami/tecsgen-python3-command`（自分の fork の PR #1、`3b72ead`。上流 `hiro22022/asp3_stm32cube_TECS` への PR は出していない）。configure 以降は C6 で確認（2026-10-09）、残りは実機
+- ~~`CMake.add_*` を呼ぶ最小のプラグインを作り、Ruby 版の同等プラグインと出力を比べる（C3 の確認）~~ → 2026-10-09 完了（下の「C3 の結果」）
+
+## C3 の結果（2026-10-09） — 詳細は [[tecsgen-python3 cmake対応計画 — C3 の結果]]
+
+- `CMake.add_*` を呼ぶプラグインの出力は Ruby 版（tecsgen-rb）と一致。セルタイプは合成ケースで、signature・cell・composite・multi・through・domain・class も確認し、golden ケース `cmake_add`・`cmake_add_<種類>` に固定済み（Python 版 PR #11・#12。multi で見つけた移植のずれは修正済み）
 
 ## C5 の結果（2026-10-06）: Asp3Tecs.cmake から Python 版を呼ぶ
 
@@ -94,13 +98,13 @@ tags:
 
 - **方法**: `cmake -P` のスクリプトから `asp3_tecs_run_generator` を呼ぶ。CubeMX の生成物（`Drivers/`、gitignore 対象で、このワークスペースには無い）は使わず、`asp3_tecs_setup_paths` の include からそれを除いた。`asp3_core`（サブモジュール。このワークスペースでは空）は、固定されているコミット `6496ca7` を作業用の場所へクローンして使った。Python 版は、`tecsgen.py`（Python 版の `main` を呼ぶ数行の shim）と `tecs/`（標準 CDL ライブラリのコピー）を置いたディレクトリを `ASP3_TECSGEN_DIR` に指し、`PYTHON_EXECUTABLE` を Python 版の `.venv` に向けた
 - **結果**: Ruby 版・Python 版とも、`asp3_tecs_run_generator` が成功し（`CMakeLists.tecsgen.cmake`・`tecsgen.cfg` が出る）、Ruby 版100ファイル・Python 版99ファイルを生成した。**改行（Ruby 版は Windows で CRLF、Python 版は LF）と出力先のパスをそろえると、99ファイルは完全に一致**した（`CMakeLists.tecsgen.cmake`・`tecsgen.cfg`・全ヘッダ・C ソースを含む）。差は、Ruby 版だけが書く `tecsgen.rbdmp` の1ファイルだけ（Python 版は仕様どおり書かない。外部仕様4章4.3）。つまり、**呼び出し側の `Asp3Tecs.cmake` の既存の `tecsgen.py` 経路（`${PYTHON_EXECUTABLE} ${ASP3_TECSGEN_DIR}/tecsgen.py <引数>`）で、Python 版は Ruby 版の代わりに動く**
-- **確認していないこと**: `asp3_tecs_configure`・`asp3_tecs_apply_manifest`（ターゲットへのソースの登録）以降、実際の `cmake --preset` による configure、ビルド、リンク、実機。CubeMX の生成物（`Drivers/`）が無く、ここまでは検証できない。N6570-DK でも同様に未確認。マニフェストの中身は Ruby 版と一致しているので、`include()` 以降の挙動は同じになる見込みだが、確かめてはいない
+- **確認していないこと**: `asp3_tecs_configure`・`asp3_tecs_apply_manifest`（ターゲットへのソースの登録）以降、実際の `cmake --preset` による configure、ビルド、リンク、実機。CubeMX の生成物（`Drivers/`）が無く、ここまでは検証できない。N6570-DK でも同様に未確認。マニフェストの中身は Ruby 版と一致しているので、`include()` 以降の挙動は同じになる見込みだが、確かめてはいない（2026-10-06 時点。コンパイル・リンクは 2026-10-09 に [[tecsgen-python3 cmake対応計画 — C6 ビルド検証|C6]] で確認、実機は未確認）
 - **見つけたこと（Ruby 版と共通）**: `Asp3Tecs.cmake` は、コンパイラのフルパスを `--cpp "…"` の1つの文字列にして渡す。Windows で `CMAKE_C_COMPILER` が `C:/Program Files (x86)/Arm GNU Toolchain …/arm-none-eabi-gcc.exe` のように空白を含むと、`popen for CPP failed` で失敗する（Ruby 版でも同じ。PATH 上のコマンド名なら通る）
 - **反映の方針（2026-10-06、ユーザー決定）**: 案3を採用 = 実行ファイルを直接呼ぶ経路（`-DASP3_TECSGEN_COMMAND`）＋ `tecs/` の場所を返す手段。ほかの案（現状のまま shim を使う、実行ファイルの経路だけ足す）は採らない
 - **実装（2026-10-06、いずれもマージ済み）**:
   - Python 版（`ykominami/tecsgen-python3`）のブランチ `ykominami/tecsgen-path`（`dd33023`）: `tecsgen-path` コマンドを追加（`tecs/` を含むディレクトリを `/` 区切りで1行出力）。`tecsgen` コマンドには新しいオプションを足していない（CLI の Ruby 版完全互換の方針）。テスト・README・CHANGELOG を追加
   - `asp3_stm32cube_TECS`（`ykominami/asp3_stm32cube_TECS`）のブランチ `ykominami/tecsgen-python3-command`（`0a9f59e`）: `Asp3Tecs.cmake` に `ASP3_TECSGEN_COMMAND` を追加。指定すると、そのコマンドを直接実行し、`ASP3_TECSGEN_DIR` を、そのコマンドの隣の `tecsgen-path` の出力に置き換える。指定しなければ従来どおり（`tecsgen.rb`／`tecsgen.py`）。`docs/tecs-cmake.md` に利用方法を追記
-  - **確認**: 変更後の `Asp3Tecs.cmake` に、`-DASP3_TECSGEN_COMMAND=<.venv の tecsgen.exe>` を渡し、shim も `tecs/` のコピーも無しで、`sample1.cdl` の生成が成功し、Ruby 版と改行・パスを除いて99ファイルが一致した。Ruby 版の既存の経路も変わらず動く。configure 以降（ビルド・リンク・実機）は未確認のまま
+  - **確認**: 変更後の `Asp3Tecs.cmake` に、`-DASP3_TECSGEN_COMMAND=<.venv の tecsgen.exe>` を渡し、shim も `tecs/` のコピーも無しで、`sample1.cdl` の生成が成功し、Ruby 版と改行・パスを除いて99ファイルが一致した。Ruby 版の既存の経路も変わらず動く。configure 以降は未確認だった（2026-10-09 に C6 で確認）
 
 ## C0〜C2 の結果（2026-10-05） — 詳細は [[tecsgen-python3 cmake対応計画 — C0〜C2 の結果]]
 
@@ -109,6 +113,7 @@ tags:
 ## Related
 
 - [[tecsgen-python3 cmake対応計画 — C0〜C2 の結果]] — C0〜C2 の結果（分割、2026-10-06）
+- [[tecsgen-python3 cmake対応計画 — C6 ビルド検証]] — configure 以降（コンパイル・リンク）の確認（2026-10-09）
 
 - [[tecsgen-python3]] — 親ノート
 - [[tecsgen-python3移植計画]] — 全体の計画

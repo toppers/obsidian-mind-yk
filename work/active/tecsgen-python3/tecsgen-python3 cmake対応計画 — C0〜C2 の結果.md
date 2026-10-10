@@ -2,7 +2,7 @@
 date: 2026-10-06
 description: "tecsgen-python3 cmake対応計画のうち、完了済みの C0（tecsgen-rb の実行確認）・C1-a（test/ 158ケースの比較）・C1・C2（基準の切り替えと実装）の結果の記録を、verbatim で分離したもの。25KB閾値による分割"
 project: tecsgen-python3
-status: completed
+status: tracking
 quarter: Q4-2026
 tags:
   - work-note

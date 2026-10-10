@@ -38,6 +38,7 @@ Ruby 版の `require_tecsgen_lib( "#{name}.rb", false )` + `Object.const_get( na
 
 - `importlib.util.spec_from_file_location` でファイルパスから読む。`sys.path` は変えない（標準ライブラリと同名のファイル、例えば `types.py` を隠さないため）。モジュール名はパスのハッシュ（`tecsgen_user_plugin_<hash>`）。別のケースに同名で内容の違うプラグインがある（`through/Plugin1` と `region/Plugin1`、`generate/RTMBridgePlugin` と `signaturePlugin/RTMBridgePlugin`）ので、名前だけでキャッシュしない
 - 読んだクラスは `sys.modules` ではなく、実行回ごとのレジストリ `_user_plugin_classes` に入れる。`PluginModule.reset()` が空にする。ロードに失敗した名前は `None` を入れ、同じ実行の中では読み直さない。組み込みは従来どおり `sys.modules` から引く（`_lookup_loaded_plugin_class`）
+- **`MultiPlugin#get_plugin` が返したクラスの登録**（2026-10-09、Python 版 PR #12。`_register_plugin_class`）: `load_plugin` の Multi の分岐で、`get_plugin` が返したクラスを、同じレジストリ `_user_plugin_classes` へクラス名で入れる（同名があれば何もしない）。Ruby ではロード済みのクラスが定数になり `Object.const_get` で引けるが、Python 版は名前からファイルを読み直す（`_import_plugin_class`）ので、ファイル名と違う名前のクラスは、post_code の生成（`gen_plugin_post_code`）などで見つからず、黙って飛ばされていた。それが `tmp_<クラス名>_post_code.cdl` と `TECS_IMPORT_CDLS` の行の差になっていた。標準付属の Multi 系（`CIfGenPlugin` など）は、返すクラスが別ファイルなので影響を受けなかった。回帰テストは golden ケース `cmake_add_multi`
 - ロード中の例外（構文エラー・import の失敗・クラス本体の例外）は `print_exception` で表示して再送出する。`load_plugin` の `except` が **P2003** にする（Ruby の `require` の失敗と同じ経路）。ファイルはあるのに `<name>` クラスが無い場合も P2003（Ruby の `uninitialized constant`）。基底クラスが期待と違えば P2002
 - 利用者プラグインは `-L` で指したディレクトリのコードをそのまま実行する。Ruby 版と同じ信頼モデル
 

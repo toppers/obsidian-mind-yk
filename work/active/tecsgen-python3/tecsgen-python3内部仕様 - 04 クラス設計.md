@@ -85,7 +85,7 @@ Ruby は代入前の `@x` を nil として読める。`Node.__getattr__` が、
 
 ## 4.5 プラグイン
 
-`plugin_module.py` の `PluginModule.load_plugin` は、P5 まで `PluginNotPorted` を送出する。呼び出し箇所（`generate` 指定子、through、domain・class の各プラグイン）は Ruby どおり移植してある。
+`plugin_module.py` の `PluginModule.load_plugin` は、P3 の時点では `PluginNotPorted` を送出するだけだった。P5（2026-09-27〜10-01）で `importlib` による名前解決に置き換え、標準付属プラグインは 85 本中 83 本を移植済み（as of 2026-10-03。残る `HRP2Cache`・`HRP2PostHook` は動かす経路が無く対象外）。呼び出し箇所（`generate` 指定子、through、domain・class の各プラグイン）は Ruby どおり移植してある。ロードの仕組みと `-L` の探索は [[tecsgen-python3内部仕様 - 09 プラグイン機構|9章]] を参照。
 
 ## Ruby版との差異
 

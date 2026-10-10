@@ -40,7 +40,7 @@ tags:
 | 種類 | 特徴 |
 |------|------|
 | OV（Organization Validation） | 法人確認が必要。年間数万円〜。SmartScreenの「評価」蓄積が必要なため、発行直後もしばらく警告が出ることがある |
-| EV（Extended Validation） | 厳格な審査、USBトークン等のハードウェア保管必須。年間数万円〜十数万円。SmartScreen警告が即座に出ないのが利点 |
+| EV（Extended Validation） | 厳格な発行者審査と秘密鍵の安全な保管が必要。EVでもSmartScreen警告の即時解消は保証されない（[Microsoftの説明](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation)）。 |
 | macOS Developer ID | Apple Developer Program（年額$99）加入で取得可能。個人開発でも比較的安価 |
 
 個人・小規模開発ではWindows証明書のコスト（特にEVのハードウェアトークン運用）がハードルになりやすい。
@@ -48,12 +48,12 @@ tags:
 ## Electronツールチェーンでの設定箇所
 
 - **electron-builder**: `certificateFile`/`certificatePassword`（Windows）、`identity`（macOS）等の設定で署名・notarizationまで自動化
-- **electron-winstaller**（`@electron-forge/maker-squirrel`が内部で使用）: `signWithParams`オプションで`signtool.exe`相当の署名パラメータを渡す
-- **Electron Forge**: `packagerConfig.osxSign`（macOS）／`packagerConfig.win32metadata`＋外部署名フックで対応
+- **electron-winstaller**（`@electron-forge/maker-squirrel`が内部で使用）: 従来の証明書ファイル指定に加え、`windowsSign`で署名処理を設定できる。
+- **Electron Forge**: Windowsでは`packagerConfig.windowsSign`（アプリ本体）とSquirrel makerの`windowsSign`（インストーラー）を設定する（[公式ガイド](https://www.electronforge.io/guides/code-signing/code-signing-windows)）。
 
 ## TECSCDE-DT-ELの現状（2026-09-12時点）
 
-Electron Forge導入は完了したが`forge.config.js`に署名設定は追加していない。現状のビルドを配布するとWindows SmartScreenの警告が出る。個人配布・検証目的であれば当面許容範囲だが、広く配布するなら証明書取得（OV/EV）と`forge.config.js`への`certificateFile`等の追加が必要。
+Electron Forge導入は完了したが`forge.config.js`に署名設定は追加していない。現状のビルドは未署名で、Windows SmartScreenの警告が出る。公開配布向けの候補にはAzure Artifact Signing、SignPath Foundation（条件を満たすOSS）、民間認証局のOV/EV証明書がある。候補比較と採用条件は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11B 配布方式の候補（署名・パッケージング）#11.2.1 Windowsインストーラーのコード署名候補（2026-10-09、未決）|内部仕様11.2.1節]]を参照。
 
 ## Related
 
@@ -63,4 +63,3 @@ Electron Forge導入は完了したが`forge.config.js`に署名設定は追加�
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様 第11章11.2節#2]] — 対応する未決事項
 - [[work/active/TECSCDE-DT-TA内部仕様/TECSCDE-DT-TA内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-TA内部仕様 第11章11.2節#5]] — Tauri版の同種の未決事項（`tauri-plugin-updater`等は別途検討要）
 - [[work/active/tecs/TECS開発|TECS開発]] — 開発進捗全体
-

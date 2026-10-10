@@ -2,7 +2,7 @@
 date: 2026-10-03
 description: "tecsgen-python3移植計画のうち完了済みフェーズP3（型・値・式・コンポーネントモデルと意味解析）・P4（最適化とコード生成）の詳細をverbatim分離したアーカイブ。25KB閾値による分割"
 project: tecsgen-python3
-status: completed
+status: tracking
 quarter: Q3-2026
 tags:
   - work-note
