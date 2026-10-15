@@ -1,6 +1,6 @@
 ---
 date: 2026-10-02
-description: "tecsgen-python3外部仕様 第8章（制約・制限）— CDL・生成コードの制約はRuby版と同じ。Python版固有の制限: プラグイン2本は対象外・tecsflow非対応・Ruby製プラグイン非互換・Cygwin未検証（macOSはテスト一式まで確認済み）。"
+description: "tecsgen-python3外部仕様 第8章（制約・制限）— CDL・生成コードの制約はRuby版と同じ。Python版固有の制限: プラグイン2本は対象外・tecsflowの保存形式はpickle・Ruby製プラグイン非互換・Cygwin未検証（macOSはテスト一式まで確認済み）。"
 project: tecsgen-python3
 quarter: Q4-2026
 status: active
@@ -30,7 +30,7 @@ Ruby 版と同じ（`C_EXP` の使い方、`INITIALIZE_TECS()` を main の先�
 | 未移植のプラグイン | 2 本（`HRP2Cache`・`HRP2PostHook`）。Ruby 版の標準付属の CDL から参照されず、動かす経路が無いため移植しない。これらを CDL で指定すると P2001 になる（[[tecsgen-python3外部仕様 - 06 プラグインシステム\|6章]]） |
 | Ruby 製の利用者プラグイン | 動かない。Python で書き直す必要がある |
 | `RUBYLIB` | 対応しない |
-| `tecsgen.rbdmp` | 書かない。`tecsflow`・`tcflow`・旧 `tecscde` は対象外 |
+| `tecsgen.rbdmp` | 書かない（Marshal は再現しない）。`tecsgen.pickle` を代わりに書き、`tecsflow` が読む。旧 `tecscde` は対象外。`tcflow`・`tecsflow` の移植状況は [[tecsgen-python3移植計画]]。`tcflow` の関数リストは JSON(`gen/tcflow.json`)で書く |
 | 動作確認 OS | Windows 11 と WSL（Linux）。macOS は 2026-10-04 に GitHub Actions で確認済み（テスト一式とバージョン表示。詳細は [[tecsgen-python3外部仕様 - 02 動作環境]]） |
 | 正解データの範囲 | Ruby 版との一致は、`tests/golden/` にあるプラグイン不使用 119 ケースとプラグイン使用 85 ケース（カーネル 23 件、配布パッケージ 17 件、`CMake.add_*` を呼ぶケース 8 件を含む。as of 2026-10-09）で確認。それ以外の入力は未確認 |
 | `-L` のコード実行 | 指したディレクトリの Python コードをそのまま実行する。信頼できるディレクトリだけを指定すること |

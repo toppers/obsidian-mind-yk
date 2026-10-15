@@ -15,7 +15,8 @@ tags:
 # tecsgen
 
 `work/active/tecsgen/` と `work/active/tecsgen-plugins` 配下の仕様書群への入口。
-
+## Context
+- [[tecsgen 参照リポジトリ・配布パッケージ一覧]] — Ruby版の最新コード・旧版、WSL上のSVNリポジトリ、展開済み配布パッケージ21件の場所（2026-10-12 に共通部分を切り出し）
 ## 仕様書
 
 - [[tecsgen外部仕様]] — 外部仕様（CDL入力・生成コード出力・CLI・プラグイン・エラー処理、全10章）

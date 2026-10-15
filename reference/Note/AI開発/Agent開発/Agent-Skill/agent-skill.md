@@ -9,7 +9,7 @@ tags:
 
 # Agent Skill 調査メモ
 
-> 関連: [[AI-Agents|AI エージェント]] / [[agent-skill-2|Agent Skill 分割マッピング表]]
+> 関連: [[AI-Agents|AI エージェント]] / [[agent-skill-2|Agent Skill 分割マッピング表]] / [[skill-cleaner]]
 
 TencentCloud/TencentDB-Agent-Memory
 

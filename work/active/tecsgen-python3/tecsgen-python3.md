@@ -39,44 +39,12 @@ tecsgenをPython3で実装する
 - [[tecsgen内部仕様]]
 - [[tecsgen-plugins]]
 - Python3版最新コード "E:/Ccur/python3/tecsgen-python3-yk"
-- Python3版リモートリポジトリ git@github.com:ykominami/tecsgen-python3.git（2026-09-28 に `ykominami/tecsgen-python` から改名。旧 URL は GitHub がリダイレクトする）
-- Ruby版最新コード  "E:\Ccur\python3\asp3_stm32cube_TECS\tecsgen-rb"
-	- 旧Ruby版最新コード  "E:/Crepo/toppers-tecs-svn/toppers/tecsgen/branches/ykominami_r3033"
-- WSL上のasp+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/asp+tecs/trunk"
-- WSL上のasp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/asp3+tecs/trunk"
-- WSL上のatk1+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/atk1+tecs/trunk"
-- WSL上のev3rt+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/ev3rt+tecs/trunk"
-- WSL上のfmp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/fmp3+tecs/trunk"
-- WSL上のhrmp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrmp3+tecs/trunk"
-- WSL上のhrp2+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrp2+tecs/trunk"
-- - WSL上のhrp3+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hrp3+tecs/trunk"
-- WSL上のhr-tecs3のsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/hr-tecs3/trunk"
-- WSL上のssp+tecsのsvnリポジトリ　"~/repo/svn-toppers-TECS-2/svn/toppers/ssp+tecs/trunk"
-- WSL上に展開済みのMrubyBridgePluginPackageパッケージ "~/Ccur/TECS-WG-DL/MrubyBridgePluginPackage-130616/"
-- WSL上に展開済みのasp3_arm_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_arm_gcc-20260518/"
-- WSL上に展開済みのasp3_imx8mm_evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_imx8mm_evk_gcc-20200710/"
-- WSL上に展開済みのasp3_lpc55s69evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_lpc55s69evk_gcc-20230401/"
-- WSL上に展開済みのasp3_macosx_xcodeパッケージ "~/Ccur/TECS-WG-DL/asp3_macosx_xcode-20191006/"
-- WSL上に展開済みのasp3_mimxrt685evk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_mimxrt685evk_gcc-20230401/"
-- WSL上に展開済みのasp3_nrf5340_dk_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nrf5340_dk_gcc-20230401/"
-- WSL上に展開済みのasp3_nucleo_f401re_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_f401re_gcc-20260518/"
-- WSL上に展開済みのasp3_nucleo_h563zi_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_h563zi_gcc-20260518/"
-- WSL上に展開済みのasp3_nucleo_l552zeq_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_nucleo_l552zeq_gcc-20230401/"
-- WSL上に展開済みのasp3_posix_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_posix_gcc-20260518/"
-- WSL上に展開済みのasp3_raspberrypi_pico_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_raspberrypi_pico_gcc-20230401/"
-- WSL上に展開済みのasp3_rx_ccrx-20240401パッケージ "~/Ccur/TECS-WG-DL/asp3_rx_ccrx-20240401/"
-- WSL上に展開済みのasp3_zybo_gcc-20190325パッケージ "~/Ccur/TECS-WG-DL/asp3_zybo_gcc-20190325/"
-- WSL上に展開済みのasp3_zybo_z7_gccパッケージ "~/Ccur/TECS-WG-DL/asp3_zybo_z7_gcc-20260520/"
-- WSL上に展開済みのatk1+tecsパッケージ "~/Ccur/TECS-WG-DL/atk1+tecs_1.0.0/"
-- WSL上に展開済みのmruby-on-asp+tecs_packageパッケージ "~/Ccur/TECS-WG-DL/mruby-on-asp+tecs_package-130618/"
-- WSL上に展開済みのmruby-on-ev3rt+tecs_packageパッケージ "~/Ccur/TECS-WG-DL/mruby-on-ev3rt+tecs_package-beta2.2.0/"
-- WSL上に展開済みのmruby_on_GR-PEACH-TECS_packageパッケージ "~/Ccur/TECS-WG-DL/mruby_on_GR-PEACH-TECS_package-alpha1.0.0/"
-- WSL上に展開済みのstm32primer2_tecs_eduパッケージ ~/Ccur/TECS-WG-DL/stm32primer2_tecs_edu-20101129/"
-- WSL上に展開済みのtecscde-MinGWパッケージ ~/Ccur/TECS-WG-DL/tecscde-MinGW-V0.5.0/"
+- Python3版リモートリポジトリ（`origin`、**public**）git@github.com:ykominami/tecsgen-python3-yk.git（2026-10-10 ユーザー決定: 今後はこちらを使う。`upstream` は public の git@github.com:toppers/tecsgen-python3-yk）。旧 `ykominami/tecsgen-python3`（**private**。2026-09-21 作成、2026-09-28 に `ykominami/tecsgen-python` から改名）は、`toppers/tecsgen-python3-yk` が public なのに合わせて public の `-yk` を作ったため退く。**将来削除する予定**（時期未定）。2026-10-10 13:36 JST の PR #15 まではこちらにマージしていた。`-yk` は 2026-10-04 作成の別リポジトリ（id が異なる）で、`origin` の向け直しは 2026-10-10 14:23 JST ごろ。両者の `main` の先頭は 2026-10-10 時点で同じ（`f33713a`）。決定の記録: [[Key Decisions]] 2026-10-10
+- [[tecsgen 参照リポジトリ・配布パッケージ一覧]] — Ruby版の最新コード・旧版、WSL上のSVNリポジトリ、展開済み配布パッケージ21件の場所（2026-10-12 に共通部分を切り出し）
 
 ## Notes
 
-- 2026-10-01: Context の WSL 展開済み21パッケージは全件 `.cdl` を含むと確認。移植元 Ruby tecsgen r3304 を使い、`E:/Ccur/python3/tecsgen-python3/tests/golden/packages/` に Plugin 正解データ16ケースを採集（ASP3系13・ATK1・Mruby2C・EV3各1）。4系統の再採集で生成物・ログ・Plugin trace がバイト一致し、WSL 検証は903 pass・77 skip。RX 用 `ccrx.exe` 不在と旧 `MrubyBridge-test` の T1007 は `diagnostics/` に分離。全21件の選定理由は `package_inventory.json`、採集手順は同リポジトリの `tools/golden/README.md`。
+- 2026-10-01: [[tecsgen 参照リポジトリ・配布パッケージ一覧]]の WSL 展開済み21パッケージは全件 `.cdl` を含むと確認。移植元 Ruby tecsgen r3304 を使い、`E:/Ccur/python3/tecsgen-python3/tests/golden/packages/` に Plugin 正解データ16ケースを採集（ASP3系13・ATK1・Mruby2C・EV3各1）。4系統の再採集で生成物・ログ・Plugin trace がバイト一致し、WSL 検証は903 pass・77 skip。RX 用 `ccrx.exe` 不在と旧 `MrubyBridge-test` の T1007 は `diagnostics/` に分離。全21件の選定理由は `package_inventory.json`、採集手順は同リポジトリの `tools/golden/README.md`。
 
 ## Action Items
 - [x] [[tecsgen-python3外部仕様]]作成（全10章、2026-10-02）
@@ -91,6 +59,7 @@ tecsgenをPython3で実装する
 - [x] `Asp3Tecs.cmake` の configure 以降（コンパイル・リンク）を確認した（2026-10-09）。NUCLEO-H563ZI の `sample1` を、CubeMX の代わりに ST の公開テンプレートで、tecsgen を Ruby 版・Python 版にして configure からリンクまで通し、最終イメージが SHA-256 まで一致（[[tecsgen-python3 cmake対応計画 — C6 ビルド検証]]）
 - [x] ほかの 3 ボードを確認した（2026-10-09）。TECS を使うのは H563ZI と N6570-DK だけで、H533・C562 のサンプルは TECS を使わない（`asp3_add_syssvc`）ため対象外。N6570-DK（FSBL）は CubeMX の代わりに ST の公開テンプレートで、H563ZI と同様に Ruby 版・Python 版で configure からリンクまで通し、最終イメージが SHA-256 まで一致（[[tecsgen-python3 cmake対応計画 — C6 ビルド検証]]）
 - [ ] 残り（[[tecsgen-python3移植計画]] P7）: 実機（書込み・起動）の確認、実際の CubeMX 生成物でのビルド、H533・C562 に TECS を展開したときの確認、`transparent_marshaler` ケースの扱いの決定（as of 2026-10-09）
+- [ ] 旧 private リポジトリ `ykominami/tecsgen-python3` の削除（2026-10-10 決定、時期未定）。削除前に確認すること: (1) `-yk` の `main`・全ブランチ・タグが旧側と同等かを `git ls-remote` で比べる（`main` の先頭は 2026-10-10 時点で同じ `f33713a`）、(2) 旧側にだけある PR・Issue・Actions のシークレット・SonarCloud 連携・branch protection が無いか、(3) vault・`asp3_stm32cube_TECS`・他リポジトリの文書やスクリプトに旧 URL（`ykominami/tecsgen-python3`）が残っていないか。削除は取り消せないのでユーザーの明示的な指示で行う
 - [x] `add_*` の合成ケースを golden ケース `cmake_add` としてリポジトリに固定（2026-10-09、Python 版 PR #11 で `main` にマージ済み、`11f38ef`。プラグインあり 78/78 一致）
 
 ## Related

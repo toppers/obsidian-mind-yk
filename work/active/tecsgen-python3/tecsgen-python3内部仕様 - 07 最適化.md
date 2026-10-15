@@ -23,7 +23,7 @@ tags:
 |---|---|
 | `optimize_and_generate` | link root ごとに: `-G` の絞り込み → セルの無い region を飛ばす → `$gen` の決定（link root が複数なら `gen/<region>` を `mkdir`）→ `reset_optimize` → エラーが無ければ `set_cell_id_and_domain` と（`-U` でなければ）`optimize` → `-s` なら木を表示 → エラーがあれば `print_report` して終了コード1 → `generate`・`generate_post`（[[tecsgen-python3内部仕様 - 08 コード生成|8章]]） |
 | `finalize` | `-G` で link root でないものの警告 → エラーが無ければ `AppFile.update` → `print_report` → エラーがあれば標準エラーに1行出して終了コード1 → `gen/tecsgen.timestamp`（空）を書く |
-| `dump_tecsgen_rbdmp` | link root ごとに `reset_optimize`・`set_cell_id_and_domain`・`optimize` をやり直す。**`tecsgen.rbdmp`（Marshal 形式）は書かない**（[[tecsgen-python3 P0基本方針決定]]）が、`-v` ではやり直しの経過が標準出力に出るので、そこまで移植した。前段の `unjoin_plugin`（プラグインの参照を外す）は P5 |
+| `dump_tecsgen_rbdmp` | link root ごとに `reset_optimize`・`set_cell_id_and_domain`・`optimize` をやり直す。**`tecsgen.rbdmp`（Marshal 形式）は書かない**（[[tecsgen-python3 P0基本方針決定]]）。代わりに最後に `tecsgen.pickle` を書く（`core/unjoin_plugin.py` がプラグインの参照を外す。[[tecsgen-python3移植計画]]）。`-v` ではやり直しの経過が標準出力に出るので、そこも移植した |
 
 `exit n` は `TecsgenExit` を投げ、`cli.run` が終了コードに変える。Ruby の `rescue`（StandardError）で捕まえない例外（`TecsgenExit`・`RecursionError`・未移植部分の `NotImplementedError`）は、`generate.reraise_if_not_standard_error` で投げ直す。
 

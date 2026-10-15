@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート"
+description: TECSCDE クラスベースTypeScript設計（TECSCDE-TS内部仕様）の実装進捗ノート
 project: TECS
 quarter: Q3-2026
 status: active

@@ -1,6 +1,6 @@
 ---
 date: 2026-10-02
-description: "tecsgen-python3外部仕様 第4章（出力）— 生成物はRuby版とバイト一致が受入基準。生成ファイル一覧、tecsgen.rbdmpを書かない差異、一致の確認状況（as of 2026-10-02）。"
+description: "tecsgen-python3外部仕様 第4章（出力）— 生成物はRuby版とバイト一致が受入基準。生成ファイル一覧、tecsgen.rbdmpの代わりにtecsgen.pickleを書く差異、一致の確認状況（as of 2026-10-02）。"
 project: tecsgen-python3
 quarter: Q4-2026
 status: active
@@ -33,7 +33,7 @@ tags:
 
 | 項目 | Ruby 版 | Python 版 |
 |---|---|---|
-| `tecsgen.rbdmp` | Ruby の `Marshal` 形式でモデルを書き出す（`tecsflow` 用） | **書かない**。`-v` で表示される経過メッセージだけ再現する。`tecsflow` を移植しないため |
+| `tecsgen.rbdmp` | Ruby の `Marshal` 形式でモデルを書き出す（`tecsflow` 用） | **書かない**。代わりに pickle 形式の `tecsgen.pickle` を書く（`tecsflow` が読む。移植状況は [[tecsgen-python3移植計画]]）。`-v` の経過メッセージも再現する |
 | 生成物の改行 | 実行した環境の既定 | Windows でも `\n`（テストは Ruby 版を Linux で実行した結果と比べる） |
 
 ### 4.4 一致の確認状況（as of 2026-10-05）

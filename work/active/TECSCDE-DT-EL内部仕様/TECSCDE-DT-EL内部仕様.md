@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT-EL内部仕様書。TECSCDE-DT外部仕様（デスクトップ版）を、TypeScriptクラスベース設計でElectron固有に実装するための内部仕様。main/renderer/preloadのプロセス境界設計が中心。全11章執筆完了。2026-09-21、ファイルブラウザ採用を決定し第7章7.6節に設計追加。2026-09-22、7.6節を第7B章（ファイルブラウザ設計）へ分離、7.7節（読み込み経路の統合：前回セッション復元・参照専用追加・消去ボタン・オプションファイル読込・import統一）を第7C章として追加し第11章11.2節#7〜#11を解消。同日、7.5節（import自動追跡）を第7D・7E章として詳細化——resolveImports()の具体アルゴリズムを確定し、tecsgen本体（Importable#find_file）との対応関係を実地検証、7C章#8/#10/#11が前提としていた未実装ギャップを解消。2026-09-23、9.6節が名前を挙げていた`CdeclExtractor`（typedef/struct抽出）自体の設計を第9B章として追加し、同日中に実装（`src/renderer/cdecl/`、279テストpass）まで完了。実装時に判明した差分は第9B章の実装時差分サテライトへ分離。"
+description: "TECSCDE-DT-EL内部仕様書（Electron・TypeScriptクラスベース）の目次。main/renderer/preloadのプロセス境界設計が中心。全11章と03B・7B〜7E・9B・11Bの章別ノート。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -29,16 +29,16 @@ tags:
 
 1. [[TECSCDE-DT-EL内部仕様 - 01 概要]]
 2. [[TECSCDE-DT-EL内部仕様 - 02 モジュール構成とプロセス境界]] — 本書の中心。main/renderer/preloadへのモジュール配置とIPC契約
-3. [[TECSCDE-DT-EL内部仕様 - 03 モデル設計]] — [[TECSCDE-TS内部仕様]]と同一（変更なし、rendererプロセスで動作）
+3. [[TECSCDE-DT-EL内部仕様 - 03 モデル設計]] 基本モデルは[[TECSCDE-TS内部仕様]]を踏襲。複合セルタイプは[[TECSCDE-DT-EL内部仕様 - 03B 複合セルタイプ設計|03B 複合セルタイプ設計]]で定める
 4. [[TECSCDE-DT-EL内部仕様 - 04 編集コマンドとUndo-Redo設計]] — 同上
-5. [[TECSCDE-DT-EL内部仕様 - 05 描画・インタラクション設計]] — 同上
+5. [[TECSCDE-DT-EL内部仕様 - 05 描画・インタラクション設計]] 基本描画を踏襲。複合セルタイプの非展開は03Bで定める
 6. [[TECSCDE-DT-EL内部仕様 - 06 表示制御設計]] — 同上
 7. [[TECSCDE-DT-EL内部仕様 - 07 ファイルI-O設計|TECSCDE-DT-EL内部仕様 - 07 ファイルI/O設計]] — Electron固有化。`dialog`/`fs`をmainプロセスに置き、`FileGateway`でIPC経由公開（インポート参照先解決含む）
    - [[TECSCDE-DT-EL内部仕様 - 07D インポート自動追跡]] — 7.5節前半（2026-09-22詳細化）。`FileService.resolveImports()`の具体アルゴリズム、tecsgen本体（`Importable#find_file`）との対応関係の実地検証
    - [[TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合]] — 7.5節後半（2026-09-22詳細化）。renderer側の再帰的解決オーケストレーション・import_Cの第9章への受け渡し境界・診断・既存コードへの統合ポイント
    - [[TECSCDE-DT-EL内部仕様 - 07B ファイルブラウザ設計]] — 7.6節（2026-09-21追加、2026-09-22分離）。階層ツリー表示・ルートフォルダの永続化（Local AppData）と起動時自動復元
    - [[TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合]] — 7.7節（2026-09-22追加）。前回セッション復元・参照専用追加・消去ボタン・tecsgenオプションファイル読込・import自動追跡との統一（第11章11.2節#7〜#11、全項目決定・実装済み。2026-09-22実装コミット`829efc7`・`e0e2c26`・`7c0318d`）
-8. [[TECSCDE-DT-EL内部仕様 - 08 整合性チェックとメッセージ設計]] — [[TECSCDE-TS内部仕様]]と同一（変更なし、rendererプロセスで動作。mainプロセスのtecsgen実行結果・フォールバック警告も集約）
+8. [[TECSCDE-DT-EL内部仕様 - 08 整合性チェックとメッセージ設計]] 既存診断を集約。複合セルタイプの未対応構文通知は03Bで定める
 9. [[TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計]] — Electron固有化。`child_process`（tecsgen・Cプリプロセッサ実行）をmainプロセスに置き、`TecsgenGateway`でIPC経由公開
    - [[TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計]] — 9.6節が名前を挙げていた`CdeclExtractor`（モジュールB、typedef/struct抽出）自体の設計・実装（2026-09-23、同日中に設計・実装完了）。文法ローダ・型モデル・CST走査アルゴリズム
    - [[TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計 — 実装時の差分]] — 上記の実装時に判明した8件の差分（サテライト、2026-09-23）

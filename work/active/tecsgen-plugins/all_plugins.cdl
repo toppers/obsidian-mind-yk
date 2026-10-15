@@ -1,0 +1,253 @@
+/*
+ * all_plugins.cdl — tecsgen 標準付属プラグイン全種の generate 文カタログ
+ *
+ * 出典: work/active/tecsgen-plugins/ 配下の各仕様書ノート、tecsgen外部仕様 6.2/6.3
+ * 作成: 2026-10-12
+ *
+ * 【重要】これは「各プラグインの付与構文を1ファイルに並べた網羅カタログ」であり、
+ *   そのまま tecsgen に通して全部動くファイルではない。
+ *   - カーネル対応プラグイン(ATK1 / HRP2 / HRP / FMP / HRMP / ASP3)は互いに排他的な
+ *     カーネル向けで、同時に使うと tecsgen がエラーにする。実際に使うときは対象カーネルの節だけ残すこと。
+ *   - 各ノートに「CDL実例がリポジトリに無く、構文はソースからの逆算(未検証)」と
+ *     明記されているものが多い。属性名・オプション文字列は仕様書ノートの記載に基づく。
+ *   - generate には2形式ある(外部仕様 6.2):
+ *       (1) specifier 形式  [generate(Plugin, "opts")]  celltype / composite / cell に付与
+ *       (2) statement 形式  generate(Plugin, sSignature, "opts");  signature 用の独立文
+ *     through / domain / class は generate ではなく別の指定子で呼ぶ(各節参照)。
+ */
+
+/* ======================================================================
+ * 0. 共通の土台: シグニチャとセルタイプ
+ * ====================================================================== */
+signature sSample {
+    ER  func1( [in] int32_t a );
+    ER  func2( [out] int32_t *b );
+    ER  func99( void );
+};
+
+celltype tCallee {
+    entry sSample eEntry;
+};
+
+celltype tCaller {
+    call sSample cCall;
+};
+
+/* ======================================================================
+ * 1. SignaturePlugin — statement 形式  generate(Plugin, sSignature, "opts");
+ * ====================================================================== */
+
+/* --- Cインタフェース (CInterfaceBridgePlugin.md) --- */
+generate( C2TECSBridgePlugin, sSample, "prefix='Sig'" );   // C -> TECS 受け口呼び出し
+generate( TECS2CBridgePlugin, sSample, "silent=true" );    // TECS 呼び口 -> C 関数
+
+/* --- mruby ブリッジ (MrubyBridgePlugin.md / MrubyInfoBridgePlugin.md / Mruby2CBridgePlugin.md) --- */
+generate( MrubyBridgePlugin,     sSample, "exclude=func99" );  // MultiPlugin -> MrubyBridgeSignaturePlugin
+generate( MrubyInfoBridgePlugin, sSample, "auto_exclude=true" ); // MultiPlugin -> MrubyInfoBridgeSignaturePlugin(TECSInfo版)
+generate( Mruby2CBridgePlugin,   sSample, "" );                // 内部で MrubyBridge/TECS2CBridge/C2TECSBridge を合成
+
+/* --- マーシャラ (DataPumpHolderPlugin.md / HRPDomainBoundaryPlugin.md) --- */
+generate( TransparentMarshalerPlugin, sSample, "" );   // RPCPlugin の Transparent マーシャラ生成本体
+generate( OpaqueMarshalerPlugin,      sSample, "" );   // HRPRPCPlugin が使う Opaque マーシャラ
+
+/* --- HRP SVC (HRPDomainBoundaryPlugin.md) — 通常は HRPSVCThroughPlugin が自動発行する --- */
+generate( HRPSVCSignaturePlugin, sSample, "" );
+
+/* ======================================================================
+ * 2. CelltypePlugin — specifier 形式  [generate(Plugin, "opts")] celltype
+ * ====================================================================== */
+
+/* --- 2.1 ATK1 (OSEK/VDX)  ATK1Plugin.md — option 引数は未使用 --- */
+[generate(ATK1KernelPlugin, "")]
+celltype tATK1Kernel { attr { [omit] char *name; }; };
+
+[generate(ATK1TaskPlugin, "")]
+celltype tATK1Task { attr { [omit] char *name; }; };
+
+[generate(ATK1AlarmPlugin, "")]
+celltype tATK1Alarm { attr { [omit] char *counter; [omit] char *action; }; };
+
+[generate(ATK1EventPlugin, "")]
+celltype tATK1Event { attr { [omit] char *name; }; };
+
+[generate(ATK1ISRPlugin, "")]
+celltype tATK1ISR { attr { [omit] char *name; }; };
+
+[generate(ATK1ResourcePlugin, "")]
+celltype tATK1Resource { attr { [omit] char *name; }; };
+
+[generate(ATK1DelayTaskPlugin, "")]
+celltype tATK1DelayTask { attr { [omit] char *name; }; };
+
+/* --- 2.2 HRP2 カーネルオブジェクト  HRP2KernelObjectPlugin.md --- */
+// 単機能8種(引数なしで呼べる)
+[generate(HRP2TaskPlugin)]              celltype tHRP2Task              { attr { [omit] ID id; }; };
+[generate(HRP2SemaphorePlugin)]         celltype tHRP2Semaphore         { attr { [omit] ID id; }; };
+[generate(HRP2EventflagPlugin)]         celltype tHRP2Eventflag         { attr { [omit] ID id; }; };
+[generate(HRP2DataqueuePlugin)]         celltype tHRP2Dataqueue         { attr { [omit] ID id; }; };
+[generate(HRP2PriorityDataqueuePlugin)] celltype tHRP2PriorityDataqueue { attr { [omit] ID id; }; };
+[generate(HRP2FixedSizeMemoryPoolPlugin)] celltype tHRP2FixedSizeMemoryPool { attr { [omit] ID id; }; };
+[generate(HRP2CyclicHandlerPlugin)]     celltype tHRP2CyclicHandler     { attr { [omit] ID id; }; };
+[generate(HRP2AlarmHandlerPlugin)]      celltype tHRP2AlarmHandler      { attr { [omit] ID id; }; };
+// 汎用2種(第2引数に種別文字列)
+[generate(HRP2ObjectPlugin,  "SEMAPHORE")] celltype tHRP2GenericObject  { attr { [omit] ID id; }; };
+[generate(HRP2HandlerPlugin, "CYCLIC")]    celltype tHRP2GenericHandler { attr { [omit] ID id; }; };
+
+/* --- 2.3 HRP カーネルオブジェクト  HRPKernelObjectPlugin.md --- */
+[generate(HRPTaskPlugin)]             celltype tHRPTask    { attr { [omit] ID id; }; };
+[generate(HRPObjectPlugin,  "SEMAPHORE")] celltype tHRPObject  { attr { [omit] ID id; }; };
+[generate(HRPHandlerPlugin, "CYCLIC")]    celltype tHRPHandler { attr { [omit] ID id; }; };
+
+/* --- 2.4 FMP3  FMPPlugin.md --- */
+[generate(FMPObjectPlugin,  "SEMAPHORE")] celltype tFMPObject  { attr { [omit] ID id; }; };
+[generate(FMPHandlerPlugin, "CYCLIC")]    celltype tFMPHandler { attr { [omit] ID id; }; };
+
+/* --- 2.5 HRMP3  HRMPPlugin.md --- */
+[generate(HRMPKernelObjectPlugin, "SEMAPHORE")] celltype tHRMPObject { attr { [omit] ID id; }; };
+
+/* --- 2.6 ASP3 タイムイベント通知  NotifierPlugin.md ---
+ * 通常は標準ライブラリ(kernel.cdl 等)の tAlarmNotifier / tCyclicNotifier に適用済み */
+[active, generate(NotifierPlugin, "factory=\"CRE_ALM({{id}}, { {{attribute}}, {{{_handler_params_}}} });\", output_file=tecsgen.cfg")]
+celltype tNotifierSample {
+    entry sSample eNotify;
+};
+
+/* --- 2.7 データポンプ  DataPumpHolderPlugin.md --- */
+[generate(DataPumpHolderPlugin, "")]
+celltype tDataHolder {
+    var { int32_t value; };
+};
+
+/* --- 2.8 TECSInfo  TECSInfoPlugin.md — --unoptimize-entry を自動強制する副作用あり --- */
+[generate(TECSInfoPlugin, "")]
+celltype tTECSInfo { entry sSample eInfo; };
+
+/* --- 2.9 C / C++ インタフェース生成  CIfGenPlugin.md / CppIfGenPlugin.md (MultiPlugin) --- */
+[generate(CIfGenPlugin, "")]
+celltype tCIfGenTarget { entry sSample eEntry; };
+
+[generate(CppIfGenPlugin, "")]
+celltype tCppIfGenTarget { entry sSample eEntry; };
+
+/* --- 2.10 mruby ブリッジ (celltype 付与 = MrubyBridgeCelltypePlugin) --- */
+[generate(MrubyBridgePlugin, "")]
+celltype tMrubyBridged { entry sSample eEntry; };
+
+/* ======================================================================
+ * 3. CompositePlugin — composite celltype に付与
+ * ====================================================================== */
+[generate(TECSInfoCompoPlugin, "")]
+composite tTECSInfoCompo {
+    entry sSample eInfo;
+    cell tCallee Inner { };
+    export Inner.eEntry as eInfo;
+};
+
+[generate(MrubyBridgePlugin, "")]    // MultiPlugin -> MrubyBridgeCompositePlugin
+composite tMrubyBridgedCompo {
+    entry sSample eEntry;
+    cell tCallee Inner { };
+    export Inner.eEntry as eEntry;
+};
+
+/* ======================================================================
+ * 4. CellPlugin — cell に付与  [generate(Plugin, "opts")] cell ...
+ * ====================================================================== */
+[generate(RepeatCellPlugin, "count=3")]     // セル名末尾の数字を基準に count 回複製(RepeatCellPlugin.md)
+cell tCallee Repeated0 { };
+
+cell tCaller RepeatJoinCaller {
+    [generate(RepeatJoinPlugin, "count=3")] // 呼び口配列の添字0の結合を種に複製
+    cCall = Repeated0.eEntry;
+};
+
+[generate(CIfGenPlugin, "")]                // MultiPlugin -> CIfGenCellPlugin: *_cif.h 生成
+cell tCIfGenTarget CIfGenCell { };
+
+[generate(CppIfGenPlugin, "")]              // MultiPlugin -> CppIfGenCellPlugin
+cell tCppIfGenTarget CppIfGenCell { };
+
+[generate(MrubyBridgePlugin, "")]           // MultiPlugin -> MrubyBridgeCellPlugin
+cell tMrubyBridged MrubyBridgedCell { };
+
+[generate(MrubyInfoBridgePlugin, "")]       // MultiPlugin -> MrubyInfoBridgeCellPlugin
+cell tCallee MrubyInfoBridgeCell { };
+
+// HRPSVCBodyCellPlugin は文形式。受け口とその呼び出し元リージョンを指定(HRPDomainBoundaryPlugin.md)
+generate( HRPSVCBodyCellPlugin, MrubyBridgedCell, "exportEntryPort=eEntry:rUser1,rUser2" );
+
+/* ======================================================================
+ * 5. ThroughPlugin — through 系指定子(generate ではない)
+ *    TracePlugin.md / RPCPlugin.md / HRP2DomainBoundaryPlugin.md / HRPDomainBoundaryPlugin.md
+ * ====================================================================== */
+cell tCallee TargetCell { };
+
+cell tCaller ThroughCaller {
+    [through(TracePlugin, "probeName=myProbe")]
+    cCall = TargetCell.eEntry;
+};
+
+cell tCaller RpcCaller {
+    [through(RPCPlugin, "")]                  // Transparent・専用チャンネル
+    cCall = TargetCell.eEntry;
+};
+cell tCaller OpaqueRpcCaller {
+    [through(OpaqueRPCPlugin, "")]            // Opaque・専用チャンネル
+    cCall = TargetCell.eEntry;
+};
+cell tCaller SharedRpcCaller {
+    [through(SharedRPCPlugin, "")]            // Transparent・共有チャンネル
+    cCall = TargetCell.eEntry;
+};
+cell tCaller SharedOpaqueRpcCaller {
+    [through(SharedOpaqueRPCPlugin, "")]      // Opaque・共有チャンネル
+    cCall = TargetCell.eEntry;
+};
+
+// 以下4種は通常 HRP2Plugin / HRPPlugin / HRMPPlugin が境界横断結合に自動挿入する。明示指定は想定外。
+cell tCaller Hrp2SvcCaller {
+    [through(HRP2SVCPlugin, "")]
+    cCall = TargetCell.eEntry;
+};
+cell tCaller Hrp2RpcCaller {
+    [through(HRP2RPCPlugin, "")]
+    cCall = TargetCell.eEntry;
+};
+cell tCaller HrpSvcCaller {
+    [through(HRPSVCThroughPlugin, "")]
+    cCall = TargetCell.eEntry;
+};
+cell tCaller HrpRpcCaller {
+    [through(HRPRPCPlugin, "")]
+    cCall = TargetCell.eEntry;
+};
+
+// region 境界を横断する全結合への一括適用
+region rThrough {
+    in_through( TracePlugin, "" );
+    out_through( TracePlugin, "" );
+};
+
+/* ======================================================================
+ * 6. DomainPlugin / ClassPlugin — region の domain(...) / class(...) 指定子
+ *    名前の末尾の "Plugin" は付けない(自動付加される)。HRP2Plugin.md
+ * ====================================================================== */
+[domain(HRP2, "trusted")]
+region rHrp2Kernel { };
+[domain(HRP2, "nontrusted")]
+region rHrp2User { };
+
+[domain(HRP, "kernel")]
+region rHrpKernel { };
+[domain(HRP, "user")]
+region rHrpUser { };
+
+[class(FMP, CLS_PRC1)]
+region rFmpPrc1 { };
+
+// HRMP は domain / class 両方にディスパッチ(MultiPlugin)
+[domain(HRMP, "kernel")]
+region rHrmpKernel {
+    [class(HRMP, CLS_PRC1)]
+    region rHrmpPrc1 { };
+};

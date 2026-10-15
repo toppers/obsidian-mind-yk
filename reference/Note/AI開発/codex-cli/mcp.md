@@ -7,6 +7,8 @@ tags:
   - mcp
 ---
 
+> 関連: [[codex-cli-help]]
+
  codex
 # 1
   - Claude 側: C:\Users\ykomi\.claude.json

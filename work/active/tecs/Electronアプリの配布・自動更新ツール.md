@@ -1,6 +1,6 @@
 ---
 date: 2026-09-12
-description: "Electronアプリのパッケージング・自動更新ツールの比較参考ノート（electron-builder/electron-updater、Electron Forge、electron-packager、Squirrel、update-electron-app、Nucleus、OSネイティブ配布チャネル）。TECSCDE-DT-EL内部仕様第11章11.2節#2・TECSCDE-DT-TA内部仕様第11章11.2節#5の背景知識。2026-09-23、TECSCDE-DT-ELの自動更新方式（origin公開化＋update-electron-app）が決定、詳細は[[TECSCDE-DT-EL 配布アーキテクチャ決定]]へ。"
+description: "Electronアプリのパッケージング・自動更新ツールの比較参考ノート（electron-builder、Forge、Squirrel、update-electron-app等）。DT-EL・DT-TA内部仕様の背景知識。"
 project: TECS
 quarter: Q3-2026
 status: active

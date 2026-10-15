@@ -1,6 +1,6 @@
 ---
 date: 2026-09-06
-description: "TECSCDE-DT-EL内部仕様（Electron・クラスベース）の実装進捗ノート。11.4節の3実装単位＋preload ESM化＋第4章（4.1節Copy/Cut/Paste＋キーボード配線含む）＋第5章（描画）＋第6章（表示制御）＋モジュールG（最小UIシェル＋次段のパレット/プロパティパネル/検索ボックス/ナビゲータ/診断パネル、esbuild+実機起動確認）＋モジュールH（診断集約）＋第9章（9.4 TecsgenResultParser、9.5 Generate操作配線、9.6 import_Cプリプロセス配線）まで完了。Electron Forge導入（package/make、Node 22 LTS実行が前提）、package/make後（asar化後）の実機起動確認（electron-squirrel-startup依存配置バグ修正込み）も完了。2026-09-16、手書きlexer/parserをtree-sitter（`web-tree-sitter`＋WASM）へ移行。2026-09-20、初の実機対話的確認を4ラウンド実施し、PropertyPanelView編集消失・CSP・起動サンプル順・保存インジケータ・既定メニューによるCtrl+C/X/V横取り・clipboard未定義・Generate後の診断視認性の計7件のバグを発見・修正してpush済み。279テストpass。2026-09-23、配布の仕組み（[[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|配布アーキテクチャ決定]]: publisher-github・update-electron-app・GitHub Actionsワークフロー・README更新）を実装、ローカルコミット済み（未push・未タグ作成）。"
+description: "TECSCDE-DT-EL内部仕様（Electron・クラスベース）の実装進捗ノート。実装単位・Forge配布・tree-sitter移行・実機確認・配布アーキテクチャの進捗と、発見したバグを記録する。"
 project: TECS
 quarter: Q3-2026
 status: active

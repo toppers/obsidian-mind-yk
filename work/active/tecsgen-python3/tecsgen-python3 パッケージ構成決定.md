@@ -89,7 +89,10 @@ tags:
 | `tecslib/plugin/lib/*.rb`（7ファイル） | `plugin/lib/*.py` | 同名 |
 | `tecsgen/tecs/`（同梱 CDL ライブラリ、928KB） | `tecs/`（パッケージデータ） | 移植元 r3304 からそのまま複製する |
 | `tecsmerge.rb` | `tecsmerge.py` | P6 |
-| `tecsflow.rb`・`tcflow.rb`・`tecscde.rb`・`tecsgen_rcov.rb` | （対象外） | 計画のスコープ外 |
+| `tecsflow.rb` | `tecsflow.py` | 移植済み（2026-10-14 訂正。状況は [[tecsgen-python3移植計画]]） |
+| `tecscde.rb` | （対象外） | 計画のスコープ外 |
+| `tecsgen_rcov.rb` | `tecsgen_rcov.py` | 2026-10-15 に移植（当初は対象外としていた）。SimpleCov の代わりに coverage.py を使う開発用ラッパー |
+| `tcflow.rb`・`flowlib/` | `tcflow.py`・`flowlib/` | 2026-10-13 に移植（当初は対象外としていた）。構文解析は `flowlib/C_parser.tab.rb` の racc 表を `flowlib/c_parser_tables.py` に変換して使う |
 
 ## Consequences
 

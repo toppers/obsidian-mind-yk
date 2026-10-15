@@ -1,6 +1,6 @@
 ---
 date: 2026-10-02
-description: "tecsgen-python3内部仕様 第3章（処理フロー）— cli.run から run1・run2・finalize までのフロー。Ruby版 第3章と同じ段取りで、Python版での差（RecursionError の扱い・.rbdmp を書かない・Host 経由の入出力）を示す。"
+description: "tecsgen-python3内部仕様 第3章（処理フロー）— cli.run から run1・run2・finalize までのフロー。Ruby版 第3章と同じ段取りで、Python版での差（RecursionError の扱い・.rbdmp の代わりに .pickle を書く・Host 経由の入出力）を示す。"
 project: tecsgen-python3
 quarter: Q4-2026
 status: active
@@ -27,7 +27,7 @@ cli.run(argv, environ)
   ├─ tecsgen = TECSGEN()
   ├─ tecsgen.run1()               # 構文解析 + 意味解析1・2
   ├─ tecsgen.run2()               # 最適化 + コード生成 + finalize
-  └─ tecsgen.dump_tecsgen_rbdmp() # 経過表示だけ再現。.rbdmp は書かない
+  └─ tecsgen.dump_tecsgen_rbdmp() # 経過表示を再現し、tecsgen.pickle を書く（.rbdmp は書かない）
 ```
 
 終了コードは `run` の戻り値（`__main__` が `sys.exit`）。`--help`・`--version` は `init` の中で表示して終わる。

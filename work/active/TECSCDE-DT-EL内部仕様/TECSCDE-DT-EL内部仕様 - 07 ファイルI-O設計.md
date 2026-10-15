@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT-EL内部仕様書 第7章（ファイルI/O設計）— mainプロセスのFileServiceクラス（dialog+fs、アトミック書き込み、openDialog()は2026-09-21撤回）とrenderer側FileGatewayによるElectron固有実装。7.6節（ファイルブラウザ設計）は第7B章へ分離（2026-09-22、25KB閾値）。同日、7.7節（読み込み経路の統合）を第7C章として追加。同日、7.5節（インポート自動追跡、resolveImports()の具体設計）を第7D・7E章として分離・詳細化——tecsgen本体との探索順序の違いはInferred/未検証から確定済みへ更新。"
+description: "TECSCDE-DT-EL内部仕様 第7章（ファイルI/O設計）— mainのFileService（dialog+fs、アトミック書き込み）とrendererのFileGatewayによるElectron固有実装。7B〜7Eは別ノート。"
 project: TECS
 quarter: Q3-2026
 status: active

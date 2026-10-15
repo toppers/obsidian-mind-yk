@@ -1,6 +1,6 @@
 ---
 date: 2026-08-30
-description: TECSCDE（JS版）TypeScript実装の進捗ノート — 全9モジュール（A〜I: ファイルI/O・CDLパーサ/シリアライザ・モデル・編集コマンド/Undo-Redo・SVG描画・表示制御・UIシェル・診断/整合性チェック・tecsgen連携）およびdependency-cruiser境界強制まで全実装完了、全26テストスイート105テストpass、checkスクリプト（build+test+depcruise）検証完了
+description: TECSCDE（JS-TS版）TypeScript実装の進捗ノート
 project: TECS
 quarter: Q3-2026
 status: active
@@ -8,7 +8,6 @@ tags:
   - work-note
   - tecs
   - tecscde
-  - 1｜みかんのうえ
 ---
 
 # TECSCDE-JS-TS実装

@@ -1,6 +1,6 @@
 ---
 date: 2026-08-16
-description: "tecsgen内部仕様書 第9章（プラグイン機構、plugin.rb/pluginModule.rb）— プラグインの種類・ロード、PluginModule、MultiPluginディスパッチ機構、既知の問題3件（TransparentRPCSignaturePlugin参照切れ・FMPのRPC死コード・CppIfGenの二重無効化コード）。2026-09-15、3件とも呼び出し元・エラー処理経路を追跡——9.7.1はP2001のクリーンな失敗、9.7.2はサイレントな誤生成（nilとの違いが鍵）、9.7.3は定義/undef対の構造から意図性を補強。CppIfGenPluginの複製も直接比較で確認済みに格上げ。"
+description: "tecsgen内部仕様 第9章（プラグイン機構、plugin.rb/pluginModule.rb）— プラグインの種類・ロード、MultiPluginディスパッチ、既知の問題3件（追跡済み）。"
 project: TECS
 quarter: Q3-2026
 status: active

@@ -33,8 +33,11 @@ cell tMyType MyCell {
     cCall = OtherCell.eEntry;
 };
 
-// (2) statement 形式 — シグニチャプラグイン用の独立文。namespace_identifier（シグニチャ名）を第2引数に取る（bnf.y.rb 853行 "# signature plugin"）
+// (2) statement 形式 — 独立文。namespace_identifier を第2引数に取り、対象は signature・celltype・composite celltype・cell のいずれでもよい
+//     （bnf.y.rb 853行のコメントは "# signature plugin" だが、`Generate#initialize`（generate.rb）が対象の種別を判定して `apply_plugin` を呼ぶ。2026-10-12 ソースで確認）
 generate(PluginName, sMySignature, "param1=val1, param2=val2");
+generate(PluginName, nNs::tMyCelltype, "options");   // celltype 対象
+generate(PluginName, nNs::MyCell, "options");        // cell 対象（例: HRPSVCThroughPlugin が HRPSVCBodyCellPlugin をこの形式で発行、HRPSVCThroughPlugin.rb:153）
 ```
 
 `generate` の2形式に加えて、CDL 上の**付与位置**によって呼び出し可能なプラグイン種別が決まる。全ロード窓口 `PluginModule#load_plugin(plugin_name, superClass)`（`tecslib/core/pluginModule.rb`）を経由し、位置ごとに次の `superClass` が渡される（[[work/active/tecsgen-plugins/MrubyBridgePlugin\|MrubyBridgePlugin]] 執筆時に全呼び出し元を特定・確認）。
@@ -44,7 +47,8 @@ generate(PluginName, sMySignature, "param1=val1, param2=val2");
 | `celltype` の `[generate(...)]` | `CelltypePlugin` |
 | `composite celltype` の `[generate(...)]` | `CompositePlugin` |
 | `cell` の `[generate(...)]` | `CellPlugin` |
-| `generate(Plugin, sSignature, "opts");`（statement 形式） | `SignaturePlugin` |
+| `signature` の `[generate(...)]` 指定子、または statement 形式で対象が signature の場合 | `SignaturePlugin`（`signature.rb:155`・`314`） |
+| statement 形式 `generate(Plugin, <対象>, "opts");` で対象が celltype／composite celltype／cell の場合 | 対象の種別に応じて `CelltypePlugin`／`CompositePlugin`／`CellPlugin`（`Generate#initialize` が `apply_plugin` に委譲） |
 | `join` の `through` 指定子 | `ThroughPlugin` |
 | `region` の `domain(...)` 指定子（[[work/active/tecsgen-plugins/HRP2Plugin\|HRP2Plugin]] 参照） | `DomainPlugin` |
 | `class`（HRMP）指定子（[[work/active/tecsgen-plugins/NotifierPlugin\|NotifierPlugin]] 参照） | `ClassPlugin` |

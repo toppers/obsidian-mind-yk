@@ -42,9 +42,10 @@ tags:
 |---|---|
 | `bnf.tab.rb`・`C_parser.tab.rb` | racc の生成物。表だけを `syntax/*_tables.py` に取り出した |
 | `core/location.rb` | どこからも読み込まれていない（同じクラスを `tool_info.rb` が定義） |
-| `tecsflow.rb`・`tcflow.rb`・`flowlib/` | スコープ外 |
+| `tecsflow.rb` | 移植済み（`tecsflow.py`。状況は [[tecsgen-python3移植計画]]） |
+| `tcflow.rb`・`flowlib/` | 移植済み(2026-10-13)。`tcflow.py` と `flowlib/`(`classes.py`・`c_parser.py`・`c_parser_actions.py`・`c_parser_tables.py`) |
 | `tecscde.rb`・`cdelib/` | 旧 TECSCDE。TypeScript 版が置き換える |
-| `tecsgen_rcov.rb` | 開発用 |
+| `tecsgen_rcov.rb` | 移植済み(2026-10-15)。`tecsgen_rcov.py`(SimpleCov の代わりに coverage.py) |
 
 ### 2.5 プラグインと同梱 CDL
 

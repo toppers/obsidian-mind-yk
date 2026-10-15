@@ -1,6 +1,6 @@
 ---
 date: 2026-08-22
-description: "tecsgen内部仕様書 第8章（コード生成、generate.rb）— 生成の起点、ファイル出力制御、_tecsgen.h/_factory.h/tecsgen.cfg/INITIALIZE_TECS()の生成。CFile/AppFileの役割誤認とテンプレート出力オプションの誤りを訂正（旧8.2/8.4/8.6、2026-08-22）。2026-09-15、8.1/8.3/8.5を検証（8.3は本体/post二段階構成、8.5はCDL宣言的生成とプラグイン命令的生成の別系統2経路）。同日、8.4のプレースホルダ対応表も全11種を検証——$id$の展開内容の誤りとFACTORY{}/factory{}での利用可能種類の違いを訂正。"
+description: "tecsgen内部仕様 第8章（コード生成、generate.rb）— 生成の起点、ファイル出力制御、プレースホルダ、CDL宣言的生成とプラグイン命令的生成の2経路。2026-09-15に検証済み。"
 project: TECS
 quarter: Q3-2026
 status: active

@@ -37,7 +37,7 @@ tecsgen-python3 は、TECS のコンポーネント記述コンパイラ tecsgen
 | `tecsgen` | CDL からコードを生成する本体 |
 | `tecsmerge` | 生成されたテンプレート（`*_templ.c`・`*_templ.h`）を、保守中のセルタイプコードへマージする |
 
-`tecsflow`・`tecscde`（旧版）・`tcflow` は移植しません。TECSCDE は TypeScript 版（[[TECSCDE-JS-TS実装]]）が置き換えます。
+`tecscde`（旧版）は移植しません。`tcflow`(C ソースの関数呼び出しと参照グローバル変数を抽出するコマンド)と `tecsflow`(呼び出しフローの表示)は、`tecsgen` とは別のコマンドとして移植しました(移植状況は [[tecsgen-python3移植計画]])。TECSCDE は TypeScript 版（[[TECSCDE-JS-TS実装]]）が置き換えます。
 
 ### 1.4 対象読者
 

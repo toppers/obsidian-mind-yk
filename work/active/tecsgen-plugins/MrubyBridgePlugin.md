@@ -51,7 +51,7 @@ mruby    | nMruby::tsSignatureBridge|  sSignature  |  tTargetCelltype  |
 | `celltype` の `[generate(...)]` | `celltypeModule.rb:60`（`kind_of? Celltype`） | `CelltypePlugin` |
 | `composite celltype` の `[generate(...)]` | `celltypeModule.rb:60`（`kind_of? CompositeCelltype`） | `CompositePlugin` |
 | `cell` の `[generate(...)]` | `cell.rb:683` | `CellPlugin` |
-| `generate(Plugin, sSignature, "opts");` 独立文（statement 形式） | `signature.rb:314` | `SignaturePlugin` |
+| `generate(Plugin, sSignature, "opts");` 独立文（statement 形式、対象が signature の場合。celltype／composite／cell を対象にすることもでき、その場合はそれぞれ `CelltypePlugin`／`CompositePlugin`／`CellPlugin` — `generate.rb`、2026-10-12 確認） | `signature.rb:314` | `SignaturePlugin` |
 | `join` の `through` 指定子 | `join.rb:744` | `ThroughPlugin` |
 | `region` の `domain(...)` 指定子 | `domaintype.rb:62` | `DomainPlugin`（[[work/active/tecsgen-plugins/HRP2Plugin\|HRP2Plugin]] 参照） |
 | `class`（HRMP）指定子 | `classtype.rb:63` | `ClassPlugin` |

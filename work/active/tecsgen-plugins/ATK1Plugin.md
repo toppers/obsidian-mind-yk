@@ -40,6 +40,19 @@ CDL の `attribute { ... };` ブロック（`bnf.y.rb` 989〜1076行、[[TECSCDE
 
 6プラグイン（ATK1EventPlugin を除く）は `gen_factory` 内で `if cell.is_generate?` によって出力対象セルをフィルタする。`Cell#is_generate?` は「現在コード生成中の region の直下にセルが属するか」を判定する（`cell.rb` 862〜874行）。この機構は [[work/active/tecsgen-plugins/HRP2Plugin|HRP2Plugin]] のドメイン境界（region の `domain(...)` 指定子）と同じ region の仕組みに依拠しており、意味解析後・コード生成前でないと呼び出せない（呼ぶと例外）。
 
+### 2.3b 呼び出し経路 — どこから `ATK1TaskPlugin.rb` が呼ばれるか（2026-10-12 確認、tecsgen-rb 基準）
+
+`ATK1*Plugin.rb` はどこからも直接 `require` されない。`MANIFEST_tecsgen_body` に出てくるのは配布物の一覧で、呼び出しではない。CDL の `generate` 指定が起点で、実行時に動的にロードされる。
+
+1. **指定**: `include/kernel.cdl` の `[active, generate(ATK1TaskPlugin,"")] celltype tTask`（ほかのセルタイプも同様）
+2. **ロード**: CDL 解析中にセルタイプが `generate` を受けると、`componentobj/celltypeModule.rb:60` が `load_plugin(plugin_name, plugin_class)` を呼ぶ。`core/pluginModule.rb:65` の `load_plugin` が `require_tecsgen_lib("ATK1TaskPlugin.rb")` でファイルを読み、`Object.const_get` でクラスを得て `CelltypePlugin` の派生か確かめる。ロード済みは重複して読まず、失敗は `P2001`〜`P2003`。`-v` では `load 'ATK1TaskPlugin.rb'` と出る
+3. **生成**: コード生成の最後に `core/generate.rb:3285` の `generate_factory_header_post` が `@generate_list` を回し、各プラグインの `gen_factory(f)` を呼ぶ。`TASK_tecsgen.oil` はここで書かれる
+4. 他の種類のプラグインのロード元: Signature は `signature.rb:314`、Cell は `cell.rb:683`、Through は `join.rb:744`、Domain は `domaintype.rb:62`、Class は `classtype.rb:63`
+
+Python 版の対応は `src/tecsgen/plugin/ATK1TaskPlugin.py`（`importlib` による名前解決。[[tecsgen-python3内部仕様 - 09 プラグイン機構]]）。
+
+**既知の制約（2026-10-12 確認）**: `gen_factory` の `extended_task_count` は `++extended_task_count;`（`ATK1TaskPlugin.rb:156`）で増やすつもりだが、Ruby の `++x` は `+(+x)` で何もしない。イベント付きのタスクが 2 本以上あると、全部が id 1 になり `S3003`（id 衝突）になる。TOPPERS Automotive Kernel アプリケーションノートのサンプル（MainTask・Task2・Task3 の 3 本がイベント付き）は、Ruby 版・Python 版とも `S3003` で止まる。Python 版は Ruby 版の挙動をそのまま再現している。
+
 ### 2.4 出力の形
 
 各プラグインは `gen_factory` で次の2種類を出力する：

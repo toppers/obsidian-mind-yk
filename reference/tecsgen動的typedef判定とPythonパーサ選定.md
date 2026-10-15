@@ -33,7 +33,7 @@ tree-sitterのDLL依存を避けたい動機（[[reference/Racc代替のPython�
 ## 未決定事項（TBC）
 - Lark採用時、動的typedef判定をカスタムレクサーで実装するコストの見積もりは未検証
 - tree-sitter継続採用の場合、意味解析フェーズでの型名解決に設計変更するコストは未検証
-- [[work/active/tecsgen-python3/tecsgen-plugins-python3/tecsgen-plugins-python3|tecsgen-plugins-python3]]の`CdeclExtractor`関連実装（[[TECSCDE-DT-EL実装]]、C宣言のtypedef/struct抽出）との設計整合も未確認——DT-EL版はTypeScript側でtree-sitterを使い切っており、同種の型名判定課題をどう解いたかは要調査
+- [[work/active/tecsgen-plugins-python3/tecsgen-plugins-python3|tecsgen-plugins-python3]]の`CdeclExtractor`関連実装（[[TECSCDE-DT-EL実装]]、C宣言のtypedef/struct抽出）との設計整合も未確認——DT-EL版はTypeScript側でtree-sitterを使い切っており、同種の型名判定課題をどう解いたかは要調査
 
 ## Related
 - [[reference/Racc代替のPythonパーサジェネレータ比較#tree-sitterのPython利用がDLLを要する具体的な仕組み（実測手順）|tree-sitterのPython利用がDLLを要する具体的な仕組み]] — `ctypes`によるネイティブ共有ライブラリロードの実測手順（本ノートの「要ネイティブ外部スキャナ」判定の裏付け）

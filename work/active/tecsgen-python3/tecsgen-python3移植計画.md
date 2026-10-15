@@ -32,7 +32,7 @@ tags:
 | `tecslib/core/componentobj` | 19 | 8,100 | Cell・Join・Celltype など |
 | `tecslib/core/syntaxobj` | 9 | 1,414 | |
 | `tecslib/plugin` | 78 | 15,973 | 標準付属プラグイン |
-| `cdelib` / `flowlib` | 8 / 3 | 5,009 / 3,422 | 旧 TECSCDE と tecsflow 用。**初期スコープ外** |
+| `cdelib` / `flowlib` | 8 / 3 | 5,009 / 3,422 | 旧 TECSCDE 用(`cdelib`)は対象外。`flowlib` は tcflow・tecsflow として移植済み(下の「移植済み」) |
 | トップレベル `*.rb` | 6 | 2,062 | `tecsgen.rb`・`tecsmerge.rb` など |
 
 自動生成されたパーサテーブルを除くと、移植対象は本体が約2.5万行、プラグインが約1.6万行。
@@ -40,9 +40,14 @@ tags:
 ## スコープ
 
 - **対象**: `tecsgen` 本体（CLI・構文解析・意味解析・最適化・コード生成）と標準プラグイン
-- **後回し**: `tecsmerge`、`tecsflow`（flowlib）
+- **移植済み（P6d、2026-10-02。2026-10-14 に周辺ケース19件を追加検証）**: `tecsmerge`（`tecsgen/tecsmerge.py`）。複数ソース・長いオプション形・省略形・引数の欠けたオプション等を Ruby 版から採取して突き合わせ、`--version`（Ruby 版は「version unknown」で終了）と、オプション解析エラー後に処理が続く挙動（残りの引数で `dst` を判定し、無ければ `error: : not found`）の2件の食い違いを修正。正解データは計91件、全テスト 1117 件通過
+- **移植済み（2026-10-15）**: `tecsgen_rcov`（`tecsgen/tecsgen_rcov.py`）。Ruby 版は SimpleCov を起動して `tecsgen` を読むだけの開発用ラッパー。Python 版は coverage.py を起動して `cli.run` を呼ぶ（依存は `dev` グループ。無ければ終了コード 1）。`simplecov begin`/`end` の出力と終了コードは Ruby 版どおり、記録は `.coverage` に追記・HTML は `coverage/`。レポート自体は coverage.py なので Ruby 版と比べない。テスト `tests/test_p8_tecsgen_rcov.py`、全テスト 1119 passed・102 skipped（Windows、tecsflow 取り込み後）。Python リポジトリの PR #5（`ykominami/tecsgen-python3-yk`、マージコミット `fbdba8d`）で `main` にマージ済み（2026-10-15）
+- **移植済み（2026-10-14）**: `tecsflow`（`tecsgen/tecsflow.py`、`core/unjoin_plugin.py`）。当初は後回しだったが、ユーザー決定（2026-10-14）で移植した。モデルの受け渡しは Marshal の `tecsgen.rbdmp` ではなく、tecsgen が書く pickle（`gen/tecsgen.pickle`）。TECS の test/ の 8 ケースで標準出力・標準エラー出力・終了コードが Ruby 版と一致（`tests/test_p8_tecsflow.py`）、WSL の `wsl_check.sh` 全通過（1101 passed・99 skipped）。Python リポジトリの PR #3（`ykominami/tecsgen-python3-yk`、マージコミット `85731c2`）で `main` にマージ済み（2026-10-14）。詳細: [[tecsgen-python3 tecsflow・Marshal調査]]
+- **移植済み（2026-10-13）**: `tcflow`（`tecsgen/tcflow.py` と `tecsgen/flowlib/`）。Ruby 版と標準出力・標準エラー出力・終了コード・関数リストが一致（合成した正解データ36ケース。実在の C ソースでは、cpp なしの 220 ファイル(WSL・Ruby 3.2.3)と 60 ファイル(Windows・Ruby 4.0.6)、cpp 経由(`gcc -E`、WSL)の 400 ファイル(関数 2397 個、関数5個以上のファイル 257 件)で不一致なし。WSL の `wsl_check.sh` も全通過(1090 passed・99 skipped。as of 2026-10-14)。ただし 400 ファイルのうち構文エラーなしは 15 件で、大半は glibc ヘッダ等に由来する 2〜4 件の構文エラーを含む。エラー出力と回復の一致は確認できたが、エラーなしの入力は少ない）。関数リストの保存は Marshal ではなく JSON（`gen/tcflow.json`、決定は [[tecsgen-python3 tecsflow・Marshal調査#tcflow の保存形式(2026-10-13、決定)|調査ノート]]）
 - **対象外**: `cdelib`（旧 TECSCDE。TS 版の [[TECSCDE-JS-TS実装]] が置き換える）
-- **後方互換を切る点（決定事項として記録する）**: 利用者が Ruby で書いたプラグインは Python 版では動かない（`-L` で探すのは `<クラス名>.py`。環境変数 `RUBYLIB` は対応しない。2026-10-01 決定、[[tecsgen-python3 -L ユーザプラグイン探索設計]]）。`tecsgen.rbdmp`（Ruby の `Marshal` 形式）は再現しない
+- **移植しないコア機能（2026-10-10 確認、tecsgen-rb 基準）**: `unjoin_plugin.rb` は Ruby 版でも呼び出し元が `dump_tecsgen_rbdmp` だけ（`Marshal.dump` のためにプラグイン参照を外す）で、`tecsgen.rbdmp` を再現しない Python 版では観測できる効果がなかった（**2026-10-14 訂正**: tecsflow 移植に伴い、同じ役割を `core/unjoin_plugin.py` の `UnjoinPickler` として移植した）。`gen_xml.rb` は `require` されるだけで、呼び出し箇所（`Region.gen_xml`・`Namespace.gen_XML`）がコメントアウトされた未使用コード。いずれも移植しない（Python 版 PR #15 で `dump_tecsgen_rbdmp` の docstring を修正済み）。標準プラグイン 85 本のうち Python 版に無いのは `HRP2Cache`・`HRP2PostHook`（動かす経路が無く対象外）の 2 本だけ
+- **後方互換を切る点（決定事項として記録する）**: 利用者が Ruby で書いたプラグインは Python 版では動かない（`-L` で探すのは `<クラス名>.py`。環境変数 `RUBYLIB` は対応しない。2026-10-01 決定、[[tecsgen-python3 -L ユーザプラグイン探索設計]]）。`tecsgen.rbdmp`（Ruby の `Marshal` 形式）は再現しない（代わりに `tecsgen.pickle` を書く。2026-10-14 変更、上の tecsflow の項）
+- **tecsflow を移植して pickle で dump する場合の `unjoin_plugin` 相当**（2026-10-14 実装済み）: 生きたオブジェクトを書き換える代わりに、`pickle.Pickler` のサブクラスの `reducer_override` で dump 用の状態だけ差し替える（`__getstate__` ではない）。`Proc` 相当と残存 Plugin は `None` に置換 → [[tecsgen-python3 tecsflow・Marshal調査#pickle 形式で dump する場合の `unjoin_plugin` 相当の設計(2026-10-14、実装済み)|設計メモ]]
 
 ## フェーズ
 
@@ -88,18 +93,9 @@ tags:
 
 - **P6a〜P6e**（2026-10-02 完了、`main` にマージ済み）: 配布（標準 CDL ライブラリの同梱）・CLI（`--help`・`--version` が Ruby 版とバイト一致）・実プロジェクトの差分テスト（カーネル・配布パッケージの正解データ）・`tecsmerge`（73シナリオ一致）・仕様書の完成（外部仕様10章・内部仕様12章）。TBC は 2026-10-04 までにすべて解消 → [[tecsgen-python3移植計画 Archive — P6|P6]]
 
-### P7 cmake 対応と正解データの基準の切り替え（2026-10-05）
+### P7 cmake 対応と正解データの基準の切り替え（2026-10-05） — 詳細は [[tecsgen-python3移植計画 — P7 cmake対応]]
 
-Ruby 版 tecsgen-rb（`asp3_stm32cube_TECS` の `tecsgen-rb`）の cmake 対応を移植し、正解データの基準を r3304 から tecsgen-rb へ切り替えた。計画・調査・決定は [[tecsgen-python3 cmake対応計画]]。実装は Python 版リポジトリのブランチ `ykominami/cmake-support`（2026-10-05 に PR #9 で `main` へマージ済み）。
-
-- **cmake**: `CMakeLists.tecsgen.cmake` の生成と `CMake` API を移植（内部仕様 [[tecsgen-python3内部仕様 - 08 コード生成#8.6 CMakeLists.tecsgen.cmake（2026-10-05、tecsgen-rb の cmake 対応）|8.6]]）
-- **`TransparentRPCSignaturePlugin`**: tecsgen-rb で追加されたプラグイン（r3304 には無く、`RPCPlugin`・`DataPumpHolderPlugin` が参照して失敗していた）を移植。これで `rpc`・`class`・`DataPumpHolder` が成功する。`DataPumpHolder` は、r3304 では実行されなかった `DataPumpHolderPlugin#gen_ep_func_body`（Ruby 約230行）も必要になり、移植した
-- **基準の切り替え**: `test/` 158ケース（`transparent_marshaler` を除く）、p2・p3、カーネル23、配布パッケージ17 を tecsgen-rb で再採取。旧との差は `CMakeLists.tecsgen.cmake` の追加と、上の3ケースの成功化だけ。`transparent_marshaler` は tecsgen-rb に `TransparentMarshalerPlugin.rb` が無いため、r3304 の正解を残し比較の対象外にした
-- **検証**: プラグインなし119/119・プラグインあり77/77 が一致（`tools/port/p4_progress.py`）。Windows 1025 passed / 78 skipped、WSL 1020 passed / 83 skipped、ruff・ty とも通過。配布パッケージは、これまで p3 記録が2件しか無く検証の対象外だった13件に記録を採り、検証の対象に加えた
-- **採取ツール**: `wsl_check.sh` に `--build-src-tree`・`--src-tree`・`--exclude`・`--cases-golden` を追加。svn 以外の移植元に対応した（`tools/golden/README.md`）
-- **`CMake.add_*` を呼ぶプラグイン**（2026-10-09 確認）: 標準のテストケースには無いので、利用者プラグイン（`-L`）の合成ケースで確かめ、`gen/` 13ファイルが Ruby 版（tecsgen-rb）とバイト一致した。同日、golden ケース `cmake_add` として固定した（Python 版 PR #11 で `main` にマージ済み、`11f38ef`。プラグインありの一致は 78/78） → [[tecsgen-python3 cmake対応計画 — C3 の結果#C3 の結果（2026-10-09）: `CMake.add_*` を呼ぶプラグインで Ruby 版と一致|C3 の結果]]
-- **セルタイプ以外の種類のプラグイン**（2026-10-09 確認）: signature・cell・composite・multi・through・domain・class の各プラグインから `CMake.add_*` を呼んでも、Ruby 版と一致した。multi で見つけた移植のずれ（`MultiPlugin#get_plugin` が返す、ファイル名と違う名前のクラスの post_code が出ない）を修正し、golden ケース 7 件を追加した（Python 版 PR #12 で `main` にマージ済み、`9c3d635`。プラグインありの一致は 85/85） → [[tecsgen-python3 cmake対応計画 — C3 の結果#種類ごとの確認（2026-10-09）|種類ごとの確認]]
-- **未了**: `asp3_stm32cube_TECS` の `Asp3Tecs.cmake` から Python 版を呼ぶ確認（C5）。ブランチの `main` へのマージ（PR #9）と、`-k` の差異の修正（`ykominami/fix-kcode-differences`、PR #8 で先に取り込み済み）との取り込み順は、2026-10-05 に完了
+cmake 対応（`CMakeLists.tecsgen.cmake`・`CMake` API・`TransparentRPCSignaturePlugin`）と、正解データの基準の r3304 から tecsgen-rb への切り替え。プラグインなし119/119・あり77/77 一致。未了（as of 2026-10-10）: 実機（書込み・起動）の確認、実際の CubeMX 生成物でのビルド、H533・C562 に TECS を展開したときの確認、`transparent_marshaler` ケースの扱いの決定。
 
 ## 主要リスク
 
@@ -113,20 +109,12 @@ Ruby 版 tecsgen-rb（`asp3_stm32cube_TECS` の `tecsgen-rb`）の cmake 対応�
 
 ## 現状の問題（2026-09-26 確認 → 同日修正済み）
 
-- ~~ノートに書かれたパス `E:/Ccur/python3/tecsgen-python` は存在しない~~ → 実体は `E:/Ccur/python3/tecsgen-python3`（リモートは `ykominami/tecsgen-python`。2026-09-28 に `ykominami/tecsgen-python3` へ改名）。関連ノート5件のパスを修正済み
-- `pyproject.toml` を修正済み
-  - 配布名を `tecsgen-python3`、import パッケージを `tecsgen`（`src/tecsgen/`）に改名。CLI 完全互換の決定（[[tecsgen-python3 P0基本方針決定]]）に合わせ、コマンド名を `tecsgen` にした
-  - description の誤記「Ptyhon」を修正
-  - `my`・`tuff` を削除。PyPI 上の無関係なパッケージだった（中身は数行の無害なコードと確認）。`ruff` の誤記と判断し、`pytest`・`ruff`・`ty` を dev 依存（`[dependency-groups]`）へ移した
-  - 依存に入っていなかった `yklibpy` の `[tool.uv.sources]` 指定を削除
-  - hatchling がパッケージを見つけられるよう `[tool.hatch.build.targets.wheel]` を追加
-- `example.py` を修正済み。インデントが崩れ、DLL パスの文字列が途中で改行されていて動かなかった。また `Language(int)` 方式は非推奨で、Windows では `OverflowError` になる（`unsigned long` が32ビットのため）。PyCapsule を渡す方式に変えた。DLL の場所は環境変数 `TECSGEN_CDL_DLL` で上書きできる
-- `.venv` を作り直した。ディレクトリ名が `tecsge-python3` だった頃に作られたもので、スクリプトのパスが古いままだった
-- 確認: `uv run example` でサンプル CDL をエラーなくパースできた。pytest 1件 pass、`ruff check`・`ruff format --check`・`ty check` はすべて問題なし
+解消済み。詳細は [[tecsgen-python3移植計画 Archive — 現状の問題]]。
 
 ## Related
 
 - [[tecsgen-python3]] — 親ノート
+- [[tecsgen-python3移植計画 Archive — 現状の問題]] — 解消済みの「現状の問題」の節（2026-10-14 分離）
 - [[tecsgen-python3移植計画 Archive — P0–P2]] — 完了済みフェーズ P0〜P2 の詳細（2026-09-27 分離）
 - [[tecsgen-python3移植計画 — P5 進捗ログ]] — P5 の段階ごとの進捗（2026-09-28 分離）
 - [[tecsgen-python3 P0基本方針決定]] — CLI 互換・多重継承・設定オブジェクト
