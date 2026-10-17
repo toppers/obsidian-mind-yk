@@ -1,0 +1,1 @@
+codex --dangerously-bypass-approvals-and-sandbox --no-daemon --add-dir C:\0-MD-2\_ARCHIVE\ObsidianVault2\0-MD-2
