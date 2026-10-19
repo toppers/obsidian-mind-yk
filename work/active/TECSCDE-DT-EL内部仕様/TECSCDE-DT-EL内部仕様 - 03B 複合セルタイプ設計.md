@@ -41,7 +41,7 @@ main/preload への新しい IPC は設けない。外部ポートと属性に�
 
 ## 3B.3 読み込みと未対応構文の判定
 
-`CdlDocumentBuilder.collectComposite()` は tree-sitter の `composite_celltype` を走査し、外部 `call`/`entry` ポート、属性、定義原文を抽出する。ポートの署名は既存の署名解決経路に通し、所属 namespace と明示的な完全修飾名を通常セルタイプと同じ規則で扱う。`CdlDocumentLoader.loadSources()` は編集対象・参照ファイルの複合定義を型レジストリへ登録し、参照ファイル由来のセルの編集可否は既存の `locale` 規則に従わせる。
+`CdlDocumentBuilder.collectComposite()`はtree-sitterの複合定義から外部ポート・属性・定義原文を抽出する。署名とnamespaceは通常セルタイプと同じ規則で解決する。`CdlDocumentLoader.loadSources()`は主ファイルと追加読み込みファイルの複合定義を型レジストリへ登録し、通常CDL由来の複合セルも編集可能とする。Plugin生成CDL由来のセルだけを読み取り専用とする（第7C章7.7.5節）。
 
 未対応構文の判定は原文への正規表現では行わない。複合定義の CST を走査し、次のいずれかがあれば `hasUnsupportedSyntax` を真にする。
 

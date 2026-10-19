@@ -43,7 +43,7 @@ tags:
 
 - **cmake 以外の中身の差は無い**: 差があるのは15ファイルで、うち `celltype.rb`・`namespace.rb`・`namespacepath.rb`・`CelltypePlugin.rb`・`GenTransparentMarshaler.rb`・`OpaqueRPCPlugin.rb`・`RPCPlugin.rb`・`SharedRPCPlugin.rb`・`SharedOpaqueRPCPlugin.rb`・`tMessageBufferChannel.cdl` は **SVN の `$Id` 行1行だけ**。`ATK1DelayTaskPlugin.rb`・`ATK1EventPlugin.rb` は**改行コード（CR）だけ**（CR を除くと差分0）
 - **cmake の差分**: `generate.rb`（+169行、コメント1行の書き換え）と `tecsgen.rb`（+69行）
-- **プラグインの名前の差**: tecsgen-rb には `TransparentRPCSignaturePlugin.rb`（303行、スループラグイン）があり、r3304 の `TransparentMarshalerPlugin.rb`（84行）が無い。cmake とは無関係。Python 版は `TransparentMarshalerPlugin` を移植済みなので、扱いは別途決める（未決）
+- **プラグインの名前の差**: tecsgen-rb には `TransparentRPCSignaturePlugin.rb`（303行、スループラグイン）があり、r3304 の `TransparentMarshalerPlugin.rb`（84行）が無い。cmake とは無関係。Python 版は `TransparentMarshalerPlugin` を移植済みなので、扱いは 2026-10-05 に決定済み（下の決定6。2026-10-19 に表現を整理）
 - 注意: この比較は `$Id` の日付から見て、tecsgen-rb が r3304 より古い版から派生している（inferred）。r3304 より新しい変更を取りこぼしていないかは、この比較からは分からない
 
 ## 計画（段階）

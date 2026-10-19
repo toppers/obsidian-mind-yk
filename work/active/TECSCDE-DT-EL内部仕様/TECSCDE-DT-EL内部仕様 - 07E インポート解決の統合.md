@@ -84,7 +84,7 @@ export async function resolveAllImports(
 
 **バッチ単位**: 1回の`gateway.resolveImports`呼び出しは「現在のフロンティア（まだ解決していない要求の集合）」をまとめて渡す——importが1個ずつIPCの往復を作らない。フロンティアが空になるまでのラウンド数は木の深さに等しく、実際のCDLプロジェクトで想定される深さ（数階層）では往復回数は小さい。
 
-**手動追加（第7C章#8）との合流**: `resolveAllImports`自身は`kind: 'manual'`を発行しない——手動追加は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合#7.7.2 ファイルブラウザからの参照専用追加（#8）|第7C章7.7.2節`addAsReference`]]が別途1件の`kind: 'manual'`要求として`gateway.resolveImports`を直接呼ぶ（同じ`resolveOne`実装を経由するが、`resolveAllImports`のループの外側）。両者は重複判定のキー（正規化済み絶対パス）を共有するべきだが、`resolveAllImports`が使う`resolvedPaths`はこの関数のローカル変数であり、`addAsReference`とは別セッションで動く——**実装時に、既に読み込み済みの参照ファイル集合全体（`store.getReferenceFilePaths()`相当）を両方の重複判定が参照するよう統合する必要がある**（未決事項、7.5.9節）。
+**手動追加（第7C章#8）との合流**: `resolveAllImports`自身は`kind: "manual"`を発行しない。手動追加は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合#7.7.2 ファイルブラウザからの追加読み込み（#8）|第7C章7.7.2節`addAsReference`]]が同じ解決・重複抑止経路を用いる。手動追加と自動追跡のいずれで読み込んだ通常CDLも編集可能である。
 
 ## 7.5.5 `import_C`の扱いと第9章9.6節への受け渡し境界
 
@@ -100,7 +100,7 @@ export async function resolveAllImports(
 [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 08 整合性チェックとメッセージ設計|第8章]]の既存決定により、解決できなかった参照先は**新しい診断コードを作らず**既存の`W-UNRESOLVED-REF-FILE`（`unresolvedReferenceFile()`、`src/renderer/cdl/messages.ts`84〜90行）を再利用する。
 
 > [!note] 文言の見直しが必要（実装時に確定）
-> `unresolvedReferenceFile()`の現在の文言「参照専用ファイル `${fileName}` は未解決です（再度ファイル選択してください）」は、8.2.2節の`direct_import`（利用者が手動で再選択する想定）向けに書かれている。本節が追加する`import`/`import_C`自動追跡の失敗は利用者の手動操作を経ないため、「再度ファイル選択してください」という指示は的外れになりうる——`import_path`/`base_dir`の設定を見直すよう促す文言への分岐が実装時に必要（未決事項）。
+> `unresolvedReferenceFile()`の現在の文言「参照専用ファイル `${fileName}` は未解決です（再度ファイル選択してください）」は、8.2.2節の`direct_import`（利用者が手動で再選択する想定）向けに書かれている。本節が追加する`import`/`import_C`自動追跡の失敗は利用者の手動操作を経ないため、「再度ファイル選択してください」という指示は的外れになりうる——`import_path`/`base_dir`の設定を見直すよう促す文言への分岐が実装時に必要（未決事項）。 この「参照専用」は既存の警告文言の引用であり、読み込み済みCDL由来のセルを編集不可とする規則ではない。
 
 ## 7.5.7 `direct_import`との違い（混同注意）
 

@@ -16,7 +16,7 @@ Domain note split from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内�
 
 ## 7.5 インポート自動追跡（`FileService.resolveImports()`）の詳細設計 — 2026-09-22
 
-[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様8.1節]]が規定する「`import`/`import_C`文の参照先を自動追跡する」を実現する。[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章]]の#8（参照専用追加）・#10（tecsgen-optsファイル一括読込）・#11（import統一）は、本節が定める`FileService.resolveImports()`の存在を前提としており、[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|実装]]（`E:\Ccur\typescript\TECSCDE-DT-EL`）に未実装のまま2026-09-22のセッションで見送られた（[[Memories]]参照）。本節はその未実装ギャップを埋める詳細設計であり、7C章の該当節（7.7.2・7.7.4・7.7.5）の記述は変更しない——それらが「既存のresolveImports()」と呼んでいた対象を、本節（および続く[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|第7E章]]）が具体的に定義する。
+[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様8.1節]]の`import`/`import_C`自動追跡を実現する。第7C章の手動追加・オプションファイル読み込み・import統一は`FileService.resolveImports()`を共有する。2026-09-22には設計対象だったが、現在は通常CDL由来の全セルを編集可能として実装済みである。
 
 ### 7.5.1 モジュールBの既存出力（`ParsedCdl.imports`）——解析はすでにある
 
@@ -31,7 +31,7 @@ export interface ImportDecl {
 }
 ```
 
-**現状はこの`imports`を使い切っていない。** `CdlDocumentLoader.loadSources()`（`document-builder.ts`89・100・306行）は、編集対象ファイル（`source.editable`のみ）の`imports`を`rawText`だけ取り出して`preservedImports`（保存時の原文書き戻し用）に格納し、それ以外には使っていない——**参照先を実際に開く処理は本節が新規に追加する。** つまり本節がやることは「新しい解析」ではなく「すでに解析済みのimport要求を、mainのファイルI/Oへつなぐ」ことに限られる。
+`ParsedCdl.imports`から得る`import`/`import_C`要求をmainのファイルI/Oへつなぐ。現在の`CdlDocumentLoader.loadSources()`は主ファイルと追加読み込みした通常CDLの情報を保持し、変更した各CDLを元のパスへ保存する。
 
 ### 7.5.2 main: `FileService.resolveImports()`
 

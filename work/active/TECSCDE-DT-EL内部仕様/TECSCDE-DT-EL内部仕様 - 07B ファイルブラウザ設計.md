@@ -309,7 +309,7 @@ export class FileBrowserView {
 
 ## Related
 
-- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|TECSCDE-DT-EL内部仕様 第7C章（7.7節、前回セッション復元・参照専用追加・消去ボタン・オプションファイル読込・import統一の設計）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|TECSCDE-DT-EL内部仕様 第7C章（7.7節、前回セッション復元・追加読み込み・消去ボタン・オプションファイル読込・import統一の設計）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07 ファイルI-O設計|TECSCDE-DT-EL内部仕様 第7章（本ノートの分離元、7.1〜7.5節）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様 第3章（3.5.1節、本節が実装するファイルブラウザの画面規定）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様 第5章（5.3節、ファイル選択ダイアログ経路の撤回）]]

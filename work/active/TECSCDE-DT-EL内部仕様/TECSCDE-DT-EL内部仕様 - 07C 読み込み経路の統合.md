@@ -1,6 +1,6 @@
 ---
 date: 2026-09-22
-description: "TECSCDE-DT-EL内部仕様書 第7C章（読み込み経路の統合）— 第11章11.2節#7〜#11（前回セッション復元・ファイルブラウザからの参照専用追加・消去ボタン・tecsgenオプション形式ファイルの一括読み込み・import自動追跡との統一）の設計。7.6節（第7B章）の続きとして新設（2026-09-22）。"
+description: "TECSCDE-DT-EL内部仕様書 第7C章（読み込み経路の統合）— 前回セッション復元・ファイルブラウザからの追加読み込み・消去ボタン・tecsgenオプション形式ファイルの一括読み込み・import自動追跡との統一。2026-10-19、通常CDLの編集可否と定義元への保存を現行実装に合わせて改訂。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -19,7 +19,9 @@ Domain note new from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部
 
 ## 7.7 読み込み経路の統合 — 2026-09-22追加
 
-決定事項（2026-09-22、ユーザー確認）: #8「ファイルブラウザで選択したファイルを既存の編集対象へ追加する」は**参照専用として追加し、既存の編集対象(editable)は変えない**（11.2節#8の解釈(a)）。この決定により、#11「import自動追跡との統一」は自然な形で解ける——手動追加を[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07D インポート自動追跡|第7D章]]／[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|第7E章]]の`resolveImports`と同じパイプラインに乗せることで、発見経路（手動選択／import自動追跡）によらず同一のデータ構造・重複抑止規則で管理できる（7.7.5節）。
+決定事項（2026-09-22の追加方法を維持し、2026-10-19に編集可否を改訂）: #8ではファイルブラウザで選んだCDLを既存の主ファイルを置き換えずに`references`集合へ追加する。`editablePath`と`referencePaths`は主ファイルと追加読み込みファイルを区別するセッション上の役割であり、編集権限の区別ではない。手動追加と`import`自動追跡は同じ解決・重複抑止パイプラインを共有する。
+
+**保存先**: `CdlDocumentLoader.loadSources()`は通常CDLのセルに編集可能フラグと定義元パスを保持する。`CdlSerializer.serializeSource()`は指定された元ファイルのセルだけを書き出し、保存時は変更のある読み込み済みCDLを各元パスへ書き戻す。新規・貼り付けセルは選択中の編集可能セルの定義元、選択がなければ主ファイルに属させる。Plugin生成セルは読み取り専用で保存しない。
 
 ### 7.7.1 前回セッションの復元（#7）
 
@@ -54,14 +56,14 @@ const initialSources = pendingOpenPath
 
 `app:bootstrap`のIPC自体（起動後1回だけプッシュ供給、第7章7.4節）は変わらない。供給するソーステキスト群の生成元が3経路（CLI引数／前回セッション／samples）に増えるのみ。
 
-### 7.7.2 ファイルブラウザからの参照専用追加（#8）
+### 7.7.2 ファイルブラウザからの追加読み込み（#8）
 
-決定(a): 参照専用として追加し、既存のeditableは変えない。
+決定(a): 主ファイルを置き換えずに`references`へ追加する。追加した通常CDL由来のセルも編集可能とする。
 
-**UI操作**: ツリー上のファイルをクリック（既存、7.6.4節`openFromPath` = 編集対象として開く）に加え、**Ctrl+クリックで「参照専用として追加」**とする。
+**UI操作**: ツリー上の通常クリックは主ファイルとして開き、Ctrl+クリックは現在の主ファイルを維持して追加で読み込む。
 
-> [!note] UI操作の選定について（inferred・未検証）
-> [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様3.5.1節]]に新設する画面規定候補。右クリックメニューも代替案として考えられるが、階層ツリーの各行に対する二値の操作としてはCtrl+クリックが実装コストが低く、既存の「クリック＝開く」を変更せずに済む。最終的なキー割当・ラベルは実装時に確定する。
+> [!note] UI操作の選定経緯
+> Ctrl+クリックは通常クリックの主ファイル切替と区別するために採用した。現在は追加読み込み操作として実装している。
 
 **重複判定**: 11.2節#8の決定どおり、選択したファイルが既に読み込み済み（editableまたはreferencesのいずれかと同一の正規化済み絶対パス）であれば無視する（第7章7.5節の`import`重複抑止と同じキー）。
 
@@ -145,7 +147,7 @@ async parseTecsgenOptionsFile(path: string): Promise<TecsgenOptionsFile> {
 
 **③`-I`/`--import-path`の受け渡し**: 既存の`ImportResolutionOptions.importPaths`（第7章7.5節）へそのまま渡す。CDLファイル自身の`__tool_info__`が持つ`import_path`・`base_dir`は5.1節の方針どおり書き換えず、オプションファイル由来の`importPaths`は追加の探索候補として重ねる（既定順序: CDL自身の`import_path`を先に試し、見つからなければオプションファイル由来を試す——第7章7.5節の既存探索順序に追加ステップとして挿入する）。
 
-**④#8との統合**: 列挙されたCDLファイルのうち最後の1つを`openFromPath`（編集対象として開く、未保存確認込み）、残りを7.7.2節の`addAsReference`で参照専用として追加する。いずれも「既読み込み済みなら無視」規則（#8決定）が適用される。
+**④#8との統合**: 列挙されたCDLファイルの最後を`openFromPath`で主ファイルとして開き、残りを7.7.2節の`addAsReference`で追加する。すべて通常CDLとして編集可能であり、重複パスは無視する。
 
 ```ts
 // renderer/app/file-actions.ts
@@ -165,20 +167,20 @@ export async function loadOptionsFile(store: AppStore, gateway: FileGateway, pat
 
 7.7.2節の設計により、11.2節#11(b)「発見経路（手動選択／import自動追跡）によらず同じ内部データ構造（documents/referencesの集合）で管理する」は**既に満たされる**——手動追加(`addAsReference`)は`kind: 'manual'`という種別が増えるだけで、`FileService.resolveImports()`以降の解決・重複抑止パイプラインは完全に共有される。
 
-#11(c)「編集可否も統一する」は**対象外のまま据え置く**（ユーザー確認済み）——[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様8.1節]]が既に定める「編集可否は定義元ファイルで決まる」規定は変更しない。手動追加・import自動追跡いずれで読み込まれたファイルも、常に参照専用（読み取り専用）として扱う。
+#11(c)「編集可否も統一する」は**2026-10-19に現行実装へ合わせて採用**した。主ファイル、手動追加、`import`自動追跡、前回セッション復元、`.tecsgen-opts`で列挙されたファイルのどの経路でも、通常CDL由来のセルを編集可能とする。`locale`は定義元と保存先の識別に用い、主ファイルか`references`かによって編集を禁止しない。Plugin生成CDL由来のセルだけは読み取り専用とし、保存・セッション参照先へ含めない（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|DT外部仕様8.1節]]）。
 
-残るは#11(a)「ツリー上での参照ファイルの表示」——[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様3.5.1節]]が「実装時の検討事項」として明示的に未規定のまま残していた項目。本節で設計する。
+ツリー上の追加読み込みファイルは主ファイルと区別して表示する（DT外部仕様3.5.1節）。この区別は編集権限の差を表さない。
 
 ```ts
 // renderer/app/file-browser-panel.ts の render() を拡張（第7B章7.6.3節）
 render(): void {
   // 既存: store.filePath と一致するノードへ「編集中」の強調クラスを付与
-  // 追加: store.references の各パスと一致するノードへ「参照読み込み済み」の強調クラス（editableとは異なる見た目）を付与
-  // 両方に該当するノードは無い（editableとreferencesは排他集合、第8章8.1節）
+  // 追加: store.references の各パスと一致するノードへ「追加読み込み済み」の強調クラスを付与（主ファイルとは異なる見た目。編集可否の差ではない）
+  // 主ファイルのパスとreferencesのパスは排他集合（開き方の区別であり編集権限の区別ではない）
 }
 ```
 
-視覚的な区別（色・アイコン等）の具体は実装時に確定する（3.5.1節が委ねている「表示可否・様式」の範囲内であり、本書はクラス名の区別のみを規定する）。
+色・アイコン等の具体的な様式はDT外部仕様3.5.1節に従って実装時に決める。表示すること自体は同節で規定済みである。
 
 ## Related
 
@@ -188,8 +190,8 @@ render(): void {
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07 ファイルI-O設計|TECSCDE-DT-EL内部仕様 第7章（7.5節、7D/7E章の分離元）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様 第11章（11.2節#7〜#11、本節が解消する決定記録）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様 第3章（3.5.1節、Ctrl+クリック追加の画面規定）]]
-- [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様 第5章（5.3節、参照専用追加経路の記述更新）]]
-- [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様 第8章（8.1節、編集可否ルールの一次情報源）]]
+- [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様 第5章（5.3節、追加読み込みとファイル別保存）]]
+- [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様 第8章（8.1節、通常CDLとPlugin生成CDLの編集可否）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---

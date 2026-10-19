@@ -95,7 +95,7 @@ tags:
 
 ### P7 cmake 対応と正解データの基準の切り替え（2026-10-05） — 詳細は [[tecsgen-python3移植計画 — P7 cmake対応]]
 
-cmake 対応（`CMakeLists.tecsgen.cmake`・`CMake` API・`TransparentRPCSignaturePlugin`）と、正解データの基準の r3304 から tecsgen-rb への切り替え。プラグインなし119/119・あり77/77 一致。未了（as of 2026-10-10）: 実機（書込み・起動）の確認、実際の CubeMX 生成物でのビルド、H533・C562 に TECS を展開したときの確認、`transparent_marshaler` ケースの扱いの決定。
+cmake 対応（`CMakeLists.tecsgen.cmake`・`CMake` API・`TransparentRPCSignaturePlugin`）と、正解データの基準の r3304 から tecsgen-rb への切り替え。プラグインなし119/119・あり77/77 一致。未了（as of 2026-10-10）: 実機（書込み・起動）の確認、実際の CubeMX 生成物でのビルド、H533・C562 への TECS 展開後の確認（現状は TECS 不使用で対象外のため保留。展開されたら実施。2026-10-19 に表現を整理）。（`transparent_marshaler` ケースの扱いは 2026-10-05 に決定済み。[[tecsgen-python3 cmake対応計画#決定事項（2026-10-05、ユーザー決定）|決定6]]、2026-10-19 に表現を整理）
 
 ## 主要リスク
 
