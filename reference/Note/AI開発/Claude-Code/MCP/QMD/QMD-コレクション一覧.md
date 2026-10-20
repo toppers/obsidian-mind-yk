@@ -34,7 +34,7 @@ Pattern は全て `**/*.md`、`Include: yes (default)`。
   qmd --index 0-MD-2 query "<...>"
   ```
 
-- `.claude/scripts/qmd-mcp.mjs`（vault 同梱の MCP サーバー）は vault 索引を pre-scope するが、`.mcp.json` は空にしてあり登録は `~/.claude.json` 側。詳細は [[Gotchas - Tooling & Config#プロジェクトの `.mcp.json` は空（`{"mcpServers": {}}`）が正しい — qmd を再追加しない|Gotchas]]。
+- `.claude/scripts/qmd-mcp.mjs`（vault 同梱の MCP サーバー）は vault 索引を pre-scope するが、`.mcp.json` は空にしてあり登録は `~/.claude.json` 側。詳細は [[Gotchas - Agent & MCP Config#プロジェクトの `.mcp.json` は空（`{"mcpServers": {}}`）が正しい — qmd を再追加しない|Gotchas]]。
 
 ## 履歴
 
