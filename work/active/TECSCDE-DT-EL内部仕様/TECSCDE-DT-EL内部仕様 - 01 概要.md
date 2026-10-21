@@ -26,9 +26,9 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 1 of 
 
 [[TECSCDE-DT外部仕様]]は「Electron・Tauriのどちらでも同一の挙動になること」を要件としていた（言語非依存）。本書はこの制約を外し、**Electronの実装詳細を直接使ってよいものとする**。
 
-| 観点 | [[TECSCDE-DT外部仕様]]の立場 | 本書の立場 |
+| 観点 | 比較元の仕様・設計 | 本書の立場 |
 |---|---|---|
-| ファイルI/O | `FileIOStrategy`インタフェースで抽象化（Electron/Tauri共通） | **Node.jsの`fs`・Electronの`dialog`モジュールを直接使う**（第7章） |
+| ファイルI/O | [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様第7章]]が`FileIOStrategy`を定義し、ブラウザのFile System Access APIとダウンロードによる保存を切り替える | **Node.jsの`fs`・Electronの`dialog`モジュールを直接使う**（第7章） |
 | プロセス実行 | Electron `child_process`・Tauri `Command`のどちらでも可、という前提のみ規定 | **Electronの`child_process.execFile`を直接使う**（第9章） |
 | クリップボード | OSクリップボード連携を採用（実現手段は未指定） | **Electronの`clipboard`モジュールを直接使う**（第4章、[[TECSCDE-TS内部仕様]]の設計を継承） |
 

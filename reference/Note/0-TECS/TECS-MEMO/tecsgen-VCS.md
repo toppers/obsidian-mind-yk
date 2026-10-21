@@ -1,12 +1,15 @@
 ---
 date: 2026-06-18
 description: "tecsgen のバージョン間差分メモ — 1.7.0→1.8.0 で HRPSVCPlugin.rb が消えた件、リビジョン r3263、1.9.0Beta1 の記録"
+verbatim: true
 tags:
   - reference
   - tecs
   - tecsgen
   - vcs
 ---
+
+1.7.0→1.8.0 の機能差分の一覧は [[tecsgen V1.7.0-V1.8.0 新機能]]、1.8.0→1.9.0 は [[tecsgen V1.8.0-V1.9.0 新機能]]、1.9.0→1.9.1 は [[tecsgen V1.9.0-V1.9.1 新機能]] を参照。
 
 --- tecsgen/tecslib/plugin/HRPSVCPlugin.rb      (.../tecsgen-1.7.0)     (revision 3303)
 +++ tecsgen/tecslib/plugin/HRPSVCPlugin.rb      (.../tecsgen-1.8.0)     (nonexistent)
