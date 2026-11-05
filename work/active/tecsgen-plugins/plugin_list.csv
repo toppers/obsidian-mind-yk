@@ -1,0 +1,92 @@
+﻿プラグイン名,呼び出し方法,CDL上の付与位置,基底クラス,ファミリー,備考,仕様書ノート
+ATK1KernelPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1TaskPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1AlarmPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1EventPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1ISRPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1ResourcePlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用,ATK1Plugin
+ATK1DelayTaskPlugin,generate文,celltype の [generate(...)],CelltypePlugin,ATK1,option引数は未使用。他プラグインとの結線関係は要確認,ATK1Plugin
+HRP2TaskPlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2SemaphorePlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2EventflagPlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2DataqueuePlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2PriorityDataqueuePlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2FixedSizeMemoryPoolPlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2CyclicHandlerPlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2AlarmHandlerPlugin,generate文,celltype の [generate(...)]（引数なし）,HRP2KernelObjectPlugin < CelltypePlugin,HRP2,単機能,HRP2KernelObjectPlugin
+HRP2ObjectPlugin,generate文,"celltype の [generate(HRP2ObjectPlugin, ""種別"")]",HRP2KernelObjectPlugin < CelltypePlugin,HRP2,汎用。第2引数は種別文字列,HRP2KernelObjectPlugin
+HRP2HandlerPlugin,generate文,"celltype の [generate(HRP2HandlerPlugin, ""種別"")]",HRP2KernelObjectPlugin < CelltypePlugin,HRP2,汎用。第2引数は種別文字列,HRP2KernelObjectPlugin
+HRPTaskPlugin,generate文,celltype の [generate(...)],HRPKernelObjectPlugin < CelltypePlugin,HRP,,HRPKernelObjectPlugin
+HRPObjectPlugin,generate文,"celltype の [generate(HRPObjectPlugin, ""種別"")]",HRPKernelObjectPlugin < CelltypePlugin,HRP,,HRPKernelObjectPlugin
+HRPHandlerPlugin,generate文,"celltype の [generate(HRPHandlerPlugin, ""種別"")]",HRPKernelObjectPlugin < CelltypePlugin,HRP,,HRPKernelObjectPlugin
+HRPSVCSignaturePlugin,generate文,"signature への statement形式 generate(HRPSVCSignaturePlugin, sSignature, """");",SignaturePlugin,HRP,通常は HRPSVCThroughPlugin が発行,HRPDomainBoundaryPlugin
+HRPSVCBodyCellPlugin,generate文,"cell を対象とする statement形式 generate(..., <セル>, ""exportEntryPort=..."");",CellPlugin,HRP,HRPSVCThroughPlugin.rb:153 が実際にこの形式を発行。Generate クラスは cell も受理（generate.rb）,HRPDomainBoundaryPlugin
+OpaqueMarshalerPlugin,generate文,signature への statement形式,SignaturePlugin,HRP,HRPRPCPlugin からのみ参照される内部利用,PluginCoverageAudit
+FMPObjectPlugin,generate文,"celltype の [generate(FMPObjectPlugin, ""種別"")]",CelltypePlugin,FMP,,FMPPlugin
+FMPHandlerPlugin,generate文,"celltype の [generate(FMPHandlerPlugin, ""種別"")]",CelltypePlugin,FMP,,FMPPlugin
+HRMPKernelObjectPlugin,generate文,"celltype の [generate(HRMPKernelObjectPlugin, ""種別"")]",CelltypePlugin,HRMP,FMPObject/FMPHandler相当を統合,HRMPPlugin
+NotifierPlugin,generate文,"celltype の [generate(NotifierPlugin, ""factory=..., output_file=..."")]",CelltypePlugin,ASP3,通常は標準ライブラリCDL(kernel.cdl等)で適用済み,NotifierPlugin
+MrubyBridgePlugin,generate文,celltype / composite / cell の [generate(...)] および signature への statement形式,MultiPlugin,mruby,付与位置で下記4クラスへ自動振り分け,MrubyBridgePlugin
+MrubyInfoBridgePlugin,generate文,cell の [generate(...)] および signature への statement形式（celltype/composite 分岐は未実装）,MultiPlugin,mruby,TECSInfo版,MrubyInfoBridgePlugin
+Mruby2CBridgePlugin,generate文,signature への statement形式,SignaturePlugin,mruby,MrubyBridge+TECS2CBridge+C2TECSBridge を合成,Mruby2CBridgePlugin
+C2TECSBridgePlugin,generate文,signature への statement形式,SignaturePlugin,Cインタフェース,,CInterfaceBridgePlugin
+TECS2CBridgePlugin,generate文,signature への statement形式,SignaturePlugin,Cインタフェース,単独使用例なし,CInterfaceBridgePlugin
+CIfGenPlugin,generate文,celltype / cell の [generate(...)],MultiPlugin,C/C++ IF生成,*_cif.h 生成。付与位置で下記2クラスへ振り分け,CIfGenPlugin
+CppIfGenPlugin,generate文,celltype / cell の [generate(...)],MultiPlugin,C/C++ IF生成,C++クラス生成,CppIfGenPlugin
+TransparentMarshalerPlugin,generate文,signature への statement形式（RPCPlugin等が内部生成）,SignaturePlugin,RPC,生成CDLが参照する TransparentRPCSignaturePlugin は未定義（参照切れ）,DataPumpHolderPlugin
+RepeatCellPlugin,generate文,"cell の [generate(RepeatCellPlugin, ""count=N"")]",CellPlugin,繰り返し生成,セル名が数字で終わる必要あり,RepeatCellPlugin
+RepeatJoinPlugin,generate文,"cell 内の呼び口結合に [generate(RepeatJoinPlugin, ""count=N"")]",CellPlugin,繰り返し生成,,RepeatCellPlugin
+DataPumpHolderPlugin,generate文,"celltype の [generate(DataPumpHolderPlugin, """")]",CelltypePlugin,データ連携,r3301で追加,DataPumpHolderPlugin
+TECSInfoPlugin,generate文,"celltype の [generate(TECSInfoPlugin, """")]",CelltypePlugin,TECSInfo,--unoptimize-entry を自動強制,TECSInfoPlugin
+TECSInfoCompoPlugin,generate文,"composite の [generate(TECSInfoCompoPlugin, """")]",CompositePlugin,TECSInfo,,TECSInfoPlugin
+HRP2SVCPlugin,through,通常は HRP2Plugin が境界横断結合に自動挿入（明示指定は想定外）,ThroughPlugin,HRP2,ユーザ→カーネルドメイン,HRP2DomainBoundaryPlugin
+HRP2RPCPlugin,through,通常は HRP2Plugin が自動挿入（明示指定は想定外）,ThroughPlugin,HRP2,異なるユーザドメイン間,HRP2DomainBoundaryPlugin
+HRPSVCThroughPlugin,through,通常は HRPPlugin/HRMPPlugin が自動挿入。内部で generate 文を発行,ThroughPlugin,HRP,,HRPDomainBoundaryPlugin
+HRPRPCPlugin,through,通常は HRPPlugin が自動挿入,ThroughPlugin,HRP,Opaqueマーシャリング,HRPDomainBoundaryPlugin
+RPCPlugin,through,"join の [through(RPCPlugin, """")]",ThroughPlugin,RPC,Transparent・専用チャンネル,RPCPlugin
+OpaqueRPCPlugin,through,"join の [through(OpaqueRPCPlugin, """")]",ThroughPlugin,RPC,Opaque・専用チャンネル,RPCPlugin
+SharedRPCPlugin,through,"join の [through(SharedRPCPlugin, """")]",ThroughPlugin,RPC,Transparent・共有チャンネル,RPCPlugin
+SharedOpaqueRPCPlugin,through,"join の [through(SharedOpaqueRPCPlugin, """")]",ThroughPlugin,RPC,Opaque・共有チャンネル,RPCPlugin
+TracePlugin,through,"join の [through(TracePlugin, ""probeName=..."")]、または in/out/to/from_through",ThroughPlugin,トレース,ThroughPlugin参照実装,TracePlugin
+HRP2Plugin,domain,"region の [domain(HRP2, ""trusted""|""nontrusted"")]（Plugin接尾辞は付けない）",DomainPlugin,HRP2,信頼ドメイン境界宣言,HRP2Plugin
+HRPPlugin,domain,"region の [domain(HRP, ""kernel""|""user"")]",DomainPlugin,HRP,,HRPPlugin
+HRMPPlugin,domain / class,"region の [domain(HRMP, ...)] および [class(HRMP, ...)]",MultiPlugin,HRMP,指定子の種類で HRMPDomainPlugin / HRMPClassPlugin へ振り分け,HRMPPlugin
+FMPPlugin,class,"region の [class(FMP, CLS_xxx)]",ClassPlugin,FMP,プロセッサ配置境界,FMPPlugin
+HRP2KernelObjectPlugin,呼び出せない,-,CelltypePlugin,HRP2,具象サブクラスの抽象基底（カーネルオブジェクトセル判定基盤）,HRP2DomainBoundaryPlugin
+HRP2PostHook,呼び出せない,-,(通常クラス),HRP2,HRP2KernelObjectPlugin に密結合したポストフック支援クラス,PluginCoverageAudit
+HRP2Cache,呼び出せない,-,-,HRP2,実質空ファイル（$Idコメントのみ）,PluginCoverageAudit
+HRPKernelObjectManager,呼び出せない,-,(支援クラス),HRP,HRPPlugin.rb 内,HRPPlugin
+HRPKernelObjectPlugin,呼び出せない,-,CelltypePlugin,HRP,具象サブクラスの抽象基底,HRPDomainBoundaryPlugin
+HRMPDomainPlugin,呼び出せない,-（HRMPPlugin 経由で domain 時に自動選択）,DomainPlugin,HRMP,,HRMPPlugin
+HRMPClassPlugin,呼び出せない,-（HRMPPlugin 経由で class 時に自動選択）,ClassPlugin,HRMP,,HRMPPlugin
+HRMPJoinManager,呼び出せない,-,(共有モジュール),HRMP,HRMPDomain/ClassPlugin が include,HRMPPlugin
+MrubyBridgeSignaturePlugin,呼び出せない,-（MrubyBridgePlugin 経由で signature 時に選択）,SignaturePlugin,mruby,,MrubyBridgePlugin
+MrubyBridgeCelltypePlugin,呼び出せない,-（MrubyBridgePlugin 経由で celltype 時に選択）,CompositePlugin,mruby,ソース確認: CelltypePluginではなくCompositePluginを継承。MultiPlugin.get_plugin が直接返すため動作する,MrubyBridgePlugin
+MrubyBridgeCompositePlugin,呼び出せない,-（MrubyBridgePlugin 経由で composite 時に選択）,CompositePlugin,mruby,Celltype版と同一実装,MrubyBridgePlugin
+MrubyBridgeCellPlugin,呼び出せない,-（MrubyBridgePlugin 経由で cell 時に選択）,CellPlugin,mruby,,MrubyBridgePlugin
+MrubyInfoBridgeSignaturePlugin,呼び出せない,-（MrubyInfoBridgePlugin 経由。auto_exclude=true で自動生成）,SignaturePlugin,mruby,,MrubyInfoBridgePlugin
+MrubyInfoBridgeCellPlugin,呼び出せない,-（MrubyInfoBridgePlugin 経由で cell 時に選択）,CellPlugin,mruby,,MrubyInfoBridgePlugin
+CIfGenCelltypePlugin,呼び出せない,-（CIfGenPlugin 経由）,CelltypePlugin,C/C++ IF生成,,CIfGenPlugin
+CIfGenCellPlugin,呼び出せない,-（CIfGenPlugin 経由）,CellPlugin,C/C++ IF生成,,CIfGenPlugin
+CppIfGenCelltypePlugin,呼び出せない,-（CppIfGenPlugin 経由）,CelltypePlugin,C/C++ IF生成,,CppIfGenPlugin
+CppIfGenCellPlugin,呼び出せない,-（CppIfGenPlugin 経由）,CellPlugin,C/C++ IF生成,,CppIfGenPlugin
+TLVTracePlugin,呼び出せない,-,-,トレース,リポジトリに実体なし,TracePlugin
+Plugin,呼び出せない,-,-,基底クラス,全プラグインの根,tecsgen外部仕様 6.2
+CelltypePlugin,呼び出せない,-,-,基底クラス,celltype 用基底,tecsgen外部仕様 6.2
+CompositePlugin,呼び出せない,-,-,基底クラス,composite 用基底,tecsgen外部仕様 6.2
+CellPlugin,呼び出せない,-,-,基底クラス,cell 用基底,tecsgen外部仕様 6.2
+SignaturePlugin,呼び出せない,-,-,基底クラス,signature 用基底,tecsgen外部仕様 6.2
+ThroughPlugin,呼び出せない,-,-,基底クラス,through 用基底,tecsgen外部仕様 6.2
+DomainPlugin,呼び出せない,-,-,基底クラス,domain 用基底,tecsgen外部仕様 6.2
+ClassPlugin,呼び出せない,-,-,基底クラス,class 用基底,tecsgen外部仕様 6.2
+MultiPlugin,呼び出せない,-（直接指定せず、継承クラスの get_plugin が振り分ける）,Node,基底クラス,Plugin系列ではない別系統,MrubyBridgePlugin
+GenTransparentMarshaler,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenTransparentMarshaler.rb。RPC系が include,PluginCoverageAudit
+GenOpaqueMarshaler,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenOpaqueMarshaler.rb,PluginCoverageAudit
+GenParamCopy,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenParamCopy.rb,PluginCoverageAudit
+GenHRP2Marshaler,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenHRP2Marshaler.rb。ファイル内のモジュール名は GenTransparentMarshaler（同名衝突、HRP2RPCPlugin が require）,PluginCoverageAudit
+GenAttMod,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenAttMod.rb,PluginCoverageAudit
+GenDefSvc,呼び出せない,-,(共有モジュール),共有モジュール,lib/GenAttMod.rb 内に同居,PluginCoverageAudit
+MrubyBridgeCelltypePluginModule,呼び出せない,-,(共有モジュール),共有モジュール,lib/。MrubyBridgeCelltype/CompositePlugin が include,PluginCoverageAudit
+MrubyBridgeSignaturePluginModule,呼び出せない,-,(共有モジュール),共有モジュール,lib/。MrubyBridgeSignaturePlugin 関連,PluginCoverageAudit
+SVCManage,呼び出せない,-,(支援クラス),HRP2,HRP2SVCPlugin.rb 内,HRP2DomainBoundaryPlugin
+HRPSVCManage,呼び出せない,-,(支援クラス),HRP,HRPKernelObjectManager.rb 内,HRPDomainBoundaryPlugin

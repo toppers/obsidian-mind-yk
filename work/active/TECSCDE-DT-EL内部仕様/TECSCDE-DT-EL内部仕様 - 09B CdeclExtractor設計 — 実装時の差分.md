@@ -1,0 +1,43 @@
+---
+date: 2026-09-23
+description: "[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計|第9B章]]（CdeclExtractor設計）の9B.7節を分離したイベントログ的サテライト。設計案から実装時に判明した14件の差分（#1〜#8は2026-09-23、#9〜#14は2026-10-21にソースと照合して追加）（クラス設計・API形状・グローバル初期化の競合・文法の実際の挙動等）。9B章から分離（25KB閾値）。"
+project: TECS
+quarter: Q3-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecscde
+  - spec
+---
+
+Domain note split from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計|TECSCDE-DT-EL内部仕様 第9B章]] (2026-09-23、25KB閾値)。本節（9B.7）のみ分離（分離時、9B.1〜9B.6の設計本体は逐語で元ファイルに残置。2026-10-21に9B.5・9B.6のコード例は実装に合わせて更新）。
+
+### 9B.7 実装時の差分（2026-09-23、`E:\Ccur\typescript\TECSCDE-DT-EL`）
+
+上記9B.3〜9B.6の設計案から、実装時に実際のリポジトリ・文法の挙動を確認して変更した点。
+
+| #   | 設計案                                                                      | 実装での実際                                                                                                                                                                                                                                                                                | 理由                                                                                                                                                                                                             |
+| --- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `initCdeclParser()`等の関数スタイル（JS-TS実装を参考）                                  | `CdeclGrammar`静的クラス（`init`/`isReady`/`parserInstance`/`resetForTest`）                                                                                                                                                                                                                 | DT-EL実装の実際の`CdlGrammar`（`src/renderer/cdl/grammar.ts`）が既に静的クラスだった。9B.3は参照元を取り違えていた                                                                                                                             |
+| 2   | `CdeclExtractor.extract(tree: Tree)`                                     | `CdeclExtractor.extract(text: string)`（内部で`CdeclGrammar.parserInstance.parse()`）                                                                                                                                                                                                      | `CdlDocumentBuilder.build(text)`が同じ「テキストを受け取り内部でparseする」慣習だったため合わせた                                                                                                                                            |
+| 3   | `Diagnostic`をクラスとして`Diagnostic.warning(code, message)`で生成                | `Diagnostic`はプレーンなinterface。生成は`cdl/messages.ts`のファクトリ関数（`cppFallback()`・`cdeclParseError()`、`W_CODES.CPP_FALLBACK`/`W_CODES.CDECL_PARSE_ERROR`）に委ねる                                                                                                                                  | 実装のDiagnostic型がそもそもクラスではなかった。extractor.ts自体はヘッダパスを知らないため、診断生成はヘッダパスを持つ呼び出し側（`import-resolution.ts`）に置き、`CdeclExtractor.extract()`は`hasErrors: boolean`だけを返す                                                    |
+| 4   | WASM資産を`/wasm/tree-sitter-tecs_cdecl.wasm`へ直接fetch                       | main→IPC（既存`cdl:grammar-assets`チャネルを拡張、`CdlGrammarAssetBytes.cdeclWasm`追加）でバイト列を受け取る                                                                                                                                                                                                  | 第11章11.5節#7で確定済みの実装差分（rendererの`file://` fetchがCORSで塞がれる）と同じ理由。既存のCDL文法と同じ起動シーケンスに乗せた                                                                                                                          |
+| 5   | （未検討）`CdlGrammar.init()`と`CdeclGrammar.init()`を並列実行                      | 両方を**逐次**awaitする（`Promise.all`禁止）                                                                                                                                                                                                                                                     | web-tree-sitterの`Parser.init()`はEmscriptenランタイムをグローバルに初期化するため、2つのinit()を並列実行すると競合し、後段の`Language.load()`が「Incompatible language version 0」で失敗することを実測で発見（`tests/setup.ts`・`main.ts`の両方で修正）                       |
+| 6   | `struct_declarator.childForFieldName("declarator")`で子の`declarator`ノードを取得 | フィールド名に頼らず`namedChildren.find(c => c.type === "declarator")`で取得                                                                                                                                                                                                                       | 実際の`tree-sitter-tecs_cdecl.wasm`では、bitfieldを伴わない`struct_declarator`の`declarator`子に**フィールド名が付与されていない**（`fieldNameForChild(0)`が`null`）ことを実測で発見。node-types.jsonの`fields.declarator`（`required: false`）は誤解を招く記載だった |
+| 7   | `resolveStructSpecifier`はタグ無し（無名struct）に対し`undefined`を返す                 | タグとmembersを別々に返す`resolveStructSpecifierMembers()`へ分割。無名structでも`members`は返し、レジストリ登録（タグ必須）は呼び出し側で判断                                                                                                                                                                                    | `typedef struct { ... } Name;`（無名structのtypedef）で`resolveDeclarationSpecifiers`が呼ぶ際にmembersが失われるバグとして発覚（テストで検出）                                                                                                |
+| 8   | `import-resolution.ts`の関数群への影響を明示せず                                      | `resolveImportClosure`/`resolveAllImports`/`resolveAddedReference`に`tecsgenGateway: TecsgenGateway`パラメータを追加、戻り値に`cdeclResults: Map<string, CdeclResult>`を追加。`file-actions.ts`（`applyOpenResult`/`openFromPath`/`addAsReference`/`loadOptionsFile`）・`main.ts`・`shell.ts`まで連鎖的にパラメータを追加 | `TecsgenGateway.preprocess()`を呼ぶには、IPCゲートウェイをrenderer側のオーケストレーション層まで橋渡しする必要があった。既存の`AppShell`が既に`this.tecsgen`を保持していたため、末端の橋渡しは1行追加ずつで済んだ                                                                      |
+| 9   | `CdeclResult`は`{ typedefs, structs, diagnostics }` | `{ typedefs, structs, usedFallback, hasErrors }`。`usedFallback`は抽出器自身は常に`false`で、呼び出し側（`ingestImportC`）が上書きする | 診断は#3のとおり呼び出し側が作る。フォールバックの有無（cpp失敗）を型解決側（`CTypeRegistry`）へ伝えるために`usedFallback`を足した（2026-10-21追記、ソースの確認） |
+| 10  | `enum`／`typeof`／`union`と、型指定子が見つからない場合は`void`扱い（`voidType()`は`primitive: void`）。未知の基本型名は`int`に丸める | いずれも`{ kind: "unsupported", name }`（型指定子なしは名前「型指定子なし」）。未知の基本型名も`unsupported`。複数トークンの基本型（`unsigned long`）は、末尾を`name`、元の表記を`spelling`に持つ | 「推測して解決済みにしない」方針（ポート型解決の設計メモ）に合わせた。`void`や`int`と取り違えると、型の一致を誤って成立させるため（2026-10-21追記） |
+| 11  | `function_declarator`は戻り値の型のみ（`{ kind: "function", returns }`） | 引数の型も`parameters`に持つ（`parameter_declaration`ごとに型指定子とdeclaratorから作る） | 署名の関数型の解決（第3章3.4節）に引数の型が必要になった（2026-10-21追記） |
+| 12  | `resolveStructSpecifier`が`CStructDef`を返し、本体が無ければ`members`は空配列 | `resolveStructSpecifierMembers`が`{ tag?, members? }`を返し、**本体が無い（タグ参照のみ）ときは`members`が`undefined`**。レジストリ登録時に`members ?? []`にする | 空の`struct Foo {};`とタグ参照のみ（`struct Foo`）を区別するため。#7の分割の続き（2026-10-21追記） |
+| 13  | `ingestImportC(headerPath, text)`が`getCdeclParser().parse`し、モジュール内の`cdeclRegistry: Map`へ登録 | `ingestImportC(tecsgenGateway, canonicalPath, rawContent, cppCommand, includeDirs, diagnostics): Promise<CdeclResult>`が`preprocess`→フォールバック判定→`CdeclExtractor.extract(text)`までを行い、結果は`resolveImportClosure`が返す`Map`に積む。`cdecl/registry.ts`は無く、型の集約は`CTypeRegistry`（`cdecl/type-registry.ts`） | #8の続き。グローバルな可変状態を避け、読み込みごとの`LoadOptions.cdeclResults`としてローダーへ渡す（2026-10-21追記） |
+| 14  | （記載なし） | `extract()`は`parse()`で得た`tree`を`delete()`しない（`CdlDocumentBuilder.build`は呼ぶ） | **読解のみ**。WASM側のメモリが解放されない可能性（影響は未確認）。→ **2026-10-22に修正**（`try/finally`で`tree.delete()`。結果はノードを参照しないので安全） |
+
+#1〜#8は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|第7E章]]の該当箇所にも反映済み。2026-10-21には、これらの差分の結果として、9B.5・9B.6の設計本体（コード例）も実装に合わせて書き換えた（以前は「設計本体はverbatimで残置」としていた）。実装は279テストpass・`npm run check` green（2026-09-23）。
+
+## Related
+
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計|TECSCDE-DT-EL内部仕様 第9B章（設計本体、本ノートの分離元）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07E インポート解決の統合|TECSCDE-DT-EL内部仕様 第7E章（統合先）]]
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
