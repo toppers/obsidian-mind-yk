@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> 本章のサイドパネル配置は従来版の設計です。V0.2.0では[[TECSCDE-DT-EL内部仕様 - 02B V0.2.0画面構成]]のモードレスダイアログと「ファイル」ボタンへ移行します。ツリー・ルート設定・未保存確認は本章を引き継ぎます。差分章は実装前の内部設計です。
+
+
 Domain note split from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07 ファイルI-O設計|TECSCDE-DT-EL内部仕様 第7章]] (2026-09-22, 25KB threshold)。第7章7.6節（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様3.5.1節]]・[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05A 開く（読み込み）|同5.3節]]が採用したファイルブラウザ機能）をverbatimで分離。
 
 ## 7.6 ファイルブラウザ（サイドパネル） — 2026-09-21追加

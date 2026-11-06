@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0のactiveセル最上段配置は[[TECSCDE-DT-EL内部仕様 - 06C V0.2.0表示と配置#6C.4 activeセルの最上段への移動|6C.4]]で追加します。表示のみの変更は編集履歴へ入れません。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 4 of 11。
 
 ## 4. 編集コマンドとUndo-Redo設計

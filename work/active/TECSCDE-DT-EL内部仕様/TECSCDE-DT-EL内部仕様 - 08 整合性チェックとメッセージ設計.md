@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0の設定保存後の版診断更新と未検出エラーの設定案内は[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理#9D.4 版確認と診断更新|9D.4]]で拡張します。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 8 of 11。
 
 ## 8. 整合性チェックとメッセージ設計

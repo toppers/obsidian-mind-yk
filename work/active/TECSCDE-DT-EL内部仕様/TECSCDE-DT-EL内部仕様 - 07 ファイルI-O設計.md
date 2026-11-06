@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0のCDLファイル一覧生成は[[TECSCDE-DT-EL内部仕様 - 07G V0.2.0CDLファイル一覧生成]]、定義ファイルの読取専用表示は[[TECSCDE-DT-EL内部仕様 - 02B V0.2.0画面構成#2B.3 プロパティと定義ファイルウィンドウ|2B.3]]で追加します。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 7 of 11. Electron固有化の中心章の1つ。
 
 ## 7. ファイルI/O設計

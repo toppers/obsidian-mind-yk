@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT外部仕様書 第1章（概要）— 目的、ツールチェーン内の位置付け、想定実装（Electron/Tauri）、対象読者、関連文書。"
+description: "TECSCDE-DT外部仕様書 第1章（概要）— 目的、ツールチェーン内の位置付け、想定実装（Electron/Tauri）、対象読者、関連文書。 2026-11-05、1.6 に V0.2.0 の作業項目（マニュアル作成）を追加。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -59,5 +59,12 @@ Domain note split from [[TECSCDE-DT外部仕様]] (2026-09-05). Chapter 1 of 11�
 | [[reference/03-Resources/my-topic/wiki/tecs--cdlref-index\|CDL リファレンスマニュアル]] | CDL 言語仕様 |
 | [[reference/03-Resources/my-topic/wiki/tecs--tcdref\|TECS コンポーネント図（TCD）リファレンスマニュアル]] | 図の記法・要素定義 |
 | [[tecsgen外部仕様]] | CDL コンパイラ（本書ではサブプロセスとして直接連携する、第8章） |
+
+### 1.6 V0.2.0 の作業項目（2026-11-05 追加）
+
+V0.1.0（2026-11-03 公開）の次の版 V0.2.0 の変更は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 追加案(V0.2.0用)|追加案(V0.2.0用)]]にまとめ、各章に反映した。外部仕様の変更に加えて、次の**文書の作成**を作業項目とする。
+
+- ユーザーズマニュアルの作成
+- リファレンスマニュアルの作成
 
 ---

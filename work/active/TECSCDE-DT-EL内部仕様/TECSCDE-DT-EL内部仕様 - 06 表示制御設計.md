@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0のactiveOnly・結合強調・リージョン矩形モード、表示制御バー廃止に伴うUI移行は[[TECSCDE-DT-EL内部仕様 - 06C V0.2.0表示と配置]]を優先します。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 6 of 11。
 
 ## 6. 表示制御設計

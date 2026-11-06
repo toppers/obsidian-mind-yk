@@ -3,7 +3,7 @@ date: 2026-11-01
 description: "tecsgen の起動コマンドを指定する設定画面（設定ダイアログ）の追加案 — 外部仕様の変更、設計、実装単位、テスト、論点と推奨。内部仕様 11章の未決事項 #3 への回答案"
 project: TECS
 quarter: Q4-2026
-status: proposed
+status: superseded
 tags:
   - work-note
   - tecs
@@ -12,6 +12,9 @@ tags:
 ---
 
 # TECSCDE-DT外部仕様 — tecsgen の起動コマンドの設定画面（追加案）
+
+> [!important] 2026-11-05 の決定で置き換え済み（V0.2.0）
+> 設定ダイアログを**採用**した。ただし、本案の「ツールバーに『設定』ボタンを置く」は採らず、**「情報」ボタンのバージョン情報ダイアログ（3.8）に同居**させる。設定の欄には、tecsgen へのパスの表示・設定（`settings.json` の `tecsgenPath`。未設定のときは環境変数 `TECSPATH`、次に `PATH` の順に決める）、環境変数 `TECSPATH` の値の表示（設定はしない。`PATH` は表示しない）、CDLファイル一覧の作成（`_ROOT_CDL_FILES.txt`）を置く。論点 7（他の項目を載せない）は、この決定で変わった。設定の単位は起動コマンド全体ではなく**パス**になった（論点 1）。現在の仕様は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.8.1]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 02 動作環境|2.5]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|8.4.3]]、経緯は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 追加案(V0.2.0用)|追加案(V0.2.0用)]]。以下は、置き換え前の案として残す。
 
 **状態: 案（採否は未決）。** [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|内部仕様 11章の未決事項 #3]]（tecsgen の検出方法。「設定画面での明示的なパス指定等は未決」）への回答案。設定の全体像は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 02 動作環境|第2章 2.5 節]]。
 

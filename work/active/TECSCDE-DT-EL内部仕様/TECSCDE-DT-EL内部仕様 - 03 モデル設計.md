@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0のactive判定と表示状態の分離は[[TECSCDE-DT-EL内部仕様 - 06C V0.2.0表示と配置]]で補足します。activeはセルタイプの指定を参照し、選択状態とは区別します。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 3 of 11。
 
 ## 3. モデル設計

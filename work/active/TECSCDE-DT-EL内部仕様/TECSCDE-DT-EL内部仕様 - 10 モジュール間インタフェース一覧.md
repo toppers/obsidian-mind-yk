@@ -73,6 +73,23 @@ src/
 - `contextIsolation: true`・`nodeIntegration: false`を既定とする（rendererプロセスのセキュリティ標準構成）。
 - `renderer/`のビルド出力とNode.js APIを要する`main/`・`preload/`のビルドは別のtsconfig（`tsconfig.renderer.json`／`tsconfig.main.json`）で分離し、`renderer/`側は`lib: ["DOM", "ES2020"]`のみを許可することで、Node APIの誤importをコンパイル時にも検出する。
 
+### 10.4 V0.2.0の追加契約
+
+以下は実装前の契約案です。既存の`TecscdeApi`へ追加・統合し、`src/shared/ipc-types.ts` → `src/main/ipc.ts` → `src/preload/index.mts` → rendererのゲートウェイの順に接続します。preloadは現在のESM構成を維持します。第2章のプロセス境界とdependency-cruiserの禁止規則は変更しません。
+
+| 責務 | main | renderer | 契約 |
+|---|---|---|---|
+| 設定取得・保存 | `app-settings.ts`とパス解決 | 情報ダイアログ、設定ゲートウェイ | `settings:getToolSettings`、`settings:updateToolSettings` |
+| tecsgen候補選択・確認 | ネイティブdialog、`TecsgenRunner` | 情報ダイアログ、`TecsgenGateway` | `settings:chooseTecsgenPath`、`tecsgen:checkPath` |
+| 保存後の版確認 | 現在の実行設定で版を取得 | 9Cの診断更新、revision照合 | 既存`tecsgen:version`を再利用 |
+| CDL一覧生成 | `CdlFileListService`案、fs | 情報ダイアログ、`FileGateway` | `file:createCdlFileLists` |
+| 定義ファイル表示 | 既存のテキスト読込処理 | `DefinitionFileView`案 | 既存API再利用を優先 |
+| active・結合・リージョン表示 | なし | `AppStore`、`ViewState`、`DisplayFilters`、`SvgRenderer` | renderer内で完結 |
+| active最上段配置 | なし | 純粋な配置計算と編集`Command` | `History`で再生 |
+| 仮想ファイル・プラグイン相当 | 配置先TBC | 配置先TBC | メモリ内の契約骨格のみ。IPC新設の要否もTBC |
+
+データの項目・結果型と失敗処理は[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理]]・[[TECSCDE-DT-EL内部仕様 - 07G V0.2.0CDLファイル一覧生成]]、ビューの所有と寿命は[[TECSCDE-DT-EL内部仕様 - 02B V0.2.0画面構成]]、純粋計算と編集履歴の分離は[[TECSCDE-DT-EL内部仕様 - 06C V0.2.0表示と配置]]を参照します。
+
 ## Related
 
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 10 モジュール間インタフェース一覧|TECSCDE-TS内部仕様 第10章（rendererモジュールのディレクトリ構成の一次情報源）]]

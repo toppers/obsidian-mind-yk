@@ -12,6 +12,10 @@ tags:
   - architecture
 ---
 
+> [!info] V0.2.0差分設計（2026-11-06）
+> V0.2.0の起動パス解決・即時反映・版再確認と、外部実行とは別のメモリ内処理は[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理]]を優先します。Cプリプロセッサの設定仕様まで変更するものではありません。差分章は実装前の内部設計です。
+
+
 Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 9 of 11. Electron固有化の中心章の1つ。
 
 ## 9. tecsgen連携設計
