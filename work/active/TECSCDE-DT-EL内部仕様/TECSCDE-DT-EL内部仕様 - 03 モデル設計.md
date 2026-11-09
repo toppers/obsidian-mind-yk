@@ -45,9 +45,9 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 3 of 
 
 - **判定の置き場所**（2026-10-22実装）: `CdlDocumentLoader.loadSources()`（第7C章7.7.4節）が、`LoadOptions.systemDirs`と各`CdlSource.sourcePath`から`systemDefined`を決め、セルの生成時に渡す。パス比較の`isUnderAny(path, dirs)`は、依存の無い純粋関数として`shared/path-under.ts`に置き、main・rendererの両方から使える（当初案の「mainで比較して結果をrendererへ渡す」は採らなかった。`OpenFileEntry`に判定結果を載せる変更が要らず、`import`自動追跡など開く経路がいくつあってもローダーの1か所で済むため）。Windows形式のパス（ドライブ文字、UNC）は大文字小文字を区別せずに比べる。
 - **編集可否はソース単位で決める**（2026-10-22）: `systemDefined`かつ`allowEditSystemDefined=false`のソースは、`CdlSource.editable`ごと`false`にする。セル単位で`editable=false`にしない理由は、編集可能なソースはテンプレートを持ち、保存時（`serializeFromTemplate`）にテンプレートのセルをすべて削除して編集可能なセルだけを書き戻すため、編集不可のセルが混ざると、そのセルが保存で消えるから。編集不可のソースはテンプレートを持たないので、書き戻しの対象にならない。主ファイルが閲覧のみのときは、保存を行わない（`AppStore.isEditingFileReadOnlySystemDefined()`）。
-- **設定**（2026-10-22実装）: `allowEditSystemDefined`は`settings.json`（`AppSettings`）の真偽値で、既定は`false`。rendererは起動時にIPC `settings:get`で一度読み、`AppStore`に保持する。設定画面は無い（外部仕様2.5節）。
-- **表示**（2026-10-22）: `systemDefined`のセルのSVG要素に`system-defined`クラスを付ける。編集不可のため、既存の`readonly`の見た目になる。形状や記号による追加の区別は未決。
-- **`editable`の算出**: `editable = 通常の規則 && !(systemDefined && !allowEditSystemDefined)`。`allowEditSystemDefined`は`AppSettings`の真偽値で、既定は`false`（名前・置き場所は提案、未確定）。`true`にすると`systemDefined`のセルも通常CDLと同じ`editable`になる。
+- **設定**（2026-10-22実装）: `allowEditSystemDefined`は`settings.json`（`AppSettings`）の真偽値で、既定は`false`。rendererは起動時にIPC `settings:get`で一度読み、`AppStore`に保持する。この項目は設定ダイアログに載せない（外部仕様2.5節）。
+- **表示**: `systemDefined`のセルのSVG要素に`system-defined`クラスを付け、編集不可なら既存の`readonly`の見た目にする（2026-10-22の設計）。**2026-11-07、監査#14で記号の契約を具体化**し、[[TECSCDE-DT-EL内部仕様 - 05B 色に依存しない状態表示|5B]]の四角いROを`!cell.editable`の場合に併記する。`systemDefined=true`だけではROを付けず、編集許可設定で`editable=true`なら出さない。不完全・未結合は別の独立した記号とし、表示のためにモデルの編集可否を変更しない。新表示の実装適合は未確認。
+- **`editable`の算出**: `editable = 通常の規則 && !(systemDefined && !allowEditSystemDefined)`。設定名は`allowEditSystemDefined`、保存先は`settings.json`（`AppSettings`）で確定している。真偽値、既定`false`とし、真偽値の`true`のときだけ有効にする（文字列`"true"`等は無効）。有効なら`systemDefined`のセルも通常CDLと同じ`editable`になる（2026-11-08、監査#29で決定状態を統一）。
 - **コマンド・保存との関係**: `editable=false`のセルは、既存の編集コマンドの前提条件（編集不可セルは対象外）と`CdlSerializer.serializeSource()`の書き戻し対象外に、そのまま従う。`systemDefined`自体は編集可否を直接参照せず、`editable`の算出にだけ使う。表示上の区別は第5章の描画仕様で別途定める。
 - **テスト（実装時）**: 配下・入れ子・兄弟ディレクトリの接頭辞一致（`/sys`と`/sysx`）・Windowsの大文字小文字・相対`-S`・`-S`なし・主ファイルが配下にある場合・`allowEditSystemDefined`の切り替え。
 
@@ -120,6 +120,14 @@ file-actions（applyOpenResult・addAsReference）──{ cdeclResults }──�
 > - **`PortTypeIndex`の読み手が`src`に無い**（2026-10-22に「将来の利用を見込んだ予約」と決めた。削除しない。データの流れ=ローダー→`file-actions`→`AppStore`は維持し、読み手は未実装のまま。読むのはテストだけ）: `AppStore.getPortTypeIndex()`は定義だけで、呼び出しが見当たらない。C型の解決状態（`valid`・由来ヘッダ）は、結合の可否にも画面にも使われておらず、可視の効果は読み込み時の警告だけである。
 > - **フォールバック由来の伝達**（2026-10-22に「`CTypeRegistry`内部の伝播のみ」と決めた。利用者への伝達は、別の`W-CPP-FALLBACK`が担うので、`TypeResolution.fallback`を読む処理は足さない）: 設計メモは「利用したポート型にもフォールバック由来の状態を伝える」としているが、`TypeResolution.fallback`は`CTypeRegistry`の内部で伝播するだけで、ローダー（`document-builder.ts`）を含め、`src`に読む箇所が無い（利用者には伝わらない）。
 > - **第8章の整合性チェックへの接続**: `diagnostics/integrity.ts`は`PortTypeIndex`を使わない。第9B章が「未設計」としていた第8章への接続は、読み込み時の警告として実現しており、整合性チェックの独立した項目はない。
+### 3.5 可変長配列ポートの挿入に必要な状態（2026-11-07、監査#12）
+
+[[TECSCDE-DT-EL内部仕様 - 04E 可変長配列ポートの要素挿入|4E]]に従い、ポート宣言の`arrayKind`（非配列・固定長・可変長・未解決）と、所有セル・呼び口／受け口種別・宣言識別子による配列グループを保持する設計を追加する。既存`PortId`は添字から独立した要素の同一性として維持し、挿入では新規要素だけにIDを割り当てる。後続要素の`subscript`と表示名を更新しても、既存の結合先要素を変えない。CPortの最大1結合・EPortの複数結合の不変条件は変更しない。これはモデル契約の具体化であり、既存実装への反映は未確認。
+
+### 3.6 配列ポートの要素削除と再添字（2026-11-07、監査#13）
+
+[[TECSCDE-DT-EL内部仕様 - 04F 配列ポートの要素削除|4F]]の削除計画でも3.5節の配列種別・グループ・安定PortIdを使う。固定長と操作前の添字0の要素を削除せず、削除可能な可変長要素だけをIDで除去する。残存要素の順序・ID・位置・結合相手は維持し、削除集合より後ろの添字と表示名を一括更新する。CPortの単一結合、EPortへの全入結合とその参照添字、doc内の要素レイアウトを同じモデル更新で整合させる。3.4節の`PortTypeIndex`はdoc外にあるため、commit・Undo・Redo後にストア側で現在のdocと型解決情報から再導出・同期し、`apply()`から副作用更新しない（4F.4）。対象の消失や新たな接続で前提が変わった計画は全体をno-opとする。これは追加設計であり、実装適合は未確認。
+
 ## Related
 
 - [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 03 モデル設計|TECSCDE-TS内部仕様 第3章（一次情報源、本章はこれと同一）]]
@@ -127,3 +135,9 @@ file-actions（applyOpenResult・addAsReference）──{ cdeclResults }──�
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 19-28 配列と配置]] — 該当する監査項目の契約補足（2026-11-09）。
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 29-38 保存と画面]] — 該当する監査項目の契約補足（2026-11-09）。
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 39-48 編集と表示]] — 該当する監査項目の契約補足（2026-11-09）。

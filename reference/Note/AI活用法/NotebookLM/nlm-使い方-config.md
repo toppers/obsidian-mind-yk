@@ -11,12 +11,19 @@ tags:
 
  Manage configuration
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ show  Show current configuration.
-│ get   Get a specific configuration value.
-│ set   Set a configuration value.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| show | Show current configuration. |
+| get | Get a specific configuration value. |
+| set | Set a configuration value. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config show --help
 
@@ -24,9 +31,12 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config show --h
 
  Show current configuration.
 
-╭─ Options
-│ --json  -j        Output as JSON
-│ --help            Show this message and exit.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --json | -j |  | Output as JSON |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config get --help
 
@@ -34,10 +44,17 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config get --he
 
  Get a specific configuration value.
 
-╭─ Arguments
-│ *    key      TEXT  Configuration key (e.g. output.format) [required]
-╭─ Options
-│ --help          Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | key | TEXT | Configuration key (e.g. output.format) [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config set --help
 
@@ -45,11 +62,18 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm config set --he
 
  Set a configuration value.
 
-╭─ Arguments
-│ *    key        TEXT  Configuration key (e.g. output.format) [required]
-│ *    value      TEXT  Value to set [required]
-╭─ Options
-│ --help          Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | key | TEXT | Configuration key (e.g. output.format) [required] |
+| * | value | TEXT | Value to set [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
 
 
 

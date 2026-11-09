@@ -74,13 +74,14 @@ expand)
   ──────
   ### 🛠️ 主なコマンド一覧
 
-   コマンド│ 使用例                         │ 説明
-  ─────────┼────────────────────────────────┼────────────────────────────────
-    init   │  /llm-wiki:wiki init <topic-nam│ 新しいWikiトピック（フォルダ構…
-    ingest │  /llm-wiki:wiki ingest <file-pa│ 指定したマークダウンファイルやW
-    compile│  /llm-wiki:wiki compile        │  raw/  内の生ソースを解析し、 w
-    query  │  /llm-wiki:wiki query "<質問文>│ 構築されたWiki知識ベースをもと…
-    lint   │  /llm-wiki:wiki lint           │ Wiki内のフロントマッター、バッ…
+| コマンド | 使用例 | 説明 |
+| --- | --- | --- |
+| init | `/llm-wiki:wiki init <topic-nam` | 新しいWikiトピック（フォルダ構… |
+| ingest | `/llm-wiki:wiki ingest <file-pa` | 指定したマークダウンファイルやW |
+| compile | `/llm-wiki:wiki compile` | raw/ 内の生ソースを解析し、 w |
+| query | `/llm-wiki:wiki query "<質問文>` | 構築されたWiki知識ベースをもと… |
+| lint | `/llm-wiki:wiki lint` | Wiki内のフロントマッター、バッ… |
+
   ──────
   ### 📝 一般的なワークフロー（例：新しいドキュメントの追加と質問）
 

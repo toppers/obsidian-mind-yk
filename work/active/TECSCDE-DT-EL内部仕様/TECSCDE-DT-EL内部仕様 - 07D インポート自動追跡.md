@@ -162,3 +162,5 @@ end
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 09-18 読み込みと設定]] — 該当する監査項目の契約補足（2026-11-09）。

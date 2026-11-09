@@ -94,6 +94,8 @@ preload（`src/preload/index.mts`）が`window.tecscde`として公開するAPI�
 
 renderer側のゲートウェイクラス（`FileGateway`・`TecsgenGateway`・`ClipboardGateway`・`LogGateway`・`WindowGateway`・`SettingsGateway`、`src/renderer/gateways/`）は、上の各名前空間を**Promiseを返す通常のメソッド**として薄くラップするだけで、プロセス境界をこのクラスの内部に閉じ込める。メソッドの一覧は`TecscdeApi`と、各ゲートウェイのソースを参照する。
 
+監査#16で追加した一括読み込み`file.openPaths(request)`の契約案は[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I]]と第10章10.6を参照する。主ファイルと読み込み順を分離した同じDTOをmain・preload・rendererで使い、既存のOS専用処理をrendererへ移さない。実装適合は未確認（2026-11-07）。
+
 `FileGateway`・`TecsgenGateway`は、[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様第7章]]の`FileSaver`・[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 09 tecsgen連携設計|同第9章]]の`TecsgenCommandBuilder`が担っていた役割を、**IPC越しの薄いプロキシとして**引き継ぐ。呼び出し側（モジュールG）から見れば、Promiseを返す通常のクラスメソッドであることに変わりはない——プロセス境界がある事実はゲートウェイクラスの内部に閉じ込め、UIシェルはそれを意識しない。
 
 ### 2.5 アプリケーションの版（2026-11-01 追加）
@@ -115,3 +117,7 @@ renderer側のゲートウェイクラス（`FileGateway`・`TecsgenGateway`・`
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 29-38 保存と画面]] — 該当する監査項目の契約補足（2026-11-09）。
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 59-69 環境と文書]] — 該当する監査項目の契約補足（2026-11-09）。

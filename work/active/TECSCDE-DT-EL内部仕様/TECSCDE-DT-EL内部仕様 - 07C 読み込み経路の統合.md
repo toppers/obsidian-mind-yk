@@ -21,40 +21,15 @@ Domain note new from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部
 
 決定事項（2026-09-22の追加方法を維持し、2026-10-19に編集可否を改訂）: #8ではファイルブラウザで選んだCDLを既存の主ファイルを置き換えずに`references`集合へ追加する。`editablePath`と`referencePaths`は主ファイルと追加読み込みファイルを区別するセッション上の役割であり、編集権限の区別ではない。手動追加と`import`自動追跡は同じ解決・重複抑止パイプラインを共有する。
 
-**保存先**: `CdlDocumentLoader.loadSources()`は通常CDLのセルに編集可能フラグと定義元パスを保持する。`CdlSerializer.serializeSource()`は指定された元ファイルのセルだけを書き出し、保存時は変更のある読み込み済みCDLを各元パスへ書き戻す。新規・貼り付けセルは選択中の編集可能セルの定義元、選択がなければ主ファイルに属させる。Plugin生成セルは読み取り専用で保存しない。
+**保存先**: `CdlDocumentLoader.loadSources()`は通常CDLのセルに編集可能フラグと定義元パスを保持する。`CdlSerializer.serializeSource()`は主ファイルも定義元で選別し、変更のある読み込み済みCDLを各元パスへ書き戻す（[[TECSCDE-DT-EL内部仕様 - 04C ファイル別保存契約|4C]]）。新規・貼り付けセルは選択中の編集可能セルの定義元、選択がなければ主ファイルに属させる。Plugin生成セルは読み取り専用で保存しない。
 
 ### 7.7.1 前回セッションの復元（#7）
 
-[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07B ファイルブラウザ設計|第7B章7.6.6節]]の`AppSettings`（ルートフォルダの永続化）に、開いていたファイル集合を追加する。
+**2026-11-07、監査#9による契約更新**: 詳細は[[TECSCDE-DT-EL内部仕様 - 07H セッション保存と復元|7H セッション保存と復元]]へ分離した（本章の25KB閾値による）。`lastSession`は`editablePath`・`referencePaths`に加え、`optionsFilePath`と`extraImportPaths`を同じスナップショットで保存する。主ファイル未確定は`editablePath: null`で表す。 7I.5の`sourceOrder`も同時に保存・復元し、主役と順序を別に保持する（三者監査#5、2026-11-09）。
 
-```ts
-// main/app-settings.ts の AppSettings 拡張
-export interface AppSettings {
-  readonly fileBrowserRoot?: string;
-  readonly lastSession?: {
-    readonly editablePath: string;
-    readonly referencePaths: readonly string[];
-  };
-}
-```
+起動時の優先順位は明示入力（CLI／関連付け確定要求） ＞ `lastSession` ＞ `public/samples`を維持する。復元時の再解析と保存済み探索パスの優先順位、失敗時のフォールバック、都度保存の時機と設定の部分更新、旧設定互換は7Hを正とする。起動時に`app:bootstrap`で渡す内容にも、オプションファイル・探索パス・再解析した`systemDirs`を含める。主パスの有無で復元対象を除外せず7H.0の判定表を使う。現行`5cf2d85`は未対応（2026-11-09）。
 
-**保存タイミング**: 7.6.6節の「都度保存」方針を踏襲する。編集対象(editable)または参照(references)集合が変化するたび——ファイルブラウザでの`openFromPath`（7.6.4節）・7.7.2節の`addAsReference`・7.7.3節の新規作成・起動時オープン（第7章7.4節）——に保存する。「終了時にまとめて保存」を採らない理由も7.6.6節と同じ（異常終了時にも直前の状態を残すため）。
-
-**復元の優先順位**: 起動時、`pendingOpenPath`（第7章7.4節、コマンドライン引数・ファイル関連付け）を最優先とする。次に`lastSession`があればそれを使う。どちらも無い場合のみ`public/samples`の固定ファイルへフォールバックする（既存の最終フォールバックを維持）。
-
-**復元失敗時**: 7.6.6節の`restoreRoot`と同じ方針——記憶されたパスが存在しない・読めない場合はエラーにせず、次善のフォールバック（`lastSession`が読めなければ`samples`）へ進む（3.5.1節「解決できない場合は黙って進める」と同じ考え方）。
-
-```ts
-// main/index.ts（did-finish-loadハンドラ、第7章7.4節app:bootstrapの供給元を拡張）
-const settings = await loadAppSettings();
-const initialSources = pendingOpenPath
-  ? await loadFromPath(pendingOpenPath)
-  : settings.lastSession
-    ? await loadLastSession(settings.lastSession).catch(() => loadSamples())
-    : loadSamples();
-```
-
-`app:bootstrap`のIPC自体（起動後1回だけプッシュ供給、第7章7.4節）は変わらない。供給するソーステキスト群の生成元が3経路（CLI引数／前回セッション／samples）に増えるのみ。
+通常open・opts・手動追加・消去は[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I.7]]の共通guardを使う。最初のawait前の文書revisionも固定し、失効結果は適用・通知・セッション保存に使わない。現行`5cf2d85`は未対応（三者監査#6、2026-11-09）。
 
 ### 7.7.2 ファイルブラウザからの追加読み込み（#8）
 
@@ -111,7 +86,7 @@ export async function newDocument(store: AppStore, gateway: FileGateway): Promis
 
 **影響範囲**: `references`集合・ファイルブラウザの展開状態（7.6.3節`expanded`/`children`）はクリアしない——消去は編集対象(editable)のみを空にする操作であり、参照ファイル一覧やツリーの展開状態はアプリケーション実行中の状態として維持する（3.5.1節「ツリーの展開状態はアプリケーション実行中の状態としてのみ保持する」と同じ扱い）。
 
-**7.7.1節との関係**: 消去後に`lastSession`へ保存する`editablePath`は無し（未保存の新規作成はパスを持たないためセッション復元の対象外）。references集合は維持されたまま保存する。
+**7.7.1節との関係**: 消去後は`editablePath: null`と保持したreferences・sourceOrderを保存する。未保存の主文書本文は復元しないが、空の主文書と参照集合は7H.0の有効セッションとして復元する。参照も空なら意図的な空状態の復元成功とし、samplesへ置換しない（2026-11-09）。
 
 ### 7.7.4 tecsgenオプション形式ファイルの一括読み込み（#10）
 
@@ -136,6 +111,7 @@ export interface TecsgenOptionsFile {
   readonly importPaths: readonly string[]; // -I/--import-path の値
   readonly cpp?: string;
   readonly defineMacros: readonly string[]; // -D/--define の値（記述順。2026-10-22追加）
+  readonly systemDirs: readonly string[]; // -Sの絶対パス。一括要求へ同じ解析結果を渡す
 }
 
 async parseTecsgenOptionsFile(path: string): Promise<TecsgenOptionsFile> {
@@ -164,9 +140,9 @@ async parseTecsgenOptionsFile(path: string): Promise<TecsgenOptionsFile> {
 4. **パスの解決**: `cdlFiles` の相対パスは、**オプションファイルのあるディレクトリ**を基点に絶対パスへ解決する（`resolve(dirname(path), f)`）。tecsgen の実際の呼び出しがそのディレクトリから行われる想定のため。これを省くと、`fs.readFile` が main プロセスの起動ディレクトリで解決して、存在しないパスになる。`importPaths` は解決せずに値のまま返す（基点は `import-resolution.ts` が、オプションファイルのあるディレクトリと `baseDir` から決める）。
 5. **値が欠けた末尾の `-I`・`-c`**: 何も追加せずに終わる（エラーにしない）。
 6. **スケッチとの違い**: 「`-` で始まらない非オプショントークンを `cdlFiles` へ」ではなく、**拡張子が `.cdl`/`.cde` のものだけ**を `cdlFiles` に入れる。ほかの非オプショントークンは無視される。
-7. **tecsgenの実行への引き継ぎ**（2026-10-22、外部仕様8.4.2）: 「実行(Generate)」と「コマンドをコピー」（`app/tecsgen-actions.ts`）は、コマンドを作るたびに`store.getOptionsFilePath()`のファイルを`parseTecsgenOptionsFile`で**再解析**して、`-I`・`-D`・`-c`を得る。起動時に一度だけ解析した値をストアへ積む方式にしないのは、前回セッションの復元（`optionsFilePath`だけを覚えている）でも、解析済みの値が無くても同じ結果になるようにするため。合成の規則は、`importPath = [__tool_info__の import_path, …, オプションファイルの -I]`、`defineMacro = [__tool_info__の define_macro, …, オプションファイルの -D]`（すべて渡す）、`cpp = オプションファイルの -c ?? __tool_info__の cpp`。オプションファイルが無い、または解析に失敗したときは、`__tool_info__`の値だけを使う（Generateは止めない）。このため`tecsgenCommandLine`は非同期（`Promise<string | undefined>`）になる。**作業ディレクトリ**（外部仕様5.3節）: `optionsFilePath`があるときは、そのディレクトリ（`shared/path-under.ts`の`dirnameOf`）を`cwd`として`generate()`に渡し、IPC `tecsgen:generate(args, cwd?)`から`TecsgenRunner.generate(args, cwd)`が`execFile`の`cwd`に指定する。相対パスの`-I`・`-S`の基点を変えないため。上限は従来どおり30秒・既定の`maxBuffer`のまま（Plugin型の取り込みの`run(args, cwd)`の120秒・16MiBとは別）。オプションファイルの解析に失敗しても`cwd`は指定する。`-S`の引き継ぎは下の「`-S`」の項（`importPaths`経由）。
+7. **tecsgenの実行への引き継ぎ**（2026-10-22、外部仕様8.4.2）: 「実行(Generate)」と「コマンドをコピー」（`app/tecsgen-actions.ts`）は、コマンドを作るたびに`store.getOptionsFilePath()`のファイルを`parseTecsgenOptionsFile`で**再解析**して、`-I`・`-D`・`-c`を得る。復元した`extraImportPaths`をコマンド生成の固定値にしないのは、オプションファイルの現在の内容を使うため（7H.4節）。合成の規則は、`importPath = [__tool_info__の import_path, …, オプションファイルの -I]`、`defineMacro = [__tool_info__の define_macro, …, オプションファイルの -D]`（すべて渡す）、`cpp = オプションファイルの -c ?? __tool_info__の cpp`。オプションファイルが無い、または解析に失敗したときは、`__tool_info__`の値だけを使う（Generateは止めない）。このため`tecsgenCommandLine`は非同期（`Promise<string | undefined>`）になる。**作業ディレクトリ**（外部仕様5.3節）: `optionsFilePath`があるときは、そのディレクトリ（`shared/path-under.ts`の`dirnameOf`）を`cwd`として`generate()`に渡し、IPC `tecsgen:generate(args, cwd?)`から`TecsgenRunner.generate(args, cwd)`が`execFile`の`cwd`に指定する。相対パスの`-I`・`-S`の基点を変えないため。上限は従来どおり30秒・既定の`maxBuffer`のまま（Plugin型の取り込みの`run(args, cwd)`の120秒・16MiBとは別）。オプションファイルの解析に失敗しても`cwd`は指定する。`-S`の引き継ぎは下の「`-S`」の項（`importPaths`経由）。
 
-呼び出しの経路（起動時）: `main/index.ts` が `process.argv` から `.tecsgen-opts` を見つけて `pendingOpenPath` に入れ（優先順位は7.7.1節）、`did-finish-load` 後に `parseTecsgenOptionsFile` を呼ぶ。`cdlFiles` を逆順にして、最後を主ファイル、残りを参照として `openPaths` へ渡し、`importPaths` は `extraImportPaths`、元ファイルのパスは `optionsFilePath` として renderer に送る。
+呼び出しの経路（起動時、2026-11-07、監査#16で統一）: CLIの対象1件選択後、その1件が`.tecsgen-opts`なら解析する。[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I]]に従い、元のCDL列挙から主ファイルと参照の役割、重複排除した列挙順`sourceOrder`を別々に確定し、明示的な要求DTOで`FileService.openPaths(request)`へ渡す。順序を逆転させず、関連メタデータとともに起動時の一括結果を`app:bootstrap`へ送る。
 
 **`-S`（システム定義ディレクトリ）の追加（設計、2026-10-21。2026-10-22に実装）**: 外部仕様（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05A 開く（読み込み）|DT外部仕様5.3節]]）の追加に合わせ、`parseTecsgenOptionsFile`の分類に次を加える。
 
@@ -176,26 +152,14 @@ async parseTecsgenOptionsFile(path: string): Promise<TecsgenOptionsFile> {
 
 - `TecsgenOptionsFile`に`readonly systemDirs: readonly string[]`を追加する。`cdlFiles`と同様、相対パスは**オプションファイルのあるディレクトリを基点に絶対パスへ解決**して返す（`importPaths`は解決しないのと異なる）。
 - `systemDirs`は`OpenResult`に載せてrendererへ送り（`extraImportPaths`と同じ経路）、`AppStore`が保持する。`CdlDocumentLoader.loadSources()`は`systemDirs`で各ソースの`systemDefined`を決める（[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03 モデル設計|第3章3.2節]]）。
-- 前回セッションの復元（7.7.1節）で`-S`は、保存してある`optionsFilePath`を`main/index.ts`が起動時に再解析して再現する（2026-10-22実装。ファイルが読めなければ`systemDirs`なし）。ファイルブラウザからの通常のクリックや、「消去」では、`extraImportPaths`と同じく`systemDirs`も空に戻る。
+- セッション復元時は7H.3.1を正とし、opts再解析成功なら同じ結果の探索パスと`systemDirs`を採用する。空配列も優先し、失敗時だけ保存済み探索パス＋`systemDirs`空へ戻す。現行コードは探索パスを旧値のままにするため未対応（三者監査#8、2026-11-09）。ファイルブラウザからの通常のクリックや、「消去」では、`extraImportPaths`と同じく`systemDirs`も空に戻る。
 - **tecsgenの実行への引き継ぎ**（2026-10-22実装）: `-S`は`importPaths`に入った時点で`-I`相当になり、上の7.の合成で、他の`-I`と記述順のまま`-I <path>`として渡る（作業ディレクトリは7.のとおり`.tecsgen-opts`のあるディレクトリ）。並べ替え・重複除去はしない。`-S`の値は書かれたまま渡す（`systemDirs`のような絶対パスへの解決はしない）。
 
 **③`-I`/`--import-path`の受け渡し**: 既存の`ImportResolutionOptions.importPaths`（第7章7.5節）へそのまま渡す。CDLファイル自身の`__tool_info__`が持つ`import_path`・`base_dir`は5.1節の方針どおり書き換えず、オプションファイル由来の`importPaths`は追加の探索候補として重ねる（既定順序: CDL自身の`import_path`を先に試し、見つからなければオプションファイル由来を試す——第7章7.5節の既存探索順序に追加ステップとして挿入する）。
 
-**④#8との統合**: 列挙されたCDLファイルの最後を`openFromPath`で主ファイルとして開き、残りを7.7.2節の`addAsReference`で追加する。すべて通常CDLとして編集可能であり、重複パスは無視する。
+**④#8との統合（2026-11-07、監査#16で契約更新）**: 主ファイルの役割と読み込み順を分離し、全ファイルの読み取り・参照解決・モデル構築が成功してから、図と関連状態を一度だけ適用する。主ファイルを`openFromPath`で開いて残りを`addAsReference`する方式や、その逆の逐次適用は使わない。
 
-```ts
-// renderer/app/file-actions.ts
-export async function loadOptionsFile(store: AppStore, gateway: FileGateway, path: string): Promise<void> {
-  const parsed = await gateway.parseTecsgenOptionsFile(path);
-  const [last, ...rest] = [...parsed.cdlFiles].reverse();
-  for (const refPath of rest.reverse()) {
-    await addAsReference(store, gateway, refPath); // 7.7.2節
-  }
-  if (last) await openFromPath(store, gateway, last, { extraImportPaths: parsed.importPaths }); // 7.6.4節を拡張
-}
-```
-
-`openFromPath`（7.6.4節）は`extraImportPaths`を受け取れるようオプション引数を追加し、`FileGateway.resolveImports`呼び出しへ引き渡す。
+要求型`OpenPathsRequest`、main・preload・rendererの共通API、`loadOptionsFile`の正規コード例は[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I.2〜4]]に統一する。`primaryPath`・`referencePaths`・`sourceOrder`を明示し、`optionsFilePath`・`extraImportPaths`・`systemDirs`を同じ一括結果へ含める。未保存確認は1回だけ、キャンセル・失敗時は旧状態を保持し、成功後に7Hのセッションを1回保存する。これは確定契約だが、現行`5cf2d85`は未対応。DTO・`primarySourceKey`・ストアとセッションの順序保持を7I.0に従って実装する必要がある（三者監査#5、2026-11-09）。
 
 ### 7.7.5 import自動追跡との統一（#11）
 

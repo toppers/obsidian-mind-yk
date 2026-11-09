@@ -38,11 +38,12 @@ Agent/CLI
 
 5. 4層の索引構造（SQLite内）
 
-│ 層  │      テーブル       │      方式      │               用途               │
-│ L0  │ symbols             │ 通常索引       │ 定義の直接引き                   │
-│ L1  │ chunks_tri          │ FTS5 trigram   │ 部分一致・正規表現の前段絞り込み │
-│ L2  │ chunks_fts          │ FTS5 unicode61 │ BM25自然文検索                   │
-│ L3  │ refs/imports/traces │ 通常索引       │ 呼び出し元・依存・設計文書対応   │
+| 層 | テーブル | 方式 | 用途 |
+| --- | --- | --- | --- |
+| L0 | symbols | 通常索引 | 定義の直接引き |
+| L1 | chunks_tri | FTS5 trigram | 部分一致・正規表現の前段絞り込み |
+| L2 | chunks_fts | FTS5 unicode61 | BM25自然文検索 |
+| L3 | refs/imports/traces | 通常索引 | 呼び出し元・依存・設計文書対応 |
 
 ランキングはSQLite内で完結（mdqと違いPython側へ全チャンクをロードしない）。BM25の列重みはname:10.0, signature:5.0, ident_text:3.0, text:1.0。
 

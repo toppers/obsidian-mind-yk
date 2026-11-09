@@ -18,39 +18,23 @@ Terraform/pascalエラーは消えたようです。各ディレクトリの結�
 
 15箇所すべて exit: 0 で成功しました。ファイル名を project.local.yml（先頭ドット無し）に直したことで、cpp / ruby / bash の設定が正しく適用され、以前失敗していた terraform / pascal 関連のエラーも解消されています。
 
-┌───────────────────────────┬─────────────────────────────┐
-│       ディレクトリ        │      インデックス結果       │
-├───────────────────────────┼─────────────────────────────┤
-│ asp+tecs/trunk            │ cpp=310, bash=1             │
-├───────────────────────────┼─────────────────────────────┤
-│ asp3+tecs/trunk           │ ruby=6, cpp=353             │
-├───────────────────────────┼─────────────────────────────┤
-│ atk1+tecs/trunk           │ cpp=127                     │
-├───────────────────────────┼─────────────────────────────┤
-│ et_robcon/trunk           │ cpp=438, ruby=5             │
-├───────────────────────────┼─────────────────────────────┤
-│ ev3rt+tecs/trunk          │ cpp=1732, bash=23, ruby=288 │
-├───────────────────────────┼─────────────────────────────┤
-│ fmp3+tecs/trunk           │ ruby=11, bash=1, cpp=246    │
-├───────────────────────────┼─────────────────────────────┤
-│ hr-tecs3                  │ cpp=111, ruby=9             │
-├───────────────────────────┼─────────────────────────────┤
-│ hrmp3+tecs/trunk          │ ruby=13, bash=2, cpp=384    │
-├───────────────────────────┼─────────────────────────────┤
-│ hrp2+tecs/trunk           │ cpp=381, ruby=16            │
-├───────────────────────────┼─────────────────────────────┤
-│ hrp3+tecs/trunk           │ ruby=109, cpp=365           │
-├───────────────────────────┼─────────────────────────────┤
-│ mruby/mruby-master        │ ruby=57, cpp=88             │
-├───────────────────────────┼─────────────────────────────┤
-│ mruby/mruby-mruby-53f74d5 │ cpp=94, ruby=26             │
-├───────────────────────────┼─────────────────────────────┤
-│ mruby/mruby-on-asp+tecs   │ cpp=237, ruby=54            │
-├───────────────────────────┼─────────────────────────────┤
-│ tecscde/trunk             │ bash=2, cpp=47, ruby=81     │
-├───────────────────────────┼─────────────────────────────┤
-│ tecsgen/trunk             │ bash=10, ruby=191, cpp=549  │
-└───────────────────────────┴─────────────────────────────┘
+| ディレクトリ | インデックス結果 |
+| --- | --- |
+| asp+tecs/trunk | cpp=310, bash=1 |
+| asp3+tecs/trunk | ruby=6, cpp=353 |
+| atk1+tecs/trunk | cpp=127 |
+| et_robcon/trunk | cpp=438, ruby=5 |
+| ev3rt+tecs/trunk | cpp=1732, bash=23, ruby=288 |
+| fmp3+tecs/trunk | ruby=11, bash=1, cpp=246 |
+| hr-tecs3 | cpp=111, ruby=9 |
+| hrmp3+tecs/trunk | ruby=13, bash=2, cpp=384 |
+| hrp2+tecs/trunk | cpp=381, ruby=16 |
+| hrp3+tecs/trunk | ruby=109, cpp=365 |
+| mruby/mruby-master | ruby=57, cpp=88 |
+| mruby/mruby-mruby-53f74d5 | cpp=94, ruby=26 |
+| mruby/mruby-on-asp+tecs | cpp=237, ruby=54 |
+| tecscde/trunk | bash=2, cpp=47, ruby=81 |
+| tecsgen/trunk | bash=10, ruby=191, cpp=549 |
 
 なお、多数の .c/.h/.rb ファイルで Could not decode ... with encoding='utf-8'; using best match 'euc_jis_2004' instead という警告が出ていますが、これはエンコーディング推定の警告でインデックス自体は成功しており、対応不要です。
 

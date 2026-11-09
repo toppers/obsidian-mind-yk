@@ -11,10 +11,17 @@ tags:
 
  Create audio overviews
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ create  Create an audio overview (podcast) from notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| create | Create an audio overview (podcast) from notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm audio create --help
 
@@ -22,17 +29,24 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm audio create --
 
  Create an audio overview (podcast) from notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --format      -f      TEXT  Overview format (deep_dive, brief, critique, debate) [default: deep_dive]
-│ --length      -l      TEXT  Length (short, default, long) [default: default]
-│ --language            TEXT  BCP-47 language code (en, es, fr, de, ja) [default: en]
-│ --focus               TEXT  Optional focus topic
-│ --source-ids  -s      TEXT  Comma-separated source IDs
-│ --confirm     -y            Skip confirmation
-│ --profile     -p      TEXT  Profile to use
-│ --help                      Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --format | -f | TEXT | Overview format (deep_dive, brief, critique, debate) [default: deep_dive] |
+| --length | -l | TEXT | Length (short, default, long) [default: default] |
+| --language |  | TEXT | BCP-47 language code (en, es, fr, de, ja) [default: en] |
+| --focus |  | TEXT | Optional focus topic |
+| --source-ids | -s | TEXT | Comma-separated source IDs |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

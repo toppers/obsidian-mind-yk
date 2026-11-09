@@ -34,20 +34,20 @@ tags:
 
   You can also use the following vault-specific commands:
 
-   Command                   │ Purpose
-  ───────────────────────────┼───────────────────────────────────────────────
-    /om-standup              │ Morning kickoff and context loading
-    /om-dump                 │ Freeform capture and auto-routing
-    /om-wrap-up              │ Full session review and cleanup
-    /om-humanize             │ Voice-calibrated editing
-    /om-weekly               │ Weekly synthesis and alignment
-    /om-capture-1on1         │ Structured capture of 1:1 meetings
-    /om-incident-capture     │ Structured capture of incidents
-    /om-vault-audit          │ Maintenance of links, orphans, and indexes
-    /om-vault-upgrade        │ Content migration from other vaults
-    /om-prep-1on1            │ Preparation for 1:1 meetings
-    /om-intake               │ Process meeting notes inbox
-    /om-project-archive      │ Archive completed projects
+| Command | Purpose |
+| --- | --- |
+| `/om-standup` | Morning kickoff and context loading |
+| `/om-dump` | Freeform capture and auto-routing |
+| `/om-wrap-up` | Full session review and cleanup |
+| `/om-humanize` | Voice-calibrated editing |
+| `/om-weekly` | Weekly synthesis and alignment |
+| `/om-capture-1on1` | Structured capture of 1:1 meetings |
+| `/om-incident-capture` | Structured capture of incidents |
+| `/om-vault-audit` | Maintenance of links, orphans, and indexes |
+| `/om-vault-upgrade` | Content migration from other vaults |
+| `/om-prep-1on1` | Preparation for 1:1 meetings |
+| `/om-intake` | Process meeting notes inbox |
+| `/om-project-archive` | Archive completed projects |
 
   Let me know if you would like more details on any of these!
 

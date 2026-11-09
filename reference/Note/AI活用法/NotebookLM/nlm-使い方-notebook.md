@@ -11,16 +11,23 @@ tags:
 
  Manage notebooks
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ list      List all notebooks.
-│ create    Create a new notebook.
-│ get       Get notebook details.
-│ describe  Get AI-generated notebook summary with suggested topics.
-│ rename    Rename a notebook.
-│ delete    Delete a notebook permanently.
-│ query     Chat with notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| list | List all notebooks. |
+| create | Create a new notebook. |
+| get | Get notebook details. |
+| describe | Get AI-generated notebook summary with suggested topics. |
+| rename | Rename a notebook. |
+| delete | Delete a notebook permanently. |
+| query | Chat with notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook list --help
 
@@ -28,13 +35,16 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook list -
 
  List all notebooks.
 
-╭─ Options
-│ --full     -a            Show all columns
-│ --json     -j            Output as JSON
-│ --quiet    -q            Output IDs only
-│ --title    -t            Show ID: Title format
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --full | -a |  | Show all columns |
+| --json | -j |  | Output as JSON |
+| --quiet | -q |  | Output IDs only |
+| --title | -t |  | Show ID: Title format |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook create --help
 
@@ -42,11 +52,18 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook create
 
  Create a new notebook.
 
-╭─ Arguments
-│   title      [TITLE]  Notebook title
-╭─ Options
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+|  | title | [TITLE] | Notebook title |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook get --help
 
@@ -54,12 +71,19 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook get --
 
  Get notebook details.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --json     -j            Output as JSON
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --json | -j |  | Output as JSON |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook describe --help
 
@@ -67,11 +91,18 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook descri
 
  Get AI-generated notebook summary with suggested topics.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook rename --help
 
@@ -79,12 +110,19 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook rename
 
  Rename a notebook.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-│ *    new_title        TEXT  New title [required]
-╭─ Options
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+| * | new_title | TEXT | New title [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook delete --help
 
@@ -92,12 +130,19 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook delete
 
  Delete a notebook permanently.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --confirm  -y            Skip confirmation
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook query --help
 
@@ -105,14 +150,21 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm notebook query 
 
  Chat with notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-│ *    question         TEXT  Question to ask [required]
-╭─ Options
-│ --conversation-id  -c      TEXT  Conversation ID for follow-up questions
-│ --source-ids       -s      TEXT  Comma-separated source IDs to query (default: all)
-│ --profile          -p      TEXT  Profile to use
-│ --help                           Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+| * | question | TEXT | Question to ask [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --conversation-id | -c | TEXT | Conversation ID for follow-up questions |
+| --source-ids | -s | TEXT | Comma-separated source IDs to query (default: all) |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

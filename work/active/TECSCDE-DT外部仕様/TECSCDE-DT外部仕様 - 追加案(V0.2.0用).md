@@ -76,7 +76,7 @@ tags:
 | tecsgen 相当機能（仮想ファイル、プラグイン相当） | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|8.5]] |
 | 結合したセル群の表示（赤色） | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 07 表示機能|7.6]] |
 | active なセル（青い背景、だけを表示、最上段へ移動） | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 04 コンポーネント図の表現|4.1.x]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 07 表示機能|7.5.x・7.3.y]] |
-| `_ROOT_CDL_FILES.txt` | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05A 開く（読み込み）|5.3.y]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.8.2]] |
+| `_ROOT_CDL_FILES.txt` | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05B CDLファイル一覧の作成と自動配置|5.3.y]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.8.2]] |
 | 「表示」ボタン（表示制御バー）をなくす | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.1.x]] |
 | 「リージョン」ボタン（追加の表示モード） | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.1.x]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 04 コンポーネント図の表現|4.9.x]] |
 | プロパティ（スクロールバー、定義ファイルのパスと表示ボタン） | [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|3.4.x（項目6〜8）]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 04 コンポーネント図の表現|4.2.x（項目4）]] |
@@ -101,7 +101,9 @@ tags:
 
 ## 将来決定する（本文では TBC と記載）
 
-青い背景と既存の色分け（編集可否・不完全・未結合）の重ね方／最上段へ移動する操作の入口／結合を強調するときの指定操作／tecsgen 相当機能の範囲。ほかに本文で TBC としたもの: Windows の実行ファイルの拡張子の一覧、`_CDL_FILES.txt` を置き換えるときの確認、リージョンの矩形領域の重なりと色の重ね方。
+ほかに本文で TBC としたもの: Windows の実行ファイルの拡張子の一覧、内部処理の対象プラグインの付表（空。`MrubyBridgePlugin` 系の登録条件は 8.5 項目5。基準データとの一致後に確定）、`_ROOT_CDL_FILES.txt` の使い方。
+
+2026-11-08 に解決済み: 青い背景と既存の色分け（編集可否・不完全・未結合）の重ね方（[[TECSCDE-DT外部仕様 - 04 コンポーネント図の表現|4.1.x]]）、最上段に収まらないときの扱いと操作の入口（[[TECSCDE-DT外部仕様 - 07 表示機能|7.3.y]]）、結合を強調するときの指定操作と探索範囲（[[TECSCDE-DT外部仕様 - 07 表示機能|7.6]]）、リージョンの矩形領域の親子の重なり・色・モードの保存（[[TECSCDE-DT外部仕様 - 04 コンポーネント図の表現|4.9.x]]）、`_CDL_FILES.txt` の上書き確認と並び順（[[TECSCDE-DT外部仕様 - 05B CDLファイル一覧の作成と自動配置|5.3.y]]）、tecsgen 相当機能の外部実行との関係（併用）・仮想内容の表示（[[TECSCDE-DT外部仕様 - 08 CDL 連携|8.5]]）。
 
 ## Context
 

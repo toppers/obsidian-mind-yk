@@ -11,12 +11,19 @@ Usage: nlm auth [OPTIONS] COMMAND [ARGS]...
 
  Authentication status
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ status  Show authentication status and profile information.
-│ list    List all available profiles.
-│ delete  Delete a profile and its credentials.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| status | Show authentication status and profile information. |
+| list | List all available profiles. |
+| delete | Delete a profile and its credentials. |
 
 
 

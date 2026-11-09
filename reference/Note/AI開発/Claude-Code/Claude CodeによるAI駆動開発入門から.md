@@ -84,21 +84,14 @@ tags:
  ---
  Server Actions (app/actions.ts)
 
- ┌───────────────────────────┬─────────────────────────────────────────┐
- │          Action           │                  処理                   │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ getTodos(filter)          │ all/active/completed でフィルタして返す │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ createTodo(formData)      │ 新規作成, revalidatePath('/')           │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ toggleTodo(id, completed) │ 完了状態を反転                          │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ deleteTodo(id)            │ 削除                                    │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ updateTodo(id, title)     │ タイトル更新                            │
- ├───────────────────────────┼─────────────────────────────────────────┤
- │ clearCompleted()          │ 完了済み一括削除                        │
- └───────────────────────────┴─────────────────────────────────────────┘
+| Action | 処理 |
+| --- | --- |
+| getTodos(filter) | all/active/completed でフィルタして返す |
+| createTodo(formData) | 新規作成, revalidatePath('/') |
+| toggleTodo(id, completed) | 完了状態を反転 |
+| deleteTodo(id) | 削除 |
+| updateTodo(id, title) | タイトル更新 |
+| clearCompleted() | 完了済み一括削除 |
 
  ---
  Component 設計
@@ -218,21 +211,14 @@ tags:
      ---
      Server Actions (app/actions.ts)
 
-     ┌───────────────────────────┬─────────────────────────────────────────┐
-     │          Action           │                  処理                   │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ getTodos(filter)          │ all/active/completed でフィルタして返す │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ createTodo(formData)      │ 新規作成, revalidatePath('/')           │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ toggleTodo(id, completed) │ 完了状態を反転                          │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ deleteTodo(id)            │ 削除                                    │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ updateTodo(id, title)     │ タイトル更新                            │
-     ├───────────────────────────┼─────────────────────────────────────────┤
-     │ clearCompleted()          │ 完了済み一括削除                        │
-     └───────────────────────────┴─────────────────────────────────────────┘
+| Action | 処理 |
+| --- | --- |
+| getTodos(filter) | all/active/completed でフィルタして返す |
+| createTodo(formData) | 新規作成, revalidatePath('/') |
+| toggleTodo(id, completed) | 完了状態を反転 |
+| deleteTodo(id) | 削除 |
+| updateTodo(id, title) | タイトル更新 |
+| clearCompleted() | 完了済み一括削除 |
 
      ---
      Component 設計
@@ -296,9 +282,9 @@ tags:
 ● PowerShell(Set-Location E:\Ccur\webapp\todoa && npx create-next-app@latest . --typescript --tailwind --eslint --app
             --no-git --no-src-dir --import-alias "@/*" --yes 2>&1)
   ⎿  Waiting…
-─────────────────────────────────────────────────────────────────────────────────────────────── nextjs-todo-app-setup ──
+─────────────── nextjs-todo-app-setup ──
 
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────
  PowerShell command
 
    Set-Location E:\Ccur\webapp\todoa && npx create-next-app@latest . --typescript --tailwind --eslint --app --no-git

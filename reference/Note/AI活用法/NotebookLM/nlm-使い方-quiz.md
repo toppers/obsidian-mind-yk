@@ -11,10 +11,17 @@ tags:
 
  Create quizzes
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ create  Create a quiz from notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| create | Create a quiz from notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm quiz create --help
 
@@ -22,15 +29,22 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm quiz create --h
 
  Create a quiz from notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --count       -c      INTEGER  Number of questions [default: 2]
-│ --difficulty  -d      INTEGER  Difficulty 1-5 (1=easy, 5=hard) [default: 2]
-│ --source-ids  -s      TEXT     Comma-separated source IDs
-│ --confirm     -y               Skip confirmation
-│ --profile     -p      TEXT     Profile to use
-│ --help                         Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --count | -c | INTEGER | Number of questions [default: 2] |
+| --difficulty | -d | INTEGER | Difficulty 1-5 (1=easy, 5=hard) [default: 2] |
+| --source-ids | -s | TEXT | Comma-separated source IDs |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

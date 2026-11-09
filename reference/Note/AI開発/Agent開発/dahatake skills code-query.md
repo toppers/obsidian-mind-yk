@@ -45,12 +45,13 @@ profile が1つだけなら --profile 省略可。複数ある場合は --profil
 3. 検索モード（--mode auto が既定で自動判定）
 
 
-│     探したいもの     │ 判定されるモード │
-│ FR-CQ-06 などのID    │ trace            │
-│ 関数名・クラス名     │ symbol           │
-│ 記号を含む部分文字列 │ substr           │
-│ 正規表現             │ --re "<pattern>" │
-│ 自然文・複数語       │ bm25             │
+| 探したいもの | 判定されるモード |
+| --- | --- |
+| FR-CQ-06 などのID | trace |
+| 関数名・クラス名 | symbol |
+| 記号を含む部分文字列 | substr |
+| 正規表現 | --re "<pattern>" |
+| 自然文・複数語 | bm25 |
 
 
 0件時は自動フォールバック（bm25→or-fallback→path一致）する。結果の route/match フィールドで経路を確認できる。

@@ -195,21 +195,26 @@ export async function openFromPath(store: AppStore, gateway: FileGateway, path: 
 // main/app-settings.ts
 export interface AppSettings {
   readonly fileBrowserRoot?: string;
+  readonly lastSession?: SessionSnapshot; // 共有型と4項目の詳細は7H.1節
 }
 
 export async function loadAppSettings(): Promise<AppSettings> {
   try {
     const raw = await fs.promises.readFile(settingsPath(), 'utf-8');
-    return JSON.parse(raw) as AppSettings;
+    return normalizeAppSettings(JSON.parse(raw)); // 7H.1節の旧設定互換と項目型検査
   } catch {
     return {}; // 初回起動・壊れた設定ファイルはいずれも「設定なし」として扱う
   }
 }
 
-export async function saveAppSettings(settings: AppSettings): Promise<void> {
-  const dir = settingsDir();
-  await fs.promises.mkdir(dir, { recursive: true });
-  await fs.promises.writeFile(path.join(dir, 'settings.json'), JSON.stringify(settings));
+export async function saveAppSettings(patch: Partial<AppSettings>): Promise<void> {
+  // すべての設定保存で共用するmain側キュー。読込・マージ・書込を直列化する。
+  return enqueueSettingsUpdate(async () => {
+    const current = await loadAppSettings();
+    const dir = settingsDir();
+    await fs.promises.mkdir(dir, { recursive: true });
+    await fs.promises.writeFile(path.join(dir, 'settings.json'), JSON.stringify({ ...current, ...patch }));
+  });
 }
 
 /**
@@ -232,6 +237,8 @@ function settingsPath(): string {
 ```
 
 設定ファイルはCDEファイルと異なり壊れても実害が「記憶が1件失われる」程度に留まるため、第7章7.1節の`writeAtomic`のような一時ファイル＋リネームは要求しない。`app.getPath('userData')`と異なりLocal AppData配下の`tecscde-dt-el/`ディレクトリはElectronが自動生成しないため、`saveAppSettings()`は書き込み前に`mkdir(..., { recursive: true })`する。
+
+**2026-11-07、監査#9の関連契約更新**: 上の保存例は設定全体の置換から部分更新へ改めた。フォルダ設定の更新で`lastSession`や利用者設定・未知項目を消さず、セッション保存も逆にフォルダ設定を保持する。共有型`SessionSnapshot`、旧設定の正規化、保存キューと復元手順は[[TECSCDE-DT-EL内部仕様 - 07H セッション保存と復元|7H]]で定める。新しい型・キューを含む例は設計更新であり、実装済みを示すものではない。
 
 **保存のタイミング**: `chooseFolder()`が成功するたびに（＝フォルダを選び直すたびに）保存する。「終了時にまとめて保存」ではなく都度保存とするのは、異常終了（クラッシュ・強制終了）でも直前の選択が残るようにするため。
 
@@ -311,6 +318,8 @@ export class FileBrowserView {
 
 `AppShell`（7.6.5節）は起動時に`gateway.onRestoreFileBrowserRoot((path) => void this.fileBrowser.restoreRoot(path))`を一度だけ登録する。
 
+通常クリックの非同期openも[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I.7]]へ従う。要求・文書世代とrevisionを最初のawait前に固定し、確認後に取り直さない。本章の旧open例だけで最新性検査を満たすとはしない（三者監査#6、2026-11-09）。
+
 ## Related
 
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|TECSCDE-DT-EL内部仕様 第7C章（7.7節、前回セッション復元・追加読み込み・消去ボタン・オプションファイル読込・import統一の設計）]]
@@ -322,3 +331,7 @@ export class FileBrowserView {
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 09-18 読み込みと設定]] — 該当する監査項目の契約補足（2026-11-09）。
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 29-38 保存と画面]] — 該当する監査項目の契約補足（2026-11-09）。

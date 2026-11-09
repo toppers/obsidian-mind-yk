@@ -24,9 +24,8 @@ tags:
    ✓ Skills (view, create, edit)
 
 
-┌─────────────────────────────────────────────────────────┐
-│              ✓ Setup Complete!                          │
-└─────────────────────────────────────────────────────────┘
+| ✓ Setup Complete! |
+| --- |
 
 📁 All your files are in ~/AppData\Local\hermes/:
 
@@ -34,7 +33,7 @@ tags:
    API Keys:  C:\Users\ykomi\AppData\Local\hermes\.env
    Data:      C:\Users\ykomi\AppData\Local\hermes/cron/, sessions/, logs/
 
-────────────────────────────────────────────────────────────
+─────────────────────────────────
 
 📝 To edit your configuration:
 
@@ -53,7 +52,7 @@ tags:
    nano C:\Users\ykomi\AppData\Local\hermes\config.yaml
    nano C:\Users\ykomi\AppData\Local\hermes\.env
 
-────────────────────────────────────────────────────────────
+─────────────────────────────────
 
 🚀 Ready to go!
 

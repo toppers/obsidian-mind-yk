@@ -11,31 +11,38 @@ tags:
 
  NotebookLM CLI - Command-line interface for Google NotebookLM
 
-╭─ Options
-│ --version             -v        Show version and exit
-│ --ai                            Output AI-friendly documentation for this CLI
-│ --install-completion            Install completion for the current shell.
-│ --show-completion               Show completion for the current shell, to copy it or customize the installation.
-│ --help                          Show this message and exit.
-╭─ Commands
-│ login        Authenticate with NotebookLM.
-│ notebook     Manage notebooks
-│ source       Manage sources
-│ chat         Configure chat settings
-│ studio       Manage studio artifacts
-│ research     Research and discover sources
-│ alias        Manage ID aliases
-│ config       Manage configuration
-│ audio        Create audio overviews
-│ report       Create reports
-│ quiz         Create quizzes
-│ flashcards   Create flashcards
-│ mindmap      Create and manage mind maps
-│ slides       Create slide decks
-│ infographic  Create infographics
-│ video        Create video overviews
-│ data-table   Create data tables
-│ auth         Authentication status
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --version | -v |  | Show version and exit |
+| --ai |  |  | Output AI-friendly documentation for this CLI |
+| --install-completion |  |  | Install completion for the current shell. |
+| --show-completion |  |  | Show completion for the current shell, to copy it or customize the installation. |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| login | Authenticate with NotebookLM. |
+| notebook | Manage notebooks |
+| source | Manage sources |
+| chat | Configure chat settings |
+| studio | Manage studio artifacts |
+| research | Research and discover sources |
+| alias | Manage ID aliases |
+| config | Manage configuration |
+| audio | Create audio overviews |
+| report | Create reports |
+| quiz | Create quizzes |
+| flashcards | Create flashcards |
+| mindmap | Create and manage mind maps |
+| slides | Create slide decks |
+| infographic | Create infographics |
+| video | Create video overviews |
+| data-table | Create data tables |
+| auth | Authentication status |
 
 
 

@@ -11,13 +11,20 @@ Usage: nlm alias [OPTIONS] COMMAND [ARGS]...
 
  Manage ID aliases
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ set     Create or update an alias for an ID.
-│ get     Get the value of an alias.
-│ list    List all aliases.
-│ delete  Delete an alias.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| set | Create or update an alias for an ID. |
+| get | Get the value of an alias. |
+| list | List all aliases. |
+| delete | Delete an alias. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias set --help
 
@@ -25,13 +32,20 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias set --hel
 
  Create or update an alias for an ID.
 
-╭─ Arguments
-│ *    name       TEXT  Alias name (e.g. 'my-notebook') [required]
-│ *    value      TEXT  ID value (e.g. valid UUID) [required]
-╭─ Options
-│ --type     -t      TEXT  Type: notebook, source, artifact, task (auto-detected if not specified)
-│ --profile  -p      TEXT  Profile to use for detection
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | name | TEXT | Alias name (e.g. 'my-notebook') [required] |
+| * | value | TEXT | ID value (e.g. valid UUID) [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --type | -t | TEXT | Type: notebook, source, artifact, task (auto-detected if not specified) |
+| --profile | -p | TEXT | Profile to use for detection |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias get --help
 
@@ -39,10 +53,17 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias get --hel
 
  Get the value of an alias.
 
-╭─ Arguments
-│ *    name      TEXT  Alias name [required]
-╭─ Options
-│ --help          Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | name | TEXT | Alias name [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias list --help
 
@@ -50,8 +71,11 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias list --he
 
  List all aliases.
 
-╭─ Options
-│ --help          Show this message and exit.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias delete --help
 
@@ -59,11 +83,18 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm alias delete --
 
  Delete an alias.
 
-╭─ Arguments
-│ *    name      TEXT  Alias name [required]
-╭─ Options
-│ --confirm  -y        Skip confirmation
-│ --help               Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | name | TEXT | Alias name [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --confirm | -y |  | Skip confirmation |
+| --help |  |  | Show this message and exit. |
 
 
 

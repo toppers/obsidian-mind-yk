@@ -39,19 +39,13 @@ OLLAMA_ENDPOINT
 
   各プロバイダーの対応環境変数
 
-  ┌──────────────┬────────────────────────────────┐
-  │ プロバイダー │            環境変数            │
-  ├──────────────┼────────────────────────────────┤
-  │ ollama       │ OLLAMA_MODEL + OLLAMA_ENDPOINT │
-  ├──────────────┼────────────────────────────────┤
-  │ openai       │ OPENAI_API_KEY                 │
-  ├──────────────┼────────────────────────────────┤
-  │ anthropic    │ ANTHROPIC_API_KEY              │
-  ├──────────────┼────────────────────────────────┤
-  │ google       │ GOOGLE_API_KEY                 │
-  ├──────────────┼────────────────────────────────┤
-  │ local_gguf   │ LOCAL_GGUF_MODEL_PATH          │
-  └──────────────┴────────────────────────────────┘
+| プロバイダー | 環境変数 |
+| --- | --- |
+| ollama | OLLAMA_MODEL + OLLAMA_ENDPOINT |
+| openai | OPENAI_API_KEY |
+| anthropic | ANTHROPIC_API_KEY |
+| google | GOOGLE_API_KEY |
+| local_gguf | LOCAL_GGUF_MODEL_PATH |
 
   例
 

@@ -11,11 +11,18 @@ Usage: nlm studio [OPTIONS] COMMAND [ARGS]...
 
  Manage studio artifacts
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ status  List all studio artifacts and their status.
-│ delete  Delete a studio artifact permanently.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| status | List all studio artifacts and their status. |
+| delete | Delete a studio artifact permanently. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm studio status --help
 
@@ -23,13 +30,20 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm studio status -
 
  List all studio artifacts and their status.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --full     -a            Show all details
-│ --json     -j            Output as JSON
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --full | -a |  | Show all details |
+| --json | -j |  | Output as JSON |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm studio delete --help
 
@@ -37,13 +51,20 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm studio delete -
 
  Delete a studio artifact permanently.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-│ *    artifact_id      TEXT  Artifact ID to delete [required]
-╭─ Options
-│ --confirm  -y            Skip confirmation
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+| * | artifact_id | TEXT | Artifact ID to delete [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

@@ -11,10 +11,17 @@ tags:
 
  Create reports
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ create  Create a report from notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| create | Create a report from notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm report create --help
 
@@ -22,17 +29,23 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm report create -
 
  Create a report from notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --format      -f      TEXT  Format: 'Briefing Doc', 'Study Guide', 'Blog Post', 'Create Your Own'
-│                             [default: Briefing Doc]
-│ --prompt              TEXT  Custom prompt (required for 'Create Your Own')
-│ --language            TEXT  BCP-47 language code [default: en]
-│ --source-ids  -s      TEXT  Comma-separated source IDs
-│ --confirm     -y            Skip confirmation
-│ --profile     -p      TEXT  Profile to use
-│ --help                      Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --format | -f | TEXT | Format: 'Briefing Doc', 'Study Guide', 'Blog Post', 'Create Your Own' [default: Briefing Doc] |
+| --prompt |  | TEXT | Custom prompt (required for 'Create Your Own') |
+| --language |  | TEXT | BCP-47 language code [default: en] |
+| --source-ids | -s | TEXT | Comma-separated source IDs |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

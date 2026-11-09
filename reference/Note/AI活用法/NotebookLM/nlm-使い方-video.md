@@ -11,10 +11,17 @@ tags:
 
  Create video overviews
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ create  Create a video overview from notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| create | Create a video overview from notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm video create --help
 
@@ -22,19 +29,24 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm video create --
 
  Create a video overview from notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --format      -f      TEXT  Format: explainer, brief [default: explainer]
-│ --style       -s      TEXT  Visual style: auto_select, classic, whiteboard, kawaii, anime, watercolor, retro_print,
-│                             heritage, paper_craft
-│                             [default: auto_select]
-│ --language            TEXT  BCP-47 language code [default: en]
-│ --focus               TEXT  Optional focus topic
-│ --source-ids          TEXT  Comma-separated source IDs
-│ --confirm     -y            Skip confirmation
-│ --profile     -p      TEXT  Profile to use
-│ --help                      Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --format | -f | TEXT | Format: explainer, brief [default: explainer] |
+| --style | -s | TEXT | Visual style: auto_select, classic, whiteboard, kawaii, anime, watercolor, retro_print, heritage, paper_craft [default: auto_select] |
+| --language |  | TEXT | BCP-47 language code [default: en] |
+| --focus |  | TEXT | Optional focus topic |
+| --source-ids |  | TEXT | Comma-separated source IDs |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

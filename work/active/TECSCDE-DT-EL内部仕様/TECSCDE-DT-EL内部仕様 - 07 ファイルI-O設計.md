@@ -25,7 +25,7 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 7 of 
 ### 7.1 `FileService`クラス（mainプロセス）
 
 > [!note] `openDialog()`の撤回（2026-09-21）
-> 複数ファイルを同時選択するOSネイティブの「開く」ダイアログは、ファイルブラウザと役割が重複するため撤回した。コマンドライン引数・ファイル関連付けで複数ファイルが渡る場合は最後を主ファイル、他を追加読み込みファイルとする。システム定義CDL（`-S`配下、第7C章7.7.4節）を除く、ユーザ定義CDL由来のセルはどのファイルでも編集可能とする（DT外部仕様第5章）。
+> 複数ファイルを同時選択するOSネイティブの「開く」ダイアログは、ファイルブラウザと役割が重複するため撤回した。**コマンドライン引数は7.4節の先頭検索に従い、最初の対象ファイル1件だけを読み込む**（2026-11-07、監査#5。旧要約の「最後を主ファイル」を訂正）。ファイル関連付けで複数ファイルが渡る場合の従来の規定と、`.tecsgen-opts`内で列挙されたCDLの最後を主ファイルとする規定は、コマンドライン引数の1件選択とは区別する。システム定義CDL（`-S`配下、第7C章7.7.4節）を除く、ユーザ定義CDL由来のセルはどのファイルでも編集可能とする（DT外部仕様第5章）。
 
 ```ts
 // main/file-service.ts
@@ -46,8 +46,9 @@ class FileService {
     return result.filePath;
   }
 
-  async exportFile(path: string, data: Buffer | string): Promise<void> {
-    await this.writeAtomic(path, data);
+  async exportFile(path: string, data: ExportData): Promise<void> {
+    const content = typeof data === 'string' ? data : Buffer.from(data);
+    await this.writeAtomic(path, content); // Bufferへの変換はmain内だけ
   }
 
   private async writeAtomic(path: string, content: string | Buffer): Promise<void> {
@@ -68,7 +69,7 @@ const fileService = new FileService(mainWindow);
 
 ipcMain.handle('file:save', (_e, path: string, content: string) => fileService.save(path, content));
 ipcMain.handle('file:saveAs', (_e, content: string, suggestedName: string) => fileService.saveAsDialog(suggestedName, content));
-ipcMain.handle('file:export', (_e, path: string, data: Buffer | string) => fileService.exportFile(path, data));
+ipcMain.handle('file:export', (_e, path: string, data: ExportData) => fileService.exportFile(path, data));
 ```
 
 ### 7.3 `FileGateway`クラス（renderer）
@@ -76,40 +77,33 @@ ipcMain.handle('file:export', (_e, path: string, data: Buffer | string) => fileS
 第2章2.4節で示したとおり、preloadが`window.tecscde.file`として公開するAPIを、rendererの`FileGateway`が薄くラップする。
 
 ```ts
-// renderer/file-gateway.ts
+// renderer/gateways/file-gateway.ts（ExportDataはsharedから型だけをimport）
 class FileGateway {
   save(path: string, content: string): Promise<void> { return window.tecscde.file.save(path, content); }
   saveAs(content: string, suggestedName: string): Promise<string | null> { return window.tecscde.file.saveAs(content, suggestedName); }
-  export(path: string, data: Buffer | string): Promise<void> { return window.tecscde.file.export(path, data); }
+  export(path: string, data: ExportData): Promise<void> { return window.tecscde.file.export(path, data); }
 }
 ```
 
-`DirtyTracker`クラス（未保存状態の管理、`History.past.length`基準）は[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様第7章]]の設計を**そのまま踏襲、変更なし**——プロセス境界とは無関係な純粋なrenderer側の状態である。
+`DirtyTracker`は[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J]]のソース別保存状態と一意な履歴位置の契約へ変更する（2026-11-08、監査#21）。TS内部仕様第7章の`History.past.length`だけによる判定は継承しない。保存成功した状態だけをbaselineへ採用し、Undo後の分岐、保存中新編集、一部失敗を現在の保存対象状態との比較で判定する。UIとmainの終了確認も同じ結果を使う。三者監査#3で確認した現行コード`5cf2d85`は履歴長判定と完了時の`markSaved()`を使っており、この確定契約は未反映。保存チケット・ソース別baseline・保存先別キューの責務と対応状況は7J.0・7J.4・7J.7を正とする。
+
+**exportの型境界（2026-11-08、監査#28）**: `ExportData = string | Uint8Array`を`shared/ipc-types.ts`で定義し、renderer・preload・mainのIPC受信と`FileService.exportFile`で共用する。mainは値を検査してから受け取り、バイト列を`Buffer.from(data)`へ変換し、内部の`writeAtomic(string | Buffer)`へ渡す。preloadは変換せず中継し、rendererからNodeのBufferを要求しない。詳細と確認条件は[[TECSCDE-DT-EL内部仕様 - 07F エクスポート設計（たたき台）|7F.7.10.7]]を参照。実装適合は未確認。
 
 ### 7.4 起動時のファイルオープン経路（コマンドライン引数・ファイル関連付け）
 
-[[TECSCDE-DT外部仕様]]5.3節が新設した2経路（コマンドライン引数・ファイル関連付け）は、mainプロセスの起動処理で扱う。
+**2026-11-08、監査#22で入口を統一**: 詳細な受信・コード例は[[TECSCDE-DT-EL内部仕様 - 07K 関連付け入力の収集と一括オープン|7K]]を正とする。CLIは先頭の対象1件、関連付けは境界付きの複数パス列を受け、単数の`pendingOpenPath`に複数イベントを上書きする旧例は使わない。
 
 ```ts
-// main/index.ts
-let pendingOpenPath: string | null = null;
-
-// Windows/Linux: コマンドライン引数、または .cde ファイルの「アプリで開く」
-const argPath = process.argv.find(a => a.endsWith('.cde') || a.endsWith('.cdl'));
-if (argPath) pendingOpenPath = argPath;
-
-// macOS: Dockアイコンへのドロップ、Finderでの「このアプリで開く」
-app.on('open-file', (event, path) => {
-  event.preventDefault();
-  pendingOpenPath = path;
-});
+// mainの入口。補助関数とOSアダプタは7Kで定義する契約案。
+const isStartupFile = (path: string): boolean => /\.(?:cde|cdl|tecsgen-opts)$/i.test(path);
+const invocation = parseLaunchOpenRequest(applicationArgs, process.cwd());
+// kind==='cli'だけ対象の最初の1件をfindで選ぶ。
+// kind==='association'は受信順のパス列と要求境界を保持する。
 ```
 
-`pendingOpenPath`は、rendererプロセスの初期化完了後にIPC（`app:pendingOpenPath`のような専用チャネル、または起動時に一度だけ送るイベント）で渡し、`FileGateway`を介さず直接`FileService.openPath(path)`（`openDialog`のダイアログを介さない版、7.1節に追加が必要）を呼んで読み込む。
+要求はrenderer準備前にもキューで保持する。通常CDLの関連付けバッチは最後を主ファイルとし、役割・sourceOrderを[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I]]へ明示して一括読み込みする。CLI等の単独optsはファイル内の列挙を7Iへ渡す。初期受付が確定するまでlastSession／samplesへ先行fallbackせず、初回だけ`app:bootstrap`、既起動時は`app:openRequest`を使う。形式識別は大小文字非区別とし、元のパス表記は変更しない（監査#31の契約を維持）。
 
-> [!note] 実装での設計更新（2026-09-10 / 2026-09-16）
-> - **起動時ドキュメント供給（`app:bootstrap`）**: renderer からの `file://` fetch が CORS 制約を受けるため、Main プロセスが `did-finish-load` 後に `app:bootstrap` IPC で初期ドキュメントのソーステキスト群（CLI 指定ファイル、または `public/samples`）を 1 回だけプッシュ供給する方式を採用。
-> - **tree-sitter WASM ロード**: 同じく renderer からの直接 fetch が困難なため、Main プロセスが `fs`（asar 透過）で WASM バイナリを読み出し、IPC 経由で renderer へバイト列を渡して初期化する構成を採用。
+macOSはOSの配列通知を受ける追加アダプタを設計し、標準open-fileにバッチ終端があるとは仮定しない。Windows/Linuxの起動モード識別・既起動instanceへの転送も7Kに従う。新入口の実装適合は未確認。
 
 ### 7.5 インポート参照先の解決
 
@@ -125,7 +119,7 @@ app.on('open-file', (event, path) => {
 
 ### 7.8 入力の文字コードと非UTF-8入力（2026-10-21、ソースの確認に基づく。同日、外部仕様を実装に合わせて改訂）
 
-**外部仕様の規定**（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|DT外部仕様5.1節]]、2026-10-21改訂。以前は「UTF-8に限る」としていた）: 読み込みはUTF-8を優先し、できなければShift_JIS、EUC-JPの順で復号する。復号できた符号は通知しない。どれでも復号できなければ読み込めない（参照先なら`W-UNRESOLVED-REF-FILE`）。保存・書き出しは常にUTF-8。判定は復号の成否なので誤判定による文字化けがありうる。旧世代の`__location_information__`形式は、エラーにせず読み込んで無視する（外部仕様5.1節、2026-10-22改訂）。
+**外部仕様の規定**（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|DT外部仕様5.1節]]、2026-10-21改訂。以前は「UTF-8に限る」としていた）: 読み込みはUTF-8を優先し、できなければShift_JIS、EUC-JPの順で復号する。復号できた符号は通知しない。三つとも失敗した通常CDLは読み込めず、参照先なら`W-UNRESOLVED-REF-FILE`とする。ただし`.tecsgen-opts`は、下表と7.7.4節のとおりUTF-8で読み直して解析を続ける（2026-11-07、監査#7。外部仕様の要約にも経路別の例外を明記）。保存・書き出しは常にUTF-8。判定は復号の成否なので誤判定による文字化けがありうる。旧世代の`__location_information__`形式は、エラーにせず読み込んで無視する（外部仕様5.1節、2026-10-22改訂）。
 
 **実装**（`main/file-service.ts`の`decodeBuffer`、`main/tecsgen-runner.ts`の`generatedCdlSources`の読解。テストは読んでいない）は、この規定と一致する: ファイルのバイト列を、`TextDecoder`の`fatal`指定で **UTF-8 → Shift_JIS → EUC-JP** の順に試し、最初に成功したものを文字列にする。
 
@@ -147,59 +141,19 @@ app.on('open-file', (event, path) => {
 > 3. **7.5.2節の`not-utf8`の設計**: 当初の`fs.readFile(path, "utf-8")`は不正バイトを置換文字にするだけで例外にならない（7D）。実装は`TextDecoder`の`fatal`で検出する形に変わっており、`not-utf8`になるのは三つの符号のいずれでも復号できないファイルに限られる。
 > 4. ~~**`__location_information__`形式**: 検出してファイル単位のエラーにする処理が無い~~ → **解決（2026-10-22）**: 外部仕様を「エラーにせず読み込んで無視する」に改め、実装を揃えた（上の「読み飛ばし」）。
 
-### 7.9 ウィンドウを閉じるときの未保存確認（2026-10-22、設計。同日実装し、実機で確認済み）
+### 7.9 終了確認と保存待機（2026-11-09、三者監査#4）
 
-**外部仕様の規定**（[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|DT外部仕様3.1節]]、[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|5.7節]]、2026-10-22改訂）: 未保存の変更がある状態でウィンドウを閉じようとしたら、OSネイティブの確認ダイアログ（保存せずに終了／キャンセル）を出す。ブラウザの`beforeunload`には依存しない。
+[[TECSCDE-DT外部仕様 - 05 ファイル操作|外部5.7]]に従い、通常closeを同期中断し、rendererの保存結果反映後の最新dirtyと、mainの受理済み書込完了を確認してから閉じる。**確定契約は[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J.9]]を正とする**。shared／preload／gateway／mainの対応は第10章10.8に揃える。
 
-**従来の実装の問題**（実機確認、2026-10-22。下の設計で解消）: `renderer/app/shell.ts`の`bindBeforeUnload`は、`isDirty()`が真のとき`beforeunload`で`preventDefault()`と`returnValue = ""`を行うだけで、mainにも対応する処理が無い。実機では、未保存の変更があっても閉じるボタンで確認なしに終了し、変更が失われた。`beforeunload`が止まらない理由は未調査だが、本設計は`beforeunload`に頼らないので、原因が分からなくても成立する。
+- `window:setDirty`は通常通知として残すが、falseというだけでcloseを通さない。queryId付き`window:requestCloseState`／`window:closeState`で最新状態を照合する。
+- 編集と新規要求の適用を止めても、開始済み保存の完了・checkpoint反映は進める。rendererのタイムアウトでmainの保存待機を打ち切らない。
+- dirtyまたは状態不明は「保存せずに終了」「キャンセル」で確認し、キャンセルを既定にする。`window:cancelCloseState`で通常操作へ戻し、待機中の保存成功は維持する。
+- 閉じる許可は1回の終了トランザクションに限定し、古い回答・別ウィンドウ・連続closeで誤許可や二重確認をしない。`beforeunload`は使わず、止められないOS終了は対象外。
 
-**方針**: 確認はmainのウィンドウの`close`イベントで行う。rendererは未保存かどうかを、変わるたびにmainへ知らせておく（`close`の中でrendererへ問い合わせて待つと、`close`の同期的な中断と非同期の応答が噛み合わないため）。
+**従来版の記録（2026-10-22）**: cached dirtyとネイティブ2択は実装・実機確認済みだった。従来はfalse／通知なしなら即closeし、応答不能時も最後の通知へ依存した。旧コード例・旧テストはこの方式だけの記録であり、新契約の実装例・受入条件にはしない。
 
-```ts
-// main/close-guard.ts（新規）。ウィンドウごとに1つ。
-class CloseGuard {
-  private dirty = false;      // rendererが最後に知らせた値
-  private confirmed = false;  // 利用者が「保存せずに終了」を選んだ
-  private asking = false;     // ダイアログ表示中（二重表示を防ぐ）
+**現行確認（2026-11-09）**: `5cf2d85`は旧方式のままで、保存待機・問い合わせ・取消通知は未実装。`main/close-guard.ts`、mainのIPC配線・書込キュー、shared／preload／`WindowGateway`、rendererの終了応答・保存コーディネータの修正が必要。
 
-  constructor(private readonly win: BrowserWindow) {
-    win.on('close', (event) => {
-      if (!this.dirty || this.confirmed) return;   // そのまま閉じる
-      event.preventDefault();
-      void this.confirmAndClose();
-    });
-  }
-
-  setDirty(dirty: boolean): void { this.dirty = dirty; }
-
-  private async confirmAndClose(): Promise<void> {
-    if (this.asking) return;
-    this.asking = true;
-    try {
-      const result = await dialog.showMessageBox(this.win, {
-        type: 'warning',
-        buttons: ['保存せずに終了', 'キャンセル'],
-        defaultId: 1, cancelId: 1,
-        message: '未保存の変更があります',
-        detail: '保存せずに終了すると、現在の変更内容は失われます。',
-      });
-      if (result.response === 0) { this.confirmed = true; this.win.close(); }
-    } finally { this.asking = false; }
-  }
-}
-```
-
-- **IPC**: rendererからmainへ一方向の`window:setDirty`（`ipcRenderer.send`。応答は不要）。`ipcMain.on`で受け、送信元の`webContents`に対応する`CloseGuard.setDirty`を呼ぶ。`createWindow`が`CloseGuard`を作って保持する（`FileService`と同じくウィンドウごと）。preloadの公開は`window.tecscde.window.setDirty(dirty: boolean)`。
-- **renderer**: `AppShell`は`bindBeforeUnload`を**廃止**し、代わりにストアの購読（`store.subscribe`）で`isDirty()`の値が変わったときだけ`setDirty`を送る。起動直後の`false`も送る。ファイルの読み込み・新規作成・保存でも`isDirty()`が変わるので、同じ経路で届く。`beforeunload`は残さない——残すと`close`の確認後の`win.close()`でも`beforeunload`が再び走り、終了が止まるか、挙動が二重になる。
-- **経路の網羅**: OSの閉じるボタン、`app.quit()`による終了、将来のメニューの終了は、いずれもウィンドウの`close`を通るので、同じ確認になる（`app.quit()`が各ウィンドウの`close`を呼び、`preventDefault`で終了が中断されることは、Electronの仕様の理解に基づく。実機では未確認）。`before-quit`は使わない（ウィンドウが複数ある場合に、どのウィンドウの未保存かを区別できないため。現在は1ウィンドウのみ）。
-- **ダイアログの選択肢**: 7.6.4節の`confirmDiscardChanges`と同じく2択（保存せずに終了／キャンセル）。「保存してから終了」の3択は採らない。文言はファイルを開く前の確認と揃える。
-- **フォールバック**: rendererが応答しない・クラッシュしたときは、最後に知らせた`dirty`で判断する。知らせが一度も無ければ`false`（確認せずに閉じる）。OSのシャットダウンなど、アプリが止められない終了は対象外。
-- **実装**（2026-10-22）: `main/close-guard.ts`（`CloseGuard`）、`main/index.ts`（`createWindow`での生成と`ipcMain.on("window:setDirty")`）、`preload/index.mts`と`shared/ipc-types.ts`（`window.tecscde.window.setDirty`）、`renderer/gateways/window-gateway.ts`、`renderer/app/shell.ts`（`bindDirtyReport`。`bindBeforeUnload`は廃止）。実機で、未保存での閉じる操作に確認が出ること、「キャンセル」で閉じないこと、「保存せずに終了」で終了すること、保存後は確認なしで閉じることを確認した。
-- **テスト**: `dirty=false`のとき`close`が通る／`dirty=true`で`close`が止まりダイアログが出る／「保存せずに終了」で閉じる／「キャンセル」で閉じない／ダイアログ表示中の二重`close`で二重表示しない／`setDirty`が送信元のウィンドウにだけ効く。
-
-> [!note] 外部仕様との関係と残る論点
-> 1. 外部仕様3.1節は「メニューの File > Exit」を終了経路に挙げるが、現行実装は`Menu.setApplicationMenu(null)`（`main/index.ts`）でアプリケーションメニューを外している。終了メニューは未実装である。メニューを設けた場合も、終了は上のとおり`close`を通る。
-> 2. `beforeunload`が確認なしに終了した原因（ソース上は`beforeunload`の登録も`isDirty()`も結線されている）は未調査。調べる場合は、`beforeunload`の呼び出しの有無、Electronの既定の挙動、ユーザー操作の有無を見る。
 ### 7.10 エクスポート（SVG・PNG・PDF）（2026-10-22、たたき台）
 
 設計のたたき台は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07F エクスポート設計（たたき台）|第7F章]]に置いた。renderer で SVG を組み立て、PNG は canvas、PDF は main の非表示ウィンドウ（`printToPDF`）で生成する案。決定ではなく、未決事項は第7F章の末尾にある。
@@ -212,9 +166,11 @@ class CloseGuard {
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|TECSCDE-DT-EL内部仕様 第7C章（7.7節、読み込み経路の統合の分離先）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様 第5章（本章が実装する外部仕様）]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 03 画面構成|TECSCDE-DT外部仕様 第3章（3.5.1節、7.6節が実装するファイルブラウザの画面規定）]]
-- [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様 第7章（DirtyTrackerの一次情報源、FileIOStrategyは本章で廃止）]]
+- [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 07 ファイルI-O設計|TECSCDE-TS内部仕様 第7章（元の設計。DirtyTrackerは7Jで置き換え、FileIOStrategyは本章で廃止）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 02 モジュール構成とプロセス境界|TECSCDE-DT-EL内部仕様 第2章（プロセス配置の根拠）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|TECSCDE-DT-EL内部仕様 第11章（11.2節#4、ファイルブラウザ採用の決定記録）]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様（目次）]]
 
 ---
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 39-48 編集と表示]] — 該当する監査項目の契約補足（2026-11-09）。

@@ -1,0 +1,4 @@
+collections:
+  my-topic:
+    path: ./wiki
+    pattern: "**/*.md"

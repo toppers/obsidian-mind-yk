@@ -14,12 +14,15 @@ tags:
  Default: Uses Chrome DevTools Protocol to extract cookies automatically.
  Use --manual to import cookies from a file.
 
-╭─ Options
-│ --manual   -m            Manually provide cookies from a file
-│ --check                  Only check if current auth is valid
-│ --profile  -p      TEXT  Profile name to save credentials to [default: default]
-│ --file     -f      TEXT  Path to file containing cookies (for manual mode)
-│ --help                   Show this message and exit.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --manual | -m |  | Manually provide cookies from a file |
+| --check |  |  | Only check if current auth is valid |
+| --profile | -p | TEXT | Profile name to save credentials to [default: default] |
+| --file | -f | TEXT | Path to file containing cookies (for manual mode) |
+| --help |  |  | Show this message and exit. |
 
 
 

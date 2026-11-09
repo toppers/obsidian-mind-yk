@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT-EL内部仕様書 第9章（tecsgen連携設計）— mainプロセスのTecsgenRunnerクラス（child_process.execFile）とrenderer側TecsgenGatewayによるElectron固有のサブプロセス実行実装。2026-09-21に-k（CDLファイル文字コード指定）の欠落を発見、2026-09-24に-k utf8を追加（常に先頭に付与）。.tecsgen-opts経由のPlugin型取り込みでは付かない点を2026-10-21に記録。"
+description: "TECSCDE-DT-EL内部仕様 第9章 — tecsgen実行・C前処理・Plugin生成型の取り込み。opts経由のPlugin型取り込みで文字コード指定がなければ-k utf8を追加し、明示指定は尊重する。欠落は2026-10-22に解消済み。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -22,7 +22,7 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 9 of 
 
 [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様第8章8.4節]]が採用した「tecsgenをサブプロセスとして直接実行する」を、Electronの`child_process`で実現する。コマンド文字列の組み立て（`TecsgenCommandBuilder`）は[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 09 tecsgen連携設計|TECSCDE-TS内部仕様第9章]]の設計を**そのまま踏襲、変更なし**——第2章2.3節のとおり、この部分は純粋な文字列処理でありrendererに残る。新規に追加するのは実際の実行部分である。
 
-> [!note] `-k`（CDLファイルの文字コード指定）: 2026-09-24に追加済み、2026-10-21にソースで再確認
+> [!note] `-k`（CDLファイルの文字コード指定）: 2026-09-24に追加、opts経由のPlugin型取り込みの欠落も2026-10-22に解消済み
 > [[work/active/tecsgen/tecsgen外部仕様 - 05 コマンドラインインターフェース|tecsgen外部仕様第5章]]によれば、tecsgenはCDLファイルの文字コードを`-k, --kcode`（値は`euc`／`sjis`／`none`／`utf8`、既定`euc`）で指定する。2026-09-21にこのオプションが組み立てられていない欠落を見つけ（踏襲元のTS内部仕様第9章は、ブラウザ版が「コマンド文字列を提示するだけで実行しない」設計だったため、実害がなかった）、**2026-09-24に追加した**（[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|11.2節#6]]、コミット`6425b25`）。
 >
 > **現行の実装**（`renderer/tecsgen/command-builder.ts`の`TecsgenCommandBuilder.buildArgs`）: 引数の**先頭に常に`-k utf8`を置く**。続けて、`importPath`の1件ごとに`-I <path>`、`defineMacro`の1件ごとに`-D <macro>`、`cpp`があれば`-c <cmd>`、参照専用ファイル、編集対象ファイルの順に並べる。`buildCommandLine`（「コマンドをコピー」）も同じ`buildArgs`を使うので、提示される文字列にも`-k utf8`が含まれる。理由はコード内のコメントのとおり、CDLファイルはUTF-8前提（[[TECSCDE外部仕様]]5.1.2節）なのに、tecsgenの既定が`euc`だから。**実際に文字化けや構文エラーが出るか（`-k`なしの場合）は未確認(inferred)**。
@@ -59,7 +59,7 @@ class TecsgenRunner {
 > [!note] この節のコードは抜粋
 > 2026-10-22に、擬似コードを全文で持つのをやめた。引数の追加（`cwd`、`includeDirs`）やメソッドの追加（`generate`、`generatedTypes`）のたびに、ここが古くなっていたため。メソッドの一覧と型は上のとおりで、本体の挙動は9.7節（`run`の結果の写像、起動失敗の分類）、9.6節（`preprocess`）、第9C章（`version`）、第7C章7.7.4節（`generate`の`cwd`）にある。IPCで公開される全体の型は`src/shared/ipc-types.ts`の`TecscdeApi`が一次情報。`run`は、実行ファイルを`TECSGEN_COMMAND`から決め、`execFile`で起動して、成功なら`{ exitCode: 0, executableFound: true }`を返す。`ENOENT`は`launchFailure: { kind: 'not-found' }`と`executableFound: false`、権限なし・タイムアウト・出力過多などは`exitCode: null`と該当の`launchFailure`、数値の終了コードで終わったもの（`tecsgen`自身の失敗）は`exitCode`にその値を入れて返し、例外にしない。
 
-`run()`は`tecsgen`が非0で終了する場合（構文・意味エラーがある場合、[[TECSCDE外部仕様]]9.1.1の`run2`直前の`exit 1`に相当）も例外として扱われるため、`try/catch`で捕捉し、標準出力・標準エラー出力は失敗時でも保持する——エラーがあってもインポートを中断しない（[[TECSCDE外部仕様]]9.1.2）という方針と同様、実行が失敗してもその出力自体は提示する。
+**非0終了時の契約（2026-11-08、監査#26）**: `run()`は、tecsgenが数値の非0終了コードで終わっても、その理由でPromiseをrejectしない。`exitCode`に終了コードを設定し、`executableFound: true`、`launchFailure`なし、標準出力・標準エラー出力を保持した`TecsgenResult`を返す。下位の`execFile`が非0終了をエラーとして通知しても、`run()`内で結果へ変換する。呼び出し側は非0終了を`try/catch`の例外経路として処理せず、返された結果を診断解析へ渡す。構文・意味エラーで実行が失敗した場合も、出力自体は提示する。起動失敗の`launchFailure`との区別は9.7節の表に従う。
 
 ### 9.2 IPCハンドラの登録（main）
 
@@ -108,7 +108,7 @@ class TecsgenResultParser {
 }
 ```
 
-解析結果は第8章の`DiagnosticsCollector.report()`へそのまま渡す。tecsgen実行結果由来の診断も、CDLインポート時の診断（第8章）と**同じ一覧・同じジャンプ機構**で提示する——[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 09 エラーと警告|TECSCDE-DT外部仕様第9章]]が定める発生源の統合方針をそのままクラス設計に反映したものである。
+解析結果は第8章の`DiagnosticsCollector.report()`へ渡し、インポート診断と同じ一覧・ジャンプ機構で提示する。[[TECSCDE-DT-EL内部仕様 - 08B 診断位置へのソースジャンプ|8B]]に従い、実行時cwd・原位置の単位・解析時ソースを関連付ける（2026-11-08、監査#18の追加契約）。生成本文は一時ディレクトリ削除前に保持し、クリック時の再生成や消えた一時パスへの読込で代用しない。実装適合は未確認。
 
 ### 9.5 実行の起点
 

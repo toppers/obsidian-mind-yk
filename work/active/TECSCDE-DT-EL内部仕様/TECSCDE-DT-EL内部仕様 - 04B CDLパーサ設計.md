@@ -30,7 +30,7 @@ Domain note of [[TECSCDE-DT-EL内部仕様]]。モジュールB（CDLパーサ�
 | `document-builder.ts` | `CdlDocumentLoader`、`CdlSource`、`LoadResult` | 複数ファイル分の`ParsedCdl`と`tool_info`を、`TecscdeDocument`へ組み立てる |
 | `port-type-index.ts` | `PortTypeIndex`、`portTypeKey` | ポートの型の解決結果をモデルとは別に保持する索引 |
 | `serializer.ts` | `CdlSerializer` | `TecscdeDocument`をCDLテキストへ書き戻す |
-| `fragment.ts` | `serializeCellsAsCdl`、`tryParseCdlFragment` | Copy/Cut/Pasteが使う、`cell`ブロックだけの断片 |
+| `fragment.ts` | `serializeClipboardAsCdl`（更新後の契約案）、`tryParseCdlFragment` | Copy/Cut/Pasteが使うセル群のCDL断片。複数セルでは選択セル間の結合代入も含める（第4章4.1節） |
 | `messages.ts` | `syntaxError`ほか | 診断メッセージの生成（コード体系は4B.7） |
 
 > [!warning] 名前と置き場所のずれ
@@ -79,7 +79,7 @@ CdlSource[]（text・fileName・sourcePath・editable・generated）
 | `diagnostics` | `Diagnostic` | 構文エラー（4B.7） |
 
 - **スコープの表現**: ルートは`"::"`、入れ子は`"::A::B"`。`namespace`と`region`は`visitNested`が再帰的に降り、`scopes`に追加して、中の`cell`・`celltype`・`signature`・`generate`・`import`などに親のパスを引き渡す。
-- **セルの属性と結合の判別**（`collectCell`）: 代入文の右辺が`field_expression`（`target.ePort`）なら結合、それ以外は属性代入として**値を元テキストのまま**保持する。`initializer`の包みは剥がす。配列添字（`cport[n]`）は`cportIndex`に入れる。添字を省いた結合（`cport[]`）は`cportIndex`を持たない（外部仕様4.6.x。tecsgenの構文規則では添字`-1`）。ローダーが、同じセルの同じ呼び口の中で、書かれた順に0, 1, 2…を割り当てる。添字を書いた結合と省いた結合が混ざったときは`W-JOIN-INDEX-INCONSISTENT`を出す。実装済み（2026-11-02、実装リポジトリPR #23、マージコミット`1a5cc4e`。`cst.ts`の`assignOmittedSubscripts`、保存は`serializer.ts`の`omittedFormPorts`）。
+- **セルの属性と結合の判別**（`collectCell`）: 代入文の右辺が`field_expression`（`target.ePort`）なら結合、それ以外は属性代入として**値を元テキストのまま**保持する。`initializer`の包みは剥がす。配列添字（`cport[n]`）は`cportIndex`に入れる。添字を省いた結合（`cport[]`）は`cportIndex`を持たない（外部仕様4.6.x。tecsgenの構文規則では添字`-1`）。ローダーが、同じセルの同じ呼び口の中で、書かれた順に0, 1, 2…を割り当てる。添字を書いた結合と省いた結合が混ざったときは`W-JOIN-INDEX-INCONSISTENT`を出す。別の実装時点では実装済み（2026-11-02、実装リポジトリPR #23、マージコミット`1a5cc4e`。`cst.ts`の`assignOmittedSubscripts`、保存は`serializer.ts`の`omittedFormPorts`）。今回基準`5cf2d85`にはこの採番・混在警告・保存契約が未反映であり、PR履歴だけで現checkoutの適合を示すものではない（監査#19）。
 - **セルタイプ**（`collectCelltype`）: `port`（`call`／`entry`、シグニチャ、名前、配列サイズ）、`attribute`の名前、`require`を拾う。`var`・`factory`はモデルに反映しない。`require`は独立の`celltype_statement`なので、`collectPort`の`isRequire`は`false`のままで、`collectRequire`が別に拾う（2026-10-22実装）。**名前つき**（`require 名前 = 要求先.受け口;`）は、利用者が結合できる通常の呼び口（`isRequire=false`）で、シグニチャはローダーが要求先（セルタイプ名、またはセル名のセルタイプ）の受け口から解決する（解決できないときは`W-PORT-SIGNATURE-UNRESOLVED`）。**名前なし**（`require 要求先.受け口;`）は図に出ない呼び口（`isRequire=true`）で、4B.5節の`hiddenRequirePortCount`に数える。
 - **複合セルタイプ**（`collectComposite`）: 外部ポート、属性、内部セル（束縛`join`／`external_join`）、ポートの公開（`export_join`）を集める。認識できない節、ポートの欠損、`hasError`のいずれかで`hasUnsupportedSyntax`を立てる。定義の**原文**を`structure.rawText`に保持する（無編集保存で完全一致させるため。[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03B 複合セルタイプ設計|3B]]）。
 - **保持するだけの構文**: `generate`、`import`／`import_C`は原文を保持する。モデルへは反映しない。
@@ -89,76 +89,49 @@ CdlSource[]（text・fileName・sourcePath・editable・generated）
 
 入力`CdlSource`は、`text`・`fileName`・`sourcePath?`・`editable`・`generated?`を持つ。`editable`は**呼び出し側が決めて渡す**（クラス自体は判定しない。TS内部仕様3.3節#5と同じ分担）。`generated`はPlugin生成CDL（読み取り専用、保存対象と参照先に含めない）。
 
-1. **ソースごとの解析**（4B.2の①）。`editable`なソースのスコープは`editableRegionPaths`にも登録する。`editable`かつ非`generated`なら、保存用の`sourceTemplate`（元テキスト、各セルの位置、直前コメントを含む先頭位置`leadingText`、結合の原文、複合定義の原文、スコープ末尾、`tool_info`ブロックの範囲）を作る。`import`／`import_C`の原文は、`editable`なソース（複数あれば最後）のものを`preservedImports`に持つ。
-2. **`tool_info`の解釈**: `tecsgen`ブロックは版を検査して保持するだけ。`tecscde`ブロックは検証し、用紙・セルの配置（`cellList`）・結合のバー（`joinList`）を**ソースごと**に覚える。自分宛てでないツール名のブロックは読み飛ばす（外部仕様5.1.1）。
+1. **ソースごとの解析**（4B.2の①）。`editable`なソースのスコープは`editableRegionPaths`にも登録する。`editable`かつ非`generated`なら、保存用の`sourceTemplate`（元テキスト、各セルの位置、直前コメントを含む先頭位置`leadingText`、結合の原文、複合定義の原文、スコープ末尾、`tool_info`ブロックの範囲）を作る。`import`／`import_C`の原文は、明示された主ファイル`primarySourceKey`のものを`preservedImports`に持つ。主ファイル指定を省略した旧補助呼び出しだけ、従来の最後の`editable`ソースを使う（2026-11-07、監査#16、7I.3）。
+2. **`tool_info`の解釈**: `tecsgen`ブロックは版を検査して保持するだけ。`tecscde`ブロックは検証し、用紙・セルの配置（`cellList`）・結合のバー（`joinList`）を**ソースごと**に覚える。用紙の未指定を既定値で潰さず、最小用紙選択までは明示指定と区別する（[[TECSCDE-DT-EL内部仕様 - 04D 読み込み時の最小用紙選択|4D.1]]）。複数ソースの用紙の採用元（開いた順に最初に有効な`paper`を宣言するファイル）の決定は、外部仕様5.3.x項目8に従う（2026-11-08）。自分宛てでないツール名のブロックは読み飛ばす（外部仕様5.1.1）。
 3. **型の解決**: `CTypeRegistry`（`cdeclResults`と、CDL内`typedef`）で、シグニチャの戻り値・引数を解決する。解決できない型は警告`W-C-TYPE-UNRESOLVED`。ポートのシグニチャが解決できなければ`W-PORT-SIGNATURE-UNRESOLVED`。結果は`PortTypeIndex`に入れ、モデルとは別に返す。
 4. **セルタイプの登録**: ポートに既定配置を割り当てる——呼び口は左辺、受け口は右辺、辺の長さ15mmを個数で均等割り（`assignDefaultPortLayout`）。`MrubyBridgePlugin`の`generate`からは、外側のセルタイプ（`nMruby::t…`と`…_Initializer`）を補う。
+   - **配列種別の保持（2026-11-07、監査#12の追加契約）**: 宣言の非配列・`[N]`・`[]`・未解決を区別して配列グループへ渡す。現在の結合数や`subscript`だけから可変長を推定しない。[[TECSCDE-DT-EL内部仕様 - 04E 可変長配列ポートの要素挿入|4E]]の挿入で添字が変わった結合は、元の結合原文を無変更扱いで再利用せず、現在の添字で出力する。個数は外部5.1.x・4E.5で復元・保存する。
 5. **セル（1周目）**: 全ソース分をまとめて処理する。
    - **重複**: 同名セルは、最初に採用された定義のみモデル化し、後続は`W-DUP-CELL`。ただしPlugin生成どうしの重複は、結合と属性の多い方を採る（tecsgenが前方宣言を先に出す場合があるため）。
-   - **配置**: `tool_info`にレイアウトがあればそれを使い、無ければ自動配置（外部仕様5.3.xの規定〔2026-11-03採用〕。従来の格子の順に、既存のセル〔保存済みの位置を持つセルを含む〕と重ならない最初の候補へ置き、用紙の内に収まらないセルは先頭から走査し直して横8mm・縦6mmずつずらして置き、数を`W-AUTO-LAYOUT-OVERFLOW`で知らせる）。幅25×高さ15mm。※実装は未対応（2026-11-03時点。現行は外部仕様5.3.1のとおり、横に55mm進め、用紙幅−30mmを超えたら次の行、高さ−15mmを超えたら先頭へ戻して重ねる）。
+   - **配置と用紙選択**: 全ソースの採用セルを確定し、保存済み位置を持つセルと自動配置対象を分けてから、[[TECSCDE-DT-EL内部仕様 - 04D 読み込み時の最小用紙選択|4D]]の計算を行う（2026-11-07、監査#10）。用紙未指定ならA4横→A3横→A2横を同じ初期条件で試し、重ならず収まる最小用紙を採用する。全候補で失敗した場合だけA2横でずらし配置と`W-AUTO-LAYOUT-OVERFLOW`へ進む。指定用紙は自動拡大せず尊重し、固定セルの位置も動かさない。既定のセル寸法は幅25×高さ15mm。これは2026-11-03採用の外部仕様5.3.xを具体化した契約であり、実装適合は未確認。
    - **リージョン**: CDLのスコープを優先する。ルート直下のセルは、`tool_info`の所属が（`editable`なソースなら`editableRegionPaths`、そうでなければ`regionPaths`の）スコープに存在すれば使い、食い違えば`W-REGION-MISMATCH`。詳細と外部仕様との差は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03 モデル設計|第3章3.3節]]。
    - **セルタイプ未解決**: `celltypeUnresolved: true`のセルを作り、ポートは空。`W-UNRESOLVED-CELLTYPE`。
    - **隠れ`require`**: 名前なしの`require`があるセルタイプのセルごとに、その個数を示す`W-REQUIRE-PORT-HIDDEN`（2026-10-22に実際に出るようにした）。名前つきの`require`は対象外。
    - **ポートの配置**: 保存された辺とオフセットで上書きする。
-6. **結合（2周目）**: 全セルが揃ってから解決する。結合先（セルまたは受け口）が無ければ`W-MISSING-JOIN-TARGET`で飛ばす。バーは、保存されたものがあればそれ、無ければ`autoRouteBars`で自動経路にする。
-7. **仕上げ**: 保存テンプレートの各セルの`joins`から、モデルに取り込まれた結合を除く（モデルに反映できなかった結合の原文だけを残す）。編集対象は`editable`なソースの**最後**で、それ以外（かつ非`generated`）が`referenceFiles`。`TecscdeDocument.build`に渡して`LoadResult`を返す。
+6. **結合（2周目）**: 全セルが揃ってから解決する。結合先（セルまたは受け口）が無ければ`W-MISSING-JOIN-TARGET`で飛ばす。保存バーは要素スキーマ・本数・呼び口辺との向き・現在の受け口端点との幾何整合を検証し、妥当な経路だけ採用する。不正な経路だけを破棄して`autoRouteBars`へ戻し、破棄件数を警告する。保存バーが無い場合も自動経路を使う（監査#32）。
+7. **仕上げ**: 保存テンプレートの各セルの`joins`から、モデルに取り込まれた結合を除く（モデルに反映できなかった結合の原文だけを残す）。主ファイルはオプションの`primarySourceKey`で明示した通常ソースとし、保存テンプレートはそのソースが編集可能な場合だけ採用する。編集不可主のimports・元情報は主から取得し、別の編集可能ソースのテンプレートで代用しない。それ以外（かつ非`generated`）を`referenceFiles`とする。一括読み込みは[[TECSCDE-DT-EL内部仕様 - 07I 複数ファイルの一括読み込み契約|7I]]の`sourceOrder`順で解析し、主ファイルを配列末尾へ移さない。主ファイルは読み取り専用でも役割を保持する。指定省略の旧補助呼び出しだけ従来の最後の`editable`ソースへフォールバックする。`TecscdeDocument.build`に渡して`LoadResult`を返す（2026-11-07、監査#16の契約更新）。
 
-`loadSingle(text, fileName, editable = true)`は、テストと新規作成直後の1ファイル読み込み用の簡便な呼び出し。
+`loadSingle(text, fileName, editable = true)`は、テストと新規作成直後の1ファイル読み込み用の簡便な呼び出し。対象ソースのキーを`primarySourceKey`として渡す。
+
+`primarySourceKey`の型は`string | null | undefined`とし、`undefined`だけを旧推定の互換経路に使う。 明示キーが通常ソースに存在しなければ構築を失敗させ、別ソースへ代替しない。現行`5cf2d85`にはこの追加項目と順序の契約は未反映（三者監査#5、2026-11-09、7I.0）。7Hの主ファイルなし復元は明示的な`null`として扱い、参照ソースを主ファイルに昇格させない（7I.3）。
 
 ## 4B.6 保存時の直列化（`CdlSerializer`）
 
-- **`serializeSource(doc, sourceKey)`**: 編集対象ファイルなら`serialize`へ。それ以外は、そのファイルの`sourceTemplate`を使い、`cell.editable && cell.locale === sourceKey`のセルだけを書く。`tecscde`ブロックのレイアウト（セル・ポート・結合のバー）を作り直し、`tecsgen`ブロックは変えない。
-- **`serialize(doc, now)`**: 編集可能なセルを名前順に並べ（決定性のため）、`tecsgen`ブロック（版・保存時刻・`directImport`＝参照ファイルを更新）、`import`の原文、`cell`ブロック、`tecscde`ブロックの3つを出力する。`sourceTemplate`があれば次のテンプレート方式、無ければ上の新規形式。
-- **テンプレート方式**（`serializeFromTemplate`）: 元テキストのセル範囲を削除し、各リージョン（スコープ）の末尾へセルを挿入する。コメントは`leadingText`としてセルについていく。`tool_info`は既存の位置で置換し、無ければ先頭（`tecsgen`）または末尾（`tecscde`）に足す。編集は位置の降順に適用する。
-- **保存後の検査**: 書いた結果をもう一度`build`して検証し、不整合なら**例外**を投げる（診断ではない）: 複合定義の名前・原文が変わった、構文エラーが出た、セル数が変わった、セルの所属リージョンが復元できない。保存前にも、リージョン所属の不整合、同名セル、保存先リージョンが編集ファイルに無いことを例外にする。
-- **結合の書き出し**: `編集可能なセル由来の結合のみ`を`joinList`に出す（外部仕様5.4.1）。
+詳細は[[TECSCDE-DT-EL内部仕様 - 04C ファイル別保存契約|4C ファイル別保存契約]]へ分離した（2026-11-07、25KB閾値による）。主ファイルも追加読み込みファイルも、`cell.editable && cell.locale === sourceKey`で定義元を選別する。`serialize(doc)`もこの契約に従う。結合・レイアウト・テンプレート・保存後検査の範囲と検証条件は4Cで定める。
 
-## 4B.7 診断
+## 4B.7〜4B.10 診断・断片・拡張点・気づいた点
 
-`messages.ts`が生成する診断:
+[[TECSCDE-DT-EL内部仕様 - 04H CDLパーサの診断・断片・拡張点|4H]]へ分離した（2026-11-08、25KB閾値、逐語。節番号は変わらない）。
 
-| コード | 内容 | 出どころ |
-|---|---|---|
-| `G1015` | 予期しないファイル終端 | `ERROR`ノードの内容が空のとき |
-| `G1016` | 構文エラー（`syntax error near`） | `MISSING`ノード、または`ERROR`ノード。対応先が定まらなければこれに倒す |
-| `W-DUP-CELL` | セル重複 | 4B.5節 |
-| `W-UNRESOLVED-CELLTYPE` | セルタイプ未解決 | 4B.5節（整合性チェックの`diagnostics/integrity.ts`も同名を出す） |
-| `W-MISSING-JOIN-TARGET` | 結合先が無い | 4B.5節 |
-| `W-COMPOSITE-UNSUPPORTED` | 複合セルタイプの未対応構文 | **DT-ELでは使わない仕様**（第8章、3B.5）。生成関数`compositeUnsupported`は、呼び出しが無いため2026-10-22に削除した（4B.10節の5）。コード`W_CODES.COMPOSITE_UNSUPPORTED`は、「出ない」ことを確かめるテストが参照するため残す。未対応構文の通知はプロパティ欄のみ |
-| `W-REQUIRE-PORT-HIDDEN` | 隠れ`require`ポート | 4B.5節 |
-| `W-LAYOUT-DISCARDED`、`W-LAYOUT-PARSE-ERROR`、`W-NEWER-FORMAT` | `tool_info`の検証 | `ToolInfoValidator`（`tool-info.ts`が直接出す） |
-| `W-UNRESOLVED-REF-FILE`、`W-CPP-FALLBACK`、`W-CDECL-PARSE` | 参照ファイル・cpp・Cヘッダ解析 | `app/import-resolution.ts`（7.5節、9B）と`diagnostics/integrity.ts`。ローダーは出さない |
-| `W-C-TYPE-UNRESOLVED`、`W-PORT-SIGNATURE-UNRESOLVED`、`W-REGION-MISMATCH` | 型・ポート・リージョン | `document-builder.ts`。コードは`messages.ts`の`W_CODES`に集約した（2026-10-22。`tool-info.ts`の`W-NEWER-FORMAT`・`W-LAYOUT-*`も同様） |
-| `W-PLUGIN-TYPE-LOAD`、`E-TECSGEN-NOT-FOUND` | tecsgenの起動失敗 | それぞれ`app/file-actions.ts`、`diagnostics/tecsgen-result-parser.ts`（パーサーの外。[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計|9.7節]]） |
-
-- tree-sitterはエラーの位置と構造しか返さず、メッセージ文言を持たない（移植したのは構文定義だけで、メッセージカタログは含まれない）。そのため構文エラーは大半を`G1016`にまとめる（tecsgen自身も大半をこの1コードで報告する）。`messages.ts`のコード体系は、外部仕様が引用する範囲の再現で、tecsgenのカタログ全体の網羅ではない。
-- 診断の`location.file`は、`CdlDocumentBuilder`の段階では空で、`loadSources`が`withLocation`でファイル名を埋める。
-
-## 4B.8 クリップボード用の断片（`fragment.ts`）
-
-`serializeCellsAsCdl`は、選択中のセルを`cell`ブロックだけに直列化する（位置・リージョン・結合は含めない。外部仕様6.7節）。`tryParseCdlFragment`は、`CdlDocumentBuilder.build`の結果を使い、構文エラーがあるか、`cell`が1つも無ければ`undefined`を返す（貼り付けは「何もしない」）。
-
-## 4B.9 システム定義CDLへの拡張点（設計）
-
-[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03 モデル設計|3.2節]]のとおり、`CdlSource`に`systemDefined`を加え、`loadSources`が`Cell`へ`systemDefined`を渡し、`editable`を算出する。判定そのものは`CdlDocumentLoader`の外（main側の`isUnderAny`）で行い、ここではソースの属性として受け取る。実装は未着手。
-
-## 4B.10 実装を読んで気づいた点
-
-仕様と実装のずれの候補。いずれも、読解のみで、動作は確認していない。
-
-1. ~~**`isRequire`が常に`false`**~~ → **解消（2026-10-22）**。`require`を拾う処理を足した（4B.2節の「セルタイプ」）。経緯: `collectPort`は`isRequire: false`固定（`require`は独立した`celltype_statement`のため）。一方、`loadSources`は`isRequire`のポート数を`hiddenRequirePortCount`にするので、この経路では**常に0**となり、`W-REQUIRE-PORT-HIDDEN`は出ない可能性が高い。`celltype_statement`の`require`を拾う処理が`collectCelltype`に無いことが原因（`var`／`require`／`factory`は無視する、とコメントがある）。
-2. ~~**古いドキュメントコメント**~~ → **解消（2026-10-22）**（`loadSources`のコメントを更新）。経緯: `loadSources`の説明は「編集対象ファイルのcellのみeditable=trueとなり」と書くが、現行の仕様（[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|7C]]）は呼び出し側が決める`editable`で、通常CDLは全て編集可能。`CdlSource.editable`のコメントも「読み込んだCDLは編集可能」となっていて、こちらは現行どおり。
-3. ~~**トップレベルとネストの重複**~~ → **解消（2026-10-22）**（`visitNested`に統合。統合前も`signature`の名前の修飾に実際の差は無かった）。経緯: `build`のトップレベル`switch`と`visitNested`の`switch`が別々に同じ分岐を持ち、片方だけ直す事故が起きうる。`signature`の名前の修飾規則も、片方（トップレベル）は常に修飾なし。
-4. ~~**メッセージの二重管理**~~ → **解消（2026-10-22）**（`W_CODES`に集約）。経緯: `W-C-TYPE-UNRESOLVED`などは`document-builder.ts`に直書きされ、`messages.ts`の`W_CODES`にない。
-5. ~~**`compositeUnsupported`の呼び出しが無い**~~ → **解消（2026-10-22）**（関数を削除。コード定数はテスト用に残す）。経緯: `messages.ts`の`W-COMPOSITE-UNSUPPORTED`と生成関数は、`src`内に呼び出しが見当たらない（2026-10-21の検索）。DT-ELの仕様（第8章、3B.5。DT外部仕様4.7節・第9章と一致）は、複合型の存在や未対応構文を警告にしないので、仕様と実装は整合しており、残るのは未使用の定義だけ（削除してよい）。
-6. ~~**ファイル名ヘッダの参照番号**~~ → **解消（2026-10-22）**（`cdl/`の主要なファイルの先頭コメントに、DT-EL内部仕様04Bへの参照を足した）。経緯: ソース先頭のコメントは「TECSCDE-TS内部仕様 2.2」「11.3」など、TS版の章番号を指す。DT-ELで章番号が違う場合に追跡しにくい（本章がDT-ELの対応表になる）。
+- **4B.7 診断** — 診断コード表（`G1015`・`G1016`・`W-*`・`E-TECSGEN-NOT-FOUND`）と、`location.file`の埋め方。
+- **4B.8 クリップボード用の断片（`fragment.ts`）** — `serializeCellsAsCdl`の契約更新（2026-11-07）と`tryParseCdlFragment`。
+- **4B.9 システム定義CDLの判定（実装済み）** — rendererのローダーが`systemDirs`と定義元パスからソース単位の編集可否を確定し、`Cell`へ渡す。
+- **4B.10 実装を読んで気づいた点** — 仕様と実装のずれの候補6件（いずれも2026-10-22に解消済み）。
 
 ## 関連
 
 - [[TECSCDE-DT-EL内部仕様]]
+- [[TECSCDE-DT-EL内部仕様 - 04H CDLパーサの診断・断片・拡張点|4H CDLパーサの診断・断片・拡張点]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03 モデル設計|第3章 モデル設計]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 03B 複合セルタイプ設計|3B 複合セルタイプ設計]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|7C 読み込み経路の統合]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09B CdeclExtractor設計|9B CdeclExtractor設計]]
 - [[work/active/TECSCDE内部仕様/TECSCDE内部仕様 - 04 CDLパーサ／シリアライザ設計|TECSCDE内部仕様第4章]]
 - [[TECSCDE-DT-EL実装]]
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 19-28 配列と配置]] — 該当する監査項目の契約補足（2026-11-09）。
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 29-38 保存と画面]] — 該当する監査項目の契約補足（2026-11-09）。

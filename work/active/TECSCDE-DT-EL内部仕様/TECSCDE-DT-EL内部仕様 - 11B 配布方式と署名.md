@@ -1,6 +1,6 @@
 ---
 date: 2026-10-10
-description: "TECSCDE-DT-EL内部仕様 第11章 11.2.1〜11.2.3 — 配布形式の決定状況（Windows: Squirrel、macOS: DMG＋ZIP、Linux: DEB＋RPM、いずれも決定済み）と、Windowsのコード署名の候補比較。25KB閾値で第11章から逐語分離（2026-10-21に表記を統一）"
+description: "配布方式・設定登録・対象OSでの実機検証を分離した状態表と署名候補。macOSはDMG＋ZIP、LinuxはDEB＋RPMの設定登録済み、実機検証は未確認として管理する。2026-11-08に監査#20を反映。"
 project: TECS
 quarter: Q4-2026
 status: active
@@ -13,16 +13,20 @@ tags:
 
 Domain note split from [[TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案]] (2026-10-10, 25KB threshold). 本文は第11章の 11.2.1〜11.2.3 を逐語で移動したもの。上位: [[TECSCDE-DT-EL内部仕様]]。関連: [[Electronアプリのコード署名]]・[[Electronアプリの配布・自動更新ツール]]。
 
-> [!info] 配布形式の決定状況（2026-10-21 に統一）
-> 配布形式（パッケージング方式）は、OSごとに次のとおり**決定済み**である。コード署名の**方式**だけが未決で、その候補を11.2.1節に整理している。
+> [!info] 配布方式・設定登録・実機検証の区別（2026-11-08、監査#20で整理）
+> 配布形式の決定、設定ファイルへの登録、対象OSでのビルド・公開・実機検証は別の段階として扱う。状態の参照元はこの表に統一し、後段や第11章で「未実装」「Windowsのみ」という旧状態を再掲しない。
 >
-> | OS | 配布形式 | 生成と公開 | 状態 | 節 |
-> |---|---|---|---|---|
-> | Windows | Squirrel.Windows（`Setup.exe`／`RELEASES`／`.nupkg`） | Electron Forge の`@electron-forge/maker-squirrel`、GitHub Releasesへ`publisher-github`で公開（`draft: true`）、自動更新は`update-electron-app` | **決定済み・実装済み**（2026-09-12／09-23。`forge.config.js`と`.github/workflows/release.yml`） | 第11章 11.2 #2 |
-> | macOS | DMG＋ZIP | Electron Forge の`@electron-forge/maker-dmg`と`maker-zip`（DMGは初回、ZIPは自動更新用） | **決定済み・設定済み・未検証**（2026-10-09 決定、2026-10-28 に `forge.config.js` と `release.yml` へ登録。macOS では未ビルド） | 11.2.2 |
-> | Linux | DEB＋RPM | Electron Forge の`@electron-forge/maker-deb`と`maker-rpm` | **決定済み・設定済み・未検証**（2026-10-10 決定、2026-10-28 に `forge.config.js` と `release.yml` へ登録。Linux では未ビルド） | 11.2.3 |
+> | OS | 配布形式・方式 | 方式決定 | 設定登録 | 対象OSでの検証 | 節 |
+> |---|---|---|---|---|---|
+> | Windows | Squirrel.Windows。`maker-squirrel`、`publisher-github`（`draft: true`）、`update-electron-app` | 決定済み（2026-09-12／09-23） | 実装済みの既存記録あり | 既存の実装記録を参照。本件では再検証しない | 第11章11.2 #2 |
+> | macOS | DMG＋ZIP。`maker-dmg`と`maker-zip`（DMGは初回、ZIPは自動更新用） | 決定済み（2026-10-09） | **設定登録済み**。2026-10-28登録の記録を、基準実装`main`・`86f8910`で確認 | **実機未検証として管理**。完了記録は未確認。CIの2026-10-28の注記は未実行・未検証 | 11.2.2 |
+> | Linux | DEB＋RPM。`maker-deb`と`maker-rpm` | 決定済み（2026-10-10） | **設定登録済み**。2026-10-28登録の記録を、基準実装`main`・`86f8910`で確認 | **実機未検証として管理**。完了記録は未確認。CIの2026-10-28の注記は未実行・未検証 | 11.2.3 |
 >
-> **コード署名**: 当面は未署名で配布する（2026-09-23決定。[[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|配布アーキテクチャ決定]]）。署名**方式**は未決で、Windows向けの候補を11.2.1節で比較している。macOSの署名・公証、Linuxの配布物の署名は、それぞれの後続検討事項（11.2.2、11.2.3）。「決定済み・未実装」は、パッケージング方式の選定を終えたという意味で、ビルド・公開・実機検証の完了を意味しない。
+> **設定登録済み**はMakerとCIの登録をファイル上で確認したことを意味し、ジョブ実行・成果物生成・公開・インストール・起動・更新の成功を含まない。**実機未検証**は、本書で対象OSの検証完了を確認していない管理状態である。今回、対象OSでのビルド・実機検証や現在までのCI実行履歴の調査は行っていない。
+>
+> **コード署名**: 当面は未署名で配布する（2026-09-23決定。[[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|配布アーキテクチャ決定]]）。署名方式は未決で、Windows向けの候補を11.2.1節で比較している。macOSの署名・公証、Linuxの配布物の署名は、それぞれの後続検討事項（11.2.2、11.2.3）。
+
+**確認した設定とチェックアウトの範囲（2026-11-08）**: 基準実装`main`・`86f8910`の`forge.config.js`にmacOS/Linuxの各Maker、`.github/workflows/release.yml`にWindows・macOS・Ubuntuのmatrixが登録されている。旧作業用チェックアウト`ykominami/TECSCDE-DT-EL-codex`・`a1f4ab9`はWindows向け設定のみであり、この差を基準実装全体の未登録・未実装とは扱わない。
 
 
 #### 11.2.1 Windowsインストーラーのコード署名候補（2026-10-09、署名方式は未決。配布形式のSquirrelは決定済み）
@@ -43,9 +47,9 @@ Domain note split from [[TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単
 
 参照: [Microsoft の署名方式比較](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/code-signing-options)、[Artifact Signing の開始手順](https://learn.microsoft.com/en-us/azure/artifact-signing/quickstart)、[SignPath Foundation の条件](https://signpath.org/terms)、[Electron Forge の Windows 署名設定](https://www.electronforge.io/guides/code-signing/code-signing-windows)、[SmartScreen の評価](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation)。
 
-#### 11.2.2 macOS向けパッケージング方式（2026-10-09、決定済み・未実装）
+#### 11.2.2 macOS向けパッケージング方式（方式決定: 2026-10-09、設定・検証状況は冒頭表）
 
-**採用する方式: Electron Forge の `@electron-forge/maker-dmg` と `@electron-forge/maker-zip` を併用する。** DMG を初回インストール用、ZIP を macOS の自動更新用として GitHub Releases に置く構成を採用する（決定済み）。現行の Electron Forge と GitHub Releases を継続でき、Forge も DMG 配布で自動更新を行う場合は ZIP の併用を案内している。この決定は**パッケージング方式の選定のみ**であり、macOS ビルド・署名・公証・公開・実機検証を完了した意味ではない。
+**採用する方式: Electron Forge の `@electron-forge/maker-dmg` と `@electron-forge/maker-zip` を併用する。** DMG を初回インストール用、ZIP を macOS の自動更新用として GitHub Releases に置く構成を採用する（決定済み）。現行の Electron Forge と GitHub Releases を継続でき、Forge も DMG 配布で自動更新を行う場合は ZIP の併用を案内している。2026-10-09の決定は方式選定の記録であり、その後の設定登録は冒頭表の別段階として扱う。いずれもmacOSビルド・署名・公証・公開・実機検証の完了とは区別する。
 
 | 候補 | 特徴 | 判定 |
 | --- | --- | --- |
@@ -55,13 +59,13 @@ Domain note split from [[TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単
 | electron-builder による DMG＋ZIP | 複数形式を一元設定できるが、既存の Forge 設定・公開処理からの移行が必要。 | 今回は採用しない |
 | Mac App Store 配布 | Store 専用ビルド、Sandbox、Apple Distribution 署名、審査が必要で、現行の GitHub Releases とは別経路になる。 | 今回は採用しない |
 
-**後続の検討・検証事項:** `forge.config.js` への maker 追加、macOS 用 GitHub Actions ジョブ、x64／arm64（または universal）の配布方法、Developer ID 署名と公証、DMG からのインストール、ZIP を用いた自動更新を個別に設計・検証する。これらは本決定では確定しない。現時点の `forge.config.js` と release workflow は Windows の Squirrel 配布のみで、macOS の配布物は未生成。
+**後続の検討・検証事項:** 設定登録の状態は冒頭表を参照し、MakerとmacOSジョブの追加自体を未着手事項として繰り返さない。対象アーキテクチャ、対象OSでのビルドとDMG／ZIP生成、Developer ID署名と公証、インストール・起動、ZIPを用いた更新、公開を個別に確認する。基準実装の署名・公証設定は未設定という記録を保持する。配布物が生成・公開されたかは、設定登録だけから断定しない。
 
 参照: [Forge DMG maker](https://www.electronforge.io/config/makers/dmg)、[Forge ZIP maker](https://www.electronforge.io/config/makers/zip)、[Forge PKG maker](https://www.electronforge.io/config/makers/pkg)、[Forge の自動更新](https://www.electronforge.io/advanced/auto-update)、[Forge の macOS 署名・公証](https://www.electronforge.io/guides/code-signing/code-signing-macos)、[Electron の Mac App Store ガイド](https://www.electronjs.org/docs/latest/tutorial/mac-app-store-submission-guide)。
 
-#### 11.2.3 Linux向けパッケージング方式（2026-10-10、決定済み・未実装）
+#### 11.2.3 Linux向けパッケージング方式（方式決定: 2026-10-10、設定・検証状況は冒頭表）
 
-**採用する方式: Electron Forge の `@electron-forge/maker-deb` と `@electron-forge/maker-rpm` を併用する。** DEB と RPM を Linux 向け配布物として生成する方針とする。既存の Forge に maker を追加する構成で、両形式の利用者を対象にできる。この決定は**パッケージング方式の選定のみ**であり、Linux 向けビルド・公開・インストール検証を完了した意味ではない。
+**採用する方式: Electron Forge の `@electron-forge/maker-deb` と `@electron-forge/maker-rpm` を併用する。** DEBとRPMをLinux向け配布物として生成する方針とする。2026-10-10の決定は方式選定の記録であり、その後のMaker・CI登録は冒頭表の別段階として扱う。方式決定や設定登録だけで、Linux向けビルド・公開・インストール検証を完了した意味にはしない。
 
 | 候補 | 特徴 | 判定 |
 | --- | --- | --- |
@@ -71,6 +75,6 @@ Domain note split from [[TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単
 | Snap | Snap の配布基盤を利用する方式。Forge の DEB／RPM maker とは別の配布・更新経路になる。 | 今回は採用しない |
 | Flatpak | Flatpak の配布基盤を利用する方式。Forge の DEB／RPM maker とは別の配布・更新経路になる。 | 今回は採用しない |
 
-**後続の検討・検証事項:** `forge.config.js` への maker 追加、Linux 用 GitHub Actions ジョブ、ビルド対象アーキテクチャ、DEB／RPM の生成と対応ディストリビューションでのインストール・起動、GitHub Releases への公開方法を設計・検証する。Linux 向け自動更新の方式は別途検討する。現時点の配布設定は Windows の Squirrel のみで、Linux の配布物は未生成。
+**後続の検討・検証事項:** 設定登録の状態は冒頭表を参照し、MakerとLinuxジョブの追加自体を未着手事項として繰り返さない。対象アーキテクチャ、対象OSでのビルドとDEB／RPM生成、対応ディストリビューションでのインストール・起動、GitHub Releasesへの公開を確認する。Linux向け自動更新の方式は別途検討する。配布物が生成・公開されたかは、設定登録だけから断定しない。
 
 参照: [Forge DEB maker](https://www.electronforge.io/config/makers/deb)、[Forge RPM maker](https://www.electronforge.io/config/makers/rpm)、[[work/active/tecs/Electronアプリの配布・自動更新ツール|Electronアプリの配布・自動更新ツール]]、[[work/active/tecs/Electron Forgeの使い方|Electron Forgeの使い方]]。

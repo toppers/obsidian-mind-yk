@@ -73,7 +73,7 @@ main/preload への新しい IPC は設けない。外部ポートと属性に�
 - 無編集保存と外側セルの編集後保存で、複合定義の原文が完全一致する。読み込み直し後も外側のポートと結合が復元される。
 - 未対応構文があっても外側セルを保持する。構文エラーは診断に残し、複合型の存在だけでは診断を増やさない。
 
-実装との対応（2026-10-21、`src/renderer`のソース確認による。テストは読んでいない）: 外部ポートの登録、複合定義の保存検証に加え、**未対応フラグの検出**（`cdl/cst.ts`の`collectComposite`が、3B.3の三つの条件——認識できない節、必須フィールドの欠落、複合定義内の`ERROR`／`MISSING`〔`compositeNode.hasError`〕——のいずれかで`hasUnsupportedSyntax`を真にする）、`CelltypeRef`への保持（`model/celltype.ts`、`document-builder.ts`で通常のセルタイプは常に偽）、**プロパティ欄の存在通知**（`app/property-panel.ts`が`hasUnsupportedSyntax`が真のときだけ読み取り専用の注記「未対応構文があります。」を1つ加える。構文の種類・本文・件数は出さない）が実装済みで、本仕様と一致する。以前この節が差分としていた内部図を開く`AppShell.bindCompositeDrilldown()`と`CompositeDiagramView`は、ソースに見当たらない（撤去済み）。残る差分は、未使用の`compositeUnsupported()`の削除だけである。
+実装との対応（2026-10-21、`src/renderer`のソース確認による。テストは読んでいない）: 外部ポートの登録、複合定義の保存検証に加え、**未対応フラグの検出**（`cdl/cst.ts`の`collectComposite`が、3B.3の三つの条件——認識できない節、必須フィールドの欠落、複合定義内の`ERROR`／`MISSING`〔`compositeNode.hasError`〕——のいずれかで`hasUnsupportedSyntax`を真にする）、`CelltypeRef`への保持（`model/celltype.ts`、`document-builder.ts`で通常のセルタイプは常に偽）、**プロパティ欄の存在通知**（`app/property-panel.ts`が`hasUnsupportedSyntax`が真のときだけ読み取り専用の注記「未対応構文があります。」を1つ加える。構文の種類・本文・件数は出さない）が実装済みで、本仕様と一致する。以前この節が差分としていた内部図を開く`AppShell.bindCompositeDrilldown()`と`CompositeDiagramView`は、ソースに見当たらない（撤去済み）。`compositeUnsupported()`の削除は2026-10-22に解消済みであり、残る差分には含めない。`W_CODES.COMPOSITE_UNSUPPORTED`の定数だけを警告非生成の検証用に保持する（3B.5節・4Hの4B.10節#5と同じ。2026-11-08、監査#2で残差記述を統一）。
 
 ## 関連
 
@@ -81,3 +81,5 @@ main/preload への新しい IPC は設けない。外部ポートと属性に�
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 05 描画・インタラクション設計|内部仕様第5章]]
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 08 整合性チェックとメッセージ設計|内部仕様第8章]]
 - [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 09 エラーと警告|外部仕様第9章]]
+
+- [[TECSCDE-DT-EL内部仕様 - 監査対応 29-38 保存と画面]] — 該当する監査項目の契約補足（2026-11-09）。

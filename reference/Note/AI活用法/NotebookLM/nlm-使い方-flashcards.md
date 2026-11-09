@@ -11,10 +11,17 @@ Usage: nlm flashcards [OPTIONS] COMMAND [ARGS]...
 
  Create flashcards
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ create  Create flashcards from notebook sources.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| create | Create flashcards from notebook sources. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm flashcards create --help
 
@@ -22,14 +29,21 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm flashcards crea
 
  Create flashcards from notebook sources.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --difficulty  -d      TEXT  Difficulty: easy, medium, hard [default: medium]
-│ --source-ids  -s      TEXT  Comma-separated source IDs
-│ --confirm     -y            Skip confirmation
-│ --profile     -p      TEXT  Profile to use
-│ --help                      Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --difficulty | -d | TEXT | Difficulty: easy, medium, hard [default: medium] |
+| --source-ids | -s | TEXT | Comma-separated source IDs |
+| --confirm | -y |  | Skip confirmation |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 

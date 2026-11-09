@@ -11,12 +11,19 @@ tags:
 
  Research and discover sources
 
-╭─ Options
-│ --help          Show this message and exit.
-╭─ Commands
-│ start   Start a research task to find new sources.
-│ status  Check research task progress.
-│ import  Import discovered sources from a completed research task.
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --help |  |  | Show this message and exit. |
+
+**Commands**
+
+| コマンド | 説明 |
+| --- | --- |
+| start | Start a research task to find new sources. |
+| status | Check research task progress. |
+| import | Import discovered sources from a completed research task. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research start --help
 
@@ -28,17 +35,23 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research start 
  for your research topic. Use 'nlm research status' to check progress
  and 'nlm research import' to add discovered sources to your notebook.
 
-╭─ Arguments
-│ *    query      TEXT  What to search for [required]
-╭─ Options
-│ --source       -s      TEXT  Where to search: web or drive [default: web]
-│ --mode         -m      TEXT  Research mode: fast (~30s, ~10 sources) or deep (~5min, ~40 sources, web only)
-│                              [default: fast]
-│ --notebook-id  -n      TEXT  Add to existing notebook
-│ --title        -t      TEXT  Title for new notebook
-│ --force        -f            Start new research even if one is already pending
-│ --profile      -p      TEXT  Profile to use
-│ --help                       Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | query | TEXT | What to search for [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --source | -s | TEXT | Where to search: web or drive [default: web] |
+| --mode | -m | TEXT | Research mode: fast (~30s, ~10 sources) or deep (~5min, ~40 sources, web only) [default: fast] |
+| --notebook-id | -n | TEXT | Add to existing notebook |
+| --title | -t | TEXT | Title for new notebook |
+| --force | -f |  | Start new research even if one is already pending |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research status --help
 
@@ -49,15 +62,22 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research status
  By default, polls until the task completes or times out.
  Use --max-wait 0 for a single status check.
 
-╭─ Arguments
-│ *    notebook_id      TEXT  Notebook ID [required]
-╭─ Options
-│ --task-id        -t            TEXT     Specific task ID to check
-│ --compact            --full             Show compact or full details [default: compact]
-│ --poll-interval                INTEGER  Seconds between status checks [default: 30]
-│ --max-wait                     INTEGER  Maximum seconds to wait (0 for single check) [default: 300]
-│ --profile        -p            TEXT     Profile to use
-│ --help                                  Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --task-id | -t | TEXT | Specific task ID to check |
+| --compact |  |  | --full Show compact or full details [default: compact] |
+| --poll-interval |  | INTEGER | Seconds between status checks [default: 30] |
+| --max-wait |  | INTEGER | Maximum seconds to wait (0 for single check) [default: 300] |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research import --help
 
@@ -68,13 +88,20 @@ PS E:\Ccur\python3\notebooklm-cli-x [notebooklm-cli-x:main]> nlm research import
  If TASK_ID is not provided, automatically imports from the first
  available completed or in-progress research task.
 
-╭─ Arguments
-│ *    notebook_id      TEXT       Notebook ID [required]
-│      task_id          [TASK_ID]  Research task ID (auto-detects if not provided)
-╭─ Options
-│ --indices  -i      TEXT  Comma-separated indices of sources to import (default: all)
-│ --profile  -p      TEXT  Profile to use
-│ --help                   Show this message and exit.
+**Arguments**
+
+| 必須 | 引数 | 型 | 説明 |
+| --- | --- | --- | --- |
+| * | notebook_id | TEXT | Notebook ID [required] |
+|  | task_id | [TASK_ID] | Research task ID (auto-detects if not provided) |
+
+**Options**
+
+| オプション | 短縮 | 型 | 説明 |
+| --- | --- | --- | --- |
+| --indices | -i | TEXT | Comma-separated indices of sources to import (default: all) |
+| --profile | -p | TEXT | Profile to use |
+| --help |  |  | Show this message and exit. |
 
 
 
