@@ -58,6 +58,7 @@ tags:
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 外部仕様と内部仕様・実装の差分一覧|外部仕様と内部仕様・実装の差分一覧]]（2026-10-21、食い違い・未実装・不整合の一覧）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 未実装・未結線項目の監査 — 2026-10-26|未実装・未結線項目の監査]]（2026-10-26、親仕様を含む28件、コード基準）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 三者監査 69件の実装要否一覧 — 2026-11-09|三者監査 69件の実装要否一覧]]（2026-11-09、要実装66件・不要3件。契約補足は内部仕様・外部仕様の「監査対応」ノート）
+- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.0 実装計画 — 2026-11-09|V0.2.0 実装計画]]（2026-11-09、段0〜5・7、tecsgen相当機能はV0.2.1へ）
 - [[work/active/tecs/TECSCDE-DT-EL 複合セルタイプ対応案|TECSCDE-DT-EL 複合セルタイプ対応案]] 複合セルタイプ対応の方針（2026-10-03採用。表示・編集範囲は外部仕様で決める）
 
 - [[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]] — 配布専用ミラーリポジトリ＋update-electron-app＋GitHub Actionsの決定記録（2026-09-23、実装は未着手）
