@@ -3,7 +3,7 @@ date: 2026-11-01
 description: "tecsgen の起動コマンドを指定する設定画面（設定ダイアログ）の追加案 — 外部仕様の変更、設計、実装単位、テスト、論点と推奨。内部仕様 11章の未決事項 #3 への回答案"
 project: TECS
 quarter: Q4-2026
-status: superseded
+status: deprecated
 tags:
   - work-note
   - tecs

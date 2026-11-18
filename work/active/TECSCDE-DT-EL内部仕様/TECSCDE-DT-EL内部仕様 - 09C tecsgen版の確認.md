@@ -74,7 +74,7 @@ function compareVersions(a: readonly number[], b: readonly number[]): number;
 - **一覧の自動表示**（2026-10-22決定）: 警告を保持したら、診断パネルを自動で開く（ステータスバーの件数だけでは、起動直後に気づきにくいため。「実行(Generate)」の後に開く扱いと同じ）。`AppShell.openDiagnostics()`を公開し、`checkTecsgenVersion`の`onWarning`コールバックから呼ぶ。診断が出ないとき（見つからない、対象以上）は開かない。
 - **時機**: 起動時に1回。`shell.start()`の後に非同期で実行し、UIをブロックしない（起動ドキュメントの読み込みとは独立）。再確認はしない。
 - **保持**: `AppStore`に`environmentDiagnostics`を新設し、`setEnvironmentDiagnostics`で設定する。`getReport()`は既存の3種（ロード時、整合性チェック、tecsgen実行結果）に加えて、これも集約する。**`loadDocument`でも、Generateの結果の差し替え（`setTecsgenDiagnostics`）でも消えない**（既存の`tecsgenDiagnostics`はそのたびに入れ替わるため、同じ場所に積むと消えてしまう）。
-- **ログ**: 診断ログは`DiagnosticsLogger`が診断パネルの内容を書くので、警告は自動で残る。版の取得に成功したときの1行は、起動処理から`LogGateway.append`で直接書く。
+- **ログ**: 診断ログは`DiagnosticsLogger`が診断パネルの内容を書くので、警告は自動で残る。版の取得に成功したときの1行は、起動処理から`LogGateway.append`で直接書く。設定保存後の再確認（[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理|9D.4]]）で成功したときも同じ1行を追記する（2026-11-17 決定、三者相違一覧 9-4。保存のたびに行が増えてよく、実装はこの動作で正）。
 
 ```ts
 // renderer/app/tecsgen-version.ts

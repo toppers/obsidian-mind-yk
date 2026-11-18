@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "TOPPERS各カーネル（JSP・ASP・ASP3・HRP・HRP2・HRP3・HRMP3・FMP・FMP3等）とTECSプラグイン指定子の対応分類表"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 | TECS対応 | カーネル | 文｜指定子    | TECS対応   | カーネル       | 文｜指定子    | TECS対応   | カーネル        | 文｜指定子    |          |         |     |      |     |
@@ -31,3 +41,7 @@ verbatim: true
 |        |      |          |          |            |          |          |             |          |          |         |     |      |     |
 |        |      |          | o        | データ連携      | generate |          |             |          |          |         |     |      |     |
 |        |      |          | o        | TECSInfo   | generate |          |             |          |          |         |     |      |     |
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "Ruby版tecsgenにおけるCDLのnamespace構文、ネスト、参照方法（::修飾）、生成Cコードのプリフィックス規則の解説メモ"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
  Ruby版tecsgenでの namespace の使い方を教えて
@@ -59,3 +69,7 @@ statement 形式の generate(Plugin, nMruby::sInitializeBridge, "opts"); の第2
 ✻ Cooked for 37s · done 7:40 AM
 
 ※ recap: Goal: document and catalog tecsgen's plugin system (CDL generate catalog, plugin list, class hierarchy), all pushed. Current task was answering your question on how namespace works in Ruby tecsgen, which is done; the new class-hierarchy file is uncommitted, so commit it next if you want.
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

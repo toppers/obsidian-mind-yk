@@ -46,7 +46,7 @@ Electronはセキュリティ上の理由（`contextIsolation: true`を既定と
 | F   | 表示制御（View State） | **renderer**                                        | UI状態そのものであり、rendererに閉じる                                                                                                                                                              |
 | G   | UIシェル            | **renderer**                                        | 同上                                                                                                                                                                                    |
 | H   | 整合性チェック／診断       | **renderer**                                        | `DiagnosticsCollector`はB（renderer）とI（mainの実行結果をIPC経由で受け取る）の両方から診断を集約する。集約先自体はrendererに置き、mainからの結果はIPC経由の入力として扱う                                                                      |
-| I   | tecsgen連携        | **main**（`TecsgenRunner`）＋**renderer**（コマンド文字列組み立て） | サブプロセス起動（`child_process`）はmain専用。ただしコマンド文字列の組み立て自体（[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 09 tecsgen連携設計\|TECSCDE-TS内部仕様第9章]]の`TecsgenCommandBuilder`）は純粋な文字列処理でありrendererに残せる |
+| I   | tecsgen連携        | **main**（`TecsgenRunner`）＋**renderer**（コマンド文字列組み立て） | サブプロセス起動（`child_process`）はmain専用。コマンドの引数の組み立て（[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 09 tecsgen連携設計\|TECSCDE-TS内部仕様第9章]]の`TecsgenCommandBuilder`、`buildArgs`）は純粋な文字列処理でありrendererに残す。一方、利用者のシェル向けに貼り付けるコピー用の文字列は、**mainが組み立てる**（`src/main/tecsgen-command-copy.ts`、`tecsgen:commandLine`。監査#62。2026-11-17 にソースへ合わせて修正） |
 
 **要点**: 9モジュールのうち、mainプロセスに置く必要があるのは**A（ファイルI/O）とI（tecsgenのサブプロセス実行部分のみ）**の2つに限られる。残る7モジュール（B・C・D・E・F・G・H）は[[TECSCDE-TS内部仕様]]の設計をそのままrendererプロセスへ持ち込める。
 
@@ -84,11 +84,12 @@ preload（`src/preload/index.mts`）が`window.tecscde`として公開するAPI�
 | 名前空間 | 役割 | 詳細 |
 |---|---|---|
 | `cdl` | CDL・cdecl文法のWASMの読み込み（`loadGrammarAssets`） | 第4B章4B.3節、第9B章9B.3節 |
-| `file` | ファイルI/O。`save`・`saveAs`・`export`・`chooseFolder`・`listDirectory`・`openPath`・`confirmDiscardChanges`・`saveSession`・`resolveImports`・`parseTecsgenOptionsFile`（OSの「開く」ダイアログによる`open`は、ファイルブラウザへの一本化で撤回した） | 第7章 |
-| `tecsgen` | tecsgenの実行。`generate`・`generatedTypes`・`preprocess`・`version` | 第9章・第9C章 |
+| `file` | ファイルI/O。`save`・`saveAs`・`chooseSavePath`・`export`・`exportPdf`・`chooseExportPath`・`chooseFolder`・`listDirectory`・`openPath`・`openPaths`・`confirmDiscardChanges`・`saveSession`・`resolveImports`・`parseTecsgenOptionsFile`・`readDefinitionFile`・`planCdlFileLists`・`applyCdlFileLists`・`confirmCdlFileLists`（OSの「開く」ダイアログによる`open`は、ファイルブラウザへの一本化で撤回した。2026-11-17 に`preload/index.mts`へ合わせて更新） | 第7章 |
+| `tecsgen` | tecsgenの実行。`generate`・`generatedTypes`・`preprocess`・`version`・`checkPath`（設定ダイアログの「確認」）・`commandLine`（コピー用のコマンド文字列） | 第9章・第9C章・第9D章 |
 | `clipboard` | OSクリップボードの読み書き（`writeText`・`readText`）。preloadに公開される`electron`モジュールには`clipboard`が含まれない（ESM／CJSを問わない。実機確認）ため、`file`・`tecsgen`と同じくipcMain経由にしている | 第4章4.1節 |
-| `settings` | rendererが読むアプリケーション設定（`get`） | 第3章3.2節 |
-| `window` | 未保存かどうかをmainへ知らせる（`setDirty`） | 第7章7.9節 |
+| `settings` | rendererが読むアプリケーション設定（`get`）と、設定ダイアログ・「情報」の入出力。`getToolSettings`・`updateToolSettings`・`chooseTecsgenPath`・`chooseCppPath`・`getAppInformation`と、CDLファイル一覧の対象ディレクトリ専用の`getCdlFilesRoot`・`setCdlFilesRoot`・`chooseCdlFilesRoot`（2026-11-17 に`preload/index.mts`へ合わせて更新） | 第3章3.2節、第9D章、第9E章 |
+| `window` | 未保存かどうかをmainへ知らせる（`setDirty`）。閉じる前の状態確認（mainからの要求`onRequestCloseState`・取り消し`onCancelCloseState`、rendererからの応答`replyCloseState`） | 第7章7.9節 |
+| `versions` | 読み取り専用の実行環境の版（Electron・Chrome・Node.js・`platform`）。本番の「情報」ダイアログは使わず、`settings.getAppInformation`の結果を使う（2.5節） | 2.5節 |
 | `log` | 診断パネルの内容を、起動ごとのログファイルへ追記する（`append`。mainの`LogService`、rendererの`DiagnosticsLogger`） | 外部仕様9.5節（2026-11-01 採用）。専用の設計節は無い（第9C章9C.5節が版の記録に使う）。9.5節の置き場所（`logsDirectory()`＝設定ファイルと同じフォルダの`logs/`）・書き込み失敗の警告（`LogService.append`が最初の失敗だけ`{ newFailure }`を返し、rendererの`createLogAppender`がストアへ`W-LOG-WRITE-FAILED`を入れる）・30個の保存期間（起動時の`pruneOldLogs`）は実装済み（2026-11-02、実装リポジトリPR #21、同日マージ`cdbb8c1`） |
 | `onBootstrap`・`onRestoreFileBrowserRoot` | mainが起動時に一度だけ送る起動ドキュメントとファイルブラウザのルート（イベント） | 第7章7.4節・7.6.6節 |
 
@@ -105,6 +106,7 @@ renderer側のゲートウェイクラス（`FileGateway`・`TecsgenGateway`・`
 - **情報源の一本化**: `scripts/build-renderer.mjs` の esbuild の `define` で、`package.json` の `version` とコミットの短縮ハッシュ（`git rev-parse --short HEAD`。取れなければ `unknown`）を、画面側のコードに埋め込む。`tool-info-types.ts` の手書きの定数 `TECSCDE_TS_VERSION` をやめ、埋め込まれた値を使う。vitest にも同じ `define` を渡す。main 側は `app.getVersion()`（= `package.json`）をそのまま使う。
 - **実行環境の版**: preload に、読み取り専用の `versions`（`process.versions` の Electron・Chromium・Node、`process.platform`）を追加する。preload から渡せるかは、`sandbox` の設定による（実装時に確認）。
 - **tecsgen の版**: 起動時の確認（第9C章）の結果のうち、確認できた版と、使われた起動コマンドを、`AppStore` に保持する（いまは診断ログの1行にしか使っていない）。
+- **実装での経路（2026-11-17、ソースに合わせて追記）**: 本番の「情報」ダイアログ（`InformationDialog`）は、版・commit・実行環境を、main が組み立てる `settings:getAppInformation`（`dist/build-info.json` と main の `process.versions`）から得る。上の `define` の値と preload の `versions` は、設定ゲートウェイが無いときに使う旧 `AboutDialogView` だけが使う。
 - **ダイアログ**: `<dialog>`。既存の `celltype-details.ts` と同じ作りにする。「コピー」は `ClipboardGateway` を使う。
 - **診断ログの先頭行**: `LogService` のコンストラクタに版（`app.getVersion()`）を渡し、先頭行に入れる。
 - **実装単位**: V1 一本化、V2 ダイアログとボタン、V3 診断ログの先頭行（コマンドライン `--version` は今回採らない。余裕があれば別に検討）。**V1〜V3 は 2026-11-01 に実装済み**（実装リポジトリ toppers/tecscde-dt-el の #16・#17・#18）。`TecsgenVersionResult.command` は省略可の項目、`LogService` のコンストラクタは `dirs, appVersion, now` の順で版は必須。進め方とテストは[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 バージョン表示追加案|追加案]]。

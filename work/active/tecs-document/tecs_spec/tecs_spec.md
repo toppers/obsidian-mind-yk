@@ -35,7 +35,7 @@ Last Changed Date: 2015-11-23 10:03:15 +0900 (月, 23 11 2015)
 	- "E:\Crepo\toppers-tecs-svn\toppers\tecs_spec\trunk\base\_md\tecs_spec_ex.md"から先頭が`## `で始まる行で必ず章として分割されたファイルを、同じ階層に新たに作成して。
 ## Action Items
 - [ ] eps形式の図をpng形式の図に変換するスクリプトの作成
-- [ ] tecd_specの原稿のテキストファイルをLaTeX化する際の中間ファイルからMarkdown形式ファイル化するPythonスクリプトの作成
+- [ ] tecs_specの原稿のテキストファイルをLaTeX化する際の中間ファイルからMarkdown形式ファイル化するPythonスクリプトの作成
 
 ## Related
 - [[TECS開発]]

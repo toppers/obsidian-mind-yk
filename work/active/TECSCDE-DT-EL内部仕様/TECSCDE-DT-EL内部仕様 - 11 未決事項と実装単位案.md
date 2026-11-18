@@ -1,6 +1,6 @@
 ---
 date: 2026-09-05
-description: "TECSCDE-DT-EL内部仕様 第11章 — 外部仕様由来とElectron固有の未決事項、実装単位案、実装との相違点。配布形式の決定状況とWindowsコード署名の候補は11Bへ分離。"
+description: "TECSCDE-DT-EL内部仕様 第11章 — 外部仕様由来とElectron固有の未決事項、実装単位案、実装との相違点。配布形式の決定状況とWindowsコード署名の候補は11Bへ、11.2節の表は11Cへ分離。"
 project: TECS
 quarter: Q3-2026
 status: active
@@ -22,21 +22,7 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 11 of
 
 ### 11.2 Electron固有の未決事項
 
-| # | 事項 | 現状 |
-|---|---|---|
-| 1 | ~~`sandbox: true`の採否~~ → **決定済み（2026-09-08）: `sandbox: false`** | preloadをESM（`.mjs`）で書く方針を採ったため`sandbox: false`（Electronのサンドボックス化preloadはESM importを使えない）。`contextIsolation: true`・`nodeIntegration: false`は維持。経緯・トレードオフ: [[work/active/tecs/TECSCDE-DT-EL preload ESM・sandbox決定\|preload ESM・sandbox決定]]。第2章2.4節のコードも`.mjs`に更新済み（`createRequire`によるclipboard取得は、2026-10-21の実機確認でpreloadから使えないと分かり、ipcMain経由に変更。第2章2.4節） |
-| 2 | ~~配布ツールの選定~~ → **決定済み（2026-09-12パッケージング／2026-09-23自動更新）**: パッケージング(package/make)はElectron Forge（`@electron-forge/maker-squirrel`）。自動更新(publish)は`update-electron-app` + GitHub Actions（Node 22固定でpublish）で自動化する構成に確定。origin（`toppers/tecscde-dt-el`）が当初非公開で`update.electronjs.org`が使えないと判明し、いったん配布専用の公開ミラーリポジトリ案を採ったが、同日中にユーザーがoriginをpublicへ変更したため撤回——**originへ直接publishする**構成で確定した。**配布方式の決定・設定登録・実機検証を別の段階として扱い、macOS/Linuxを一括して「未実装」とは表記しない。設定の基準チェックアウトと検証状況は[[TECSCDE-DT-EL内部仕様 - 11B 配布方式と署名\|11B]]冒頭の表を正とする（2026-11-08、監査#20）。コード署名は当面見送り（未署名、2026-09-23決定）で、署名方式は未決（候補は11.2.1節）**。決定の経緯・却下した代替案は[[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]]参照。パッケージング導入時に見つかった3件の環境要因（gitフェッチ禁止によるoverrides、electron-winstallerの上流バグ、`@electron/packager`のNode 26非対応）は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]Action Items参照。コード署名の背景知識・設定箇所は[[work/active/tecs/Electronアプリのコード署名|Electronアプリのコード署名]]、選定時に比較したパッケージング・自動更新ツールの一覧は[[work/active/tecs/Electronアプリの配布・自動更新ツール|Electronアプリの配布・自動更新ツール]]参照 |
-| 3 | `tecsgen`・Cプリプロセッサの検出方法 | **tecsgenの設定はV0.2.0で決定**（2026-11-05外部仕様、内部設計は[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理\|9D]]）。「情報」に設定欄を同居させ、環境変数`TECSGEN_COMMAND`、保存パス、実在する`TECSPATH`、`PATH`の順で解決します。Windows拡張子等はTBC。Cプリプロセッサの検出・設定はこの決定の対象外で、未決を維持します |
-| 5 | tree-sitterバインディングの選択 | **2026-09-13追加**（[[work/active/TECSCDE内部仕様/TECSCDE内部仕様 - 04 CDLパーサ／シリアライザ設計\|TECSCDE内部仕様第4章]]の改訂に伴う本書固有の選択）。ブラウザ版と異なりElectronはネイティブバインディング（`node-tree-sitter`）を選べるが、**モジュールBはrendererに置かれ`nodeIntegration: false`・`contextIsolation: true`（第2章2.4節）のためrendererからは読み込めない**。したがって選択肢は①rendererで`web-tree-sitter`（WASM）を使う（プロセス配置を変えずに済む・ブラウザ版と同一コード）②CDL解析をmainへ移し`node-tree-sitter`を使う（速いがBの配置を第2章2.2節から変更することになり、解析結果をIPCで渡す設計が増える）。**①を既定とする**——**2026-09-21、大規模CDLでの実測により決着**（[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装|TECSCDE-DT-EL実装]]の`tests/perf/cdl-parse.bench.test.ts`、`RUN_CDL_BENCH=1`で実行）: 150〜6000セル（100〜4000結合）で計測したところ、6000セル・4000結合という現実のtecsgen CDL図では想定しづらい規模でも`CdlDocumentLoader.loadSources()`（パース＋CST走査＋モデル構築のフルパイプライン）の中央値は約75ms、スケーリングもほぼ線形で崖（急激な劣化点）は観測されなかった。②へ切り替える性能上の根拠は無いと判断し、①のまま確定する |
-| 4 | ~~ファイルブラウザの再検討~~ → **決定済み（2026-09-21）: 採用。** [[TECSCDE-DT外部仕様]]第3章3.5.1節・第10章10.4節を改訂し、階層ツリー表示のファイルブラウザを採用した。訂正: 本表は以前「mainプロセスに`fs.readdir`（`FileService`の拡張）が既にある」と記載していたが誤りだった——2026-09-21時点の[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装\|TECSCDE-DT-EL実装]]の`FileService`にディレクトリ列挙機能は存在せず（`openDialog`/`openPath`/`openPaths`/`save`/`saveAsDialog`/`exportFile`のみ）、新規実装が必要。設計は第7章7.6節に追加した |
-| 6 | ~~`TecsgenCommandBuilder`に`-k`（CDLファイルの文字コード指定）を追加するか~~ → **決定済み（2026-09-24）: 追加した。** [[work/active/tecsgen/tecsgen外部仕様 - 05 コマンドラインインターフェース\|tecsgen外部仕様第5章]]の`-k, --kcode`（既定`euc`）に対し、CDLファイルはUTF-8前提（[[TECSCDE外部仕様]]5.1.2節）のため`buildArgs`の先頭で常に`-k utf8`を付与するよう`command-builder.ts`を変更（コミット`6425b25`、テスト更新込みで279テスト全pass）。実際に文字化け・構文エラーが発生するかどうかは未確認のまま(inferred)だが、外部仕様が定める前提と一致させる安全側の対応として実施。**Plugin型取り込みの文字コード指定の欠落は2026-10-22に解消済み**。`.tecsgen-opts`に`-k`／`--kcode`が無い場合は、`-g <dir>`の直後に`-k utf8`を追加し、明示指定があればその値を尊重する（2026-11-08、監査#17で旧記述を整理）（[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計|第9章冒頭の注記]]） |
-| 7 | 起動時、固定のsamples/コマンドライン引数ではなく**前回終了時に開いていたファイルを復元する** | **決定済み（2026-09-22）、2026-11-07に監査#9の保存契約を具体化**: `lastSession`は`editablePath`・`referencePaths`・`optionsFilePath`・`extraImportPaths`を都度保存し、明示入力（CLI／関連付け確定要求） > `lastSession` > `samples`の優先順位で復元する。詳細は[[TECSCDE-DT-EL内部仕様 - 07H セッション保存と復元\|7H]]。4項目の契約更新に対する実装適合は未確認 |
-| 8 | ファイルブラウザで選択したファイルを既存の主ファイルを置き換えずに追加する | **実装済み**: Ctrl+クリックで`references`へ追加する。この名称は読み込み元の区別であり、ユーザ定義CDL由来のセルは主ファイルと同様に編集可能とする（システム定義CDL由来のセルは既定で編集不可、第3章3.2節）。重複パスは無視する。詳細は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章7.7.2節]]。 |
-| 9 | ツールバーに**「消去」ボタンを追加**（現在の図をクリアし、CDLファイルを何も読み込んでいない状態にする） | **決定済み（2026-09-22、ユーザー確認）**: [[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作\|TECSCDE-DT外部仕様5.2節「新規作成」]]の別名として設計。未保存確認は第7B章7.6.4節の`confirmDiscardChanges()`を再利用。設計は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合\|第7C章7.7.3節]]参照 |
-| 10 | ファイルブラウザでtecsgenのオプション形式ファイルを選んだ場合、探索パスを使って列挙CDLを読み込む | **実装済み**: 最後のCDLを主ファイル、残りを`references`へ追加する。システム定義CDLを除くすべてのユーザ定義CDL由来セルは編集可能で、変更は各元パスへ保存する。詳細は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章7.7.4節]]。 |
-| 11 | `import`自動追跡先をファイルブラウザで追加したCDLと統一して扱う | **実装済み**: 読み込み経路を共通化し、2026-10-19に編集可否の規定も現行実装へ合わせて改訂した。主ファイル以外の通常CDLも編集可能で、Plugin生成CDLのみ読み取り専用とする。詳細は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章7.7.5節]]。 |
-
-11.2.1〜11.2.3（Windowsのコード署名の候補比較、macOS／Linuxのパッケージング方式の決定）は、25KB閾値のため [[TECSCDE-DT-EL内部仕様 - 11B 配布方式と署名]] へ分離した（2026-10-10、本文は逐語移動）。
+11.2節（#1〜#11の表）は、25KB閾値のため [[TECSCDE-DT-EL内部仕様 - 11C Electron固有の未決事項]] へ分離した（2026-11-11、本文は逐語移動）。11.2.1〜11.2.3は[[TECSCDE-DT-EL内部仕様 - 11B 配布方式と署名|11B]]にある。
 
 ### 11.3 Tauriではなくelectronを選ぶことの含意（参考）
 
@@ -75,7 +61,7 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 11 of
 | V02-01 | 情報・設定、tecsgenパス・TECSPATH表示 | 02B.2、9D.1〜5 | 型・保存・解決器・版診断更新を先に結線 |
 | V02-02 | ファイルブラウザのモードレス化、「ファイル」 | 02B.1 | 既存ツリーと未保存確認を再利用 |
 | V02-03 | セルタイプ一覧のモードレス化 | 02B.1 | パレットとキャンバス配置の同期 |
-| V02-04 | tecsgen相当機能、仮想ファイル、プラグイン相当 | 9D.6 | **V0.2.1へ送る（2026-11-09決定）**。外部実行との関係（併用）・実行配置（Web Worker）・仮想内容の表示は2026-11-08に決定。対象プラグインの付表は、外部tecsgenの出力との照合後に確定 |
+| V02-04 | tecsgen相当機能、仮想ファイル、プラグイン相当 | 9D.6 | **V0.2.1へ送る（2026-11-09決定）**。外部実行との関係（併用）・実行配置（Web Worker）・仮想内容の表示は2026-11-08に決定。対象プラグインの付表は、外部tecsgenの出力との照合後に確定（**V0.2.1で実装済み、2026-11-13。付表は`MrubyBridgePlugin`・`MrubyBridgeCellPlugin`の2件**） |
 | V02-05 | 呼び口／受け口からの赤い結合強調 | 6C.3 | 指定操作（トグルに追従）と探索範囲（直接の結合のみ）は2026-11-08に決定 |
 | V02-06 | activeセル青背景、だけの表示、最上段配置 | 6C.1〜4 | 色の優先順位・最上段不足時の扱い・操作入口は2026-11-08に決定（6C.2、6C.4） |
 | V02-07 | `_CDL_FILES.txt`・`_ROOT_CDL_FILES.txt`生成 | 7G | 上書き確認・並び順・リンク・書式は2026-11-08に決定。`_ROOT_CDL_FILES.txt`は作成のみ |
@@ -97,13 +83,13 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 11 of
 | （解決済み、2026-11-08）青背景と編集可否・不完全・未結合の塗り・枠の色の優先順位。塗りと枠を別の軸として決定。色以外の記号は監査#14で5Bへ具体化済み | 6C.2、5B |
 | （解決済み、2026-11-08）active最上段配置の操作入口（ツールバーのボタン「アクティブを最上段へ」）と最上段に収まらない場合の扱い | 6C.4 |
 | （解決済み、2026-11-08）結合強調の指定操作（トグルに追従）、複合・間接結合をたどる範囲（直接の結合のみ） | 6C.3 |
-| Windows実行ファイルの拡張子、TECSPATHがディレクトリ等の場合 | 9D.2 |
+| Windows探索候補は2026-11-10に.bat/.ps1へ確定。TECSPATHがディレクトリの場合は、2026-11-17に「採用せずPATH探索へ進む」と決定（実装済み）。ディレクトリ内の実行ファイルへの変換は未決 | 9D.2 |
 | macOS/Linuxの具体的な設定ファイルパス | 9D.3 |
 | （解決済み、2026-11-08）一覧の上書き確認（内容が異なる既存の一覧があるときだけ1回確認）・並び順（名前の昇順、パスは要素ごと）、リンクや拡張子等の探索細部 | 7G.2 |
 | プロパティの横スクロール | 02B.3 |
 | （解決済み、2026-11-08）リージョン親子の重なり（親が子孫を含む）・色・保存有無（保存しない）、矩形の単位・余白・非表示セル（非表示は除外） | 6C.5 |
 | 既存表示機能の操作移設位置 | 6C.1 |
-| （解決済み、2026-11-08）内部tecsgenの外部実行との関係（併用）・仮想内容の表示・実行配置。**残る未決**: 対象プラグインの付表（`MrubyBridgePlugin`系が候補だが、C型の解決・処理順・プラグイン連鎖の再現と基準データとの一致が条件。基準データは採取済みで、付表は空のまま。2026-11-08） | 9D.6 |
+| （解決済み、2026-11-08）内部tecsgenの外部実行との関係（併用）・仮想内容の表示・実行配置。**残る未決**: なし。対象プラグインの付表は解決した（2026-11-13: `MrubyBridgePlugin`・`MrubyBridgeCellPlugin`の2件を、基準データ55ファイルとの完全一致を確認して登録した。2026-11-08時点では、付表は空のままだった） | 9D.6 |
 
 完了条件は各章の受入確認を満たし、実装変更時に`npm run check`（build・test・dependency-cruiser）が成功することです。モードレス操作、色・矩形外周、定義ファイル表示、設定保存後の反映はElectronで確認し、記録は`tests/verification/`に置きます。未決事項を残した機能は、当該機能の実装完了とはしません。今回の仕様更新自体の検証と、将来の実装テストの実行結果を区別します。
 

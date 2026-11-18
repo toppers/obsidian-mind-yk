@@ -27,6 +27,8 @@ tags:
 
 ## Action Items
 
+- [ ] V0.2.5 三者相違一覧の判断（2026-11-17、ユーザー）は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.5 三者相違一覧の判断 — 2026-11-17|別ノート]]に移した（25KB閾値）。仕様側は 2026-11-17 に反映済みで、ソース側の変更と完了条件は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.6 実装計画 — 2026-11-17|V0.2.6 実装計画]]に整理した。未決は 6-22（Backspace で削除）ほか（計画ノートの「未決」参照）
+
 2026-09-06〜09-15分は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — Action Items — 2026-09-06〜09-15|Action Items — 2026-09-06〜09-15]]に分離（2026-09-21、25KB閾値）。09-16〜09-21分は[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — Action Items — 2026-09-16〜09-21|Action Items — 2026-09-16〜09-21]]に分離（2026-09-21、コア再肥大化）。以下は09-21以降の未分類項目。
 
 - [x] ツールバーのズームUI（−/100%/＋ボタン）の外部仕様3.2.1スライダ規定からの逸脱（[[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — Action Items — 2026-09-16〜09-21|09-16〜09-21分]]参照）を解消——整数値スライダ（`min=5 max=200 step=1`）を追加（コミット`06f2c25`）した上でユーザーが使用感を比較し、`−`/`＋`ボタンを削除して「100%」ボタンを「Reset Rate」に改称、スライダへ一本化（コミット`43268b4`、いずれも2026-09-21）。設計記録は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|内部仕様11.5節#9]]参照
@@ -53,12 +55,13 @@ tags:
 - [ ] 入力の文字コードの残課題（2026-10-21。外部仕様を実装に合わせて改訂し、「UTF-8に限る」との食い違いは解消。出典は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07 ファイルI-O設計|7.8]]。**読解のみ、動作は未確認**）:
   - [ ] ①レガシー符号のファイルを保存するとUTF-8に変わる点を利用者に提示するか（現状は無通知で、外部仕様もそれを認めた）
   - [x] ②`__location_information__`形式は、検出してエラーにする代わりに「読み込んで無視する」へ外部仕様・内部仕様・実装を統一（2026-10-22、`blankLocationInformation`）。第8章の発生源`input`は診断を生成しないままで正しい
-
-## Related
-- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 外部仕様と内部仕様・実装の差分一覧|外部仕様と内部仕様・実装の差分一覧]]（2026-10-21、食い違い・未実装・不整合の一覧）
+- - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 外部仕様と内部仕様・実装の差分一覧|外部仕様と内部仕様・実装の差分一覧]]（2026-10-21、食い違い・未実装・不整合の一覧）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 未実装・未結線項目の監査 — 2026-10-26|未実装・未結線項目の監査]]（2026-10-26、親仕様を含む28件、コード基準）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — 三者監査 69件の実装要否一覧 — 2026-11-09|三者監査 69件の実装要否一覧]]（2026-11-09、要実装66件・不要3件。契約補足は内部仕様・外部仕様の「監査対応」ノート）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.0 実装計画 — 2026-11-09|V0.2.0 実装計画]]（2026-11-09、段0〜5・7、tecsgen相当機能はV0.2.1へ）
+- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.1 実装計画 — 2026-11-12|V0.2.1 実装計画]]（2026-11-12。Cプリプロセッサ設定、tecsgen相当機能、配列の受け口の展開。段0〜3完了）
+- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.5 三者相違一覧 — 2026-11-16|V0.2.5 三者相違一覧]]（2026-11-16、外部仕様・内部仕様・ソースの相違を9分野で列挙。基準HEAD 9fa3f5a、読解のみで実機確認なし）
+- [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.6 実装計画 — 2026-11-17|V0.2.6 実装計画]]（2026-11-17。三者相違一覧の判断分と新規の小不具合修正、段0〜5、完了条件）
 - [[work/active/tecs/TECSCDE-DT-EL 複合セルタイプ対応案|TECSCDE-DT-EL 複合セルタイプ対応案]] 複合セルタイプ対応の方針（2026-10-03採用。表示・編集範囲は外部仕様で決める）
 
 - [[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]] — 配布専用ミラーリポジトリ＋update-electron-app＋GitHub Actionsの決定記録（2026-09-23、実装は未着手）
@@ -67,11 +70,7 @@ tags:
 - [[work/active/tecs/Electron Forgeの使い方|Electron Forgeの使い方]] — Forgeの一般的な使い方と、本実装で実際に採った構成の差分
 - [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様|TECSCDE-DT-EL内部仕様]] — 本実装が対応する内部仕様（全11章）
 - [[work/active/tecs/TECSCDE-DT-EL ズーム・パン対話的確認チェックリスト|TECSCDE-DT-EL ズーム・パン対話的確認チェックリスト]] — SVG幾何・ズーム/パンの対話的目視確認用チェックリスト（ズーム項目は2026-09-21確認・修正済み）
-- [[work/active/TECSCDE外部仕様/TECSCDE外部仕様 - 07 表示機能|TECSCDE外部仕様7章（表示機能）]] — Ctrl+ホイールのポインタ固定点ズーム・「左上基準でずれる」旧版バグの禁止を規定する一次情報源
-- [[TECSCDE-TS実装]] — model/cdl/diagnosticsの移植元
-- [[TECSCDE-JS-TS実装]] — 現行の関数ベース・ブラウザ版実装（比較対象）
-- [[work/active/TECSCDE共通ロジック/TECSCDE共通ロジック|TECSCDE共通ロジック]] — 本実装と[[TECSCDE-JS-TS実装]]が共有するロジックの棚卸しと共有方法の未決事項
-- [x] [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 06B 表示フィルタUI設計|第6B章]]（表示フィルタ、外部仕様7.5.2）の1〜7番を実装（2026-10-23〜24、PR #4、コミット`da603e0`・`50909a4`・`5fd550d`・`3a87b29`）。`DisplayFilters`を非表示リージョンの集合へ作り替え、色分けの帯・表示制御バー・リージョン木・凡例・結合スタブ・検索連携を追加。`HitTester`が非表示セルを掴める不具合も修正。518テストpass
+- [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 06B 表示フィルタUI設計|第6B章]]（表示フィルタ、外部仕様7.5.2）の1〜7番を実装（2026-10-23〜24、PR #4、コミット`da603e0`・`50909a4`・`5fd550d`・`3a87b29`）。`DisplayFilters`を非表示リージョンの集合へ作り替え、色分けの帯・表示制御バー・リージョン木・凡例・結合スタブ・検索連携を追加。`HitTester`が非表示セルを掴める不具合も修正。518テストpass
 - [x] 整列操作（上端・左端、外部仕様7.3.2）を結線（2026-10-24、PR #5、コミット`6974663`、524テストpass）。差分一覧のF1
 - [ ] 第6B章の目視確認——リージョン木のポップオーバー、凡例、結合スタブ、検索連携、整列（`tests/testa/test-region/regions-join-test.cde`で確認できる）。あわせて暫定値（帯2mm・スタブ4mm・横線2mm・パレット）を決める
 - [x] 差分一覧のF2（結合経路の重なり回避、PR #6、コミット`bf022a2`）・F3（セル名強調、PR #7、コミット`ec996d0`）を実装し、F4（スペース+ドラッグのパン、PR #8）とともにマージ済み（2026-10-24）。いずれも`origin/main`

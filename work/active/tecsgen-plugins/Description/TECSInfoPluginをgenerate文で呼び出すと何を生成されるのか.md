@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "TECSInfoPluginをgenerate文または指定子で適用した際に生成されるCDL・Cコードと副作用（--unoptimize-entry）の解説メモ"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 TECSInfoPluginをgenerate文で呼び出すと何が生成されるのか
@@ -41,3 +51,7 @@ generate 文で呼ぶときの注意
 tTECSInfo には、標準ライブラリの tecs/TECSInfo/TECSInfo.cdl:299 で既に generate(TECSInfoPlugin, "") の指定子が付いています。同じセルタイプに generate 文でもう一度付けると、指定子とは別に @generate_list へ追加され、プラグインが2回適用されます。そうなると new_cell が2回呼ばれ、同じ名前の tmp_..._TECSInfoSub.cdl が重複して Import される可能性があります。この点は、実行して確かめていません。
 
 通常は、TECSInfo.cdl を import して tTECSInfo のセルを1つ置く使い方で足ります。generate 文で呼ぶ必要はありません。
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

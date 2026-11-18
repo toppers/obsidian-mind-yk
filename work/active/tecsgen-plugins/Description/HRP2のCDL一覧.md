@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "hr-tecsリポジトリ配下（mindstorms_ev3・common・target等）のHRP2関連CDLファイルパス一覧"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 hr-tecs\tecs_lib\mindstorms_ev3\sZmodemToppers.cdl
@@ -252,3 +262,7 @@ hr-tecs\workspace\sd\tEV3Sample.cdl
 hr-tecs\workspace\sd\VM1_bigtire.cdl
 hr-tecs\workspace\sd\VM2_bigtire.cdl
 hr-tecs\workspace\sd\VM1.cdl
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

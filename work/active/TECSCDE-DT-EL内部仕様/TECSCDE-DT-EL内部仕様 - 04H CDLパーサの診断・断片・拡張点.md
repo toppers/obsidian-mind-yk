@@ -33,7 +33,14 @@ Domain note of [[TECSCDE-DT-EL内部仕様 - 04B CDLパーサ設計]]（2026-11-
 | `W-LAYOUT-DISCARDED`、`W-LAYOUT-PARSE-ERROR`、`W-NEWER-FORMAT` | `tool_info`の検証 | `ToolInfoValidator`（`tool-info.ts`が直接出す） |
 | `W-UNRESOLVED-REF-FILE`、`W-CPP-FALLBACK`、`W-CDECL-PARSE` | 参照ファイル・cpp・Cヘッダ解析 | `app/import-resolution.ts`（7.5節、9B）と`diagnostics/integrity.ts`。ローダーは出さない |
 | `W-C-TYPE-UNRESOLVED`、`W-PORT-SIGNATURE-UNRESOLVED`、`W-REGION-MISMATCH` | 型・ポート・リージョン | `document-builder.ts`。コードは`messages.ts`の`W_CODES`に集約した（2026-10-22。`tool-info.ts`の`W-NEWER-FORMAT`・`W-LAYOUT-*`も同様） |
-| `W-PLUGIN-TYPE-LOAD`、`E-TECSGEN-NOT-FOUND` | tecsgenの起動失敗 | それぞれ`app/file-actions.ts`、`diagnostics/tecsgen-result-parser.ts`（パーサーの外。[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計|9.7節]]） |
+| `W-JOIN-INDEX-INCONSISTENT` | 同じ呼び口の結合で、添字を書いた形と省いた形が混在 | `messages.ts`の`W_CODES`（外部仕様9.2。2026-11-17に表へ追加） |
+| `W-ARRAY-SIZE-UNRESOLVED` | 配列長を評価できない（整数の定数式のみ対応。配列として展開しない） | `document-builder.ts`。外部仕様9章の警告表には無い（三者相違一覧 9-8） |
+| `W-ACTIVE-TOP-OVERFLOW`、`W-ACTIVE-TOP-FAILED` | 「アクティブを最上段へ」で、置ききれず次の行へ送った／重ならずに置けず移動しなかった | `messages.ts`の`W_CODES`（外部仕様9.2、内部6C.4） |
+| `W-LOG-WRITE-FAILED` | 診断ログを作れない・追記できない | コードは`messages.ts`の`W_CODES`、生成は`app/log-warning.ts`の`logWriteFailedDiagnostic`の1か所（ストアへ入れる。診断ログへは書き戻さない。外部仕様9.5。V0.2.6 段4で、二重定義と使われない側を整理、2026-11-17。三者相違一覧 9-13） |
+| `E-SAVE-FAILED`、`E-OPEN-FAILED`、`E-ACTION-FAILED`、`W-SAVE-READONLY`、`W-OPTS-NO-CDL` | 保存・読み込み・操作の失敗、閲覧のみの主ファイルの保存拒否、opts に CDL が 0 件 | `messages.ts`の`E_CODES`・`W_CODES`、生成は`app/action-failure.ts`。ストアの`setTransientActionDiagnostics`で診断一覧へ入れる（外部仕様9.2。実装済み、V0.2.6 段4、2026-11-17、コミット `b9c15a9`、ブランチ `v0.2.6-stage4`・未マージ） |
+| `W-PLUGIN-UNSUPPORTED` | 内部処理の対象外のプラグインの`generate(...)`で、生成型を取り込まなかった | `messages.ts`の`W_CODES`（外部仕様8.5、内部9D.6） |
+| `W-PLUGIN-TYPE-LOAD` | Plugin生成型の取り込みの失敗 | `renderer/tecsgen/plugin-type-provider.ts`・`internal/processor.ts`・`internal/worker.ts`が作る（`app/file-actions.ts`だけではない。2026-11-17に修正。9D・[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計|9.7節]]） |
+| `E-TECSGEN-NOT-FOUND`、`E-TECSGEN-NO-PERMISSION`、`E-TECSGEN-TIMEOUT`、`E-TECSGEN-OUTPUT-OVERFLOW`、`E-TECSGEN-LAUNCH-FAILED`、`E-TECSGEN-FAILED` | tecsgenの起動失敗（6種）と、非0終了でエラー行が1つも無いとき | `diagnostics/tecsgen-result-parser.ts`の`TECSGEN_CODES`（パーサーの外。外部仕様9.4。[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計|9.7節]]。2026-11-17に6種へ更新） |
 
 - tree-sitterはエラーの位置と構造しか返さず、メッセージ文言を持たない（移植したのは構文定義だけで、メッセージカタログは含まれない）。そのため構文エラーは大半を`G1016`にまとめる（tecsgen自身も大半をこの1コードで報告する）。`messages.ts`のコード体系は、外部仕様が引用する範囲の再現で、tecsgenのカタログ全体の網羅ではない。
 - 診断の`location.file`は、`CdlDocumentBuilder`の段階では空で、`loadSources`が`withLocation`でファイル名を埋める。

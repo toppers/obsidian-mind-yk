@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "Ruby版tecsgenにおけるgenerate文とgenerate指定子の構文・記述場所・呼び出しタイミング・指定可能回数の比較メモ"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 Ruby版tecsgenの generate文　と generate 指定子　の違いを教えて
@@ -46,3 +56,7 @@ Ruby版tecsgenの generate文　と generate 指定子　の違いを教えて
 - 第2引数の意味:指定子の第2引数は plugin_arg(オプション文字列)です。文の第2引数は対象のパスで、オプション文字列は第3引数です。
 
 実際に tecsgen を実行しての確認はしていません。上記は文法規則と、celltypeModule.rb、cell.rb、signature.rb、generate.rb の該当箇所を読んだ結果です。
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

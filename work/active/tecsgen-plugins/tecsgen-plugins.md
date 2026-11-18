@@ -47,9 +47,12 @@ tags:
 
 `Description/` 配下は `verbatim: true` の生キャプチャ（frontmatter の必須項目は問わない）。
 
+- [[generate文とgenerate指定子の違い]] — generate 文と generate 指定子の構文・呼び出しタイミング比較
+- [[HRP2のCDL一覧]] — hr-tecs リポジトリ配下の HRP2 関連 CDL ファイル一覧
 - [[HRP2のgenerate文一覧]] — HRP2系プラグインを呼ぶ generate 文の一覧
 - [[namespace の使い方]] — CDL の namespace の使い方
 - [[plugin-category]] — プラグインの分類表
+- [[plugin一覧]] — tecsgen 全プラグインの呼び出し方法・基底クラス・カーネル比較一覧
 - [[region を解釈するのはどこか]] — region を解釈する Region クラスの所在
 - [[TECSInfoPluginをgenerate文で呼び出すと何を生成されるのか]] — TECSInfoPlugin を generate 文で呼んだときの生成物
 

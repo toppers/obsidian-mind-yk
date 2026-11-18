@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "tecsgen全プラグインの呼び出し方法、CDL上の付与位置、基底クラス、対象カーネル、関連プラグインの比較一覧表"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 ソースコードから、プラグイン毎の呼び出し方法、CDLでの書き方、基底クラス、関連の観点でまとめた一覧

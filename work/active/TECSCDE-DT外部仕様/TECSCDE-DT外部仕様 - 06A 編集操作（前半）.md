@@ -19,6 +19,10 @@ Domain note [[TECSCDE-DT外部仕様 - 06 編集操作]].
 
 キーボードイベントの判定（`KeyboardEvent.key`の名前付き値を用い、現行版Ruby/GTK版のビットマスク方式に起因するキー衝突が構造的に発生しない）についても、Electron・TauriいずれもWebViewが標準の`KeyboardEvent`を発火するため、[[TECSCDE外部仕様]]6.1.2・6.2.2の規定がそのまま成り立つ。
 
+### 6.3.2 差分: Backspace でも削除する（2026-11-17 決定、三者相違一覧 6-22）
+
+削除操作は、親の規定（Delete キー）に加え、**Backspace キーでも Delete キーと同じ操作として行える**（`KeyboardEvent.key` が `Delete` または `Backspace`）。デスクトップ版では Mac のキーボードに Delete キーが無いため、同じ動作を Backspace に割り当てる。選択の扱い・結合解除の優先・確認ダイアログを設けないこと・アンドゥの単位は Delete と同一とする。テキスト入力中・IME 変換中の Backspace は、入力欄の編集であり、図の削除として扱わない。実装は `gesture-controller.ts` が従来から両キーを受けており、本項で仕様に追いつかせた（ソース変更なし。入力欄・IME 中の除外は V0.2.6 で実機確認する）。
+
 詳細は[[TECSCDE外部仕様]]該当節を参照。
 
 ## Related

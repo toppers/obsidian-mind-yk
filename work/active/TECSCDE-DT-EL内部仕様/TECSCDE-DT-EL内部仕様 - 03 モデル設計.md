@@ -22,6 +22,8 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 3 of 
 
 `Cell`・`Port`（`CPort`/`EPort`）・`Join`・`Region`・`RegionTree`・`TecscdeDocument`のクラス設計は、[[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 03 モデル設計|TECSCDE-TS内部仕様第3章]]と**複合セルタイプを除き同一**。第2章2.3節で述べたとおり本モジュール（C）はrendererプロセスで動作し、Node.js APIへの依存を一切持たない——これはブラウザ版（TECSCDE-TS内部仕様）から変更する理由がないことの裏付けでもある。
 
+**実装との差（2026-11-17、三者相違一覧 3-14）**: 「同一」なのは設計の考え方までで、フィールドの構成は TS 版と大きく異なる。実装（`src/renderer/model/`）の主な差は次のとおり。`Port` は`id`を持たず、`name`・`signature`・`arraySize`を持つ（安定した`PortId`はモデルに無い。3.5・3.6 が前提とする`PortId`は未実装、3-15）。`Cell` は`celltypeRef`ではなく`celltypeName`（文字列）と、`attrs`・`celltypeUnresolved`・`locale`・`sourceName`・`systemDefined`を持つ。`Join` は`cellId`・`cportName`・`eportCellId`・`eportName`・`targetRef`と添字2つを持つ。`TecscdeDocument` は`celltypes`・`referenceFiles`・`editingFileName`・`sourceTemplate(s)`・`primarySourceKey`・`sourceOrder`などを持つ。`withCell` は、所属リージョンが木に無いと何もせず元の文書を返す（黙って何もしない）。フィールドの一覧は、ソースを一次情報とする。
+
 複合セルタイプのモデル、未対応構文フラグ、外側セルへの適用は[[TECSCDE-DT-EL内部仕様 - 03B 複合セルタイプ設計|3B章]]で定める。
 
 その他の詳細は[[TECSCDE-TS内部仕様]]第3章を参照。
@@ -46,7 +48,7 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 3 of 
 - **判定の置き場所**（2026-10-22実装）: `CdlDocumentLoader.loadSources()`（第7C章7.7.4節）が、`LoadOptions.systemDirs`と各`CdlSource.sourcePath`から`systemDefined`を決め、セルの生成時に渡す。パス比較の`isUnderAny(path, dirs)`は、依存の無い純粋関数として`shared/path-under.ts`に置き、main・rendererの両方から使える（当初案の「mainで比較して結果をrendererへ渡す」は採らなかった。`OpenFileEntry`に判定結果を載せる変更が要らず、`import`自動追跡など開く経路がいくつあってもローダーの1か所で済むため）。Windows形式のパス（ドライブ文字、UNC）は大文字小文字を区別せずに比べる。
 - **編集可否はソース単位で決める**（2026-10-22）: `systemDefined`かつ`allowEditSystemDefined=false`のソースは、`CdlSource.editable`ごと`false`にする。セル単位で`editable=false`にしない理由は、編集可能なソースはテンプレートを持ち、保存時（`serializeFromTemplate`）にテンプレートのセルをすべて削除して編集可能なセルだけを書き戻すため、編集不可のセルが混ざると、そのセルが保存で消えるから。編集不可のソースはテンプレートを持たないので、書き戻しの対象にならない。主ファイルが閲覧のみのときは、保存を行わない（`AppStore.isEditingFileReadOnlySystemDefined()`）。
 - **設定**（2026-10-22実装）: `allowEditSystemDefined`は`settings.json`（`AppSettings`）の真偽値で、既定は`false`。rendererは起動時にIPC `settings:get`で一度読み、`AppStore`に保持する。この項目は設定ダイアログに載せない（外部仕様2.5節）。
-- **表示**: `systemDefined`のセルのSVG要素に`system-defined`クラスを付け、編集不可なら既存の`readonly`の見た目にする（2026-10-22の設計）。**2026-11-07、監査#14で記号の契約を具体化**し、[[TECSCDE-DT-EL内部仕様 - 05B 色に依存しない状態表示|5B]]の四角いROを`!cell.editable`の場合に併記する。`systemDefined=true`だけではROを付けず、編集許可設定で`editable=true`なら出さない。不完全・未結合は別の独立した記号とし、表示のためにモデルの編集可否を変更しない。新表示の実装適合は未確認。
+- **表示**: `systemDefined`のセルのSVG要素に`system-defined`クラスを付け、編集不可なら既存の`readonly`の見た目にする（2026-10-22の設計）。**2026-11-07、監査#14で記号の契約を具体化**し、[[TECSCDE-DT-EL内部仕様 - 05B 色に依存しない状態表示|5B]]の四角いROを`!cell.editable`の場合に併記する。`systemDefined=true`だけではROを付けず、編集許可設定で`editable=true`なら出さない。不完全・未結合は別の独立した記号とし、表示のためにモデルの編集可否を変更しない。新表示は V0.2.0 段4 で実装した（2026-11-17 に更新。残差は三者相違一覧 3-3・3-5・3-6・3-7）。
 - **`editable`の算出**: `editable = 通常の規則 && !(systemDefined && !allowEditSystemDefined)`。設定名は`allowEditSystemDefined`、保存先は`settings.json`（`AppSettings`）で確定している。真偽値、既定`false`とし、真偽値の`true`のときだけ有効にする（文字列`"true"`等は無効）。有効なら`systemDefined`のセルも通常CDLと同じ`editable`になる（2026-11-08、監査#29で決定状態を統一）。
 - **コマンド・保存との関係**: `editable=false`のセルは、既存の編集コマンドの前提条件（編集不可セルは対象外）と`CdlSerializer.serializeSource()`の書き戻し対象外に、そのまま従う。`systemDefined`自体は編集可否を直接参照せず、`editable`の算出にだけ使う。表示上の区別は第5章の描画仕様で別途定める。
 - **テスト（実装時）**: 配下・入れ子・兄弟ディレクトリの接頭辞一致（`/sys`と`/sysx`）・Windowsの大文字小文字・相対`-S`・`-S`なし・主ファイルが配下にある場合・`allowEditSystemDefined`の切り替え。

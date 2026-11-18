@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "hr-tecsリポジトリ内のCDLファイルにおけるgenerate文（MrubyBridgePlugin・HRP2HandlerPlugin等）の出現箇所一覧"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 hr-tecs\tecs_lib\common\EV3_mruby_common.cdl
@@ -242,3 +252,7 @@ hr-tecs\tecsgen\test\multiplugin\multiplugin2.cdl
 
 hr-tecs\tecsgen\tecsgen\tecs\TECSInfo\TECSInfo.cdl
 216:     generate( TECSInfoPlugin, "" )]
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

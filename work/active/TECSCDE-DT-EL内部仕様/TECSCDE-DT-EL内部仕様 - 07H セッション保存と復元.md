@@ -13,7 +13,7 @@ tags: [work-note, tecs, tecscde, spec, architecture]
 
 ## 7H.0 主パスとセッションの有効性の分離（2026-11-09）
 
-本章は外部05の5.3に対応する確定契約です。`status: active`は実装完了を意味しません。現行`5cf2d85`は`main/index.ts`の`if (lastSession?.editablePath)`で主パスの真偽だけを使い、null／省略ではsamplesへ進むため未対応です。shared・app-settingsの「主なしは復元対象外」という注記も更新が必要です。
+本章は外部05の5.3に対応する確定契約です。`status: active`は実装完了を意味しません。（三者監査#7は段0で実装済み、as of 2026-11-12。以下は 2026-11-09 の確認）現行`5cf2d85`は`main/index.ts`の`if (lastSession?.editablePath)`で主パスの真偽だけを使い、null／省略ではsamplesへ進むため未対応です。shared・app-settingsの「主なしは復元対象外」という注記も更新が必要です。
 
 明示的な起動入力がない場合、正規化後の`SessionSnapshot`の有無で次を分岐します。
 
@@ -116,7 +116,7 @@ interface RestoreImportContext {
 
 mainはこの組を`OpenPathsRequest`／成功batch・bootstrapへ渡し、空配列も明示します。rendererは古いストア値や保存値と再合成せず、この組を使って解決・構築し、7I.7のguardが有効な場合だけ一括適用します。成功後に保存する`extraImportPaths`も採用した列に一致させます。失敗・失効で旧セッションを書き換えません。主なし・空セッションにも同じ選択表を適用し、optsのCDLリストで復元対象を補ったり置き換えたりしません。
 
-**現行`5cf2d85`は未対応**です。`main/index.ts`は再解析の`systemDirs`だけを使い、探索パスは`lastSession.extraImportPaths`のままで、新しいシステム定義指定と古い探索列が混在します。この確定契約に合わせ、同じ解析結果から両方を採用するソース修正が必要です。
+**現行`5cf2d85`は未対応**でした（三者監査#8は段0で実装済み、as of 2026-11-12）。`main/index.ts`は再解析の`systemDirs`だけを使い、探索パスは`lastSession.extraImportPaths`のままで、新しいシステム定義指定と古い探索列が混在します。この確定契約に合わせ、同じ解析結果から両方を採用するソース修正が必要です。
 
 ## 7H.4 Generateとの境界
 

@@ -30,11 +30,17 @@ tags: [work-note, tecs, tecscde, spec, architecture]
 1. 環境変数`TECSGEN_COMMAND`。従来の起動コマンドとして扱い、引数を含み得る値を`tecsgenPath`へ転記しません。
 2. `settings.json`の`tecsgenPath`。設定済みならこれを使い、ファイルが消えていても別のtecsgenへ黙って切り替えません。起動失敗は既存のエラー経路へ渡します。
 3. 未設定なら`TECSPATH`の値が実在するか調べ、実在すればtecsgenへのパスに採用します。
-4. それでも決まらなければ`PATH`をOSの区切りで分け、先頭のディレクトリからOSに応じた実行ファイルを探します。Windowsの拡張子一覧と候補内の優先順はTBCです。
+4. それでも決まらなければ`PATH`をOSの区切りで分け、先頭のディレクトリからOSに応じた実行ファイルを探します。2026-11-10の利用者指定により、Windowsの候補は`tecsgen.bat`と`tecsgen.ps1`とし、`tecsgen.exe`は自動探索しません。同じディレクトリでは列挙順の`.bat`→`.ps1`を採り、ディレクトリ順を拡張子の優先順より先に適用します。Windows以外は従来の`tecsgen`を探索します。
 
 自動探索で見つかった値は`tecsgenPath`として保存します。見つからなければ未設定のままとし、情報ダイアログへ未検出の状態を返します。`TECSGEN_COMMAND`による上書きがあっても保存値は保持し、その値が使われないことを表示します。
 
-外部仕様は`TECSPATH`の「値が実在する」ことを条件にしています。その値がディレクトリだった場合の実行ファイルへの変換や`.rb`の起動方法は未規定です。既存の`TECSGEN_COMMAND`対応から推測して自動変換を追加せず、実装前のTBCとします。`tecsgenPath`はコマンド文字列ではなくパスとして扱い、引用符や空白をシェルへ連結して実行しません。
+外部仕様は`TECSPATH`の「値が実在する」ことを条件にしています。その値がディレクトリだった場合は、**採用せず、保存もせず、次の`PATH`探索へ進みます**（2026-11-17、ユーザー決定。実装済み、v0.2.6 段2、コミット `a9a5833`、三者相違一覧 1-5。`resolveTecsgenCommand`が`exists(TECSPATH, true)`で実行できるファイルかを確かめる）。ディレクトリ内の実行ファイルへの変換や`.rb`の起動方法は未規定のままで、既存の`TECSGEN_COMMAND`対応から推測して自動変換は追加しません。`tecsgenPath`はコマンド文字列ではなくパスとして扱い、引用符や空白をシェルへ連結して実行しません。
+
+### Windowsスクリプトの起動とコマンドコピー（2026-11-10）
+
+`.bat`は明示した`cmd.exe`、`.ps1`は利用可能なPowerShell 7を優先し、見つからなければWindows PowerShell 5.1をホストとして起動します。これはUTF-8スクリプト読込とnative引数転送の互換性を考慮した実装方針です。`shell: true`や未処理の入力連結にはせず、実引数から専用の起動計画を組み立て、Generate・版確認・候補確認・外部Plugin取り込みで共用します。スクリプト自身の終了コードを保持し、実行ポリシーを自動で迂回しません。パスを保存しても環境変数やシステム設定を変更しません。
+
+コピー先は利用者指定のPowerShell 7・Windows PowerShell 5・コマンドプロンプトから操作時に選びます。入力をシェル構文として解釈させず、固定プログラムと符号化したデータを用いて、実行先・引数・作業ディレクトリを再現します。copy formatterと実行用引数列は分離し、引用符・空引数・Unicode・特殊文字・末尾バックスラッシュを実シェルのargv照合で検証します。環境変数全体をコピーへ含めません。NUL、Windowsバッチで表現できない改行・空白を含み末尾がバックスラッシュの引数、シェルの長さ上限を超える入力は、黙って変形せず明示的な失敗にします。`.ps1`とnative実行の引数内改行は保持します。コピー途中に対象シェルを変更した場合は旧結果を採用しません。
 
 ## 9D.3 設定の保存と即時反映
 
@@ -61,7 +67,7 @@ tags: [work-note, tecs, tecscde, spec, architecture]
 | API案 | チャネル案 | 役割 |
 |---|---|---|
 | `settings.getToolSettings()` | `settings:getToolSettings` | 保存パス・有効な起動元・TECSPATH・一覧対象ディレクトリ・Plugin生成型の取り込み方式を取得 |
-| `settings.updateToolSettings(patch)` | `settings:updateToolSettings` | パス／対象ディレクトリ／取り込み方式を部分更新し、有効設定とrevisionを返す |
+| `settings.updateToolSettings(patch)` | `settings:updateToolSettings` | パス／対象ディレクトリ／取り込み方式を部分更新し、有効設定とrevisionを返す。**統合APIを採用（2026-11-17、ユーザー決定）**。**実装済み（v0.2.6 段2、2026-11-17、コミット `68f5046`、ブランチ `v0.2.6-stage2`・未マージ、三者相違一覧 1-6）**: `ToolSettings.cdlFilesRoot`・`ToolSettingsUpdate.cdlFilesRoot`を足し、`updateToolSettings`が成否とrevisionを返す。専用の`settings:getCdlFilesRoot`・`settings:setCdlFilesRoot`は廃止した。ネイティブのフォルダ選択ダイアログ`settings:chooseCdlFilesRoot`は、`chooseTecsgenPath`と同じく設定の読み書きではないので残す。`CdlFileListView`は保存の失敗を表示し、失敗したときは一覧の作成へ進まない |
 | `settings.chooseTecsgenPath()` | `settings:chooseTecsgenPath` | ネイティブファイル選択、キャンセル可 |
 | `tecsgen.checkPath(path)` | `tecsgen:checkPath` | 未保存候補の版確認。設定は変更しない |
 | `tecsgen.version()` | 既存`tecsgen:version` | 現在有効な設定で版確認 |
@@ -94,7 +100,7 @@ CDLの入力はアプリが保持するソース群のスナップショット�
 1. **構成**: `PluginTypeProvider`インタフェースを置き、`ExternalPluginTypeProvider`（既存の`TecsgenGateway.generatedTypes`）と`InternalPluginTypeProvider`の2つを実装します。`file-actions.ts`の呼び出し側は、設定で選ばれた実装を使うだけにします（重複した経路を作りません）。
 2. **設定**: `pluginTypeSource: 'external' | 'internal'`（既定`external`）を9D.3の`settings.json`と9D.5の`getToolSettings`・`updateToolSettings`に含めます。保存した直後に有効な設定を更新し、次の読み込みから使います。開いているCDLを勝手に読み直しません。
 3. **処理**: `InternalTecsgenProcessor.process(inputs, { enabledPlugins })`は、`fs`と外部プロセスに依存しない純粋な計算です。rendererのWeb Workerで実行し、`VirtualFileSystem`だけを入出力にします。
-   - `PluginRegistry`（名前 → ハンドラ）に、外部仕様8.5の付表に載ったプラグインだけを登録します。照合ができるまで、登録は空です。
+   - `PluginRegistry`（名前 → ハンドラ）に、外部仕様8.5の付表に載ったプラグインだけを登録します。登録は`MrubyBridgePlugin`・`MrubyBridgeCellPlugin`（ともにtecsgen 1.9.1）の2件です（2026-11-13、基準データとの55ファイル完全一致を確認。ソースは`DEFAULT_PLUGIN_REGISTRY`。2026-11-17に本文を実装へ合わせて更新）。
    - ソースから`generate(...)`を抽出し、登録のないプラグインは`W-PLUGIN-UNSUPPORTED`にします。
 4. **仮想パス**: `plugin:/<プラグイン名>/<ファイル名>.cdl`に正規化します。重複名は、8.1の規則（結合と属性の多い方）で採ります。
 5. **寿命**: 実行ごとに新しい`VirtualFileSystem`を作ります。成功すれば、以前の生成物と入れ替えます。失敗すれば、新旧どちらの生成物も取り込みません（混ぜない）。
@@ -102,14 +108,14 @@ CDLの入力はアプリが保持するソース群のスナップショット�
 7. **フォールバックの禁止**: 内部処理の失敗から外部実行へ、または外部実行の失敗から内部処理へ、自動で切り替えません。どちらを使ったかは診断ログに記録します。
 8. **仮想内容の表示**: 生成された型の定義ファイルは、仮想パスを`TypeDefinitionSource`に持たせ、定義ファイルウィンドウが読み取り専用で`VirtualFileSystem`の内容を表示します。実在するパスの扱い（コピー・保存）を仮想パスには適用しません。生成物を保存元・セッション参照へ混入させません。
 9. **同一性**: 内部処理の生成物は、外部tecsgenの記録済みの出力との照合（ゴールデン照合）で一致したものだけを、付表の登録対象にします。基準データは`tests/fixtures/tecsgen-golden/sample1-mruby-bridge/`（tecsgen 1.9.1、CDL 55ファイル。採取条件はREADME）です。外部は2回の実行で全件が一致する決定的な出力で、照合は両者の改行をLFに正規化して行います（基準データはWindowsのCRLF）。
-10. **MrubyBridge系の登録条件**（2026-11-08の調査）: 署名の関数引数の構造体からセルタイプ名を導くため、C型（`import_C`のtypedef・struct）の解決が必要です。初期化セルの並びは`generate(...)`の処理順に依存し、生成物の中の`generate(...)`が別のプラグインを呼ぶ多段の連鎖も再現する必要があります。これらを満たして基準データと一致するまで、`PluginRegistry`への登録は空とします。`HRP2*Plugin`系はCDLを生成しない（全て0バイト）ため、対象外です。
+10. **MrubyBridge系の登録条件**（2026-11-08の調査）: 署名の関数引数の構造体からセルタイプ名を導くため、C型（`import_C`のtypedef・struct）の解決が必要です。初期化セルの並びは`generate(...)`の処理順に依存し、生成物の中の`generate(...)`が別のプラグインを呼ぶ多段の連鎖も再現する必要があります。これらを満たして基準データと一致した2件を、`PluginRegistry`へ登録しました（2026-11-13、V0.2.1）。`HRP2*Plugin`系はCDLを生成しない（全て0バイト）ため、対象外です。
 
 ## 9D.7 実装時の受入確認
 
-- 優先順位4段階、探索順、空入力解除、未検出、空白入りのパス、未知設定項目保持、保存失敗をmainのテストで確認します。Windows拡張子等はTBC確定後に試験値を追加します。
+- 優先順位4段階、探索順、空入力解除、未検出、空白入りのパス、未知設定項目保持、保存失敗をmainのテストで確認します。Windowsは2026-11-10確定の`.bat`・`.ps1`について、自動探索・ホスト起動・引数保持・終了コードを確認します。TECSPATHがディレクトリの場合は採用せずPATH探索へ進みます（上の9D.2、テストは`tests/main/tool-settings.test.ts`）。ディレクトリ内の実行ファイルへの変換等、上記以外のTBCは保持します。
 - 保存直後に次の実行へ反映され、`TECSGEN_COMMAND`優先時の表示が一致します。候補の確認は保存済み設定を変えません。
 - 版確認が逆順で完了しても最新だけを採用し、旧版・不明から正常に変えた場合は古い診断だけが消えます。
-- 内部処理（2026-11-08追加）: 外部プロセス呼び出しとディスク書き込みが0回であること。対象プラグインの生成物が、外部tecsgenの記録済みの出力と一致すること（ゴールデン照合）。対象外のプラグインで`W-PLUGIN-UNSUPPORTED`になること。失敗時に新旧の生成物が混ざらないこと。上限と時間切れで失敗すること。方式の切り替えが次の読み込みから反映され、開いているCDLを読み直さないこと。内部処理から外部実行へ（または逆に）自動で切り替わらないこと。仮想内容が定義ファイルウィンドウに読み取り専用で表示されること。対象プラグインの期待値は、付表が確定してから用意します。
+- 内部処理（2026-11-08追加）: 外部プロセス呼び出しとディスク書き込みが0回であること。対象プラグインの生成物が、外部tecsgenの記録済みの出力と一致すること（ゴールデン照合）。対象外のプラグインで`W-PLUGIN-UNSUPPORTED`になること。失敗時に新旧の生成物が混ざらないこと。上限と時間切れで失敗すること。方式の切り替えが次の読み込みから反映され、開いているCDLを読み直さないこと。内部処理から外部実行へ（または逆に）自動で切り替わらないこと。仮想内容が定義ファイルウィンドウに読み取り専用で表示されること。対象プラグインの期待値は、基準データ（tecsgen 1.9.1、55ファイル）との完全一致テスト（`tests/renderer/internal-tecsgen-golden.test.ts`）で確認します（2026-11-13）。
 - テストは`tests/main/`・`tests/renderer/`、実機の設定・版確認記録は`tests/verification/`に置きます。
 
 ## Related

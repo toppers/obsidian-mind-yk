@@ -79,7 +79,7 @@ TecsgenRunnerの入口で環境変数の存在をundefinedとの比較で判定�
 
 [[TECSCDE-DT外部仕様 - 監査対応 59-69 環境と文書#監査62]]に対応する。
 
-buildArgsを実行用の真の引数列として維持し、copy formatterは別の純粋関数に分離する。copy対象シェル、実行コマンドの引用、内部引用符・空引数・改行・シェル特殊文字の表現はTBCとして管理し、未決のまま安全な一行実行を保証しない。既存quoteIfNeededは空白を含む値を二重引用符で囲むだけで、cpp内部の引用符を保持できないためソース修正が必要である。ただし実行APIへescape済み文字列を戻してはならない。シェル契約確定後にround-trip試験を追加し、引用されたWindowsパス、空白を含むcpp、空引数、特殊文字を確認する。実コマンドを実行せず構文解析だけでも引数境界を検証できる。
+buildArgsを実行用の真の引数列として維持し、copy formatterを分離する。2026-11-10の利用者指定によりコピー対象はPowerShell 7・Windows PowerShell 5・コマンドプロンプトの3種類とし、ツールバーで選ぶ。mainが現在有効な実行設定を取得し、Generateと同じ起動計画・引数・作業ディレクトリから対象シェル用の文字列を作る。固定プログラムと圧縮・符号化したJSONデータを使ってよく、入力をシェル構文として評価しない。環境変数全体や秘密値をコピーへ含めない。実行APIへescape済み文字列を戻さない。native・PS1・batの実シェルround-tripで引用Windowsパス、cpp内部の引用符、空引数、Unicode、特殊文字を検証する。NUL・Windowsバッチの改行や表現できない末尾バックスラッシュ・長さ上限超過は明示的に拒否する。コピー先変更後に到着する旧応答はクリップボードへ反映しない。
 
 **実装要否**: ソースコードの修正は必要です。 現行コードが確定契約に未対応です。
 
@@ -88,7 +88,7 @@ buildArgsを実行用の真の引数列として維持し、copy formatterは別
 - `src/renderer/tecsgen/command-builder.ts:34` — `` return /\s/.test(arg) ? `"${arg}"` : arg; ``
 - `src/renderer/tecsgen/command-builder.ts:50` — `return ["tecsgen", ...TecsgenCommandBuilder.buildArgs(input).map(quoteIfNeeded)].join(" ");`
 
-**受入条件**: コピー先シェル確定まではTBC。確定後は構文解析によるargv一致を試験し、直接実行のbuildArgsに二重escapeが入らないことを確認。
+**受入条件**: 確定した3シェルそれぞれでargv・cwd一致を試験し、直接実行のbuildArgsに二重escapeが入らないことを確認する。Windowsバッチの通常の`%~1`分岐と`%*`転送、PS1の終了コード保持、長さ上限と表現不能値の明示拒否も確認する。
 
 参照: [[TECSCDE-DT-EL内部仕様 - 09 tecsgen連携設計]]、[[TECSCDE-DT-EL内部仕様 - 09D V0.2.0tecsgen設定と内部処理]]。
 

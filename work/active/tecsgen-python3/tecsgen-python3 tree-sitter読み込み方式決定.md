@@ -1,7 +1,7 @@
 ---
 date: 2026-09-26
 description: "tecsgen-python3のtree-sitter文法の読み込み方式を決定：移植元の生成済みparser.cをリポジトリに同梱し、tecsgenパッケージ内のC拡張として setuptools でビルドする。WindowsとWSLの両方でビルド・テスト済み"
-status: superseded
+status: deprecated
 project: tecsgen-python3
 quarter: Q3-2026
 tags:

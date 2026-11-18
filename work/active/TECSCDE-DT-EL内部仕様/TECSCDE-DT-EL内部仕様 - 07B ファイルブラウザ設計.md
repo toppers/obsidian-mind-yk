@@ -56,7 +56,7 @@ class FileService {
   async listDirectory(dirPath: string): Promise<DirEntry[]> {
     const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
     return entries
-      .filter((e) => e.isDirectory() || /\.(cde|cdl)$/i.test(e.name))
+      .filter((e) => e.isDirectory() || /\.(cde|cdl|tecsgen-opts)$/i.test(e.name))
       .map((e) => ({
         name: e.name,
         path: path.join(dirPath, e.name),
@@ -131,6 +131,24 @@ export class FileBrowserView {
 
 `expanded`・`children`はクラス内部の状態としてのみ保持し、`AppStore`にもCDEファイルの保存内容にも含めない（3.5.1節「ツリーの展開状態はアプリケーション実行中の状態としてのみ保持する」）。
 
+#### 7.6.3.1 選択ディレクトリのフルパス表示 — 2026-11-12追加（V0.2.1段1で実装済み）
+
+**実装済み（V0.2.1段1、`eb0c1b9`、2026-11-17に本文を実装へ合わせて更新）**。下の設計のとおり、`selectedDir`・`file-browser-selected-path`・`textContent`・`overflow-wrap: anywhere` で実装した。
+
+[[TECSCDE-DT外部仕様]]3.5.1節が追加した規定（ダイアログ上部に、ツリー内で選択したディレクトリのフルパスを表示する）の内部設計。
+
+- **状態**: `FileBrowserView`に`private selectedDir: string | null = null;`を足す。`expanded`・`children`と同じく、クラス内部の状態としてのみ保持し、`AppStore`にもCDEファイルの保存内容にも利用者設定にも含めない。
+- **選択の更新**:
+  - ツリーのディレクトリ行のクリックで、`selectedDir`をそのノードのパス（`listDirectory`が返す`DirEntry`の絶対パス）に設定して`render()`を呼ぶ。展開・折りたたみの切り替え（`expanded`）と同じクリックで行ってよい（操作の分け方は実装時に定める、TBC）。
+  - `chooseRoot()`の成功時、および7.6.6節の起動時の復元で`root`を設定したときは、`selectedDir = root`とする（`expanded`・`children`を消去する既存の処理と同じ位置）。`chooseRoot()`がキャンセルされた場合（`dir`が`null`）は`root`も`selectedDir`も変えない。
+  - ファイル行のクリックは`onOpen`を呼ぶだけで、`selectedDir`は変えない。
+- **表示する値**: `selectedDir`を**加工せずそのまま**表示する。ホームディレクトリの`~`への短縮、末尾の区切り文字の補正、途中の省略（`…`）は行わない。`root`が`null`（`selectedDir`も`null`）のときは、未選択を示す文言を表示する（文言は「(フォルダ未選択)」、V0.2.1段1で実装）。
+- **DOM**: ダイアログの先頭（ツリーの直前）に、パス専用の要素を1つ置く（クラス名は`file-browser-selected-path`）。`render()`が先頭で、この要素の内容を**`textContent`で**設定する（`innerHTML`は使わない。パスに`<`・`&`等の文字が含まれても解釈されない）。
+- **長いパス**: 要素のCSSは`overflow-wrap: anywhere`（折り返して全体を見せる）とし、横スクロールや末尾の省略表示にしない。
+- **保持**: ダイアログを閉じてもビューは破棄されない（[[TECSCDE-DT-EL内部仕様 - 02B V0.2.0画面構成|2B.1]]）ので、開き直したときも同じ値が表示される。
+- **対象外**: ファイルのパス、および主ファイル・追加読み込みしたファイルの表示（現行の強調表示とステータス表示）は変えない。
+- **テスト（案）**: ディレクトリ行のクリックで`selectedDir`の絶対パスが表示される／`chooseRoot()`成功後はルートフォルダのパスに戻る／ファイル行のクリックでは変わらない／`root`が`null`のとき未選択の文言になる／`chooseRoot()`のキャンセルで変わらない／`<`・`&`を含むパスが文字としてそのまま出る、をDOMのユニットテストで確かめる。
+
 ### 7.6.4 未保存確認 — 2026-09-22実装
 
 外部仕様5.3節・5.7節は「ファイルブラウザ経由のファイルを開く操作は未保存の変更がある場合5.7節の確認を経る」と規定する。実現手段は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様5.7節（2026-09-22追加）]]のとおりOSネイティブの確認ダイアログ（`dialog.showMessageBox`）とする——3.6.2節が禁じるのは表示内容を制御できないブラウザ標準`confirm`であり、OSネイティブAPIは対象外（`dialog.showSaveDialog`等の既存採用と同じ扱い）。
@@ -181,6 +199,8 @@ export async function openFromPath(store: AppStore, gateway: FileGateway, path: 
 **未保存確認の対象は本節（ファイルブラウザ経由）のみ**——コマンドライン引数・ファイル関連付け経由の起動時オープン（第7章7.4節）はアプリ起動時点であり編集中のドキュメントが存在しないため対象外。新規作成機能はDT-EL版に未実装のため、5.7.2節が定めるもう一方の対象（新規作成）は本節の対象外のまま残る（[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 11 未決事項と実装単位案|第11章]]参照）。
 
 ### 7.6.5 `AppShell`への配線
+
+**（V0.2.0で変更、2026-11-17にソースへ合わせて追記）** 現行は、ツールバーの「ファイル」ボタン（`data-action="openFileBrowser"`）がモードレスのダイアログを開き、ダイアログ内の「フォルダを開く」ボタンが`chooseRoot()`を呼ぶ。ツールバーに`openFolder`のボタンは置かない（`runAction`の`case 'openFolder'`は呼び出し元の無い残置）。以下は、サイドパネル時代（V0.1.0）の設計の記録である。
 
 `index.html`にサイドパネル用の`#file-browser`要素と、ツールバーに`data-action="openFolder"`ボタンを追加する。`AppShell`は他パネル（7.6.3節）と同様にコンストラクタで`FileBrowserView`を生成し、`runAction`に`case 'openFolder':`を追加して`chooseRoot()`を呼ぶ。
 

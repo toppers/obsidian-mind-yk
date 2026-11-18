@@ -1,4 +1,14 @@
 ---
+date: 2026-10-17
+description: "Ruby版tecsgenでCDLのregion構文および指定子（domain・class・to_through等）を解釈するRegionクラスの実装箇所と処理フロー"
+project: TECS
+quarter: Q4-2026
+status: active
+tags:
+  - work-note
+  - tecs
+  - tecsgen
+  - plugin
 verbatim: true
 ---
 region を解釈するのは Region クラス(tecslib/core/componentobj/region.rb:48)で、Region < Namespace < Node です。Region は Plugin 系のクラスではなく、構文木のモデルクラスです。
@@ -25,3 +35,7 @@ region を解釈するのは Region クラス(tecslib/core/componentobj/region.r
 4. 親リージョンへの伝播:set_domain_type / set_class_type(region.rb:310、328)が、子のドメイン・クラスを親へ伝えます。親に指定がなければ OutOfDomain や OutOfClass 相当を設定します。node リージョンが複数のドメインにまたがるとエラーになります。
 
 確認の範囲:bnf.y.rb、region.rb の該当部分、domaintype.rb と classtype.rb のクラス定義だけを読みました。Region#initialize の中身(region.rb:84)や、ルートリージョン周りは読んでいません。
+
+## Related
+
+- [[work/active/tecsgen-plugins/tecsgen-plugins|tecsgen-plugins]]

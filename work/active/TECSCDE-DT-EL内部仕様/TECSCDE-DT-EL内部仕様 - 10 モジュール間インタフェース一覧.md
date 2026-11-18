@@ -19,27 +19,35 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 10 of
 第2章の依存図・プロセス配置を、実際のディレクトリ構成まで落とし込む。
 
 ```
-src/
-  main/                    (mainプロセス)
-    file-service.ts          A: FileService（dialog + fs、7章）
-    tecsgen-runner.ts         I: TecsgenRunner（child_process、9章）
-    ipc.ts                    ipcMain.handleの登録一式
+src/   （2026-11-17、ソースに合わせて書き直した。以前の構成図は、V0.1.0 の設計時の名前だった。三者相違一覧 9-15）
+  main/                    (mainプロセス。17ファイル)
     index.ts                  起動処理・BrowserWindow生成・コマンドライン引数/open-fileの処理（7.4節）
+    ipc.ts                    ipcMain.handle の登録一式（10.11節）
+    file-service.ts           A: FileService（dialog + fs、7章）
+    write-queue.ts            保存先ごとの書き込みキュー（07J.7）
+    close-guard.ts, close-state-bridge.ts   終了確認（7.9節）
+    session-restore.ts        セッションの復元（7H）
+    cdl-file-list.ts          CDLファイル一覧の作成（7G）
+    pdf-exporter.ts           PDF の生成（7F）
+    app-settings.ts, tool-settings.ts, app-information.ts   設定と「情報」（9D・9E）
+    tecsgen-runner.ts, tecsgen-invocation.ts, tecsgen-path-resolver.ts, tecsgen-command-copy.ts   I: tecsgen の起動と探索（9章・9D）
+    log-service.ts            診断ログ（外部仕様9.5）
   preload/
-    index.ts                 contextBridge.exposeInMainWorld（2章2.4節）。clipboardもipcMain経由
+    index.mts                 contextBridge.exposeInMainWorld（2章2.4節）。clipboardもipcMain経由
+  shared/                  ipc-types.ts（TecscdeApiの型）, file-kind.ts, path-under.ts（main・renderer共用）
   renderer/
-    model/                 (C) types.ts, document.ts, invariants.ts — TECSCDE-TS内部仕様3章と同一
-    cdl/                   (B) grammar.ts, builder.ts, serializer.ts, tool-info.ts, cdecl-extractor.ts — 同左
-    commands/              (D) command.ts, history.ts, ops/*.ts（clipboard連携を含む、4章）
-    render/                (E) svg-renderer.ts, hit-test.ts, gesture.ts — TECSCDE-TS内部仕様5章と同一
-    view-state/            (F) view-state.ts, display-filters.ts — 同左
-    ui-shell/              (G) toolbar.ts, palette.ts, property-panel.ts, status-bar.ts, dialogs/
-    diagnostics/           (H) collector.ts, tecsgen-result-parser.ts（9章）
-    gateways/                 file-gateway.ts（7章）, tecsgen-gateway.ts（9章）, clipboard-gateway.ts（4章）
-    tecsgen-link/          (I) command-builder.ts — TECSCDE-TS内部仕様9章と同一
-    app/
-      store.ts                Store（C・F・Hを束ねる）
-      main.ts                 起動・依存注入・イベント配線
+    model/                 (C) cell.ts, port.ts, join.ts, region.ts, document.ts, paper.ts, ids.ts …（17ファイル）
+    cdl/                   (B) grammar.ts, document-builder.ts, serializer.ts, tool-info.ts, messages.ts, fragment.ts, auto-placement.ts …
+    cdecl/                 (B) grammar.ts, extractor.ts, type-registry.ts, types.ts（9B）
+    commands/              (D) command.ts, history.ts, cell-/join-/port-/layout-/paper-/clipboard-commands.ts, move-active-to-top.ts
+    render/                (E) svg-renderer.ts, cell-renderer.ts, join-renderer.ts, hit-tester.ts, gesture-controller.ts, region-outlines.ts …
+    view-state/            (F) view-state.ts, display-filters.ts, navigator.ts, search.ts, region-colors.ts
+    app/                   (G) UI シェルと配線（35ファイル）: shell.ts, store.ts, toolbar・property-panel・file-browser-panel・information-dialog・diagnostics-panel など
+    diagnostics/           (H) collector.ts, integrity.ts, format.ts, tecsgen-result-parser.ts
+    export/                   svg-exporter.ts, png-exporter.ts（7F）
+    gateways/                 file / tecsgen / clipboard / log / settings / window の6つのゲートウェイ
+    tecsgen/               (I) command-builder.ts, plugin-type-provider.ts, failure-summary.ts, internal/（内部処理の Web Worker。9D）
+    main.ts                   起動・依存注入・イベント配線
 ```
 
 [[work/active/TECSCDE-TS内部仕様/TECSCDE-TS内部仕様 - 10 モジュール間インタフェース一覧|TECSCDE-TS内部仕様第10章]]のディレクトリ構成と比較すると、**`main/`・`preload/`という2つの新規ディレクトリが加わり、`renderer/`配下に`gateways/`が新設される**点のみが差分——`model/`・`cdl/`・`render/`等の既存モジュールはディレクトリ構成ごとrendererへそのまま持ち込める。
@@ -71,7 +79,7 @@ src/
 [[TECSCDE-TS内部仕様]]10.3節と同一の方針に加え、Electron固有の設定を追加する。
 
 - `contextIsolation: true`・`nodeIntegration: false`を既定とする（rendererプロセスのセキュリティ標準構成）。
-- `renderer/`のビルド出力とNode.js APIを要する`main/`・`preload/`のビルドは別のtsconfig（`tsconfig.renderer.json`／`tsconfig.main.json`）で分離し、`renderer/`側は`lib: ["DOM", "ES2020"]`のみを許可することで、Node APIの誤importをコンパイル時にも検出する。
+- `renderer/`のビルド出力とNode.js APIを要する`main/`・`preload/`のビルドは別のtsconfig（`tsconfig.renderer.json`／`tsconfig.main.json`）で分離し、`renderer/`側は`lib: ["DOM", "ES2020"]`のみを許可することで、Node APIの誤importをコンパイル時にも検出する。**ソース側を強化する（2026-11-17、ユーザー決定）**: 現行は、dependency-cruiserの禁止が`electron`だけで`node:fs`などNode組込みモジュールは対象外、`tsconfig.renderer.json`は`lib`がES2022で`@types/node`が型検査に入る。この2点を、仕様どおり（Node組込みモジュールのimport禁止、`lib`を絞る）に強化する。**実装済み（v0.2.6 段1、2026-11-17、コミット `3991269`、`main` にマージ済み（2026-11-17、ブランチ `v0.2.6-stage1`）、三者相違一覧 1-16）**: `.dependency-cruiser.cjs` に `renderer-must-not-import-node-builtins`（`dependencyTypes: ["core"]`、`node:` 接頭辞の有無を問わない）を足し、`tsconfig.renderer.json` は `include` を `src/renderer` に絞って `types: []` で `@types/node` を外した（`lib` は `["DOM", "ES2022"]` のまま）。`tests/renderer` は `node:fs`・`__dirname` を使うため、型検査は `types: ["node"]` を持つ `tsconfig.renderer-tests.json` へ分け、`npm run typecheck:renderer` は両方を実行する。`node:fs` を import するファイルを `src/renderer` に置くと、depcruise と `tsconfig.renderer.json` の型検査の両方が失敗することを確認した。
 
 ### 10.4 V0.2.0の追加契約
 
@@ -129,6 +137,28 @@ sharedの`ExportData = string | Uint8Array`を、`FileGateway.export`・preload�
 [[TECSCDE-DT-EL内部仕様 - 07K 関連付け入力の収集と一括オープン|7K]]の`LaunchOpenRequest`（案）は入力元・requestId・順序付きパス列・送信元cwdを持つ。mainのOSアダプタと収集キューがバッチを確定し、7Iの要求へ変換する。macOSはネイティブ配列通知の受信アダプタを追加し、既存open-fileの単数変数上書きで代用しない。Windows/Linuxは関連付けモードを明示して受信し、既起動instanceへ確定済みコンテキストを値として転送する。
 
 起動時の一括結果は`app:bootstrap`で1回供給し、その後の入力は`app:openRequest`（案）と`onOpenRequest`購読でrendererへ渡す。main・preloadはUIのストアを更新せず、rendererが7I・7Jの確認・一括適用・保存を行う。新しいOSアダプタ・ランチャー登録と受信APIの実装適合は未確認。
+
+### 10.11 IPC チャネル一覧（2026-11-17、三者相違一覧 9-16。ソースの確認に基づく）
+
+チャネル名と方向の正は`src/main/ipc.ts`、`src/main/index.ts`、`src/main/close-state-bridge.ts`である。メソッド名は2.4節の名前空間表と`TecscdeApi`（`src/shared/ipc-types.ts`）を参照する。
+
+**renderer → main（`ipcMain.handle`、37チャネル）**
+
+| 群 | チャネル |
+|---|---|
+| `cdl` | `cdl:grammar-assets` |
+| `file`（保存・書き出し） | `file:save`、`file:chooseSavePath`、`file:saveAs`、`file:export`、`file:exportPdf`、`file:chooseExportPath` |
+| `file`（開く・参照） | `file:chooseFolder`、`file:listDirectory`、`file:openPath`、`file:openPaths`、`file:readDefinitionFile`、`file:resolveImports`、`file:parseTecsgenOptionsFile` |
+| `file`（その他） | `file:confirmDiscardChanges`、`file:saveSession`、`file:planCdlFileLists`、`file:applyCdlFileLists`、`file:confirmCdlFileLists` |
+| `tecsgen` | `tecsgen:generate`、`tecsgen:generatedTypes`、`tecsgen:preprocess`、`tecsgen:version`、`tecsgen:checkPath`、`tecsgen:commandLine` |
+| `settings` | `settings:get`、`settings:getToolSettings`、`settings:updateToolSettings`、`settings:chooseTecsgenPath`、`settings:chooseCppPath`、`settings:getAppInformation`、`settings:getCdlFilesRoot`、`settings:setCdlFilesRoot`、`settings:chooseCdlFilesRoot` |
+| `log`・`clipboard` | `log:append`、`clipboard:writeText`、`clipboard:readText` |
+
+**renderer → main（一方向の`send`）**: `window:setDirty`（未保存かどうか）、`window:closeState`（終了前の状態確認への応答。`replyCloseState`）。
+
+**main → renderer（`webContents.send`）**: `app:bootstrap`（起動ドキュメント、7.4節）、`app:fileBrowserRoot`（ファイルブラウザのルートの復元、7.6.6節）、`window:requestCloseState`・`window:cancelCloseState`（終了前の状態確認の要求と取り消し、7.9節）。
+
+**注意**: `file:readDefinitionFile`は、10.4節の「定義ファイル表示は既存APIの再利用を優先」に反して新設された（`file:openPath`の編集対象を返す薄い入口）。`file:confirmCdlFileLists`・`tecsgen:commandLine`・`settings:getAppInformation`・`log:append`のチャネル名は、この節が初出である。
 
 ## Related
 

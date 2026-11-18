@@ -16,7 +16,7 @@ Domain note split from [[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内�
 
 ## 7.5 インポート自動追跡（`FileService.resolveImports()`）の詳細設計 — 2026-09-22
 
-[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様8.1節]]の`import`/`import_C`自動追跡を実現する。第7C章の手動追加・オプションファイル読み込み・import統一は`FileService.resolveImports()`を共有する。2026-09-22には設計対象だったが、現在はユーザ定義CDL由来の全セルを編集可能として実装済みである（2026-10-21時点の実装は、システム定義CDLの区別を持たない。区別は7.5.10節の設計のみ）。
+[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 08 CDL 連携|TECSCDE-DT外部仕様8.1節]]の`import`/`import_C`自動追跡を実現する。第7C章の手動追加・オプションファイル読み込み・import統一は`FileService.resolveImports()`を共有する。2026-09-22には設計対象だったが、現在はユーザ定義CDL由来の全セルを編集可能として実装済みである（2026-10-21時点の実装は、システム定義CDLの区別を持たない。区別は7.5.10節の設計のみだった。2026-10-22に実装済み。[[TECSCDE-DT-EL内部仕様 - 03 モデル設計|3.2]]）。
 
 ### 7.5.1 モジュールBの既存出力（`ParsedCdl.imports`）——解析はすでにある
 

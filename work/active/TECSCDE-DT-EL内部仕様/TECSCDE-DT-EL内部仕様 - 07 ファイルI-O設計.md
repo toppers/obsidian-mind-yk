@@ -28,48 +28,69 @@ Domain note split from [[TECSCDE-DT-EL内部仕様]] (2026-09-05). Chapter 7 of 
 > 複数ファイルを同時選択するOSネイティブの「開く」ダイアログは、ファイルブラウザと役割が重複するため撤回した。**コマンドライン引数は7.4節の先頭検索に従い、最初の対象ファイル1件だけを読み込む**（2026-11-07、監査#5。旧要約の「最後を主ファイル」を訂正）。ファイル関連付けで複数ファイルが渡る場合の従来の規定と、`.tecsgen-opts`内で列挙されたCDLの最後を主ファイルとする規定は、コマンドライン引数の1件選択とは区別する。システム定義CDL（`-S`配下、第7C章7.7.4節）を除く、ユーザ定義CDL由来のセルはどのファイルでも編集可能とする（DT外部仕様第5章）。
 
 ```ts
-// main/file-service.ts
+// main/file-service.ts（2026-11-17、ソースに合わせて書き直した抜粋。全体は src/main/file-service.ts）
 class FileService {
+  private acceptingWrites = true;              // 終了確認中は false（7.9節）
+  private readonly pendingWrites = new Set<Promise<unknown>>();
+
   constructor(private readonly window: BrowserWindow) {}
 
-  async save(path: string, content: string): Promise<void> {
-    await this.writeAtomic(path, content); // 7.2節参照
+  // 保存（renderer の保存コーディネータが、ソース別・保存先別に呼ぶ。7J）
+  saveWithReceipt(path: string, content: string): Promise<WriteReceipt> {
+    return this.acceptWrite(() => this.writeAtomic(path, content));
   }
 
-  async saveAsDialog(suggestedName: string, content: string): Promise<string | null> {
-    const result = await dialog.showSaveDialog(this.window, {
-      defaultPath: suggestedName,
-      filters: [{ name: 'CDE files', extensions: ['cde'] }],
+  // 「名前を付けて保存」は、保存先の選択と書き込みを分ける（rendererが保存チケットを再検証してから書く）
+  chooseSavePath(suggestedName: string): Promise<string | null>;       // ダイアログだけ。書かない
+  saveAsDialog(suggestedName: string, content: string): Promise<string | null>; // ダイアログ＋書き込み
+
+  // エクスポート（7F）。SVG・PNG は共通の書き込みキューを通る。PDF は main で生成してから書く
+  exportFile(path: string, data: string | Uint8Array): Promise<void>;  // acceptWrite 経由
+  exportPdf(path: string, svg: string, page: PdfPage): Promise<void>;  // acceptWrite を通らない（7F、三者相違一覧 4-10）
+  chooseExportPath(format: ExportFormat, suggestedName: string): Promise<string | null>;
+
+  // 終了確認（7.9節）
+  setWriteAcceptance(accept: boolean): void;
+  waitForWrites(): Promise<void>;
+
+  private acceptWrite<T>(operation: () => Promise<T>): Promise<T> {
+    if (!this.acceptingWrites) return Promise.reject(new Error('終了確認中のため保存を受け付けられません。'));
+    const pending = operation();
+    this.pendingWrites.add(pending);
+    void pending.then(() => this.pendingWrites.delete(pending), () => this.pendingWrites.delete(pending));
+    return pending;
+  }
+
+  private writeAtomic(path: string, content: string | Uint8Array): Promise<WriteReceipt> {
+    return fileWrites.write(path, async (absolutePath) => {     // 保存先ごとの共有キュー（07J.7）
+      const tmpPath = `${absolutePath}.tmp-${process.pid}`;
+      try {
+        await fs.writeFile(tmpPath, content);
+        await fs.rename(tmpPath, absolutePath);                  // OSのファイルシステムレベルでアトミック
+      } catch (error) {
+        await fs.unlink(tmpPath).catch(() => {});                // 失敗時は一時ファイルを消し、元のファイルは無傷
+        throw error;
+      }
     });
-    if (result.canceled || !result.filePath) return null;
-    await this.writeAtomic(result.filePath, content);
-    return result.filePath;
-  }
-
-  async exportFile(path: string, data: ExportData): Promise<void> {
-    const content = typeof data === 'string' ? data : Buffer.from(data);
-    await this.writeAtomic(path, content); // Bufferへの変換はmain内だけ
-  }
-
-  private async writeAtomic(path: string, content: string | Buffer): Promise<void> {
-    const tmpPath = `${path}.tmp-${process.pid}`;
-    await fs.promises.writeFile(tmpPath, content);
-    await fs.promises.rename(tmpPath, path); // OSのファイルシステムレベルでアトミック
   }
 }
 ```
 
 `writeAtomic`は[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05 ファイル操作|TECSCDE-DT外部仕様5.4節]]が要件とする「書き込み失敗時に既存データを失わない」を、**一時ファイル書き込み＋リネーム**で実現する——`fs.promises.rename`は同一ファイルシステム内であればOSレベルでアトミックであり、書き込み途中でプロセスが異常終了しても元のファイルは無傷のまま残る。
 
+**書き直しの経緯（2026-11-17、三者相違一覧 4-19）**: 上の擬似コードは、V0.1.0 の初版（`save`が`writeAtomic`を直接呼び、`saveAsDialog`が直接書く3つのIPC）のままだった。現行の実装は、(1) 保存を[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J]]のチケット・ソース別baselineで管理するため、`file:save`が書込順（`WriteReceipt`）を返す、(2) 「名前を付けて保存」の保存先の選択（`file:chooseSavePath`）と書き込みを分ける、(3) 保存先ごとの共有キュー（`write-queue.ts`、07J.7）を経由する、(4) 終了確認中は`acceptWrite`が新しい書き込みを断る（7.9節）、(5) エクスポートに`file:exportPdf`・`file:chooseExportPath`を加える、という点で異なる。`exportPdf`は`acceptWrite`を通らない（7Fの扱いは未決、三者相違一覧 4-10）。
+
+
 ### 7.2 IPCハンドラの登録（main）
 
 ```ts
-// main/ipc.ts
-const fileService = new FileService(mainWindow);
-
-ipcMain.handle('file:save', (_e, path: string, content: string) => fileService.save(path, content));
+// main/ipc.ts（2026-11-17、ソースに合わせて書き直した抜粋。一覧は src/main/ipc.ts と、第10章）
+ipcMain.handle('file:save', (_e, path: string, content: string) => fileService.saveWithReceipt(path, content)); // 書込順（WriteReceipt）を返す
+ipcMain.handle('file:chooseSavePath', (_e, name: string) => fileService.chooseSavePath(name));
 ipcMain.handle('file:saveAs', (_e, content: string, suggestedName: string) => fileService.saveAsDialog(suggestedName, content));
 ipcMain.handle('file:export', (_e, path: string, data: ExportData) => fileService.exportFile(path, data));
+ipcMain.handle('file:exportPdf', (_e, path: string, svg: string, page: PdfPage) => fileService.exportPdf(path, svg, page));
+ipcMain.handle('file:chooseExportPath', (_e, format: ExportFormat, suggestedName: string) => fileService.chooseExportPath(format, suggestedName));
 ```
 
 ### 7.3 `FileGateway`クラス（renderer）
@@ -85,7 +106,7 @@ class FileGateway {
 }
 ```
 
-`DirtyTracker`は[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J]]のソース別保存状態と一意な履歴位置の契約へ変更する（2026-11-08、監査#21）。TS内部仕様第7章の`History.past.length`だけによる判定は継承しない。保存成功した状態だけをbaselineへ採用し、Undo後の分岐、保存中新編集、一部失敗を現在の保存対象状態との比較で判定する。UIとmainの終了確認も同じ結果を使う。三者監査#3で確認した現行コード`5cf2d85`は履歴長判定と完了時の`markSaved()`を使っており、この確定契約は未反映。保存チケット・ソース別baseline・保存先別キューの責務と対応状況は7J.0・7J.4・7J.7を正とする。
+`DirtyTracker`は[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J]]のソース別保存状態と一意な履歴位置の契約へ変更する（2026-11-08、監査#21）。TS内部仕様第7章の`History.past.length`だけによる判定は継承しない。保存成功した状態だけをbaselineへ採用し、Undo後の分岐、保存中新編集、一部失敗を現在の保存対象状態との比較で判定する。UIとmainの終了確認も同じ結果を使う。三者監査#3で確認した現行コード`5cf2d85`は履歴長判定と完了時の`markSaved()`を使っており、この確定契約は未反映だった（三者監査#3は段0で実装済み、as of 2026-11-12）。保存チケット・ソース別baseline・保存先別キューの責務と対応状況は7J.0・7J.4・7J.7を正とする。
 
 **exportの型境界（2026-11-08、監査#28）**: `ExportData = string | Uint8Array`を`shared/ipc-types.ts`で定義し、renderer・preload・mainのIPC受信と`FileService.exportFile`で共用する。mainは値を検査してから受け取り、バイト列を`Buffer.from(data)`へ変換し、内部の`writeAtomic(string | Buffer)`へ渡す。preloadは変換せず中継し、rendererからNodeのBufferを要求しない。詳細と確認条件は[[TECSCDE-DT-EL内部仕様 - 07F エクスポート設計（たたき台）|7F.7.10.7]]を参照。実装適合は未確認。
 
@@ -143,7 +164,7 @@ macOSはOSの配列通知を受ける追加アダプタを設計し、標準open
 
 ### 7.9 終了確認と保存待機（2026-11-09、三者監査#4）
 
-[[TECSCDE-DT外部仕様 - 05 ファイル操作|外部5.7]]に従い、通常closeを同期中断し、rendererの保存結果反映後の最新dirtyと、mainの受理済み書込完了を確認してから閉じる。**確定契約は[[TECSCDE-DT-EL内部仕様 - 07J 保存チェックポイントと未保存判定|7J.9]]を正とする**。shared／preload／gateway／mainの対応は第10章10.8に揃える。
+[[TECSCDE-DT外部仕様 - 05 ファイル操作|外部5.7]]に従い、通常closeを同期中断し、rendererの保存結果反映後の最新dirtyと、mainの受理済み書込完了を確認してから閉じる。**確定契約は[[TECSCDE-DT-EL内部仕様 - 07M 終了確認と保存中の待機|7J.9]]を正とする**。shared／preload／gateway／mainの対応は第10章10.8に揃える。
 
 - `window:setDirty`は通常通知として残すが、falseというだけでcloseを通さない。queryId付き`window:requestCloseState`／`window:closeState`で最新状態を照合する。
 - 編集と新規要求の適用を止めても、開始済み保存の完了・checkpoint反映は進める。rendererのタイムアウトでmainの保存待機を打ち切らない。
@@ -152,11 +173,11 @@ macOSはOSの配列通知を受ける追加アダプタを設計し、標準open
 
 **従来版の記録（2026-10-22）**: cached dirtyとネイティブ2択は実装・実機確認済みだった。従来はfalse／通知なしなら即closeし、応答不能時も最後の通知へ依存した。旧コード例・旧テストはこの方式だけの記録であり、新契約の実装例・受入条件にはしない。
 
-**現行確認（2026-11-09）**: `5cf2d85`は旧方式のままで、保存待機・問い合わせ・取消通知は未実装。`main/close-guard.ts`、mainのIPC配線・書込キュー、shared／preload／`WindowGateway`、rendererの終了応答・保存コーディネータの修正が必要。
+**現行確認（2026-11-09。三者監査#4は段0で実装済み、as of 2026-11-12。以下は当時の確認）**: `5cf2d85`は旧方式のままで、保存待機・問い合わせ・取消通知は未実装。`main/close-guard.ts`、mainのIPC配線・書込キュー、shared／preload／`WindowGateway`、rendererの終了応答・保存コーディネータの修正が必要。
 
 ### 7.10 エクスポート（SVG・PNG・PDF）（2026-10-22、たたき台）
 
-設計のたたき台は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07F エクスポート設計（たたき台）|第7F章]]に置いた。renderer で SVG を組み立て、PNG は canvas、PDF は main の非表示ウィンドウ（`printToPDF`）で生成する案。決定ではなく、未決事項は第7F章の末尾にある。
+設計のたたき台は[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07F エクスポート設計（たたき台）|第7F章]]に置いた。renderer で SVG を組み立て、PNG は canvas、PDF は main の非表示ウィンドウ（`printToPDF`）で生成する案。2026-11-17 時点で、SVG・PNG・PDF の3形式とも実装済み（項目表 A#1〜#3）。決定は第7F章の「決定済み」、未決は同章の末尾にある。
 
 ## Related
 

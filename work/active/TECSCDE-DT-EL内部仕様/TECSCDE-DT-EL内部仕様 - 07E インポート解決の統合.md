@@ -134,7 +134,7 @@ DT-EL版がファイルシステムへ実際にアクセスできるようにな
 
 ## 7.5.10 システム定義CDLの判定（2026-10-21設計、2026-10-22実装）
 
-`import`の自動追跡で読み込まれたCDL（`resolveImportClosure`の結果）も、手動で開いたCDLと同じ規則でシステム定義かどうかを判定する。[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05A 開く（読み込み）|DT外部仕様5.3節]]のとおり、判定は経路ではなく**解決後の実パスが`systemDirs`（`.tecsgen-opts`の`-S`、[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07C 読み込み経路の統合|第7C章7.7.4節]]）のいずれかの配下か**だけで決まる。`-S`で指定したディレクトリ自体も`importPaths`に入って`import`の探索パスになる（7.7.4節）ため、`-S`の配下から追跡されたCDLのセルは`systemDefined`になる。`-I`で指定したディレクトリが`-S`の配下にある場合も同じである。当初案の「`resolveImportClosure`が各解決結果に`systemDefined`を付けて返す」は採らなかった。`import`で追跡されたCDLも`references`として`CdlSource`になり、判定は`CdlDocumentLoader.loadSources()`が実パス（`sourcePath`）と`systemDirs`から1か所で行う（第3章3.2節の`isUnderAny`、`shared/path-under.ts`）ためである。
+`import`の自動追跡で読み込まれたCDL（`resolveImportClosure`の結果）も、手動で開いたCDLと同じ規則でシステム定義かどうかを判定する。[[work/active/TECSCDE-DT外部仕様/TECSCDE-DT外部仕様 - 05A 開く（読み込み）|DT外部仕様5.3節]]のとおり、判定は経路ではなく**解決後の実パスが`systemDirs`（`.tecsgen-opts`の`-S`、[[work/active/TECSCDE-DT-EL内部仕様/TECSCDE-DT-EL内部仕様 - 07L tecsgenオプション形式ファイルの一括読み込み|第7C章7.7.4節]]）のいずれかの配下か**だけで決まる。`-S`で指定したディレクトリ自体も`importPaths`に入って`import`の探索パスになる（7.7.4節）ため、`-S`の配下から追跡されたCDLのセルは`systemDefined`になる。`-I`で指定したディレクトリが`-S`の配下にある場合も同じである。当初案の「`resolveImportClosure`が各解決結果に`systemDefined`を付けて返す」は採らなかった。`import`で追跡されたCDLも`references`として`CdlSource`になり、判定は`CdlDocumentLoader.loadSources()`が実パス（`sourcePath`）と`systemDirs`から1か所で行う（第3章3.2節の`isUnderAny`、`shared/path-under.ts`）ためである。
 
 ## 7.5.11 `_CDL_FILES.txt`による探索（2026-11-01）
 
@@ -144,7 +144,7 @@ DT-EL版がファイルシステムへ実際にアクセスできるようにな
 - **一覧の読み込み**: `CdlFileLists.lookup(参照先のパス)` が、参照先が入っているディレクトリ（`dirname`）を調べる。そのディレクトリが `-S` のディレクトリ自身か配下で、`_CDL_FILES.txt` があれば、一覧を読んで（ディレクトリごとにキャッシュ）、ファイル名（`basename`）を照合する。結果は、`listed`（載っている。パスは「ディレクトリ＋一覧の行」）、`unlisted`（一覧はあるが載っていない）、`probe`（一覧を使わない。従来どおり調べる）の3つ。親の一覧は見ない。
 - **候補の組み立て**（`candidatesFor`）: 従来どおり、探索ディレクトリ × `importPaths` の順に候補を作り、`import` に限り各候補を `lookup` にかける。`listed` ならその一覧のパスを、`probe` ならそのまま、`unlisted` なら候補にしない。`importPaths` の相対パスから `-S` を割り出せない場合（編集対象のディレクトリが `.tecsgen-opts` のディレクトリと違うとき）に備え、`systemDirs` の各ディレクトリも最後に見る（こちらは `listed` のときだけ候補にする）。重複した候補は除く。
 - **`import_C`** は一覧を使わず、従来どおり。
-- **絶対探索パスの契約**: 候補は探索先を`resolve(dir, p)`で確定してから指定ファイル名へ接続し、絶対`-I`・`-S`を基点へ連結しない。従来記録の「修正済み」は別の実装時点の記録であり、今回基準`5cf2d85`の`FileService.resolveOne`は`join(dir, p, 指定)`のままで未対応（監査#12）。
+- **絶対探索パスの契約**: 候補は探索先を`resolve(dir, p)`で確定してから指定ファイル名へ接続し、絶対`-I`・`-S`を基点へ連結しない。従来記録の「修正済み」は別の実装時点の記録であり、今回基準`5cf2d85`の`FileService.resolveOne`は`join(dir, p, 指定)`のままで未対応だった（監査#12は段3で実装済み、as of 2026-11-12）。
 - **規則の経緯**: 当初は「`-S` のディレクトリの一覧に、`-S` からの相対パスを書く」案で実装したが、実際の一覧が「ディレクトリ直下のファイル名だけ、サブディレクトリには別の一覧」という形式だったため、同日、「指定のディレクトリ部分の一覧で、ファイル名を照合する」規則に改めた。
 - **テスト**: `tests/main/file-service.test.ts`（自身の一覧、`sub/x.cdl` は `sub` の一覧、入れ子、親の一覧を使わない、一覧に載っていない、サブディレクトリに一覧が無ければ調べる、一覧が全く無い、区切りと `./` と CRLF と空行、載っているがファイルが無い、`import_C`、`systemDirs` なし、`../` で `-S` の外、相対の `-S` で割り出せないとき）、`tests/renderer/import-resolution.test.ts`（`systemDirs` を渡す）。
 
