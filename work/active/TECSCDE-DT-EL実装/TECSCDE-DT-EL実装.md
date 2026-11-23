@@ -62,6 +62,7 @@ tags:
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.1 実装計画 — 2026-11-12|V0.2.1 実装計画]]（2026-11-12。Cプリプロセッサ設定、tecsgen相当機能、配列の受け口の展開。段0〜3完了）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.5 三者相違一覧 — 2026-11-16|V0.2.5 三者相違一覧]]（2026-11-16、外部仕様・内部仕様・ソースの相違を9分野で列挙。基準HEAD 9fa3f5a、読解のみで実機確認なし）
 - [[work/active/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.2.6 実装計画 — 2026-11-17|V0.2.6 実装計画]]（2026-11-17。三者相違一覧の判断分と新規の小不具合修正、段0〜5、完了条件）
+- [[work/archive/2026/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.3.0 実装計画 — 2026-11-19|V0.3.0 実装計画]]（2026-11-19。情報ダイアログ改修・5B セル被り解消＋保存設計強化＋描画・画面 UI 整備、段0〜段3 実装・実機確認・`v0.3.0` タグ・push 完了 2026-11-20、`03b1faf`。[[work/archive/2026/TECSCDE-DT-EL実装/TECSCDE-DT-EL実装 — V0.3.0 実装計画 — 段の結果 — 2026-11-19|段の結果]]）
 - [[work/active/tecs/TECSCDE-DT-EL 複合セルタイプ対応案|TECSCDE-DT-EL 複合セルタイプ対応案]] 複合セルタイプ対応の方針（2026-10-03採用。表示・編集範囲は外部仕様で決める）
 
 - [[work/active/tecs/TECSCDE-DT-EL 配布アーキテクチャ決定|TECSCDE-DT-EL 配布アーキテクチャ決定]] — 配布専用ミラーリポジトリ＋update-electron-app＋GitHub Actionsの決定記録（2026-09-23、実装は未着手）

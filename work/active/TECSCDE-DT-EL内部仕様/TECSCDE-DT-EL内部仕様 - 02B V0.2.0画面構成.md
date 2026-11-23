@@ -28,6 +28,13 @@ tags: [work-note, tecs, tecscde, spec, architecture]
 
 「ファイル」ダイアログの上部には、ツリー内で選択したディレクトリのフルパスを表示します（2026-11-12追加、V0.2.1段1で実装済み。設計は[[TECSCDE-DT-EL内部仕様 - 07B ファイルブラウザ設計#7.6.3.1 選択ディレクトリのフルパス表示 — 2026-11-12追加（V0.2.1段1で実装済み）|7.6.3.1]]）。
 
+**セルタイプ一覧（`PaletteView`）の表示規則**（V0.3.1 段1、2026-11-20。外部仕様は[[TECSCDE-DT外部仕様 - 03 画面構成|外部 03]]の3.1.x項目3）:
+
+- 並びと分類は純関数`groupAndSortCelltypes`（`src/renderer/app/palette-order.ts`）が決めます。`CelltypeRef.namespace`で分け、名前空間なしを先頭、以降は名前空間名の昇順、各グループ内は短い名前（`shortCelltypeName`）の昇順です。
+- 各項目の先頭に付ける種類の印は純関数`celltypeKindMark`（同ファイル）が決めます。`CelltypeRef.composite`が定義されていれば`[C]`、そうでなければ`[N]`です。MrubyBridgePluginが登録するブリッジ用セルタイプ（`document-builder.ts`の`registerMrubyBridgeCelltypes`）は`composite`を持たないので`[N]`です。
+- ボタンの表示は`${印} ${name}`、`aria-label`は「複合セルタイプ 名前」「通常のセルタイプ 名前」です。**`name`（短い名前か完全修飾名かは`CelltypeRef.name`のまま）・`data-celltype`・選択の動作は変えません。**`name`の形式が種類で違う理由は、複合は`cst.ts`が修飾名を名前に入れ、通常は`document-builder.ts`が（生成ソース以外では）短い名前を入れるためです。
+- 再描画の判定に使う`signature`は、印を含めます。
+
 表示制御バーの廃止は、検索・フィルタ・色分け等の表示機能の廃止を意味しません。[[TECSCDE-DT-EL内部仕様 - 06B 表示フィルタUI設計]]の純粋なフィルタ処理、リージョンバー・凡例を保持します。領域の開閉以外の既存表示機能の操作位置は6C.1で扱います。
 
 ## 2B.2 情報ダイアログ

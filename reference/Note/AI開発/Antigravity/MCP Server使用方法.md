@@ -88,6 +88,6 @@ tags:
 
 ## Related
 
-- [[agy-mcp定義]] — CLI 側（`~/.gemini/settings.json` の `mcpServers`）での定義。IDE 側の `mcp_config.json` とは別系統
+- [[agy-mcp定義]] — gemini-cli 側（`~/.gemini/settings.json` の `mcpServers`）での定義。agy は参照しない（2026-11-23訂正・未検証）。IDE 側の `mcp_config.json` とは別系統
 - [[MCP-LIST|MCP-LIST]] — 他のMCPサーバー候補一覧
 - [[brain/Skills]] — 併用する Claude Code スキル/コマンド一覧

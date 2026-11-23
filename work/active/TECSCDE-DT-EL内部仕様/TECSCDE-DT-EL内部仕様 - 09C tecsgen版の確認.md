@@ -90,7 +90,7 @@ export async function checkTecsgenVersion(
 
 - 外部仕様8.4.2の規定（起動時1回、古い・読めない場合に警告、見つからない場合は出さない、実行中保持、診断ログへ記録）を、そのまま実装する設計。
 - **新しい版の扱い**: 対象より新しい版では警告しない。上限は設けない（外部仕様2.2節の対象は「V1.3.1.0以降」）。
-- **`TECSGEN_COMMAND`**: 版の確認も、`TECSGEN_COMMAND`で指定されたコマンドを使う（`run`が共通のため）。
+- **`TECSGEN_COMMAND`**: 版の確認も、`TECSGEN_COMMAND`で指定されたコマンドを使う（`run`が共通のため）。なお「情報」ダイアログ（[[TECSCDE-DT外部仕様 - 03 画面構成|外部 03]] 3.8・3.8.1）での `tecsgen:`（版表示）・`tecsgenのコマンドラインオプション:`・`環境変数TECSPATH:`・`環境変数TECSGEN_COMMAND:` の表示と `ToolSettings.tecsgenCommandEnv` の受け渡しは V0.3.0 段1 で実装・実機確認済み（2026-11-20）。
 - **論点（要確認）**: tecsgen-python3の`--version`の出力形式（Ruby版との一致はP6bで確認済みと記録されているが、出力先が標準エラー出力かどうかはこのノートでは確かめていない）。
 
 ### 9C.7 テスト（実装時）
